@@ -2,9 +2,11 @@
 
 `/genjutsu:paint` on a one-page TestFlight landing page for Étale, a fictional iPhone app that tells year-round swimmers at Aquatic Park, San Francisco, when the water goes slack. React 19 + Vite 8 + TypeScript, plain CSS, no animation library (template react).
 
-Recorded as a real conversation: the first message below is what a user types, genjutsu asks its questions and shows its gates, and an agent plays the founder from `clients/etale.md`. The full exchange is in [transcript.md](transcript.md).
+Recorded as a real conversation: the first message below is what a user types, genjutsu asks its questions and shows its gates, and an agent plays the founder from the brief in [client.md](client.md). The full exchange is in [transcript.md](transcript.md).
 
 ## The first message
+
+Sent word for word from [opening.txt](opening.txt) as the client's first message. The agent playing the client answered every later turn from [client.md](client.md), the brief it was given.
 
 > /genjutsu:paint build the landing page for Étale.
 >
@@ -19,7 +21,7 @@ Recorded as a real conversation: the first message below is what a user types, g
 
 | | |
 |---|---|
-| Mode | conversation (client played by an agent from clients/etale.md) |
+| Mode | conversation (client played by an agent from [client.md](client.md)) |
 | genjutsu | genjutsu branch fix/skill-arguments on commit 09c177b, the 4.1.1 candidate that fixes the $1/$2 substitution bug |
 | Model | `claude-opus-5-5` (genjutsu), `claude-opus-5-5` (client) |
 | Date | 2026-10-04 |

@@ -107,9 +107,3 @@ Notes:
 
 1. **Horizontal overflow from the hero's slack marker.** `.strip__marker` is a full-width layer (`inset: 0`) moved with `translateX(<slack minute as % of the day>)` (`src/CurrentDay.tsx:82`, `src/index.css:378-383`), so it sticks out of the plot by that percentage, and nothing clips it. Document width with 05:57 / 10:31 / 16:17 picked: 421 / 478 / 551 px at a 390 px viewport, 853 / 972 / 1123 at 768, 1053 / 1137 / 1243 at 1024, 1440 / 1442 / 1565 at 1440. The page scrolls sideways on phones and tablets from the start, and on desktop once a later slack is picked. The run handed this check over as not verified. The stills do not show it (the overflow is empty space right of the viewport); measured with `takes/probe-overflow-390.json` and the same probe at other widths.
 2. **Slack lines through the high-water labels.** In the tide chart the amber slack lines run through the "H 05:47" and "H 15:58" labels: each label is centred on its high water and the slack 10 and 19 minutes later falls inside it (`src/TideChart.tsx:20-32`). Visible in mid-page.png, full-desktop.webp and clip.webp.
-
-## Follow-up (etale-tide)
-
-workspace-1, without node_modules, dist and preview/, is copied to `genjutsu-readme/examples/etale-tide/start/`. The hero is rendered in `src/App.tsx` (the `.hero` block: headline, copy, button and the `CurrentDay` panel). `finalize.py write src/App.tsx` and `finalize.py check` both answered:
-
-> etale-tide: tide-drawn targets src/App.tsx and fails on the untouched start/ file

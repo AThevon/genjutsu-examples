@@ -1,8 +1,10 @@
 # nocturne - receipt
 
-`/genjutsu:paint` on a landing page for Nocturne, the after-hours program of a fictional planetarium in Lisbon, with the real 22:00 sky of Friday 9 October 2026 as the hero. Recorded as a real conversation: genjutsu asked its questions and showed its gates, and an agent playing the program director answered from `clients/nocturne.md`. React 19 + Vite 8 + TypeScript, plain CSS, no animation library (template react).
+`/genjutsu:paint` on a landing page for Nocturne, the after-hours program of a fictional planetarium in Lisbon, with the real 22:00 sky of Friday 9 October 2026 as the hero. Recorded as a real conversation: genjutsu asked its questions and showed its gates, and an agent playing the program director answered from the brief in [client.md](client.md). React 19 + Vite 8 + TypeScript, plain CSS, no animation library (template react).
 
 ## The first message
+
+Sent word for word from [opening.txt](opening.txt) as the client's first message. The agent playing the client answered every later turn from [client.md](client.md), the brief it was given.
 
 > /genjutsu:paint build the landing page for Nocturne, the late program of a planetarium in Lisbon.
 >
@@ -17,7 +19,7 @@
 
 | | |
 |---|---|
-| Mode | conversation (client played by an agent from clients/nocturne.md) |
+| Mode | conversation (client played by an agent from [client.md](client.md)) |
 | genjutsu | fix/skill-arguments on 09c177b (4.1.1 candidate) |
 | Driver | `bin/converse.mjs`, sandboxed, one headless call per turn on the same genjutsu session |
 | Model | `claude-opus-5-5` |

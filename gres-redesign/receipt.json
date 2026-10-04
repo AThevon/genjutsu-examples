@@ -3,7 +3,7 @@
   "skill": "paint",
   "stack": "React 19 + Vite + TypeScript, GSAP 3 ScrollTrigger (template react-gsap)",
   "firstMessage": "/genjutsu:paint redesign this site\n\nAtelier Grès is a fictional pottery studio, made up for this example. Everything it has to say is already on the page.",
-  "mode": "conversation (client played by an agent from clients/gres.md)",
+  "mode": "conversation (client played by an agent from gres-redesign/client.md)",
   "startingPage": "the pottery-firing fixture (examples/pottery-firing/fixture.sh in the genjutsu repo): cream paper ground, Georgia, four bordered boxes. It is the same starting point as the pottery-firing example; here the job is a full redesign.",
   "plugin": {
     "source": "fix/skill-arguments on 09c177b (4.1.1 candidate)",

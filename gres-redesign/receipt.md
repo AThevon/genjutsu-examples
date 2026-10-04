@@ -2,9 +2,11 @@
 
 `/genjutsu:paint` redesigning a one-page site for Atelier Grès, a fictional pottery studio. The starting page is the pottery-firing fixture: cream paper, Georgia, four bordered boxes. Here the whole visual layer is redone and the copy stays word for word. React 19 + Vite + TypeScript, GSAP 3 ScrollTrigger (template react-gsap).
 
-Recorded as a real conversation: the first message is what a user types, genjutsu asks its questions and shows its gates, and an agent playing the potter answers from a brief (`clients/gres.md`). The whole exchange is in `transcript.md`.
+Recorded as a real conversation: the first message is what a user types, genjutsu asks its questions and shows its gates, and an agent playing the potter answers from the brief in [client.md](client.md). The whole exchange is in `transcript.md`.
 
 ## The first message
+
+Sent word for word from [opening.txt](opening.txt) as the client's first message. The agent playing the client answered every later turn from [client.md](client.md), the brief it was given.
 
 > /genjutsu:paint redesign this site
 >
@@ -14,7 +16,7 @@ Recorded as a real conversation: the first message is what a user types, genjuts
 
 | | |
 |---|---|
-| Mode | conversation (client played by an agent from clients/gres.md) |
+| Mode | conversation (client played by an agent from [client.md](client.md)) |
 | genjutsu | branch `fix/skill-arguments` on `09c177b` (the 4.1.1 candidate, with the $1/$2 skill-argument fix) |
 | Harness | Claude Code 2.1.289, sandboxed, driven by `bin/converse.mjs` |
 | Model (genjutsu) | `claude-opus-5-5` |
@@ -132,5 +134,3 @@ The gallery uses a subset of the media above, picked for what each frame shows. 
 
 1. **Glow behind text in both previews.** In `preview/theses.html` and in the glaze card of `preview/design-system.html`, the spy-hole glow is drawn behind the glaze-firing text, which becomes close to unreadable. The run later measured about 1.3:1 for it. See `media/preview-theses.png` and `media/preview-design-system.png`. The client agent approved the theses on this preview without mentioning it. The run caught it while building, fixed it in the build (the glow has its own column) and said so in exchange 7. It left the previews as they were and called them stale.
 2. **The report overstates token coverage.** It says every value comes from a token and no one-off numbers are left in the styles. `src/index.css` still has three literal sizes: `max-width: 13ch` (line 112), `max-width: 40ch` (line 136) and `30svh` in the cooling padding (line 190). The run did not report this. Nothing on screen changes because of it.
-
-`runs/conversation-2/calls/` and `runs/conversation-2/session/` hold account details and are not part of this example.
