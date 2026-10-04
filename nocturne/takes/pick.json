@@ -1,0 +1,119 @@
+{
+ "_note": "Second take: at full night (the closing '22:00' section), the mouse comes onto three named bodies on the dome, each time from the bottom left, and stops 4 px down and 4 px left of the body's centre, still inside its hit circle (6.6 to 7.6 px at this size), so the recorder's arrow sits below and left of the star and its tag. The paths were planned against the hit circles of all 150 named bodies (measured at scrollY 4540) so that no other star lights up on the way; the tightest pass clears a hit circle by 3.2 px. The pointer is drawn by the recorder, it is not in the build.",
+ "root": "../build/dist",
+ "w": 1440,
+ "h": 900,
+ "fps": 24,
+ "width": 1200,
+ "settle": 1500,
+ "cursor": true,
+ "probe": "({y: Math.round(scrollY), on: !!document.querySelector('.dome__highlight.is-on'), name: document.querySelector('.dome__hl-name')?.textContent || null})",
+ "steps": [
+  {
+   "eval": "window.scrollTo(0, 4540)"
+  },
+  {
+   "wait": 900
+  },
+  {
+   "pointer": {
+    "path": [
+     [
+      600,
+      880
+     ],
+     [
+      842,
+      609
+     ],
+     [
+      881,
+      563
+     ]
+    ],
+    "duration": 1300,
+    "ease": "inOut"
+   }
+  },
+  {
+   "wait": 1400
+  },
+  {
+   "still": "pick"
+  },
+  {
+   "pointer": {
+    "path": [
+     [
+      881,
+      563
+     ],
+     [
+      842,
+      609
+     ],
+     [
+      1008,
+      564
+     ],
+     [
+      1103,
+      512
+     ],
+     [
+      1149,
+      446
+     ]
+    ],
+    "duration": 1400,
+    "ease": "inOut"
+   }
+  },
+  {
+   "wait": 1400
+  },
+  {
+   "pointer": {
+    "path": [
+     [
+      1149,
+      446
+     ],
+     [
+      1103,
+      512
+     ],
+     [
+      1076,
+      540
+     ],
+     [
+      1068,
+      632
+     ],
+     [
+      1036,
+      672
+     ],
+     [
+      956,
+      748
+     ],
+     [
+      927,
+      761
+     ],
+     [
+      967,
+      692
+     ]
+    ],
+    "duration": 1500,
+    "ease": "inOut"
+   }
+  },
+  {
+   "wait": 1400
+  }
+ ]
+}

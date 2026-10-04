@@ -1,0 +1,3 @@
+{ "_note": "Measures, at 390x844 on the first screen, the dome's disc, the compass S and the hero panel.", "root": "../build/dist", "w": 390, "h": 844, "dpr": 2, "settle": 1500,
+  "probe": "(()=>{const r=e=>{const b=e.getBoundingClientRect();return [Math.round(b.left),Math.round(b.top),Math.round(b.right),Math.round(b.bottom)]};return {disc:r(document.querySelector('.dome__disc')), svg:r(document.querySelector('.dome')), S:r([...document.querySelectorAll('.dome__compass')].find(t=>t.textContent==='S')), heroPanel:r(document.querySelector('.section--hero .panel')), bar:r(document.querySelector('.facts'))}})()",
+  "steps": [ { "wait": 200 } ] }

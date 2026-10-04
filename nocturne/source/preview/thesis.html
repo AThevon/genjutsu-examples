@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nocturne · thesis preview (proposal, not the build)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#07090E; --dusk:#1A2638; --dome:#0C1018;
+    --ink:#E8E3D8; --muted:#9AA0AB; --faint:#6B7280;
+    --amber:#E2A65A; --amber-hi:#ECB873; --saturn:#EBD3A0;
+    --hair:rgba(232,227,216,.14);
+    --ease:cubic-bezier(0.22,0.61,0.36,1);
+    --t-reveal:700ms; --t-hover:200ms; --stagger:90ms;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--night);color:var(--ink);font-family:Jost,system-ui,sans-serif;font-weight:400;font-size:18px;line-height:1.6;font-variant-numeric:tabular-nums}
+  .wrap{max-width:1120px;margin:0 auto;padding:48px 32px 128px}
+  .note{border:1px solid var(--hair);padding:16px 24px;color:var(--muted);font-size:14px}
+  h1{font-weight:300;font-size:56px;line-height:1.05;letter-spacing:-.01em;margin:48px 0 24px}
+  h2{font-weight:300;font-size:32px;margin:96px 0 24px;padding-top:24px;border-top:1px solid var(--hair)}
+  .thesis{max-width:820px}
+  .thesis p{margin:0 0 24px}
+  .thesis b{font-weight:500;color:var(--amber)}
+  .label{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  /* facts bar */
+  .facts{position:sticky;top:0;z-index:5;background:rgba(7,9,14,.92);border-bottom:1px solid var(--hair)}
+  .facts .in{max-width:1120px;margin:0 auto;padding:12px 32px;display:flex;gap:32px;align-items:center;flex-wrap:wrap;font-size:15px}
+  .facts .brand{font-weight:300;font-size:20px;letter-spacing:.02em;margin-right:auto}
+  .facts strong{font-weight:500}
+  .facts span{color:var(--muted)} .facts span strong{color:var(--ink)}
+  /* button */
+  .btn{display:inline-block;font:500 16px/1 Jost,sans-serif;letter-spacing:.02em;color:var(--night);background:var(--amber);border:0;border-radius:2px;padding:14px 24px;text-decoration:none;cursor:pointer;transition:background-color var(--t-hover) var(--ease)}
+  .btn:hover,.btn.is-hover{background:var(--amber-hi)}
+  .btn:focus-visible,.btn.is-focus{outline:1px solid var(--ink);outline-offset:4px}
+  .btn:active,.btn.is-active{background:#C98F45}
+  .btn:disabled,.btn.is-disabled{background:transparent;color:var(--faint);box-shadow:inset 0 0 0 1px var(--faint);cursor:not-allowed}
+  .facts .btn{padding:10px 16px;font-size:15px}
+  /* dome demo */
+  .demo{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start}
+  .scroller{height:620px;overflow-y:auto;border:1px solid var(--hair);position:relative}
+  .scroller .stage{position:sticky;top:0;height:618px;display:grid;place-items:center;transition:none}
+  .scroller .runway{height:2200px;margin-top:-618px}
+  .dome svg{width:560px;max-width:100%;height:auto;display:block}
+  .side p{margin:0 0 16px;color:var(--muted);font-size:15px}
+  .side .big{font-size:40px;font-weight:300;color:var(--ink)}
+  .star:focus{outline:none}
+  .star:focus-visible circle.hit{stroke:var(--ink);stroke-width:1}
+  .tip{position:absolute;pointer-events:none;background:var(--night);border:1px solid var(--hair);padding:8px 12px;font-size:14px;opacity:0;transition:opacity var(--t-hover) var(--ease);white-space:nowrap}
+  /* swatches */
+  .sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+  .sw div{border:1px solid var(--hair)}
+  .sw i{display:block;height:88px}
+  .sw p{margin:0;padding:12px 16px;font-size:14px;color:var(--muted)}
+  .sw p b{color:var(--ink);font-weight:500;display:block}
+  /* type */
+  .spec>div{display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--hair)}
+  .spec .k{font-size:13px;color:var(--muted)}
+  .bars div{display:flex;align-items:center;gap:16px;margin:8px 0;font-size:14px;color:var(--muted)}
+  .bars i{display:block;height:8px;background:var(--muted)}
+  .row{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+  .card{border:1px solid var(--hair);padding:32px;max-width:420px}
+  .card dl{display:grid;grid-template-columns:auto 1fr;gap:8px 32px;margin:16px 0 24px}
+  .card dt{color:var(--muted)} .card dd{margin:0;font-weight:500}
+  /* motion */
+  .motion{display:grid;grid-template-columns:320px 1fr;gap:48px;align-items:center}
+  .reveal-box{border:1px solid var(--hair);padding:32px;min-height:220px}
+  .reveal-box p{margin:0 0 12px;opacity:0;transform:translateY(8px)}
+  .reveal-box.go p{opacity:1;transform:none;transition:opacity var(--t-reveal) var(--ease),transform var(--t-reveal) var(--ease)}
+  .reveal-box.go p:nth-child(2){transition-delay:var(--stagger)}
+  .reveal-box.go p:nth-child(3){transition-delay:calc(var(--stagger)*2)}
+  body.rm .reveal-box p{opacity:1;transform:none;transition:none}
+  .ctrl{display:flex;gap:16px;margin-top:16px;align-items:center;font-size:14px;color:var(--muted)}
+  .ghost{font:400 15px Jost,sans-serif;color:var(--ink);background:none;border:1px solid var(--hair);border-radius:2px;padding:8px 16px;cursor:pointer;transition:border-color var(--t-hover) var(--ease)}
+  .ghost:hover{border-color:var(--muted)}
+  .ghost:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+  code{font-family:inherit;color:var(--ink)}
+  ul.dials{padding-left:20px;color:var(--muted)} ul.dials b{color:var(--ink);font-weight:500}
+  @media (max-width:860px){.demo,.motion{grid-template-columns:1fr}.spec>div{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="facts" role="region" aria-label="Sample: pinned facts bar">
+  <div class="in">
+    <span class="brand">Nocturne</span>
+    <span>Fri &amp; Sat</span>
+    <span>Doors <strong>21:30</strong></span>
+    <span>First show <strong>22:00</strong> · last <strong>23:30</strong></span>
+    <span><strong>12 €</strong> · students <strong>8 €</strong></span>
+    <a class="btn" href="#">Book tickets</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <p class="note">Thesis preview: this page is the proposal, not the build. It is throwaway; the landing page will be built from MASTER.md once you've approved it. The sky below is drawn from <code>data/stars.json</code> (403 stars, magnitude ≤ 4.5, plus Saturn).</p>
+
+  <h1>Nocturne: thesis preview</h1>
+  <div class="thesis">
+    <p><span class="label">Visual thesis</span><br>A darkened dome, not outer space: a blue-black ground that starts at dusk blue (<code>#1A2638</code>) and deepens to night (<code>#07090E</code>) as you scroll, warm off-white ink, each star tinted from its catalogue B-V colour index, Saturn in pale gold, and one sodium-amber accent kept for booking. Display in <b>Jost</b> at weight 300: its geometric, compass-drawn circles echo the dome and the star chart, and the light weight reads like talking softly. The same family at 400 and 500 carries the facts, with tabular figures. Spacing is airy on an 8px base, with tall sections. Components are flat and sharp-cornered (2px radius at most), drawn with 1px hairlines and no shadows; the dome is the only circle on the page. A pinned facts bar (Fri &amp; Sat, doors 21:30, 22:00 / 23:30, 12 € / 8 €, Book) stays on screen from the first view.</p>
+    <p><span class="label">Interaction thesis</span><br>Slow and hushed. The page's dusk is mapped linearly to scroll: the ground deepens, the amber house-light glow at the dome rim fades out, and stars appear brightest-first by catalogue magnitude, so the sky is complete by the time you reach the first show. Text reveals once, opacity plus an 8px rise, <b>700ms</b> on <b>cubic-bezier(0.22, 0.61, 0.36, 1)</b> with a <b>90ms</b> stagger. Hover only brightens colour, over <b>200ms</b>, with no scale and no movement. Named stars show their name and magnitude on hover or keyboard focus. Forbidden: twinkling, shooting stars, sky rotation, parallax, bounce or springs, blurred glows, cursor effects, any looping animation. With reduced motion, the full night sky shows at once and nothing reveals.</p>
+    <p><span class="label">Allowed patterns</span><br>compass letters N / E / S / W and two faint altitude rings (30°, 60°) on the dome; 1px hairline rules; the amber house-light glow at the dome rim (scroll-linked, never loops); the pinned facts bar; tabular figures for times and prices; small tracked uppercase labels, limited to the dome compass and practical-info terms; star tints from catalogue B-V.</p>
+    <p><span class="label">Assumptions</span><br>Copy in English · no logo yet, so the wordmark is "Nocturne" set in Jost 300 · fonts served from Google Fonts.</p>
+  </div>
+
+  <h2>The dome, dusk to first show</h2>
+  <div class="demo">
+    <div class="scroller" id="scroller" tabindex="0" aria-label="Scroll inside to move from dusk to night">
+      <div class="stage"><div class="dome" id="dome"></div></div>
+      <div class="runway" aria-hidden="true"></div>
+    </div>
+    <div class="side">
+      <p class="label">Scroll inside the frame</p>
+      <p><span class="big" id="duskv">0.00</span><br>dusk → night (0 → 1), linear in scroll</p>
+      <p><span class="big" id="countv">0</span><br>stars drawn of 403, plus Saturn</p>
+      <p>Seen lying back and looking up: north at the top, east on the left. Zenith at the centre, horizon at the rim (azimuthal equidistant projection).</p>
+      <p>Labels show only for named stars brighter than magnitude 1.5, and for Saturn. Every named star gets its tooltip.</p>
+      <label class="ctrl"><input type="checkbox" id="rm2"> reduced motion (whole night sky, no reveal)</label>
+    </div>
+  </div>
+
+  <h2>Palette</h2>
+  <div class="sw" id="sw"></div>
+  <p class="note" style="margin-top:24px">Faint <code>#6B7280</code> is only used for non-text lines (rim, ticks, disabled outlines); at 4.12:1 on night it fails as body text. Star tints are computed from each star's B-V index and mixed 55% toward white, so colour stays a hint.</p>
+
+  <h2>Type: Jost</h2>
+  <div class="spec">
+    <div><span class="k">Display · 300 · 72/1.0</span><span style="font-size:72px;font-weight:300;line-height:1">The sky at ten</span></div>
+    <div><span class="k">H2 · 300 · 40/1.15</span><span style="font-size:40px;font-weight:300;line-height:1.15">What is in tonight's sky</span></div>
+    <div><span class="k">H3 · 400 · 24/1.3</span><span style="font-size:24px;line-height:1.3">Saturn, low in the east-south-east</span></div>
+    <div><span class="k">Body · 400 · 18/1.6</span><span>The dome first shows the night sky above Lisbon as it is that evening, with a narrator, then a 40-minute show.</span></div>
+    <div><span class="k">Facts · 500 · 18 · tnum</span><span style="font-weight:500">21:30 · 22:00 · 23:30 · 12 € · 8 €</span></div>
+    <div><span class="k">Small · 400 · 14</span><span style="font-size:14px;color:var(--muted)">Star positions: Yale Bright Star Catalogue. Names: IAU WGSN.</span></div>
+    <div><span class="k">Star label · 300 italic · 13</span><span style="font-size:13px;font-style:italic;font-weight:300;color:var(--muted)">Vega · Capella · Altair</span></div>
+  </div>
+
+  <h2>Spacing, radii, shadows</h2>
+  <div class="bars" id="bars"></div>
+  <div class="row" style="margin-top:32px">
+    <div class="card" style="border-radius:0">radius 0: cards, panels, rules</div>
+    <div class="card" style="border-radius:2px">radius 2px: buttons, inputs</div>
+    <div class="card" style="border-radius:0">shadow: none, at every level. Depth comes from light: the ground, the dome, the hairline.</div>
+  </div>
+
+  <h2>Button (five states) and one card</h2>
+  <div class="row">
+    <a class="btn" href="#">Default</a>
+    <a class="btn is-hover" href="#">Hover</a>
+    <a class="btn is-focus" href="#">Focus</a>
+    <a class="btn is-active" href="#">Active</a>
+    <button class="btn is-disabled" disabled>Disabled</button>
+  </div>
+  <div class="card" style="margin-top:48px">
+    <span class="label">Friday &amp; Saturday</span>
+    <dl>
+      <dt>Doors</dt><dd>21:30</dd>
+      <dt>First show</dt><dd>22:00</dd>
+      <dt>Last show</dt><dd>23:30</dd>
+      <dt>Tickets</dt><dd>12 € · students 8 €</dd>
+    </dl>
+    <a class="btn" href="#">Book tickets</a>
+  </div>
+
+  <h2>Motion</h2>
+  <div class="motion">
+    <div>
+      <svg viewBox="-20 -20 240 240" width="300" aria-label="Easing curve cubic-bezier(0.22, 0.61, 0.36, 1)">
+        <rect x="0" y="0" width="200" height="200" fill="none" stroke="rgba(232,227,216,.14)"/>
+        <line x1="0" y1="200" x2="200" y2="0" stroke="rgba(232,227,216,.14)" stroke-dasharray="3 4"/>
+        <path d="M0 200 C44 78 72 0 200 0" fill="none" stroke="#E2A65A" stroke-width="2"/>
+        <circle cx="44" cy="78" r="3" fill="#9AA0AB"/><circle cx="72" cy="0" r="3" fill="#9AA0AB"/>
+        <text x="0" y="218" fill="#9AA0AB" font-size="11" font-family="Jost">time →</text>
+      </svg>
+      <p style="font-size:15px;color:var(--muted)"><code>cubic-bezier(0.22, 0.61, 0.36, 1)</code><br>reveal 700ms · rise 8px · stagger 90ms · once<br>hover 200ms, colour only<br>dusk: linear in scroll position, no easing</p>
+    </div>
+    <div>
+      <div class="reveal-box" id="rb">
+        <p style="font-size:40px;font-weight:300;line-height:1.15">Nocturne</p>
+        <p>The sky above Lisbon, as it is tonight.</p>
+        <p style="color:var(--muted)">Friday and Saturday nights. First show 22:00.</p>
+      </div>
+      <div class="ctrl">
+        <button class="ghost" id="replay">Replay reveal</button>
+        <label><input type="checkbox" id="rm"> reduced motion</label>
+      </div>
+    </div>
+  </div>
+
+  <h2>Dials for the design-system lookup</h2>
+  <ul class="dials">
+    <li><b>variance 4</b>: from "the dome is the only circle on the page", with a centred dome and calm, mostly symmetric sections.</li>
+    <li><b>motion 3</b>: from "slow and hushed … hover only brightens colour … no looping animation".</li>
+    <li><b>density 2</b>: from "airy on an 8px base, with tall sections".</li>
+  </ul>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA = {"stars":[[55.36,284.63,0.03,0.0,"Vega"],[12.62,40.03,0.08,0.8,"Capella"],[51.99,225.37,0.77,0.22,"Altair"],[19.19,161.23,1.16,0.09,"Fomalhaut"],[77.83,307.56,1.25,0.09,"Deneb"],[4.14,174.44,1.74,-0.13,"Alnair"],[13.44,333.96,1.77,-0.02,"Alioth"],[30.22,48.05,1.79,0.48,"Mirfak"],[11.9,349.52,1.79,1.07,"Dubhe"],[4.53,217.88,1.85,-0.03,"Kaus Australis"],[13.9,323.21,1.86,-0.19,"Alkaid"],[6.73,35.2,1.9,0.03,"Menkalinan"],[31.35,83.56,2.0,1.15,"Hamal"],[20.1,287.55,2.0,0.1,""],[38.8,0.8,2.02,0.6,"Polaris"],[14.97,216.74,2.02,-0.22,"Nunki"],[18.42,132.92,2.04,1.02,"Diphda"],[57.28,95.15,2.06,-0.11,"Alpheratz"],[47.95,76.73,2.06,1.58,"Mirach"],[33.92,341.07,2.08,1.47,"Kochab"],[30.87,261.08,2.08,0.15,"Rasalhague"],[3.24,168.62,2.1,1.6,"Tiaki"],[28.77,58.65,2.12,-0.05,"Algol"],[75.63,282.34,2.2,0.68,"Sadr"],[55.04,43.74,2.23,1.17,"Schedar"],[15.99,291.58,2.23,-0.02,"Alphecca"],[50.16,307.19,2.23,1.52,"Eltanin"],[40.3,62.97,2.26,1.37,"Almach"],[58.26,36.98,2.27,0.34,"Caph"],[15.39,329.93,2.27,0.02,"Mizar"],[6.7,348.16,2.37,-0.02,"Merak"],[0.36,149.92,2.39,1.09,"Ankaa"],[61.22,175.86,2.39,1.53,"Enif"],[69.0,113.4,2.42,1.67,"Scheat"],[7.53,242.8,2.43,0.06,"Sabik"],[6.94,340.21,2.44,0.0,"Phecda"],[65.86,354.9,2.44,0.22,"Alderamin"],[78.91,249.06,2.46,1.03,"Aljanah"],[52.13,37.57,2.47,-0.15,""],[59.58,134.05,2.49,-0.04,"Markab"],[9.2,92.0,2.53,1.64,"Menkar"],[5.0,252.11,2.56,0.02,""],[12.71,213.42,2.6,0.08,"Ascella"],[0.73,40.1,2.62,-0.08,"Mahasim"],[32.36,88.04,2.64,0.13,"Sheratan"],[5.55,273.69,2.65,1.17,"Unukalhai"],[48.66,39.16,2.68,0.13,"Ruchbah"],[6.65,52.17,2.69,1.53,"Hassaleh"],[7.44,298.78,2.7,0.97,"Izar"],[7.82,221.12,2.7,1.38,"Kaus Media"],[52.77,228.51,2.72,1.52,"Tarazed"],[5.08,261.04,2.74,1.58,"Yed Prior"],[38.71,323.16,2.74,0.91,"Athebyne"],[23.46,279.36,2.77,0.94,"Kornephoros"],[27.39,252.5,2.77,1.16,"Cebalrai"],[46.21,308.96,2.79,0.98,"Rastaban"],[30.87,287.58,2.81,0.65,""],[12.29,222.49,2.81,1.04,"Kaus Borealis"],[48.39,113.1,2.83,-0.23,"Algenib"],[16.14,61.69,2.85,0.12,""],[12.71,69.06,2.87,-0.09,"Alcyone"],[68.39,296.44,2.87,-0.03,"Fawaris"],[35.21,176.73,2.87,0.29,"Deneb Algedi"],[20.18,54.22,2.89,-0.18,""],[21.19,216.57,2.89,0.35,"Albaldah"],[45.81,181.58,2.91,0.83,"Sadalsuud"],[34.42,45.46,2.93,0.7,""],[73.93,116.29,2.94,0.86,"Matar"],[50.49,168.26,2.96,0.98,"Sadalmelik"],[13.07,43.48,2.99,0.54,"Almaaz"],[5.34,223.38,2.99,1.0,"Alnasl"],[48.56,243.72,2.99,0.01,"Okab"],[36.47,71.09,3.0,0.14,""],[26.55,48.54,3.01,-0.13,""],[13.93,176.28,3.01,-0.12,"Aldhanab"],[12.54,309.31,3.03,0.19,"Seginus"],[12.99,104.51,3.04,1.42,"Mira"],[35.19,337.52,3.05,0.05,"Pherkad"],[54.84,337.1,3.07,1.0,"Altais"],[61.85,257.16,3.08,1.13,"Albireo"],[33.78,201.94,3.08,0.79,"Dabih"],[1.82,217.55,3.11,1.56,""],[3.11,189.8,3.11,1.0,""],[33.93,276.25,3.14,0.08,"Sarin"],[39.43,289.53,3.16,1.44,""],[10.71,44.87,3.17,-0.18,"Haedus"],[0.28,0.42,3.17,0.46,""],[44.02,328.15,3.17,-0.12,"Aldhibah"],[13.23,218.23,3.17,-0.11,""],[21.69,264.54,3.2,1.15,""],[80.34,211.52,3.2,0.99,""],[48.87,9.48,3.21,1.03,"Errai"],[46.0,211.34,3.23,-0.07,""],[58.02,358.69,3.23,-0.22,"Alfirk"],[5.22,259.63,3.24,0.96,"Yed Posterior"],[57.74,271.61,3.24,-0.05,"Sulafat"],[28.89,238.93,3.26,0.94,""],[52.01,87.36,3.27,1.28,""],[2.95,234.25,3.27,-0.22,""],[32.57,157.39,3.27,0.05,"Skat"],[30.97,322.98,3.29,1.16,"Edasich"],[11.34,339.09,3.31,0.08,"Megrez"],[15.1,213.7,3.32,1.19,""],[20.08,238.35,3.34,0.99,""],[69.62,13.02,3.35,1.57,""],[10.24,8.01,3.36,0.84,"Muscida"],[43.67,228.12,3.36,0.32,""],[45.1,34.44,3.38,-0.15,"Segin"],[28.28,61.09,3.39,1.65,""],[0.02,69.42,3.4,0.18,"Chamukuy"],[58.65,147.92,3.4,-0.09,"Homam"],[37.15,79.07,3.41,0.49,"Mothallah"],[41.48,274.98,3.42,0.75,""],[65.47,345.35,3.43,0.92,""],[53.66,41.96,3.44,0.57,"Achird"],[34.37,227.2,3.44,-0.09,""],[20.6,122.69,3.45,1.16,""],[56.26,274.0,3.45,0.0,"Sheliak"],[12.36,95.69,3.47,0.09,"Kaffaljidhma"],[3.09,76.36,3.47,-0.12,""],[16.47,299.68,3.47,0.95,""],[61.54,234.66,3.47,1.57,""],[28.03,266.17,3.48,1.44,"Rasalgethi"],[69.05,126.42,3.48,0.93,"Sadalbari"],[10.5,120.24,3.5,0.72,""],[18.38,307.37,3.5,0.97,"Nekkar"],[19.68,219.1,3.51,1.18,""],[60.48,14.82,3.52,1.05,""],[2.18,66.91,3.53,1.01,"Ain"],[0.46,265.13,3.53,-0.04,""],[34.48,295.16,3.53,0.92,""],[56.7,164.41,3.53,0.08,"Biham"],[12.4,238.33,3.54,0.26,""],[29.28,132.16,3.56,1.22,""],[46.32,56.22,3.57,1.28,"Nembus"],[48.46,340.2,3.57,0.49,""],[35.68,203.62,3.57,0.94,"Algedi"],[7.37,303.19,3.58,1.3,""],[19.47,118.27,3.6,1.06,""],[7.85,84.57,3.6,0.89,""],[33.75,97.14,3.62,0.97,"Alpherg"],[73.34,70.16,3.62,-0.09,""],[25.17,74.08,3.63,-0.1,"Bharani"],[12.37,68.86,3.63,-0.09,"Atlas"],[62.72,212.26,3.63,0.44,"Rotanev"],[1.5,70.99,3.65,0.99,"Prima Hyadum"],[25.5,333.71,3.65,-0.05,"Thuban"],[55.97,48.19,3.66,-0.2,"Fulu"],[26.36,155.6,3.66,1.22,""],[11.67,0.44,3.67,0.33,""],[11.44,280.58,3.67,0.06,""],[16.15,294.52,3.68,0.28,"Nusakan"],[34.73,178.79,3.68,0.32,"Nashira"],[47.87,140.54,3.69,0.92,""],[13.19,69.41,3.7,-0.11,"Electra"],[44.38,275.25,3.7,0.94,""],[1.08,338.76,3.71,1.18,"Taiyangshou"],[5.62,271.14,3.71,0.15,""],[50.54,221.72,3.71,0.86,"Alshain"],[13.87,29.07,3.72,1.0,""],[82.06,314.52,3.72,1.65,""],[85.74,264.06,3.72,0.39,""],[13.16,114.87,3.73,1.14,"Baten Kaitos"],[35.14,252.32,3.73,0.12,""],[7.83,83.65,3.74,-0.09,""],[28.95,182.44,3.74,1.0,""],[40.53,154.66,3.74,1.64,""],[11.16,45.51,3.75,1.22,"Saclateni"],[20.53,278.48,3.75,0.27,""],[26.96,250.11,3.75,0.04,""],[49.75,315.57,3.75,1.18,"Grumium"],[68.43,18.89,3.75,0.6,""],[37.1,43.45,3.76,1.68,"Miram"],[2.15,69.03,3.76,0.98,"Secunda Hyadum"],[75.25,151.6,3.76,0.44,""],[23.57,53.28,3.77,0.42,""],[19.98,217.28,3.77,1.01,""],[62.08,313.24,3.77,0.96,""],[64.12,212.53,3.77,-0.06,"Sualocin"],[40.59,195.76,3.77,0.0,"Albali"],[74.79,35.26,3.77,0.01,""],[64.4,311.1,3.79,0.14,""],[72.83,304.85,3.79,1.28,""],[30.31,54.53,3.8,0.98,"Misam"],[7.69,357.98,3.8,0.29,""],[6.26,278.39,3.8,0.26,""],[6.26,278.39,3.8,0.26,""],[46.61,299.59,3.8,-0.18,""],[11.88,262.84,3.82,0.01,"Marfik"],[59.0,237.28,3.82,1.41,""],[66.49,60.55,3.82,1.01,""],[18.07,62.6,3.83,0.05,"Atik"],[46.07,273.26,3.83,-0.03,""],[55.31,344.24,3.83,0.89,""],[0.1,69.37,3.84,0.95,""],[20.0,349.47,3.84,1.62,"Giausar"],[17.22,290.13,3.84,0.0,""],[45.69,261.93,3.84,1.18,""],[48.67,162.58,3.84,-0.05,"Sadachbia"],[13.56,279.26,3.85,0.48,""],[27.05,232.03,3.85,1.33,""],[47.25,285.99,3.86,1.35,""],[13.79,227.87,3.86,0.23,"Polis"],[51.32,73.78,3.87,0.13,""],[13.17,69.07,3.87,-0.07,"Maia"],[23.09,344.68,3.87,-0.13,""],[2.13,103.05,3.89,1.11,"Azha"],[33.56,305.39,3.89,-0.15,""],[69.75,267.65,3.89,1.02,""],[45.52,218.54,3.9,0.89,""],[3.52,163.54,3.9,1.02,""],[34.11,284.57,3.92,-0.01,""],[56.32,189.11,3.92,0.53,"Kitalpha"],[25.34,215.6,3.93,0.22,""],[82.07,291.85,3.94,0.02,""],[35.66,46.97,3.95,0.74,""],[15.39,329.93,3.95,0.13,""],[68.81,129.99,3.95,1.07,""],[3.26,40.09,3.97,1.13,""],[29.44,247.83,3.97,0.02,""],[5.21,204.49,3.97,-0.1,"Rukbat"],[7.03,170.25,3.97,1.03,""],[26.2,151.88,3.97,1.1,""],[43.46,22.37,3.98,-0.01,""],[72.75,308.29,3.98,1.52,""],[4.19,121.22,4.0,1.57,""],[34.53,71.48,4.01,0.02,""],[15.56,329.84,4.01,0.16,"Alcor"],[35.29,320.47,4.01,0.52,""],[1.64,203.05,4.01,-0.1,"Arkab Prior"],[73.98,244.02,4.01,0.4,""],[35.06,157.97,4.01,1.57,""],[44.77,125.1,4.01,0.42,""],[48.35,246.49,4.02,1.08,""],[33.01,227.72,4.02,1.09,""],[83.0,356.55,4.02,0.89,""],[48.98,157.05,4.02,-0.09,""],[23.56,29.87,4.03,0.92,""],[30.01,246.52,4.03,0.86,""],[59.29,211.36,4.03,-0.13,"Aldulfin"],[17.6,57.76,4.04,0.01,"Menkib"],[22.8,46.16,4.04,-0.03,""],[59.59,293.1,4.04,1.59,""],[32.36,49.5,4.05,0.59,""],[20.07,321.11,4.05,0.5,""],[47.34,95.07,4.06,1.12,""],[45.76,53.07,4.07,-0.04,""],[11.27,98.61,4.07,-0.22,""],[33.71,188.61,4.07,-0.01,""],[70.95,190.19,4.08,1.11,""],[69.79,2.59,4.08,2.35,""],[44.8,66.32,4.09,0.54,"Titawin"],[13.56,282.44,4.09,1.62,"Gudja"],[9.08,80.53,4.11,1.12,""],[6.38,208.22,4.11,0.04,"Meridiana"],[5.16,207.45,4.11,1.2,""],[23.66,190.71,4.11,1.64,""],[6.77,170.21,4.11,1.57,""],[35.98,51.73,4.12,0.49,""],[6.31,198.54,4.13,1.08,""],[76.93,171.56,4.13,0.43,""],[82.16,93.05,4.13,1.46,""],[46.76,131.63,4.13,0.51,""],[22.31,44.91,4.14,0.95,""],[18.35,295.79,4.14,-0.13,""],[25.05,192.42,4.14,0.43,""],[66.21,65.94,4.14,-0.08,""],[20.28,288.65,4.15,1.23,""],[54.16,32.68,4.16,0.14,""],[42.67,166.18,4.16,0.98,"Ancha"],[4.24,234.11,4.17,0.28,""],[22.65,164.38,4.17,-0.11,""],[12.83,69.35,4.18,-0.06,"Merope"],[15.32,317.37,4.18,0.08,"Xuange"],[49.21,256.13,4.19,0.46,""],[70.49,15.79,4.19,0.28,""],[59.29,144.54,4.19,0.5,""],[34.4,299.88,4.2,-0.01,""],[33.53,36.8,4.21,0.41,""],[16.49,162.47,4.21,0.97,""],[36.97,148.54,4.21,1.11,""],[4.77,65.02,4.22,0.13,""],[49.07,338.3,4.22,-0.1,""],[31.64,231.84,4.22,1.1,""],[63.61,342.83,4.22,0.2,""],[76.96,236.52,4.22,1.05,""],[39.9,147.37,4.22,1.56,""],[30.55,63.14,4.23,0.34,""],[27.69,48.72,4.23,-0.06,""],[40.56,349.87,4.23,0.89,""],[67.89,263.12,4.23,1.82,""],[86.24,283.56,4.23,0.12,""],[79.13,8.98,4.23,-0.12,""],[35.69,203.75,4.24,1.07,""],[40.78,3.84,4.25,1.21,""],[50.82,59.39,4.25,-0.07,""],[1.25,108.79,4.25,-0.14,""],[14.98,48.59,4.25,1.22,""],[33.19,343.51,4.25,1.44,""],[27.28,100.4,4.26,0.96,"Torcular"],[7.45,34.51,4.26,1.72,""],[31.25,304.83,4.26,-0.07,""],[14.86,239.43,4.26,0.08,""],[16.29,89.85,4.27,0.31,""],[65.02,209.17,4.27,1.04,""],[37.06,170.71,4.27,-0.07,""],[34.46,109.45,4.28,0.96,""],[18.56,93.87,4.28,-0.06,""],[0.14,89.49,4.28,0.58,""],[4.93,64.48,4.28,0.26,""],[2.24,61.97,4.28,-0.13,""],[34.47,183.97,4.28,0.9,""],[5.36,163.61,4.28,0.42,""],[49.08,134.63,4.28,1.07,""],[24.5,43.92,4.29,0.02,""],[1.93,68.35,4.29,0.05,""],[27.85,25.23,4.29,0.03,""],[29.93,359.85,4.29,1.48,""],[0.28,230.01,4.29,0.4,""],[1.38,202.81,4.29,0.34,"Arkab Posterior"],[67.44,2.76,4.29,0.52,""],[63.66,6.52,4.29,0.34,"Kurhah"],[81.29,125.84,4.29,0.46,""],[17.9,167.66,4.29,0.01,""],[66.66,68.57,4.29,-0.1,""],[13.34,69.08,4.3,-0.11,"Taygeta"],[58.23,279.68,4.3,1.68,""],[67.42,329.36,4.3,0.11,""],[7.28,137.14,4.31,-0.16,""],[20.29,302.1,4.31,0.31,"Alkalurops"],[37.98,344.34,4.32,0.04,""],[48.11,201.9,4.32,0.95,""],[50.93,46.83,4.33,0.17,""],[20.01,102.89,4.33,0.03,"Alrescha"],[11.35,243.11,4.33,0.03,""],[51.33,281.89,4.33,1.17,""],[23.93,255.22,4.34,1.5,""],[18.34,177.98,4.34,-0.05,""],[68.67,174.5,4.34,1.17,""],[16.84,77.79,4.35,1.03,"Botein"],[12.53,19.95,4.35,0.85,""],[53.59,83.33,4.36,-0.14,""],[28.47,49.44,4.36,1.35,""],[8.34,68.23,4.36,1.07,""],[42.27,263.51,4.36,-0.16,""],[40.19,355.98,4.36,0.02,"Yildun"],[56.55,281.9,4.36,0.19,""],[48.04,252.98,4.36,0.13,""],[62.73,280.01,4.36,1.26,""],[41.55,221.64,4.36,-0.08,""],[76.73,42.3,4.36,1.68,""],[51.49,89.73,4.37,0.87,""],[21.75,96.01,4.37,0.89,""],[57.42,238.93,4.37,0.78,"Sham"],[57.19,237.94,4.37,1.05,""],[12.82,199.91,4.37,-0.15,""],[9.01,156.95,4.37,-0.09,""],[21.46,265.8,4.38,-0.08,""],[5.56,237.15,4.39,0.39,""],[62.43,282.38,4.39,-0.15,"Aladfar"],[49.82,352.83,4.39,-0.05,""],[36.68,148.02,4.39,-0.15,""],[25.41,151.38,4.39,1.47,""],[62.29,115.16,4.4,0.61,"Alkarab"],[37.63,275.37,4.41,1.44,"Maasym"],[44.95,276.33,4.41,0.39,""],[51.75,9.01,4.41,0.8,""],[14.98,157.71,4.41,1.13,""],[34.06,134.44,4.41,1.63,""],[44.97,94.4,4.42,0.94,""],[44.94,197.11,4.42,1.65,""],[49.54,159.4,4.42,0.38,""],[36.85,112.68,4.43,1.5,""],[6.55,274.08,4.43,0.6,""],[73.94,251.88,4.43,1.33,""],[63.75,209.83,4.43,0.32,""],[84.78,226.13,4.43,-0.11,""],[74.09,27.11,4.43,1.02,""],[21.55,139.5,4.44,1.66,""],[25.69,104.26,4.44,1.36,""],[59.69,251.98,4.44,1.5,"Anser"],[28.52,246.27,4.45,0.02,""],[51.32,344.57,4.45,1.25,""],[48.38,229.27,4.45,1.17,""],[7.43,302.31,4.46,0.36,""],[11.56,174.03,4.46,1.37,""],[76.73,59.46,4.46,1.33,""],[16.36,163.28,4.46,-0.04,""],[20.52,68.5,4.47,1.55,""],[33.31,29.55,4.47,1.88,""],[20.08,36.09,4.47,-0.02,""],[24.16,157.22,4.47,0.9,""],[15.77,23.77,4.48,0.01,""],[0.41,4.14,4.48,0.27,""],[65.88,308.45,4.48,0.38,""],[0.28,69.98,4.49,0.25,""],[60.99,191.02,4.49,0.5,""],[82.64,78.24,4.49,1.39,""],[29.18,144.37,4.49,-0.04,""],[0.65,0.12,4.5,0.01,""],[26.03,187.25,4.5,1.61,""],[18.02,172.82,4.5,0.05,""],[43.3,134.14,4.5,0.2,""]],"saturn":[33.67,119.05,0.36]};
+const NS='http://www.w3.org/2000/svg';
+const R=440, C=500;
+const lerp=(a,b,t)=>a+(b-a)*t, clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const DUSK=hex('#1A2638'), NIGHT=hex('#07090E');
+function project(alt,az){const r=(90-alt)/90*R, a=az*Math.PI/180;return [C - r*Math.sin(a), C - r*Math.cos(a)];}
+function bvColor(bv){
+  if(bv==null) return 'rgb(232,227,216)';
+  const T=4600*(1/(0.92*bv+1.7)+1/(0.92*bv+0.62)), t=T/100; let r,g,b;
+  r = t<=66?255:329.7*Math.pow(t-60,-0.1332);
+  g = t<=66?99.47*Math.log(t)-161.12:288.12*Math.pow(t-60,-0.0755);
+  b = t>=66?255:(t<=19?0:138.52*Math.log(t-10)-305.04);
+  const m=x=>Math.round(lerp(clamp(x,0,255),255,0.55));
+  return `rgb(${m(r)},${m(g)},${m(b)})`;
+}
+const radius=mag=>0.8+0.9*(4.7-mag);
+const appearAt=mag=>0.08+(mag+0.5)/5*0.8;
+
+const svg=document.createElementNS(NS,'svg');
+svg.setAttribute('viewBox','0 0 1000 1000'); svg.setAttribute('role','img');
+svg.setAttribute('aria-label','The sky over Lisbon at 22:00 on Friday 9 October 2026, with Saturn in the east-south-east');
+svg.innerHTML=`<defs><radialGradient id="glow" cx="500" cy="500" r="${R}" gradientUnits="userSpaceOnUse">
+  <stop offset="0.62" stop-color="#E2A65A" stop-opacity="0"/><stop offset="1" stop-color="#E2A65A" stop-opacity="0.5"/></radialGradient></defs>
+  <circle cx="500" cy="500" r="${R}" fill="#0C1018" id="domebg"/>
+  <circle cx="500" cy="500" r="${R}" fill="url(#glow)" id="glowc"/>
+  <circle cx="500" cy="500" r="${R/3*2}" fill="none" stroke="#6B7280" stroke-opacity=".35" stroke-width="1"/>
+  <circle cx="500" cy="500" r="${R/3}" fill="none" stroke="#6B7280" stroke-opacity=".35" stroke-width="1"/>
+  <circle cx="500" cy="500" r="${R}" fill="none" stroke="#6B7280" stroke-width="1.2"/>`;
+[['N',500,40],['E',35,506],['S',500,976],['W',965,506]].forEach(([t,x,y])=>{
+  const e=document.createElementNS(NS,'text');e.textContent=t;e.setAttribute('x',x);e.setAttribute('y',y);
+  e.setAttribute('fill','#9AA0AB');e.setAttribute('font-size','20');e.setAttribute('letter-spacing','3');e.setAttribute('text-anchor','middle');e.setAttribute('font-family','Jost');svg.appendChild(e);});
+const items=[];
+const tip=document.getElementById('tip');
+function addBody(alt,az,mag,fill,name,label,isPlanet){
+  const [x,y]=project(alt,az); const g=document.createElementNS(NS,'g'); g.setAttribute('class','star');
+  const c=document.createElementNS(NS,'circle'); c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',radius(mag)*(isPlanet?1.15:1));c.setAttribute('fill',fill);g.appendChild(c);
+  if(name){
+    const hit=document.createElementNS(NS,'circle');hit.setAttribute('class','hit');hit.setAttribute('cx',x);hit.setAttribute('cy',y);hit.setAttribute('r',Math.max(9,radius(mag)+5));hit.setAttribute('fill','transparent');g.appendChild(hit);
+    g.setAttribute('tabindex','-1'); g.setAttribute('aria-label',`${name}, magnitude ${mag.toFixed(2)}`);
+    const show=()=>{const b=g.getBoundingClientRect();tip.innerHTML=`${name}<br><span style="color:#9AA0AB">magnitude ${mag.toFixed(2)}${isPlanet?' · planet':''}</span>`;tip.style.left=(b.right+8+scrollX)+'px';tip.style.top=(b.top-8+scrollY)+'px';tip.style.opacity=1;};
+    const hide=()=>tip.style.opacity=0;
+    g.addEventListener('mouseenter',show);g.addEventListener('mouseleave',hide);g.addEventListener('focus',show);g.addEventListener('blur',hide);
+  }
+  if(label){const t=document.createElementNS(NS,'text');t.textContent=name;t.setAttribute('x',x+radius(mag)+7);t.setAttribute('y',y+5);
+    t.setAttribute('fill',isPlanet?'#EBD3A0':'#9AA0AB');t.setAttribute('font-size','15');t.setAttribute('font-style',isPlanet?'normal':'italic');t.setAttribute('font-weight',isPlanet?'400':'300');t.setAttribute('font-family','Jost');g.appendChild(t);}
+  svg.appendChild(g); items.push({g,t:appearAt(mag),p:isPlanet});
+}
+DATA.stars.slice().sort((a,b)=>b[2]-a[2]).forEach(([alt,az,mag,bv,name])=>addBody(alt,az,mag,bvColor(bv),name,name&&mag<1.5,false));
+const [sa,sz,sm]=DATA.saturn; addBody(sa,sz,sm,'#EBD3A0','Saturn',true,true);
+document.getElementById('dome').appendChild(svg);
+items.filter(i=>i.g.hasAttribute('tabindex')).forEach(i=>i.g.setAttribute('tabindex','0'));
+
+const scroller=document.getElementById('scroller'), glow=document.getElementById('glowc');
+let rm=false, ticking=false;
+function paint(){
+  ticking=false;
+  const max=scroller.scrollHeight-scroller.clientHeight;
+  const dusk = rm?1:clamp(scroller.scrollTop/max);
+  const bg=DUSK.map((v,i)=>Math.round(lerp(v,NIGHT[i],dusk)));
+  scroller.style.background=`rgb(${bg})`;
+  glow.setAttribute('opacity',(1-dusk).toFixed(3));
+  let n=0;
+  for(const it of items){const o=clamp((dusk-it.t)/0.12); it.g.style.opacity=o; it.g.style.visibility=o>0?'visible':'hidden'; if(o>0&&!it.p)n++;}
+  document.getElementById('duskv').textContent=dusk.toFixed(2);
+  document.getElementById('countv').textContent=n;
+}
+scroller.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(paint);}},{passive:true});
+paint();
+
+// palette
+const L=h=>hex(h).map(v=>v/255).map(c=>c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)).reduce((s,c,i)=>s+c*[0.2126,0.7152,0.0722][i],0);
+const cr=(a,b)=>{const[x,y]=[L(a),L(b)].sort((p,q)=>q-p);return ((x+0.05)/(y+0.05)).toFixed(2);};
+[['night','#07090E','ground after dusk'],['dusk','#1A2638','ground at the top of the page'],['dome','#0C1018','the dome disc'],['ink','#E8E3D8','text'],['muted','#9AA0AB','secondary text, star labels'],['faint','#6B7280','rim, ticks · non-text only'],['amber','#E2A65A','booking, house-light glow'],['amber-hi','#ECB873','booking hover'],['saturn','#EBD3A0','Saturn and its label']].forEach(([n,h,u])=>{
+  const d=document.createElement('div');
+  d.innerHTML=`<i style="background:${h}"></i><p><b>${n} ${h}</b>${u}<br>on night ${cr(h,'#07090E')}:1 · on dusk ${cr(h,'#1A2638')}:1</p>`;
+  document.getElementById('sw').appendChild(d);});
+const s=document.createElement('div');s.innerHTML=`<i style="background:linear-gradient(90deg,${[-0.03,0.0,0.3,0.6,0.9,1.2,1.6].map(bvColor).join(',')})"></i><p><b>star tint (computed)</b>B-V −0.03 → 1.6, mixed 55% to white</p>`;document.getElementById('sw').appendChild(s);
+[4,8,12,16,24,32,48,64,96,128,192].forEach(v=>{const d=document.createElement('div');d.innerHTML=`<span style="width:48px">${v}px</span><i style="width:${v*2}px"></i>`;document.getElementById('bars').appendChild(d);});
+
+// motion
+const rb=document.getElementById('rb');
+const replay=()=>{rb.classList.remove('go');void rb.offsetWidth;rb.classList.add('go');};
+document.getElementById('replay').onclick=replay; setTimeout(replay,400);
+const setRM=v=>{rm=v;document.body.classList.toggle('rm',v);document.getElementById('rm').checked=v;document.getElementById('rm2').checked=v;paint();};
+document.getElementById('rm').onchange=e=>setRM(e.target.checked);
+document.getElementById('rm2').onchange=e=>setRM(e.target.checked);
+if(matchMedia('(prefers-reduced-motion: reduce)').matches) setRM(true);
+</script>
+</body>
+</html>

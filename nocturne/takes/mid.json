@@ -1,0 +1,7 @@
+{ "root": "../build/dist", "w": 1440, "h": 900, "settle": 1500,
+  "probe": "({y: Math.round(scrollY), ground: document.documentElement.style.getPropertyValue('--c-ground')})",
+  "steps": [
+    { "eval": "window.scrollTo(0, 1800)" }, { "wait": 1500 }, { "still": "mid-dusk" },
+    { "eval": "window.scrollTo(0, 2720)" }, { "wait": 1500 }, { "still": "mid-stars" },
+    { "eval": "window.scrollTo(0, 4540)" }, { "wait": 1500 }, { "still": "night" }
+  ] }

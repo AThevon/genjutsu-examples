@@ -1,0 +1,4 @@
+{ "_note": "Phone width, the star list docked under the dome (the run's fix 2), then a mouse click on the Vega button. The recorder clicks with a mouse, not a touch, so this shows the button's click handler and the docking, not touch input.",
+  "root": "../build/dist", "w": 390, "h": 844, "dpr": 2, "settle": 1500,
+  "probe": "({y: Math.round(scrollY), docW: document.documentElement.scrollWidth, list: Math.round(document.querySelector('.dock__list').getBoundingClientRect().top), on: !!document.querySelector('.dome__highlight.is-on'), name: document.querySelector('.dome__hl-name')?.textContent || null})",
+  "steps": [ { "eval": "window.scrollTo(0, 4300)" }, { "wait": 1500 }, { "still": "mobile-dock" }, { "click": ".star-item", "nth": 1 }, { "wait": 800 }, { "still": "mobile-dock-pick" } ] }

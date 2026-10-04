@@ -1,0 +1,630 @@
+@import "./styles/tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--c-ground);
+  color: var(--c-ink);
+  font-family: var(--font);
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+ul,
+figure {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: var(--line) solid var(--c-ink);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--r-1);
+}
+
+/* ---------- type ---------- */
+
+.display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  font-weight: 300;
+  letter-spacing: var(--tracking-display);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  font-weight: 300;
+}
+
+h2.display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  font-weight: 400;
+}
+
+.lead {
+  font-size: var(--fs-body);
+  max-width: var(--measure);
+}
+
+/* ---------- facts bar ---------- */
+
+.facts {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-bar);
+  background: var(--c-bar);
+  border-bottom: var(--line) solid var(--c-hair);
+  padding-top: env(safe-area-inset-top);
+}
+
+.facts__in {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--s-3) var(--s-4);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "brand book" "list list";
+  align-items: center;
+  gap: var(--s-2) var(--s-4);
+}
+
+.facts__brand {
+  grid-area: brand;
+  color: var(--c-ink);
+  font-weight: 300;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-none);
+  letter-spacing: var(--tracking-ui);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: var(--line);
+  text-underline-offset: var(--underline-offset);
+  transition:
+    text-decoration-color var(--dur-hover) var(--ease-out),
+    color var(--dur-hover) var(--ease-out);
+}
+
+.facts__brand:active {
+  color: var(--c-muted);
+}
+
+.facts__list {
+  grid-area: list;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+  font-size: var(--fs-small);
+  line-height: var(--lh-tight);
+  font-variant-numeric: tabular-nums;
+}
+
+.facts__list div {
+  display: flex;
+  gap: var(--s-2);
+}
+
+.facts__list dt {
+  color: var(--c-muted);
+}
+
+.facts__list div:first-child dt {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.facts__list dd {
+  font-weight: 500;
+}
+
+.facts__book {
+  grid-area: book;
+}
+
+@media (min-width: 900px) {
+  .facts__in {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "brand list book";
+    padding: var(--s-3) var(--s-8);
+    gap: var(--s-6);
+  }
+
+  .facts__list {
+    justify-content: flex-end;
+    gap: var(--s-2) var(--s-5);
+    font-size: var(--fs-fact);
+  }
+}
+
+/* ---------- buttons and links ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding: var(--s-3) var(--s-5);
+  border: 0;
+  border-radius: var(--r-1);
+  background: var(--c-amber);
+  color: var(--c-night);
+  font: 500 var(--fs-ui) / var(--lh-none) var(--font);
+  letter-spacing: var(--tracking-ui);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--dur-hover) var(--ease-out);
+}
+
+.btn:active {
+  background: var(--c-amber-press);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background: transparent;
+  color: var(--c-muted);
+  box-shadow: inset 0 0 0 var(--line) var(--c-faint);
+  cursor: not-allowed;
+}
+
+.link {
+  color: var(--c-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--c-hair-strong);
+  text-decoration-thickness: var(--line);
+  text-underline-offset: var(--underline-offset);
+  transition: text-decoration-color var(--dur-hover) var(--ease-out);
+}
+
+.link:active {
+  color: var(--c-muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover:not(:disabled) {
+    background: var(--c-amber-hi);
+  }
+
+  .link:hover,
+  .facts__brand:hover {
+    text-decoration-color: var(--c-ink);
+  }
+
+  .facts__brand:hover:active {
+    color: var(--c-muted);
+  }
+
+  .btn:hover:active {
+    background: var(--c-amber-press);
+  }
+}
+
+/* ---------- the sky layer ---------- */
+
+.sky {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sky);
+  height: 100svh;
+  margin-bottom: -100svh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: calc(var(--bar-h) + var(--s-4)) var(--s-4) var(--s-4);
+  background: var(--c-ground);
+}
+
+.sky__figure {
+  width: min(100%, calc(var(--dome-mobile) - var(--bar-h)));
+}
+
+.sky__keys {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.sky__figure:focus-within .sky__keys {
+  position: static;
+  display: block;
+  width: auto;
+  height: auto;
+  margin-top: var(--s-1);
+  clip-path: none;
+  white-space: normal;
+  color: var(--c-ink);
+}
+
+.sky__caption {
+  margin-top: var(--s-2);
+  font-size: var(--fs-small);
+  line-height: var(--lh-tight);
+  color: var(--c-muted);
+  text-align: center;
+}
+
+.dome {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  --k: 1; /* set at runtime: SVG units per CSS pixel */
+}
+
+.dome__disc {
+  fill: var(--c-dome);
+}
+
+.dome__ring,
+.dome__rim {
+  fill: none;
+  stroke: var(--c-faint);
+  stroke-width: var(--line);
+  vector-effect: non-scaling-stroke;
+}
+
+.dome__ring {
+  stroke-opacity: var(--o-ring);
+}
+
+.dome__compass {
+  fill: var(--c-muted);
+  font-size: calc(var(--fs-label) * var(--k));
+  letter-spacing: var(--tracking-label);
+}
+
+.dome__glow-stop {
+  stop-color: var(--c-amber);
+}
+
+.dome__dot {
+  fill: var(--c-ink);
+}
+
+.dome__body--planet .dome__dot,
+.dome__dot--planet {
+  fill: var(--c-saturn);
+}
+
+.dome__bin {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.dome__label {
+  fill: var(--c-muted);
+  font-size: calc(var(--fs-star) * var(--k));
+  font-style: italic;
+  font-weight: 300;
+  pointer-events: none;
+}
+
+.dome__body--planet .dome__label {
+  fill: var(--c-saturn);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.dome__opt {
+  fill: transparent;
+  pointer-events: all;
+}
+
+/* Keyboard focus: the shared outline on the target, and the amber pick ring thickens. */
+.dome:has(.dome__opt:focus-visible) .dome__ring-hl {
+  stroke-width: var(--line-strong);
+}
+
+.dome__highlight {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-hover) var(--ease-out);
+}
+
+.dome__highlight.is-on {
+  opacity: 1;
+}
+
+.dome__ring-hl {
+  fill: none;
+  stroke: var(--c-amber);
+  stroke-width: var(--line);
+  vector-effect: non-scaling-stroke;
+}
+
+.dome__highlight text {
+  paint-order: stroke;
+  stroke: var(--c-dome);
+  stroke-width: calc(var(--s-1) * var(--k));
+  stroke-linejoin: round;
+}
+
+.dome__hl-name {
+  fill: var(--c-ink);
+  font-size: calc(var(--fs-small) * var(--k));
+  font-weight: 500;
+}
+
+.dome__hl-detail {
+  fill: var(--c-muted);
+  font-size: calc(var(--fs-small) * var(--k));
+}
+
+/* ---------- page and sections ---------- */
+
+.page {
+  position: relative;
+  z-index: var(--z-content);
+  pointer-events: none;
+}
+
+.section {
+  display: flex;
+  padding: 0 var(--s-4);
+  margin-bottom: var(--gap-sky);
+}
+
+.section--hero {
+  min-height: calc(100svh - var(--bar-h));
+  align-items: flex-end;
+  margin-bottom: var(--gap-sky-hero);
+}
+
+.section--closing {
+  margin-bottom: 0;
+  min-height: 100svh;
+  align-items: flex-end;
+  padding-bottom: var(--s-9);
+}
+
+.panel {
+  pointer-events: auto;
+  width: 100%;
+  max-width: var(--measure);
+  padding: var(--s-6) var(--s-5);
+  background: var(--c-ground);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.part {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding-top: var(--s-5);
+  border-top: var(--line) solid var(--c-hair);
+}
+
+.part p,
+.panel > p {
+  max-width: var(--measure);
+}
+
+.section--stars {
+  flex-direction: column;
+}
+
+.dock {
+  width: 100%;
+  max-width: var(--measure);
+}
+
+/* Below 1100px the star list docks under the dome, so a picked star stays in view. The track
+   starts one dome-height lower, so the intro has scrolled away when the list docks. */
+@media (max-width: 1099px) {
+  .dock {
+    margin-top: var(--sky-bottom);
+    height: calc(var(--dock-hold) + 100svh - var(--sky-bottom));
+  }
+
+  .dock__list {
+    pointer-events: auto;
+    position: sticky;
+    top: var(--sky-bottom);
+    max-height: calc(100svh - var(--sky-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin-top: 0;
+    padding: var(--s-4) var(--s-5);
+    background: var(--c-ground);
+  }
+}
+
+@media (min-width: 1100px) {
+  .sky {
+    justify-content: flex-end;
+    align-items: center;
+    padding: calc(var(--bar-h) + var(--s-5)) var(--s-8) var(--s-5);
+  }
+
+  .sky__figure {
+    width: min(var(--col-dome), calc(100svh - var(--bar-h) - var(--s-9)));
+  }
+
+  .section {
+    min-height: 100svh;
+    align-items: center;
+    padding: var(--s-10) var(--s-8);
+    margin-bottom: 0;
+  }
+
+  .section--hero {
+    min-height: calc(100svh - var(--bar-h));
+  }
+
+  .section--stars {
+    justify-content: center;
+  }
+
+  .dock {
+    pointer-events: auto;
+    width: min(var(--measure), var(--col-text));
+  }
+
+  .panel {
+    width: min(var(--measure), var(--col-text));
+    padding: 0;
+    background: none;
+    gap: var(--s-6);
+  }
+}
+
+/* ---------- tonight's stars ---------- */
+
+.stars {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--s-4);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--chip-min), 1fr));
+  gap: var(--s-1) var(--s-4);
+}
+
+.star-item {
+  display: block;
+  width: 100%;
+  min-height: var(--target);
+  padding: var(--s-2) var(--s-4);
+  text-align: left;
+  background: none;
+  border: 0;
+  border-left: var(--line) solid var(--c-hair);
+  border-radius: 0;
+  color: var(--c-ink);
+  font: 400 var(--fs-ui) / var(--lh-tight) var(--font);
+  cursor: pointer;
+  transition: border-color var(--dur-hover) var(--ease-out);
+}
+
+.star-item small {
+  display: block;
+  color: var(--c-muted);
+  font-size: var(--fs-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.star-item:focus-visible {
+  border-left-color: var(--c-amber);
+  outline-offset: var(--focus-offset-tight);
+}
+
+.star-item:active .star-item__name {
+  color: var(--c-muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .star-item:hover {
+    border-left-color: var(--c-amber);
+  }
+}
+
+/* ---------- practical ---------- */
+
+.practical {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: var(--s-3) var(--s-6);
+  padding-top: var(--s-5);
+  border-top: var(--line) solid var(--c-hair);
+  font-variant-numeric: tabular-nums;
+}
+
+.practical dt {
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.practical dd {
+  font-weight: 500;
+}
+
+/* ---------- credits ---------- */
+
+.credits {
+  position: relative;
+  z-index: var(--z-content);
+  background: var(--c-ground);
+  border-top: var(--line) solid var(--c-hair);
+  padding: var(--s-6) var(--s-4) calc(var(--s-6) + env(safe-area-inset-bottom));
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--c-muted);
+}
+
+.credits p {
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+@media (min-width: 1100px) {
+  .credits {
+    padding-inline: var(--s-8);
+  }
+}
+
+/* ---------- reveal, once ---------- */
+
+.can-reveal [data-reveal] > * {
+  opacity: 0;
+  transform: translateY(var(--rise));
+}
+
+.can-reveal [data-reveal].is-in > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+/* ---------- reduced motion: the whole night sky, nothing moves ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .can-reveal [data-reveal] > *,
+  .can-reveal [data-reveal].is-in > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .btn,
+  .link,
+  .facts__brand,
+  .star-item,
+  .dome__highlight {
+    transition: none;
+  }
+}

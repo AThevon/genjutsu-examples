@@ -1,0 +1,25 @@
+{
+ "_note": "Recorded at 24 fps with --keep-frames, then encoded by takes/encode-clip.py (see receipt): 2 s hold on the first screen, a linear 6 s scroll from the top to the end of the practical information section (0 to 3640 px, where that section fills the viewport), then 1 s hold.",
+ "root": "../build/dist",
+ "w": 1440,
+ "h": 900,
+ "fps": 24,
+ "width": 1100,
+ "settle": 1500,
+ "steps": [
+  {
+   "wait": 2000
+  },
+  {
+   "scroll": {
+    "to": 3640,
+    "duration": 6000,
+    "ease": "linear"
+   }
+  },
+  {
+   "wait": 1000
+  }
+ ],
+ "probe": "({y: Math.round(scrollY), ground: document.documentElement.style.getPropertyValue('--c-ground')})"
+}

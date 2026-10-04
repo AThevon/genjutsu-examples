@@ -1,0 +1,1 @@
+{ "root": "../build/dist", "w": 1440, "h": 900, "reduced": true, "settle": 1500, "steps": [ { "wait": 1000 }, { "still": "reduced" } ] }

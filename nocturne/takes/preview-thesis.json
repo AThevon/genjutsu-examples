@@ -1,0 +1,4 @@
+{ "root": "../build/preview", "path": "/thesis.html", "w": 1440, "h": 900, "settle": 1500,
+  "probe": "({H: document.documentElement.scrollHeight, dome: Math.round(document.getElementById('scroller').getBoundingClientRect().top + scrollY)})",
+  "steps": [ { "wait": 500 }, { "still": "preview-thesis-top" },
+    { "eval": "(()=>{const s=document.getElementById('scroller'); window.scrollTo(0, s.getBoundingClientRect().top + scrollY - 140); s.scrollTop=(s.scrollHeight-s.clientHeight)*0.5})()" }, { "wait": 800 }, { "still": "preview-thesis-dome" } ] }

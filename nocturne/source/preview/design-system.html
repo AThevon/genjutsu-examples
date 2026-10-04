@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nocturne · design system preview (proposal, not the build)</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>/* Nocturne design tokens. Mirrors MASTER.md: change a value there first. */
+:root {
+  /* colour */
+  --c-night: #07090e;
+  --c-dusk: #1a2638;
+  --c-dome: #0c1018;
+  --c-ink: #e8e3d8;
+  --c-muted: #9aa0ab;
+  --c-faint: #6b7280;
+  --c-amber: #e2a65a;
+  --c-amber-hi: #ecb873;
+  --c-amber-press: #c98f45;
+  --c-saturn: #ebd3a0;
+  --c-hair: rgb(232 227 216 / 0.14);
+  --c-hair-strong: rgb(232 227 216 / 0.28);
+  --c-ground: var(--c-dusk); /* set at runtime, dusk to night */
+  --c-bar: rgb(7 9 14 / 0.92);
+
+  /* type */
+  --font: "Jost", system-ui, sans-serif;
+  --fs-display: clamp(2.75rem, 1.6rem + 4.6vw, 5rem);
+  --fs-h2: clamp(2rem, 1.6rem + 1.6vw, 2.5rem);
+  --fs-h3: 1.5rem;
+  --fs-body: 1.125rem;
+  --fs-fact: 0.9375rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.8125rem;
+  --fs-star: 0.8125rem;
+  --lh-display: 1;
+  --lh-h2: 1.15;
+  --lh-h3: 1.3;
+  --lh-body: 1.6;
+  --lh-tight: 1.4;
+  --tracking-label: 0.14em;
+  --measure: 34rem;
+
+  /* spacing, 8px base */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+  --s-11: 12rem;
+
+  /* radii, lines */
+  --r-0: 0;
+  --r-1: 2px;
+  --r-round: 50%;
+  --line: 1px;
+  --target: 44px;
+
+  /* layout */
+  --container: 80rem;
+  --z-sky: 0;
+  --z-content: 1;
+  --z-bar: 10;
+  --z-tip: 20;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-hover: 200ms;
+  --dur-reveal: 700ms;
+  --stagger: 90ms;
+  --rise: 8px;
+}
+
+*{box-sizing:border-box}body{margin:0;background:var(--c-night);color:var(--c-ink);font:400 var(--fs-body)/var(--lh-body) var(--font);font-variant-numeric:tabular-nums}
+.wrap{max-width:var(--container);margin:0 auto;padding:var(--s-7) var(--s-6) var(--s-10)}
+h1{font-weight:300;font-size:var(--fs-display);line-height:var(--lh-display);margin:var(--s-7) 0 var(--s-5)}
+h2{font-weight:300;font-size:var(--fs-h2);line-height:var(--lh-h2);margin:var(--s-9) 0 var(--s-5);padding-top:var(--s-5);border-top:var(--line) solid var(--c-hair)}
+.note{border:var(--line) solid var(--c-hair);padding:var(--s-4) var(--s-5);color:var(--c-muted);font-size:var(--fs-small);max-width:52rem}
+.label{font-size:var(--fs-label);letter-spacing:var(--tracking-label);text-transform:uppercase;color:var(--c-muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:var(--s-4)}
+.sw{border:var(--line) solid var(--c-hair)}.sw i{display:block;height:5rem}.sw p{margin:0;padding:var(--s-3) var(--s-4);font-size:var(--fs-small);color:var(--c-muted)}.sw b{color:var(--c-ink);font-weight:500}
+.spec>div{display:grid;grid-template-columns:14rem 1fr;gap:var(--s-5);align-items:baseline;padding:var(--s-4) 0;border-top:var(--line) solid var(--c-hair)}
+.spec .k{font-size:var(--fs-small);color:var(--c-muted)}
+.bar{display:flex;gap:var(--s-4);align-items:center;margin:var(--s-2) 0;font-size:var(--fs-small);color:var(--c-muted)}.bar span{width:9rem}.bar i{display:block;height:var(--s-2);background:var(--c-muted)}
+.states{display:grid;grid-template-columns:8rem repeat(5,minmax(7rem,1fr));gap:var(--s-4);align-items:center;margin:var(--s-5) 0}
+.states .h{font-size:var(--fs-small);color:var(--c-muted)}
+.btn{display:inline-flex;align-items:center;min-height:var(--target);font:500 1rem/1 var(--font);letter-spacing:.02em;color:var(--c-night);background:var(--c-amber);border:0;border-radius:var(--r-1);padding:var(--s-4) var(--s-5);text-decoration:none;cursor:pointer;transition:background-color var(--dur-hover) var(--ease-out)}
+.btn:hover,.btn.hover{background:var(--c-amber-hi)}.btn:focus-visible,.btn.focus{outline:var(--line) solid var(--c-ink);outline-offset:4px}.btn:active,.btn.active{background:var(--c-amber-press)}
+.btn:disabled{background:transparent;color:var(--c-muted);box-shadow:inset 0 0 0 var(--line) var(--c-faint);cursor:not-allowed}
+.link{color:var(--c-ink);text-decoration:underline;text-decoration-color:var(--c-hair-strong);text-underline-offset:4px;transition:text-decoration-color var(--dur-hover) var(--ease-out)}
+.link:hover,.link.hover{text-decoration-color:var(--c-ink)}.link:focus-visible,.link.focus{outline:var(--line) solid var(--c-ink);outline-offset:4px;border-radius:var(--r-1)}.link:active,.link.active{color:var(--c-muted)}
+.star-item{display:block;width:100%;text-align:left;background:none;border:0;border-left:var(--line) solid var(--c-hair);padding:var(--s-2) var(--s-4);color:var(--c-ink);font:400 1rem/var(--lh-tight) var(--font);cursor:pointer;transition:border-color var(--dur-hover) var(--ease-out)}
+.star-item small{display:block;color:var(--c-muted);font-size:var(--fs-small)}
+.star-item:hover,.star-item.hover{border-left-color:var(--c-amber)}.star-item:focus-visible,.star-item.focus{border-left-color:var(--c-amber);outline:var(--line) solid var(--c-ink);outline-offset:2px}.star-item:active,.star-item.active{color:var(--c-muted)}
+.na{font-size:var(--fs-small);color:var(--c-muted)}
+.facts{background:var(--c-bar);border-bottom:var(--line) solid var(--c-hair);padding:var(--s-3) var(--s-6);display:flex;gap:var(--s-6);align-items:center;flex-wrap:wrap;font-size:var(--fs-fact)}
+.facts .brand{font-weight:300;font-size:1.25rem;margin-right:auto}.facts span{color:var(--c-muted)}.facts strong{color:var(--c-ink);font-weight:500}
+dl.prac{display:grid;grid-template-columns:auto 1fr;gap:var(--s-3) var(--s-7);border-top:var(--line) solid var(--c-hair);padding-top:var(--s-5);max-width:30rem}
+dl.prac dt{font-size:var(--fs-label);letter-spacing:var(--tracking-label);text-transform:uppercase;color:var(--c-muted);padding-top:.2em}dl.prac dd{margin:0;font-weight:500}
+.rad{display:flex;gap:var(--s-5);flex-wrap:wrap}.rad div{width:9rem;height:6rem;border:var(--line) solid var(--c-hair);display:grid;place-items:center;font-size:var(--fs-small);color:var(--c-muted)}
+ol.plan{color:var(--c-muted);max-width:var(--measure)}ol.plan b{color:var(--c-ink);font-weight:500}
+@media (max-width:900px){.states{grid-template-columns:repeat(2,1fr)}.spec>div{grid-template-columns:1fr}}
+</style></head><body>
+<div class="facts"><span class="brand">Nocturne</span><span>Fridays and Saturdays</span><span>Doors <strong>21:30</strong></span><span>First show <strong>22:00</strong></span><span>Last show <strong>23:30</strong></span><span><strong>12 €</strong>, students <strong>8 €</strong></span><a class="btn" href="#">Book tickets</a></div>
+<div class="wrap">
+<p class="note">Design system preview: this page is the proposal, not the build, and gets thrown away once you approve it. Values come straight from <code>src/styles/tokens.css</code>, which mirrors <code>MASTER.md</code>. The facts bar above is the one the page pins; its items are separated by space, not by middle dots.</p>
+<h1>Nocturne design system</h1>
+<p class="label">Dark only &middot; no light mode, the page is a darkened dome</p>
+<h2>Colour</h2><div class="grid"><div class="sw"><i style="background:#07090e"></i><p><b>--c-night</b> #07090e<br>on night 1.00:1 &middot; on dusk 1.31:1</p></div><div class="sw"><i style="background:#1a2638"></i><p><b>--c-dusk</b> #1a2638<br>on night 1.31:1 &middot; on dusk 1.00:1</p></div><div class="sw"><i style="background:#0c1018"></i><p><b>--c-dome</b> #0c1018<br>on night 1.05:1 &middot; on dusk 1.25:1</p></div><div class="sw"><i style="background:#e8e3d8"></i><p><b>--c-ink</b> #e8e3d8<br>on night 15.56:1 &middot; on dusk 11.91:1</p></div><div class="sw"><i style="background:#9aa0ab"></i><p><b>--c-muted</b> #9aa0ab<br>on night 7.58:1 &middot; on dusk 5.80:1</p></div><div class="sw"><i style="background:#6b7280"></i><p><b>--c-faint</b> #6b7280<br>on night 4.12:1 &middot; on dusk 3.15:1</p></div><div class="sw"><i style="background:#e2a65a"></i><p><b>--c-amber</b> #e2a65a<br>on night 9.33:1 &middot; on dusk 7.14:1</p></div><div class="sw"><i style="background:#ecb873"></i><p><b>--c-amber-hi</b> #ecb873<br>on night 11.07:1 &middot; on dusk 8.47:1</p></div><div class="sw"><i style="background:#c98f45"></i><p><b>--c-amber-press</b> #c98f45<br>on night 7.11:1 &middot; on dusk 5.44:1</p></div><div class="sw"><i style="background:#ebd3a0"></i><p><b>--c-saturn</b> #ebd3a0<br>on night 13.62:1 &middot; on dusk 10.42:1</p></div></div>
+<p class="note" style="margin-top:var(--s-5)"><code>--c-faint</code> is for lines only (rim, rings, disabled ring): 4.12:1 is too low for text. Night text on <code>--c-amber-press</code> is 7.11:1. <code>--c-ground</code> is computed while you scroll, from dusk to night. No semantic colours: the page has no forms.</p>
+<h2>Type: Jost</h2><div class="spec">
+<div><span class="k">--fs-display &middot; 300 &middot; lh 1</span><span style="font-size:var(--fs-display);font-weight:300;line-height:1">Nocturne</span></div>
+<div><span class="k">--fs-h2 &middot; 300 &middot; lh 1.15</span><span style="font-size:var(--fs-h2);font-weight:300;line-height:1.15">What is in tonight's sky</span></div>
+<div><span class="k">--fs-h3 &middot; 400 &middot; lh 1.3</span><span style="font-size:var(--fs-h3);line-height:1.3">Saturn, low in the east-south-east</span></div>
+<div><span class="k">--fs-body &middot; 400 &middot; lh 1.6</span><span style="max-width:var(--measure)">The dome first shows the night sky above Lisbon as it is that evening, with a narrator, then a 40-minute show.</span></div>
+<div><span class="k">--fs-fact &middot; 500 &middot; tnum</span><span style="font-size:var(--fs-fact);font-weight:500">21:30 22:00 23:30 12 € 8 €</span></div>
+<div><span class="k">--fs-small &middot; 400</span><span style="font-size:var(--fs-small);color:var(--c-muted)">Star names: IAU Working Group on Star Names.</span></div>
+<div><span class="k">--fs-label &middot; tracked caps</span><span class="label">Doors</span></div>
+<div><span class="k">--fs-star &middot; 300 italic</span><span style="font-size:var(--fs-star);font-style:italic;font-weight:300;color:var(--c-muted)">Vega</span></div></div>
+<h2>Spacing (8px base)</h2><div class="bar"><span>--s-1 0.25rem</span><i style="width:var(--s-1)"></i></div><div class="bar"><span>--s-2 0.5rem</span><i style="width:var(--s-2)"></i></div><div class="bar"><span>--s-3 0.75rem</span><i style="width:var(--s-3)"></i></div><div class="bar"><span>--s-4 1rem</span><i style="width:var(--s-4)"></i></div><div class="bar"><span>--s-5 1.5rem</span><i style="width:var(--s-5)"></i></div><div class="bar"><span>--s-6 2rem</span><i style="width:var(--s-6)"></i></div><div class="bar"><span>--s-7 3rem</span><i style="width:var(--s-7)"></i></div><div class="bar"><span>--s-8 4rem</span><i style="width:var(--s-8)"></i></div><div class="bar"><span>--s-9 6rem</span><i style="width:var(--s-9)"></i></div><div class="bar"><span>--s-10 8rem</span><i style="width:var(--s-10)"></i></div><div class="bar"><span>--s-11 12rem</span><i style="width:var(--s-11)"></i></div>
+<h2>Radii and elevation</h2><div class="rad"><div>--r-0 &middot; 0<br>cards, panels</div><div style="border-radius:var(--r-1)">--r-1 &middot; 2px<br>buttons</div><div style="border-radius:var(--r-round)">--r-round<br>the dome only</div><div>shadow 0&ndash;4<br>none</div></div>
+<h2>Components, five states</h2>
+<div class="states"><span></span><span class="h">default</span><span class="h">hover</span><span class="h">focus-visible</span><span class="h">active</span><span class="h">disabled</span>
+<span class="h">Book button</span><a class="btn" href="#">Book tickets</a><a class="btn hover" href="#">Book tickets</a><a class="btn focus" href="#">Book tickets</a><a class="btn active" href="#">Book tickets</a><button class="btn" disabled>Book tickets</button>
+<span class="h">Text link</span><a class="link" href="#">/tickets</a><a class="link hover" href="#">/tickets</a><a class="link focus" href="#">/tickets</a><a class="link active" href="#">/tickets</a><span class="na">not used</span>
+<span class="h">Star chip</span><button class="star-item">Vega<small>WNW, 55° up, mag 0.03</small></button><button class="star-item hover">Vega<small>WNW, 55° up, mag 0.03</small></button><button class="star-item focus">Vega<small>WNW, 55° up, mag 0.03</small></button><button class="star-item active">Vega<small>WNW, 55° up, mag 0.03</small></button><span class="na">not used</span></div>
+<p class="note">Every component here is live too: hover and tab through them.</p>
+<h2>Practical block</h2>
+<dl class="prac"><dt>When</dt><dd>Friday and Saturday nights</dd><dt>Doors</dt><dd>21:30</dd><dt>First show</dt><dd>22:00</dd><dt>Last show</dt><dd>23:30</dd><dt>Tickets</dt><dd>12 €, students 8 €</dd><dt>Book</dt><dd><a class="link" href="#">/tickets</a></dd></dl>
+<p class="note" style="margin-top:var(--s-4)">One hairline above the block, not on every row.</p>
+<h2>Motion tokens</h2><div class="spec">
+<div><span class="k">--ease-out</span><span>cubic-bezier(0.22, 0.61, 0.36, 1)</span></div>
+<div><span class="k">--dur-reveal &middot; --rise &middot; --stagger</span><span>700ms &middot; 8px &middot; 90ms, once per element</span></div>
+<div><span class="k">--dur-hover</span><span>200ms, colour only</span></div>
+<div><span class="k">dusk</span><span>linear in scroll, 0 at the top, 1 at the closing section</span></div></div>
+<h2>Page plan, dusk to first show</h2><ol class="plan">
+<li><b>Hero</b>: the dome at dusk, "Nocturne", one line on the program, Book tickets.</li>
+<li><b>The program</b>: the sky above Lisbon that evening with a narrator, then a 40-minute show.</li>
+<li><b>Tonight's sky</b>: Saturn (ESE, 34° up, mag 0.36, five days after opposition), the brightest named stars as chips that light up on the dome, no Moon (below the horizon, under 1% lit), 403 stars to magnitude 4.5. A note that every night's dome shows that night's own sky.</li>
+<li><b>Practical</b>: the block above.</li>
+<li><b>Closing</b>: dusk reaches 1 at "22:00", the full sky, Book tickets, then the data credits.</li></ol>
+</div></body></html>
