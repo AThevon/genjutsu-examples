@@ -1,0 +1,2 @@
+{ "root": "../build-20261004T162510Z-1/preview", "path": "/variants.html", "w": 1280, "h": 560, "fps": 10,
+  "steps": [ { "wait": 200 }, { "click": "button" }, { "wait": 500 }, { "still": "preview-variants" } ] }

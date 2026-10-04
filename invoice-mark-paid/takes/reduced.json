@@ -1,0 +1,4 @@
+{ "root": "../build-20261004T162510Z-1/dist", "w": 1200, "h": 656, "fps": 24, "reduced": true, "cursor": true,
+  "probe": "[...document.querySelectorAll('.summary dd')].map(e=>e.textContent).join(' | ') + ' || ' + [...document.querySelectorAll('.ledger-delta')].map(e=>e.textContent+'@'+getComputedStyle(e).opacity).join(',') + ' || pills ' + document.querySelectorAll('tbody tr:nth-child(2) .status').length",
+  "steps": [ { "wait": 300 }, { "hover": "tbody tr:nth-child(2) button[data-mark-paid]", "duration": 400 }, { "wait": 200 },
+             { "click": "tbody tr:nth-child(2) button[data-mark-paid]", "hold": 90 }, { "wait": 260 }, { "still": "reduced" }, { "wait": 400 } ] }

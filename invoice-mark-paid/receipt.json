@@ -1,0 +1,199 @@
+{
+  "example": "invoice-mark-paid",
+  "skill": "cast",
+  "stack": "React 19 + Vite + TypeScript, motion 14 (installed, unused before the run)",
+  "prompt": "/genjutsu:cast the \"Mark as paid\" action in our invoice list is dead, make it feel like the money landed\n\nFolio, its user and its clients are fictional, made up for this example.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the invoice list and its \"Mark as paid\" action. You may edit files under src/ and write previews under preview/; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+  "genjutsu": {
+    "version": "4.1.0",
+    "commit": "09c177b"
+  },
+  "harness": {
+    "tool": "claude plugin eval",
+    "claude_code": "2.1.289",
+    "headless": true,
+    "note": "nobody answered the gates; the skill's 'When nobody is answering' rule applied"
+  },
+  "model": "claude-opus-5-5",
+  "date": "2026-10-04",
+  "started_at": "2026-10-04T16:25:11.924Z",
+  "cost_usd": 1.88,
+  "cost_usd_exact": 1.882439,
+  "turns": 45,
+  "duration_seconds": 329,
+  "subagents": 0,
+  "modules_loaded": [
+    "motion-principles",
+    "framer-motion",
+    "desktop-principles",
+    "tells",
+    "tells/references/web.md (reference)"
+  ],
+  "modules_not_loaded": [],
+  "interaction_thesis": "Marking an invoice paid moves its amount across the ledger. The button leaves in 150ms, and the status pill stamps from Sent/Overdue to Paid on a spring (stiffness 520, damping 30). Outstanding counts down while Paid counts up by exactly that amount over 700ms on `cubic-bezier(0.22, 1, 0.36, 1)`, with Paid starting 120ms after Outstanding. Each card shows a signed amount (−€ / +€) for 1.6s, and an aria-live line says what landed.",
+  "allowed_patterns": "counting numbers on the two totals; a temporary signed amount on the summary cards.",
+  "unvalidated": true,
+  "assumptions": "the mood is calm bookkeeping, not celebration; \"landed\" means the amount moving between the two totals; reduced motion and screen readers are covered.",
+  "variant_picked": "B, \"Ledger\", from three (A Settle, C Transfer)",
+  "audit": {
+    "summary": "11 checks, 1 problem, 4 for you to run",
+    "problems": [
+      "a new raw colour, #000, for the button hover (index.css:191); the project has no design tokens"
+    ],
+    "tells": "audit.py --group tells reported no findings; the hand read found no decoration (the counting totals and signed amounts show real figures)",
+    "kept_on_purpose": "the 700 ms count is over the 500 ms limit in motion-principles; nobody waits on it",
+    "unverified": [
+      "npm run build (no Node in the sandbox)",
+      "DevTools Performance under 16.7 ms a frame",
+      "375 / 768 / 1024 / 1440 px widths",
+      "OS reduce-motion setting"
+    ]
+  },
+  "files_changed": {
+    "src/InvoiceList.tsx": "rewritten (AnimatePresence pill stamp, button exit, whileTap, focus handoff, MotionConfig reducedMotion=user)",
+    "src/LedgerFigure.tsx": "new, 70 lines (counting total + signed amount)",
+    "src/App.tsx": "LedgerFigure for the two totals, double-mark guard, role=status line",
+    "src/index.css": "button states, pill slot, signed amount styles",
+    "stat": "4 files, 142 insertions, 44 deletions against the fixture"
+  },
+  "previews": [
+    "preview/thesis.html",
+    "preview/variants.html"
+  ],
+  "selection": "first pass",
+  "runs_recorded": 1,
+  "build": {
+    "result": "success",
+    "command": "npm run build (tsc --noEmit && vite build)",
+    "first_try": true,
+    "note": "the run could not build (no Node binary in its sandbox) and checked the types by hand against motion 14; it built here unchanged on the first try"
+  },
+  "human_edits": 0,
+  "edits_diff": null,
+  "grader_score": {
+    "score": 0.3333333333333333,
+    "note": "cast-fired and cast-loaded failed because the slash command expands the skill inline (no Skill tool call) and the expanded prompt is not in the trace; the run did run cast (its loader points at skills/cast, it loaded four cast modules and wrote cast's final report). button-has-interaction passed."
+  },
+  "skill_bug_reported_by_run": "the module loader in the skill text arrived with its $1/$2 placeholders replaced by the second shell-quoted argument of the invocation (\"Mark as paid\"), so as written it could not find any module; the run rebuilt it with the placeholders restored. Cause: Claude Code substitutes $N in a skill's text with the invocation's arguments; skills/cast, paint and bunshin SKILL.md all use $1/$2 in their shell functions. Fixed on branch fix/skill-arguments, to ship as 4.1.1.",
+  "observations": [
+    "the Overdue count card changes from 2 to 1 instantly: it is not in the thesis",
+    "a code comment says the stamp settles 'in about a quarter second'; the run's own thesis preview computes about 502 ms for the same spring",
+    "the preview pages use a smaller sample (EUR 8,430.00 outstanding) than the app (EUR 9,380.00); they are throwaway mockups, not the build"
+  ],
+  "capture": {
+    "tool": "genjutsu-examples/bin/record.mjs",
+    "build": "build-20261004T162510Z-1/dist",
+    "takes": "takes/*.json; clip crop by takes/clip-crop.sh",
+    "served": "from disk over CDP Fetch interception, no server",
+    "time": "virtual",
+    "console_errors": 0,
+    "exceptions": 0,
+    "failed_requests": 0
+  },
+  "media": [
+    {
+      "file": "media/clip.webp",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "output": "1100x460",
+      "duration_s": 5.5,
+      "fps": 24,
+      "quality": 82,
+      "kb": 452,
+      "crop": "x 170-1270, y 134-594 of the 1440x900 viewport, from frames kept by record.mjs --keep-frames, re-encoded by takes/clip-crop.sh; nothing else touched",
+      "what": "the page is the starting fixture, only the motion is the run's. Summary cards and first four rows. Click 'Mark as paid' on FOL-2026-032 (Overdue, EUR 4,200.00) at about 1.0 s: button slides out, pill stamps to Paid, Outstanding counts EUR 9,380.00 to 5,180.00 and Paid EUR 1,770.00 to 5,970.00 with -/+EUR 4,200.00 on the cards, Overdue 2 to 1. Click FOL-2026-034 (Sent, EUR 1,150.00) at about 3.5 s: EUR 4,030.00 / 7,120.00. scrollY 0 in every frame. The loop jumps back to the first state",
+      "annotation": "the pointer is drawn by the recorder (cursor: true), it is not part of the build"
+    },
+    {
+      "file": "media/overdue-mid.png",
+      "viewport": "1440x900",
+      "output": "1440x900",
+      "kb": 160,
+      "what": "350 ms after the FOL-2026-032 click: EUR 5,300.81 / 5,520.29 mid-count, -/+EUR 4,200.00 showing, pill Paid, button gone, Overdue 1"
+    },
+    {
+      "file": "media/overdue-settled.png",
+      "viewport": "1440x900",
+      "output": "1440x900",
+      "kb": 157,
+      "what": "2.85 s after: EUR 5,180.00 outstanding, EUR 5,970.00 paid, signed amounts gone"
+    },
+    {
+      "file": "media/sent-mid.png",
+      "viewport": "1440x900",
+      "output": "1440x900",
+      "kb": 159,
+      "what": "350 ms after the FOL-2026-034 click: EUR 4,063.08 / 6,996.87 mid-count, -/+EUR 1,150.00 showing, FOL-2026-034 Paid, page not scrolled"
+    },
+    {
+      "file": "media/sent-settled.png",
+      "viewport": "1440x900",
+      "output": "1440x900",
+      "kb": 154,
+      "what": "after both clicks: EUR 4,030.00 outstanding, EUR 7,120.00 paid, Overdue 1, signed amounts gone"
+    },
+    {
+      "file": "media/defect-focus-scroll.png",
+      "viewport": "1200x656",
+      "output": "1200x656",
+      "kb": 126,
+      "what": "the defect: 350 ms after the FOL-2026-034 click at this height the page has scrolled 242 px; heading and summary cards out of view while they count; FOL-2026-036's button (focus target) now on screen"
+    },
+    {
+      "file": "media/desktop.png",
+      "viewport": "1440x900",
+      "output": "1440x900",
+      "kb": 158,
+      "what": "first screen before any click: the fixture as it looks with the run's code in place (nothing the run did is visible at rest)"
+    },
+    {
+      "file": "media/mobile.png",
+      "viewport": "390x844",
+      "dpr": 2,
+      "output": "780x1688",
+      "kb": 160,
+      "what": "first screen; the fixture has no small-screen rules: the totals overflow their cards and the table scrolls sideways (page 778 px wide). Fixture layout, not the run's; the run listed the 375 px check as unverified"
+    },
+    {
+      "file": "media/reduced.png",
+      "viewport": "1200x656",
+      "output": "1200x656",
+      "kb": 107,
+      "what": "prefers-reduced-motion: reduce, 350 ms after the FOL-2026-032 click: totals already final at EUR 5,180.00 / 5,970.00 (no count), signed amounts faded in without moving, pill swapped by a fade; no scroll at this click (focus target FOL-2026-033 is on screen)"
+    },
+    {
+      "file": "media/preview.png",
+      "viewport": "1280x1526",
+      "output": "1280x1526",
+      "kb": 231,
+      "what": "preview/thesis.html, whole page: thesis, allowed patterns, UNVALIDATED status, count curve, spring plot, bare numbers, one-row replay"
+    },
+    {
+      "file": "media/preview-variants.png",
+      "viewport": "1280x560",
+      "output": "1280x560",
+      "kb": 119,
+      "what": "preview/variants.html, 500 ms after 'Play all three': A Settle, B Ledger (picked), C Transfer, mid-count"
+    },
+    {
+      "file": "media/clip-probe.json",
+      "what": "per clip frame: scrollY, the three summary values, each signed amount with its opacity, the row holding focus"
+    }
+  ],
+  "work_scope": "only the motion is the run's work; the page itself (header, summary cards, invoice table, colours, type) is the starting fixture written by fixture.sh, unchanged in look",
+  "caption": "The Folio page is the starting fixture; the motion is the run's work. Two \"Mark as paid\" clicks: the amount leaves Outstanding and lands in Paid as both totals count, with a signed amount on each card. 1440x900 viewport, cropped.",
+  "defects_introduced": [
+    {
+      "what": "the focus hand-off scrolls the page on a mouse click: focus() is called without { preventScroll: true }, so when the next unpaid invoice's button is not fully in the viewport the browser scrolls it into view, in the same frame the totals start counting",
+      "where": "src/InvoiceList.tsx:25",
+      "code": "if (document.activeElement === button) next?.focus();",
+      "when": "at 1200x656, after marking FOL-2026-032, the click on FOL-2026-034 hands focus to FOL-2026-036 below the fold and the page scrolls 242 px (scrollY 0 -> 242, takes/focus-scroll.json); the heading and summary cards leave the screen while they count. A mouse click focuses the button in Chrome, so mouse users get it too. Does not show at 1440x900, where every row fits",
+      "evidence": "media/defect-focus-scroll.png",
+      "caught_by_run_audit": false,
+      "fixed": false
+    }
+  ],
+  "refilm": {
+    "why": "a cold-eyes review rejected the first capture: filmed at 1200x656, the defect above scrolled the totals out of the clip on the second click; the whole page at 1200 px made the motion too small in a thumbnail; the receipt described sent-mid.png and sent-settled.png as showing totals they did not show",
+    "how": "same build (build-20261004T162510Z-1, unchanged); 1440x900 viewport so nothing scrolls; clip cropped to the summary cards and the clicked rows; the four stills retaken at 1440x900; the defect filmed on its own at 1200x656"
+  }
+}

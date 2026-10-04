@@ -1,0 +1,2 @@
+{ "root": "../build-20261004T162510Z-1/dist", "w": 1440, "h": 900, "fps": 10,
+  "steps": [ { "wait": 300 }, { "still": "desktop" } ] }

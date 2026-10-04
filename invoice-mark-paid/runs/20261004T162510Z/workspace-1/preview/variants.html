@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Folio - Mark as paid - variants (throwaway preview)</title>
+<style>
+  :root { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #1f2328; background: #f6f7f9; line-height: 1.5; }
+  body { margin: 0 auto; padding: 2rem; max-width: 1400px; }
+  h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+  .note { color: #59636e; font-size: .875rem; margin: 0 0 1rem; }
+  .controls { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+  button { font: inherit; cursor: pointer; border: 1px solid #1f2328; background: #1f2328; color: #fff; border-radius: 6px; padding: .35rem .75rem; font-size: .875rem; }
+  button.secondary { background: #fff; color: #1f2328; }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .variant { position: relative; background: #fff; border: 1px solid #e3e5e8; border-radius: 8px; padding: 1rem; }
+  .variant h2 { font-size: .9375rem; margin: 0; }
+  .variant p { font-size: .8125rem; color: #59636e; margin: .25rem 0 .75rem; }
+  .summary { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin: 0 0 .75rem; }
+  .summary div { position: relative; border: 1px solid #e3e5e8; border-radius: 8px; padding: .5rem .75rem; }
+  .summary dt { color: #59636e; font-size: .8125rem; }
+  .summary dd { margin: 0; font-size: 1.125rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .delta { position: absolute; top: .5rem; right: .75rem; font-size: .75rem; font-weight: 600; font-variant-numeric: tabular-nums; opacity: 0; }
+  .delta.up { color: #1a7f37; } .delta.down { color: #59636e; }
+  .row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: .75rem; border: 1px solid #e3e5e8; border-radius: 8px; padding: .5rem .75rem; font-size: .875rem; }
+  .amt { font-variant-numeric: tabular-nums; }
+  .pillslot { display: grid; min-width: 3.5rem; } .pillslot > * { grid-area: 1 / 1; justify-self: start; }
+  .status { display: inline-block; padding: .125rem .5rem; border-radius: 999px; font-size: .8125rem; font-weight: 500; }
+  .status-sent { background: #e7f0fe; color: #1d4ed8; }
+  .status-paid { background: #e6f4ea; color: #1a7f37; opacity: 0; }
+  .actslot { grid-column: 1 / -1; text-align: right; min-height: 2rem; }
+  .ghost { position: absolute; left: 0; top: 0; font-variant-numeric: tabular-nums; font-size: .875rem; font-weight: 600; color: #1a7f37; opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+  <h1>Folio · "Mark as paid" · three variants</h1>
+  <p class="note">Throwaway preview, not the build. All three keep the thesis: button exit 150ms ease-in, Paid pill on spring (520 / 30), counts over 700ms on cubic-bezier(0.22, 1, 0.36, 1), Paid 120ms after Outstanding. They differ only in how loudly the amount arrives. Thesis status: UNVALIDATED.</p>
+  <div class="controls">
+    <button type="button" id="all">Play all three</button>
+    <label><input type="checkbox" id="rm" /> Reduced motion</label>
+  </div>
+  <div class="cols" id="cols"></div>
+
+<template id="tpl">
+  <section class="variant">
+    <h2></h2><p></p>
+    <dl class="summary">
+      <div><dt>Outstanding</dt><dd data-out>€8,430.00</dd><span class="delta down" data-dout>−€1,150.00</span></div>
+      <div data-paidcard><dt>Paid</dt><dd data-paid>€1,770.00</dd><span class="delta up" data-dpaid>+€1,150.00</span></div>
+    </dl>
+    <div class="row">
+      <span>Gullwhistle Outdoor</span>
+      <span class="amt" data-amt>€1,150.00</span>
+      <span class="pillslot"><span class="status status-sent" data-sent>Sent</span><span class="status status-paid" data-ppaid>Paid</span></span>
+      <span class="actslot"><button type="button" data-mark tabindex="-1">Mark as paid</button></span>
+    </div>
+    <span class="ghost" data-ghost>€1,150.00</span>
+    <button type="button" class="secondary" data-replay style="margin-top:.75rem">Replay</button>
+  </section>
+</template>
+
+<script>
+  const fmt = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" });
+  const AMOUNT = 1150, OUT0 = 8430, PAID0 = 1770;
+  const VARIANTS = [
+    { key: "A", name: "Variant A - Settle (subtle)", text: "Pill stamps, button leaves, both totals count to their new value. No labels.", deltas: false, ghost: false },
+    { key: "B", name: "Variant B - Ledger (balanced)", text: "A, plus a signed delta on each card (−€ on Outstanding, +€ on Paid) that holds 1.6s, so the eye reads where the money went.", deltas: true, ghost: false },
+    { key: "C", name: "Variant C - Transfer (impressive)", text: "B, plus a copy of the row's amount travels from the row up to the Paid card (transform + opacity, 450ms, same curve) before the count starts.", deltas: true, ghost: true },
+  ];
+
+  function springSamples(k = 520, c = 30) { let x = 1, v = 0, out = []; for (let i = 0; i < 1200; i++) { v += (-k * x - c * v) / 600; x += v / 600; out.push(x); if (i > 60 && Math.abs(x) < .001 && Math.abs(v) < .01) break; } return out; }
+  const sp = springSamples(), springMs = Math.round(sp.length / .6);
+  const st = Math.max(1, Math.floor(sp.length / 60));
+  const springLinear = "linear(" + sp.filter((_, i) => i % st === 0).concat([0]).map((d) => (1 - d).toFixed(4)).join(", ") + ")";
+  function bez(t) { const B = (a, b, s) => 3 * a * s * (1 - s) ** 2 + 3 * b * s * s * (1 - s) + s ** 3; let lo = 0, hi = 1, s = t; for (let i = 0; i < 30; i++) { s = (lo + hi) / 2; if (B(.22, .36, s) < t) lo = s; else hi = s; } return B(1, 1, s); }
+  function count(el, from, to, delay, reduced) {
+    if (reduced) { setTimeout(() => el.textContent = fmt.format(to), delay); return; }
+    const t0 = performance.now() + delay;
+    (function tick(now) { const t = Math.min(1, Math.max(0, (now - t0) / 700)); el.textContent = fmt.format(from + (to - from) * bez(t)); if (t < 1) requestAnimationFrame(tick); })(performance.now());
+  }
+  function delta(el, delay, reduced) {
+    el.animate(reduced ? [{ opacity: 1 }, { opacity: 1, offset: .9 }, { opacity: 0 }]
+      : [{ opacity: 0, transform: "translateY(4px)" }, { opacity: 1, transform: "none", offset: .1 }, { opacity: 1, offset: .9 }, { opacity: 0 }],
+      { duration: 2000, delay, fill: "both" });
+  }
+
+  const cols = document.getElementById("cols"), tpl = document.getElementById("tpl");
+  const runs = VARIANTS.map((v) => {
+    const node = tpl.content.firstElementChild.cloneNode(true);
+    node.querySelector("h2").textContent = v.name; node.querySelector("p").textContent = v.text;
+    cols.appendChild(node);
+    const q = (s) => node.querySelector(`[data-${s}]`);
+    function run() {
+      const reduced = document.getElementById("rm").checked;
+      node.querySelectorAll("*").forEach((e) => e.getAnimations().forEach((a) => a.cancel()));
+      q("out").textContent = fmt.format(OUT0); q("paid").textContent = fmt.format(PAID0);
+      q("mark").animate(reduced ? [{ opacity: 1 }, { opacity: 0 }] : [{ opacity: 1, transform: "none" }, { opacity: 0, transform: "translateX(8px)" }], { duration: 150, easing: "ease-in", fill: "forwards" });
+      q("sent").animate([{ opacity: 1 }, { opacity: 0 }], { duration: 150, fill: "forwards" });
+      q("ppaid").animate(reduced ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, transform: "scale(1.15)" }, { opacity: 1, transform: "scale(1)" }],
+        reduced ? { duration: 150, fill: "forwards" } : { duration: springMs, easing: springLinear, fill: "forwards" });
+      let lead = 0;
+      if (v.ghost && !reduced) {
+        lead = 450;
+        const box = node.getBoundingClientRect(), a = q("amt").getBoundingClientRect(), p = q("paid").getBoundingClientRect();
+        const from = [a.left - box.left, a.top - box.top], to = [p.left - box.left, p.top - box.top];
+        q("ghost").animate([{ opacity: 1, transform: `translate(${from[0]}px, ${from[1]}px)` }, { opacity: .2, transform: `translate(${to[0]}px, ${to[1]}px)` }],
+          { duration: 450, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "none" });
+      }
+      count(q("out"), OUT0, OUT0 - AMOUNT, 0, reduced);
+      count(q("paid"), PAID0, PAID0 + AMOUNT, lead || 120, reduced);
+      if (v.deltas) { delta(q("dout"), 0, reduced); delta(q("dpaid"), reduced ? 0 : (lead || 120), reduced); }
+    }
+    q("replay").addEventListener("click", run);
+    return run;
+  });
+  document.getElementById("all").addEventListener("click", () => runs.forEach((r) => r()));
+</script>
+</body>
+</html>

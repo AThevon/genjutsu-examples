@@ -1,0 +1,2 @@
+{ "root": "../build-20261004T162510Z-1/preview", "path": "/thesis.html", "w": 1280, "h": 1526, "fps": 10,
+  "steps": [ { "wait": 200 }, { "still": "preview" } ] }

@@ -1,0 +1,240 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #1f2328;
+  background: #f6f7f9;
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid #1f2328;
+  background: #1f2328;
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+button.secondary {
+  background: #fff;
+  color: #1f2328;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.75rem 2rem;
+  background: #fff;
+  border-bottom: 1px solid #e3e5e8;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.topbar nav {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.9375rem;
+}
+
+.topbar nav a {
+  text-decoration: none;
+  color: #59636e;
+}
+
+.topbar nav a[aria-current="page"] {
+  color: #1f2328;
+  font-weight: 600;
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.summary div {
+  background: #fff;
+  border: 1px solid #e3e5e8;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.summary .ledger-figure {
+  position: relative;
+}
+
+.ledger-delta {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ledger-delta-in {
+  color: #1a7f37;
+}
+
+.ledger-delta-out {
+  color: #59636e;
+}
+
+.summary dt {
+  color: #59636e;
+  font-size: 0.875rem;
+}
+
+.summary dd {
+  margin: 0.25rem 0 0;
+  font-size: 1.375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.invoices {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #e3e5e8;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+.invoices th,
+.invoices td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.invoices th {
+  color: #59636e;
+  font-weight: 500;
+  font-size: 0.8125rem;
+}
+
+.invoices tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.num {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.mono {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.8125rem;
+}
+
+.muted {
+  color: #59636e;
+}
+
+.actions {
+  text-align: right !important;
+  width: 9rem;
+}
+
+.actions button {
+  transition: background-color 100ms ease-out;
+}
+
+.actions button:hover {
+  background: #000;
+}
+
+.actions button:focus-visible {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+.actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Outgoing and incoming pills share one cell while they cross. */
+.status-slot {
+  display: inline-grid;
+}
+
+.status-slot > .status {
+  grid-area: 1 / 1;
+  justify-self: start;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.status-draft {
+  background: #eef0f2;
+  color: #59636e;
+}
+
+.status-sent {
+  background: #e7f0fe;
+  color: #1d4ed8;
+}
+
+.status-overdue {
+  background: #fdecec;
+  color: #b42318;
+}
+
+.status-paid {
+  background: #e6f4ea;
+  color: #1a7f37;
+}

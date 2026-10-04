@@ -1,0 +1,19 @@
+{ "root": "../build-20261004T162510Z-1/dist", "w": 1440, "h": 900, "dpr": 1, "fps": 24, "cursor": true,
+  "probe": "'y=' + Math.round(window.scrollY) + ' | ' + [...document.querySelectorAll('.summary dd')].map(e=>e.textContent).join(' | ') + ' || ' + [...document.querySelectorAll('.ledger-delta')].map(e=>e.textContent+'@'+getComputedStyle(e).opacity).join(',') + ' || focus ' + (document.activeElement && document.activeElement.closest('tr') ? document.activeElement.closest('tr').cells[0].textContent : document.activeElement.tagName)",
+  "steps": [
+    { "wait": 300 },
+    { "hover": "tbody tr:nth-child(2) button[data-mark-paid]", "duration": 500 },
+    { "wait": 150 },
+    { "click": "tbody tr:nth-child(2) button[data-mark-paid]", "hold": 110 },
+    { "wait": 350 },
+    { "still": "overdue-mid" },
+    { "wait": 2500 },
+    { "still": "overdue-settled" },
+    { "hover": "tbody tr:nth-child(4) button[data-mark-paid]", "duration": 500 },
+    { "wait": 150 },
+    { "click": "tbody tr:nth-child(4) button[data-mark-paid]", "hold": 110 },
+    { "wait": 350 },
+    { "still": "sent-mid" },
+    { "wait": 2600 },
+    { "still": "sent-settled" }
+  ] }
