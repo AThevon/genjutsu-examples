@@ -1,0 +1,3 @@
+{ "root": "../build/dist", "w": 1440, "h": 900, "settle": 800,
+  "probe": "(()=>{const r=e=>Math.round(e.getBoundingClientRect().top+scrollY);return {H:document.documentElement.scrollHeight,stages:[...document.querySelectorAll('.stage')].map(r),intro:r(document.querySelector('.firings-intro')),footer:r(document.querySelector('.footer')),font:getComputedStyle(document.querySelector('h1')).fontFamily,docW:document.documentElement.scrollWidth}})()",
+  "steps": [ { "wait": 1500 }, { "still": "desktop" } ] }

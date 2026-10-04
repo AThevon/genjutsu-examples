@@ -1,0 +1,286 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: var(--font-family);
+  font-weight: var(--weight-text);
+  line-height: var(--leading-body);
+  color: var(--color-ink);
+  background: var(--color-clay-dry);
+}
+
+body {
+  margin: 0;
+}
+
+/* Bands: one ground each, at least a full screen. Padding keeps text clear of the seams. */
+.band {
+  position: relative;
+  min-height: var(--band-min);
+  display: flex;
+  align-items: center;
+  padding-block: max(var(--space-8), calc(var(--seam) / 2 + var(--space-5)));
+}
+
+.band > * {
+  position: relative;
+  z-index: 1;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--column-max);
+  padding-inline: var(--column-offset) var(--space-5);
+}
+
+.ground-dry {
+  background: var(--color-clay-dry);
+  color: var(--color-ink);
+}
+
+.ground-bisque {
+  background: var(--color-clay-bisque);
+  color: var(--color-ink);
+}
+
+.ground-kiln {
+  background: var(--color-kiln);
+  color: var(--color-bone);
+}
+
+.ground-celadon {
+  background: var(--color-celadon);
+  color: var(--color-ink);
+}
+
+/* Seams: the ground changes only here, between stages, as the page scrolls past. */
+.seam::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  right: 0;
+  top: calc(var(--seam) / -2);
+  height: var(--seam);
+  background: linear-gradient(
+    var(--seam-from) 0%,
+    color-mix(in srgb, var(--seam-to) 15.6%, var(--seam-from)) 25%,
+    color-mix(in srgb, var(--seam-to) 50%, var(--seam-from)) 50%,
+    color-mix(in srgb, var(--seam-to) 84.4%, var(--seam-from)) 75%,
+    var(--seam-to) 100%
+  );
+  pointer-events: none;
+}
+
+.seam-dry-bisque {
+  --seam-from: var(--color-clay-dry);
+  --seam-to: var(--color-clay-bisque);
+}
+
+.seam-bisque-kiln {
+  --seam-from: var(--color-clay-bisque);
+  --seam-to: var(--color-kiln);
+}
+
+.seam-kiln-celadon {
+  --seam-from: var(--color-kiln);
+  --seam-to: var(--color-celadon);
+}
+
+/* Hero */
+.hero {
+  min-height: var(--band-min);
+}
+
+.brand {
+  margin: 0 0 var(--space-5);
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: var(--text-display);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  max-width: 13ch;
+}
+
+.hero-text {
+  margin: var(--space-4) 0 0;
+  max-width: var(--measure-hero);
+  font-size: var(--text-body);
+  color: var(--color-ash);
+}
+
+/* The four firings */
+.firings-intro {
+  min-height: auto;
+}
+
+.firings h2 {
+  margin: 0;
+  font-size: var(--text-h2);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-h2);
+}
+
+.lede {
+  margin: var(--space-3) 0 0;
+  max-width: 40ch;
+  font-size: var(--text-body);
+  color: var(--color-ash);
+}
+
+.stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stage .wrap {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.stage-index {
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.stage h3 {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-h3);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-h3);
+}
+
+.stage-measure {
+  margin: var(--space-2) 0 var(--space-3);
+  font-size: var(--text-measure);
+  line-height: var(--leading-measure);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-rust);
+}
+
+.ground-kiln .stage-measure {
+  color: var(--color-glow-mid);
+}
+
+.stage-text {
+  margin: 0;
+  max-width: var(--measure-body);
+  font-size: var(--text-body);
+}
+
+/* Cooling: the long wait */
+.stage-cooling {
+  min-height: var(--band-cooling);
+  align-items: stretch;
+}
+
+.stage-cooling {
+  padding-top: max(var(--space-8), calc(var(--seam) / 2 + var(--space-5)), 30svh);
+}
+
+.stage-cooling .wrap {
+  align-content: start;
+}
+
+/* Spy-hole: the one light on the page, in its own column, never behind text.
+   Without motion (reduced motion, no JS) it holds a static state. */
+.spyhole-cell {
+  display: flex;
+  justify-content: center;
+}
+
+.spyhole {
+  position: relative;
+  width: var(--spyhole-size);
+  aspect-ratio: 1;
+}
+
+.spyhole-hot,
+.spyhole-ember {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-none);
+}
+
+.spyhole-hot {
+  background: radial-gradient(
+    circle closest-side,
+    var(--color-glow-core) 0%,
+    var(--color-glow-mid) 40%,
+    color-mix(in srgb, var(--color-glow-mid) 0%, transparent) 100%
+  );
+}
+
+.spyhole-ember {
+  background: radial-gradient(
+    circle closest-side,
+    var(--color-ember) 0%,
+    color-mix(in srgb, var(--color-ember) 0%, transparent) 100%
+  );
+  opacity: 0;
+}
+
+.stage-cooling .spyhole-hot {
+  opacity: 0;
+}
+
+.stage-cooling .spyhole-ember {
+  opacity: 0.6;
+}
+
+.stage-cooling .spyhole {
+  position: sticky;
+  top: calc(50svh - var(--spyhole-size) / 2);
+}
+
+@media (min-width: 64rem) {
+  .stage .wrap {
+    grid-template-columns: minmax(0, var(--measure-body)) 1fr;
+    align-items: center;
+  }
+
+  .stage-cooling .wrap {
+    align-items: start;
+  }
+
+  .stage-cooling .spyhole-cell {
+    align-self: stretch;
+  }
+}
+
+/* Footer: the kiln opened */
+.footer {
+  min-height: auto;
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* Reveal: hidden only once the motion script has opted in. */
+.motion .reveal {
+  opacity: 0;
+  transform: translateY(var(--rise));
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+}
+
+.motion .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}

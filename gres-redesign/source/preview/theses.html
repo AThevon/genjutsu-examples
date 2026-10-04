@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Atelier Grès - thesis preview (throwaway)</title>
+<style>
+  /* THROWAWAY PREVIEW. Proposal only, never the build. */
+  :root {
+    --clay-dry: #D7D1C6;
+    --clay-bisque: #DDBFA8;
+    --kiln: #17110E;
+    --celadon: #BCCBC3;
+    --ink: #1F1A17;
+    --ash: #4F4740;
+    --rust: #843719;
+    --bone: #EADBCB;
+    --ash-light: #B9A796;
+    --glow-core: #FFC27A;
+    --glow-mid: #F08A3C;
+    --ember: #7A2A14;
+    --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+    --dur-reveal: 700ms;
+    --stagger: 120ms;
+    /* Display face is undecided: system-ui is a placeholder only. */
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--clay-dry); }
+
+  .toolbar {
+    position: fixed; z-index: 10; top: 0; left: 0; right: 0;
+    display: flex; gap: 1rem; align-items: center; justify-content: space-between;
+    padding: .5rem 1rem; font-size: .8125rem;
+    background: rgba(255,255,255,.88); color: #111; border-bottom: 1px solid #0002;
+  }
+  .toolbar label { display: flex; gap: .4rem; align-items: center; cursor: pointer; }
+
+  #backdrop { position: fixed; inset: 0; z-index: -2; background: var(--clay-dry); }
+  #glow {
+    position: fixed; z-index: -1; left: 50%; top: 50%;
+    width: 80vmin; height: 80vmin; margin: -40vmin 0 0 -40vmin;
+    border-radius: 50%; opacity: 0; pointer-events: none;
+    background: radial-gradient(circle, var(--glow-core) 0%, var(--glow-mid) 28%, rgba(240,138,60,0) 70%);
+  }
+
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 2rem 0 clamp(2rem, 12vw, 10rem); }
+  section, header { position: relative; }
+  .band { min-height: 100svh; display: flex; align-items: center; padding: 6rem 0; }
+  .band.long { min-height: 170svh; align-items: flex-start; padding-top: 30svh; }
+  .light { color: var(--ink); }
+  .dark { color: var(--bone); }
+
+  .brand { margin: 0 0 2rem; font-size: .875rem; }
+  h1 { margin: 0; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.05; font-weight: 600; max-width: 13ch; letter-spacing: -.01em; }
+  .hero-text { font-size: 1.125rem; max-width: 38ch; color: var(--ash); margin-top: 1.5rem; }
+  h2 { margin: 0; font-size: 2.25rem; font-weight: 600; line-height: 1.15; }
+  .lede { color: var(--ash); max-width: 40ch; font-size: 1.125rem; }
+  h3 { margin: .25rem 0 0; font-size: 1.75rem; font-weight: 600; line-height: 1.2; }
+  .idx { font-size: .875rem; }
+  .measure { margin: .5rem 0 1rem; font-size: 1.25rem; color: var(--rust); }
+  .dark .measure { color: var(--glow-mid); }
+  .stage p:last-child { max-width: 58ch; font-size: 1.125rem; }
+  .dark .stage p:last-child { color: var(--bone); }
+  ol { list-style: none; margin: 0; padding: 0; }
+
+  footer { background: var(--celadon); color: var(--ink); padding: 6rem 0; }
+
+  /* Reveal: once, 16px rise, 700ms, ease-out, 120ms stagger */
+  .rv { opacity: 0; transform: translateY(16px);
+        transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out); }
+  .rv.in { opacity: 1; transform: none; }
+
+  /* Reduced motion: static grounds per stage, static glow, no reveals */
+  .rm #backdrop, .rm #glow { display: none; }
+  .rm .rv { opacity: 1; transform: none; transition: none; }
+  .rm [data-ground="dry"] { background: var(--clay-dry); }
+  .rm [data-ground="bisque"] { background: var(--clay-bisque); }
+  .rm [data-ground="kiln"] { background: var(--kiln); }
+  .rm [data-ground="glaze"] { background: radial-gradient(circle at 70% 50%, var(--glow-core) 0, var(--glow-mid) 14vmin, rgba(240,138,60,0) 38vmin), var(--kiln); }
+  .rm [data-ground="cooling"] { background: radial-gradient(circle at 70% 40%, rgba(122,42,20,.55) 0, rgba(122,42,20,0) 30vmin), var(--kiln); }
+
+  /* Spec sheet */
+  .spec { background: #fff; color: #111; padding: 4rem 0 6rem; font-size: .9375rem; }
+  .spec h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+  .spec h3 { font-size: 1.125rem; margin-top: 3rem; }
+  .spec blockquote { margin: 1rem 0; padding: 1rem 1.25rem; background: #f3f3f3; border-left: 3px solid #111; max-width: 70ch; }
+  .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1rem; }
+  .sw div { padding: 1.25rem 1rem; min-height: 7rem; font-size: .8125rem; }
+  .sw b { display: block; font-size: 1rem; margin-bottom: .25rem; }
+  .curve { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
+  .curve svg { width: 220px; height: 220px; background: #f3f3f3; }
+  .demo { width: 22rem; padding: 2rem; background: var(--clay-dry); color: var(--ink); }
+  button { font: inherit; padding: .5rem 1rem; cursor: pointer; }
+  table { border-collapse: collapse; } td { padding: .25rem 1.5rem .25rem 0; }
+  .scale p { margin: .5rem 0; }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <span><b>Proposal, not the build.</b> Throwaway preview of the two theses, with the real copy. Scroll down to the spec sheet below the footer.</span>
+  <label><input type="checkbox" id="rm" /> Reduced motion</label>
+</div>
+<div id="backdrop"></div>
+<div id="glow" aria-hidden="true"></div>
+
+<header class="band light" data-ground="dry">
+  <div class="wrap">
+    <p class="brand rv">Atelier Grès</p>
+    <h1 class="rv">Stoneware, thrown and fired by hand.</h1>
+    <p class="hero-text rv">Bowls, cups and plates for everyday use, made in small batches and fired in our own gas kiln.</p>
+  </div>
+</header>
+
+<main>
+  <section class="band light" data-ground="dry" style="min-height:60svh">
+    <div class="wrap">
+      <h2 class="rv">The four firings</h2>
+      <p class="lede rv">Every piece goes through the same four stages before it leaves the studio.</p>
+    </div>
+  </section>
+  <ol>
+    <li class="band light stage" data-ground="dry"><div class="wrap">
+      <span class="idx rv">1</span><h3 class="rv">Drying</h3>
+      <p class="measure rv">About a week</p>
+      <p class="rv">Freshly thrown pieces dry slowly, first under plastic, then in the open air, until they are bone dry. Water left in the clay turns to steam in the kiln and can burst a pot.</p>
+    </div></li>
+    <li class="band light stage" data-ground="bisque"><div class="wrap">
+      <span class="idx rv">2</span><h3 class="rv">Bisque firing</h3>
+      <p class="measure rv">Around 950 °C</p>
+      <p class="rv">The first firing turns dry clay into ceramic for good. The pieces come out hard but still porous, so they can take up the glaze.</p>
+    </div></li>
+    <li class="band dark stage" data-ground="glaze" id="glaze"><div class="wrap">
+      <span class="idx rv">3</span><h3 class="rv">Glaze firing</h3>
+      <p class="measure rv">Around 1280 °C, in reduction</p>
+      <p class="rv">The second firing melts the glaze and vitrifies the stoneware body. Near the top of the firing the kiln is starved of oxygen; this reduction changes how the iron in the clay and the glazes colours.</p>
+    </div></li>
+    <li class="band long dark stage" data-ground="cooling" id="cooling"><div class="wrap">
+      <span class="idx rv">4</span><h3 class="rv">Cooling</h3>
+      <p class="measure rv">Slowly, over about 24 hours</p>
+      <p class="rv">The kiln stays shut while it cools. Opening it too early would crack the work with thermal shock.</p>
+    </div></li>
+  </ol>
+</main>
+
+<footer data-ground="celadon"><div class="wrap"><p>Atelier Grès. Stoneware, thrown and fired by hand.</p></div></footer>
+
+<div class="spec"><div class="wrap">
+  <h2>The two theses</h2>
+  <blockquote><b>Visual thesis:</b> Redesigning the whole visual layer: one page whose ground follows a piece through the kiln, from the cool grey-buff of bone-dry clay to the salmon of bisque, then the near-black of a kiln in reduction where the only light is a soft spy-hole glow, ending on the grey-green celadon that reduced iron gives a glaze. Iron-black ink, oxidised-iron rust for the firing measures. Display face undecided, chosen at the design-system gate (not Georgia): one face with tabular figures for the temperatures and a strong size jump from body to headline. Airy, every stage gets at least a full screen on an 8px base. Flat and borderless: no cards, square corners, no shadows.</blockquote>
+  <blockquote><b>Interaction thesis:</b> Slow and patient. The ground colour is tied to scroll position and changes only in the gaps between stages, holding still while you read. The spy-hole glow rises as the glaze firing reaches mid-screen, then over the long cooling stage it fades from yellow-orange to dull red to nothing, so the page waits like the kiln. Text fades in once with a 16px rise, 700ms, cubic-bezier(0.25, 1, 0.5, 1), 120ms stagger. No hover effects: the page has nothing to click. Forbidden: flames, flicker, particles, parallax, pinning or scroll-jacking, bounce, any loop.</blockquote>
+  <p><b>Allowed patterns:</b> the spy-hole glow (glaze firing and cooling only); scroll-linked ground colour; a dark ground for the glaze firing and cooling; firing measures in rust with tabular figures.</p>
+
+  <h3>Palette, with contrast ratios</h3>
+  <div class="sw">
+    <div style="background:#D7D1C6;color:#1F1A17"><b>clay-dry #D7D1C6</b>ground: hero, drying<br>ink 11.35:1 · ash 5.99:1 · rust 5.44:1</div>
+    <div style="background:#DDBFA8;color:#1F1A17"><b>clay-bisque #DDBFA8</b>ground: bisque firing<br>ink 9.92:1 · ash 5.24:1 · rust 4.76:1</div>
+    <div style="background:#17110E;color:#EADBCB"><b>kiln #17110E</b>ground: glaze firing, cooling<br>bone 13.8:1 · ash-light 8.04:1 · glow-mid 7.49:1</div>
+    <div style="background:#BCCBC3;color:#1F1A17"><b>celadon #BCCBC3</b>ground: footer, kiln opened<br>ink 10.23:1 · ash 5.4:1 · rust 4.91:1</div>
+    <div style="background:#1F1A17;color:#EADBCB"><b>ink #1F1A17</b>iron-black text on light grounds</div>
+    <div style="background:#4F4740;color:#EADBCB"><b>ash #4F4740</b>secondary text on light grounds</div>
+    <div style="background:#843719;color:#EADBCB"><b>rust #843719</b>oxidised iron: measures on light</div>
+    <div style="background:#EADBCB;color:#1F1A17"><b>bone #EADBCB</b>text on kiln</div>
+    <div style="background:#FFC27A;color:#1F1A17"><b>glow-core #FFC27A</b>spy-hole centre (light only, never text)</div>
+    <div style="background:#F08A3C;color:#1F1A17"><b>glow-mid #F08A3C</b>spy-hole edge, measures on kiln</div>
+    <div style="background:#7A2A14;color:#EADBCB"><b>ember #7A2A14</b>glow at the end of cooling (light only)</div>
+  </div>
+
+  <h3>Type scale (placeholder face: system-ui, the real face comes at the design-system gate)</h3>
+  <div class="scale">
+    <p style="font-size:clamp(2.5rem,6vw,4.5rem);font-weight:600;line-height:1.05">Display 40–72px</p>
+    <p style="font-size:2.25rem;font-weight:600">h2 36px</p>
+    <p style="font-size:1.75rem;font-weight:600">h3 28px</p>
+    <p style="font-size:1.25rem;color:#843719">Measure 20px · Around 1280 °C, in reduction</p>
+    <p style="font-size:1.125rem">Body 18px · The kiln stays shut while it cools.</p>
+    <p style="font-size:.875rem">Small 14px · Atelier Grès</p>
+  </div>
+
+  <h3>Reveal motion</h3>
+  <div class="curve">
+    <svg viewBox="-10 -10 120 120" aria-label="cubic-bezier(0.25, 1, 0.5, 1)">
+      <line x1="0" y1="100" x2="100" y2="0" stroke="#bbb" stroke-dasharray="2 2" stroke-width=".8"/>
+      <path d="M0,100 C25,0 50,0 100,0" fill="none" stroke="#843719" stroke-width="2.5"/>
+      <circle cx="25" cy="0" r="2.5" fill="#111"/><circle cx="50" cy="0" r="2.5" fill="#111"/>
+      <text x="0" y="114" font-size="7">cubic-bezier(0.25, 1, 0.5, 1)</text>
+    </svg>
+    <div>
+      <div class="demo" id="demo">
+        <p class="idx" style="margin:0">2</p><h3 style="margin:0">Bisque firing</h3>
+        <p style="color:#843719;margin:.25rem 0 0">Around 950 °C</p>
+      </div>
+      <p><button id="replay">Replay reveal</button></p>
+      <table>
+        <tr><td>Duration</td><td>700ms</td></tr>
+        <tr><td>Rise</td><td>16px</td></tr>
+        <tr><td>Stagger</td><td>120ms</td></tr>
+        <tr><td>Easing</td><td>cubic-bezier(0.25, 1, 0.5, 1)</td></tr>
+        <tr><td>Ground colour</td><td>tied to scroll, changes only between stages</td></tr>
+        <tr><td>Spy-hole glow</td><td>tied to scroll: peaks with the glaze firing at mid-screen, fades out through cooling</td></tr>
+      </table>
+    </div>
+  </div>
+</div></div>
+
+<script>
+  const C = { dry: "#D7D1C6", bisque: "#DDBFA8", glaze: "#17110E", cooling: "#17110E", celadon: "#BCCBC3" };
+  const hex = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16));
+  const mix = (a,b,t) => { a=hex(a); b=hex(b); return `rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")})`; };
+  const clamp = v => Math.max(0, Math.min(1, v));
+  const smooth = t => t*t*(3-2*t);
+  const backdrop = document.getElementById("backdrop");
+  const glow = document.getElementById("glow");
+  const bands = [...document.querySelectorAll("[data-ground]")];
+  const glaze = document.getElementById("glaze"), cooling = document.getElementById("cooling");
+
+  function frame() {
+    const vh = innerHeight, mid = scrollY + vh / 2;
+    // Ground: hold inside a band, transition across 40vh around each boundary.
+    let color = C[bands[0].dataset.ground];
+    for (let i = 0; i < bands.length - 1; i++) {
+      const b = bands[i + 1].offsetTop, band = vh * 0.4;
+      const t = clamp((mid - (b - band / 2)) / band);
+      if (mid >= b - band / 2) color = mix(C[bands[i].dataset.ground], C[bands[i+1].dataset.ground], smooth(t));
+    }
+    backdrop.style.background = color;
+    // Glow: rises to the glaze firing centre, then fades over the whole cooling band.
+    const gTop = glaze.offsetTop, gMid = gTop + glaze.offsetHeight / 2;
+    const cEnd = cooling.offsetTop + cooling.offsetHeight - vh * 0.5;
+    let o = 0, cool = 0;
+    if (mid < gMid) o = smooth(clamp((mid - (gTop - vh * 0.3)) / (gMid - gTop + vh * 0.3)));
+    else { cool = clamp((mid - gMid) / (cEnd - gMid)); o = 1 - cool * cool; }
+    glow.style.opacity = o.toFixed(3);
+    // Cooling: yellow-orange core shifts toward dull red ember.
+    glow.style.background = `radial-gradient(circle, ${mix("#FFC27A","#7A2A14",cool)} 0%, ${mix("#F08A3C","#7A2A14",cool)} 28%, rgba(122,42,20,0) 70%)`;
+  }
+  addEventListener("scroll", () => requestAnimationFrame(frame), { passive: true });
+  addEventListener("resize", frame); frame();
+
+  // Reveal once, staggered within each group.
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const sibs = [...e.target.parentElement.querySelectorAll(".rv")];
+    e.target.style.transitionDelay = (sibs.indexOf(e.target) * 120) + "ms";
+    e.target.classList.add("in"); io.unobserve(e.target);
+  }), { threshold: 0.2 });
+  document.querySelectorAll(".rv").forEach(el => io.observe(el));
+
+  // Demo replay
+  const demo = [...document.getElementById("demo").children];
+  demo.forEach(el => el.classList.add("rv"));
+  function play() {
+    demo.forEach(el => { el.style.transition = "none"; el.classList.remove("in"); });
+    void document.body.offsetWidth;
+    demo.forEach((el, i) => { el.style.transition = ""; el.style.transitionDelay = (i * 120) + "ms"; el.classList.add("in"); });
+  }
+  document.getElementById("replay").onclick = play; setTimeout(play, 300);
+
+  // Reduced-motion toggle (also follows the OS setting)
+  const rm = document.getElementById("rm");
+  const mq = matchMedia("(prefers-reduced-motion: reduce)");
+  rm.checked = mq.matches;
+  const apply = () => document.documentElement.classList.toggle("rm", rm.checked);
+  rm.onchange = apply; apply();
+</script>
+</body>
+</html>

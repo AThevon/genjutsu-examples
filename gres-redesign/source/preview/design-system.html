@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Atelier Grès - design system preview (throwaway)</title>
+<style>
+  /* THROWAWAY PREVIEW of MASTER.md. Proposal only, never the build. */
+  :root {
+    --color-clay-dry:#D7D1C6; --color-clay-bisque:#DDBFA8; --color-kiln:#17110E; --color-celadon:#BCCBC3;
+    --color-ink:#1F1A17; --color-ash:#4F4740; --color-rust:#843719; --color-bone:#EADBCB; --color-ash-light:#B9A796;
+    --color-glow-core:#FFC27A; --color-glow-mid:#F08A3C; --color-ember:#7A2A14;
+    --ease-out:cubic-bezier(0.25,1,0.5,1); --dur-reveal:700ms; --stagger:120ms; --rise:16px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height:1.6;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#fff; color:#111; font-size:.9375rem; }
+  .sheet { max-width:72rem; margin:0 auto; padding:3rem 2rem 6rem; }
+  .note { background:#f3f3f3; padding:1rem 1.25rem; border-left:3px solid #111; max-width:75ch; }
+  h1.t { font-size:1.75rem; margin:0 0 1rem; } h2.t { font-size:1.25rem; margin:3rem 0 1rem; }
+  .sw { display:grid; grid-template-columns:repeat(auto-fill,minmax(12rem,1fr)); gap:.75rem; }
+  .sw div { padding:1rem; min-height:6.5rem; font-size:.8125rem; } .sw b { display:block; font-size:.9375rem; }
+  .grounds { display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr)); gap:0; }
+  .stage { padding:3rem 2rem; min-height:22rem; }
+  .stage .idx { font-size:.875rem; font-variant-numeric:tabular-nums; }
+  .stage h3 { margin:.25rem 0 0; font-size:1.75rem; font-weight:600; line-height:1.2; }
+  .stage .measure { margin:.5rem 0 1rem; font-size:1.25rem; line-height:1.4; font-variant-numeric:tabular-nums; }
+  .stage p.body { margin:0; font-size:1.125rem; max-width:58ch; }
+  .light { color:var(--color-ink); } .light .measure { color:var(--color-rust); }
+  .dark { color:var(--color-bone); } .dark .measure { color:var(--color-glow-mid); }
+  .spec p { margin:.35rem 0; }
+  .bars div { display:flex; align-items:center; gap:1rem; margin:.25rem 0; font-size:.8125rem; }
+  .bars span { display:block; height:.75rem; background:var(--color-rust); }
+  .glowrow { display:grid; grid-template-columns:repeat(5,1fr); }
+  .glowrow div { aspect-ratio:1; background:var(--color-kiln); color:var(--color-ash-light); font-size:.75rem; padding:.5rem; display:flex; align-items:flex-end; }
+  .demo { padding:2rem; background:var(--color-clay-dry); color:var(--color-ink); max-width:24rem; }
+  .rv { opacity:0; transform:translateY(var(--rise)); transition:opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out); }
+  .rv.in { opacity:1; transform:none; }
+  button { font:inherit; padding:.5rem 1rem; cursor:pointer; }
+  table { border-collapse:collapse; } td { padding:.2rem 1.5rem .2rem 0; vertical-align:top; }
+</style>
+</head>
+<body><div class="sheet">
+  <h1 class="t">Atelier Grès: design system (MASTER.md)</h1>
+  <p class="note"><b>Proposal, not the build.</b> Every token from MASTER.md, rendered. The page has no buttons, inputs or links, so there are no five-state components to show: its components are the band, the stage, the spy-hole glow and the footer.</p>
+
+  <h2 class="t">Grounds through the firing, with the stage component on each</h2>
+  <div class="grounds">
+    <div class="stage light" style="background:var(--color-clay-dry)"><span class="idx">1</span><h3>Drying</h3><p class="measure">About a week</p><p class="body">Freshly thrown pieces dry slowly, first under plastic, then in the open air, until they are bone dry.</p></div>
+    <div class="stage light" style="background:var(--color-clay-bisque)"><span class="idx">2</span><h3>Bisque firing</h3><p class="measure">Around 950 °C</p><p class="body">The first firing turns dry clay into ceramic for good.</p></div>
+    <div class="stage dark" style="background:radial-gradient(circle at 75% 55%, var(--color-glow-core) 0, var(--color-glow-mid) 9rem, rgba(240,138,60,0) 22rem), var(--color-kiln)"><span class="idx">3</span><h3>Glaze firing</h3><p class="measure">Around 1280 °C, in reduction</p><p class="body">The second firing melts the glaze and vitrifies the stoneware body.</p></div>
+    <div class="stage dark" style="background:radial-gradient(circle at 75% 55%, rgba(122,42,20,.6) 0, rgba(122,42,20,0) 18rem), var(--color-kiln)"><span class="idx">4</span><h3>Cooling</h3><p class="measure">Slowly, over about 24 hours</p><p class="body">The kiln stays shut while it cools.</p></div>
+    <div class="stage light" style="background:var(--color-celadon);min-height:auto"><p class="body">Atelier Grès. Stoneware, thrown and fired by hand.</p><p style="font-size:.8125rem;color:var(--color-ash);margin-top:1rem">footer: the kiln opened</p></div>
+  </div>
+
+  <h2 class="t">Colour, with computed contrast</h2>
+  <div class="sw">
+    <div style="background:#D7D1C6;color:#1F1A17"><b>clay-dry #D7D1C6</b>ink 11.35 · ash 5.99 · rust 5.44</div>
+    <div style="background:#DDBFA8;color:#1F1A17"><b>clay-bisque #DDBFA8</b>ink 9.92 · ash 5.24 · rust 4.76</div>
+    <div style="background:#17110E;color:#EADBCB"><b>kiln #17110E</b>bone 13.8 · ash-light 8.04 · glow-mid 7.49</div>
+    <div style="background:#BCCBC3;color:#1F1A17"><b>celadon #BCCBC3</b>ink 10.23 · ash 5.4 · rust 4.91</div>
+    <div style="background:#1F1A17;color:#EADBCB"><b>ink #1F1A17</b>text on light</div>
+    <div style="background:#4F4740;color:#EADBCB"><b>ash #4F4740</b>secondary on light</div>
+    <div style="background:#843719;color:#EADBCB"><b>rust #843719</b>measures on light</div>
+    <div style="background:#EADBCB;color:#1F1A17"><b>bone #EADBCB</b>text on kiln</div>
+    <div style="background:#B9A796;color:#1F1A17"><b>ash-light #B9A796</b>secondary on kiln</div>
+    <div style="background:#FFC27A;color:#1F1A17"><b>glow-core #FFC27A</b>light only</div>
+    <div style="background:#F08A3C;color:#1F1A17"><b>glow-mid #F08A3C</b>glow edge, measures on kiln</div>
+    <div style="background:#7A2A14;color:#EADBCB"><b>ember #7A2A14</b>light only, end of cooling</div>
+  </div>
+
+  <h2 class="t">Type: system face (this is the real face, not a placeholder)</h2>
+  <div class="spec" style="background:var(--color-clay-dry);color:var(--color-ink);padding:2rem">
+    <p style="font-size:clamp(2.5rem,6vw,4.5rem);font-weight:600;line-height:1.05;letter-spacing:-.01em;max-width:13ch">Stoneware, thrown and fired by hand.</p>
+    <p style="font-size:2.25rem;font-weight:600;line-height:1.15">h2 36px · The four firings</p>
+    <p style="font-size:1.75rem;font-weight:600;line-height:1.2">h3 28px · Glaze firing</p>
+    <p style="font-size:1.25rem;color:var(--color-rust);font-variant-numeric:tabular-nums">measure 20px · Around 950 °C / Around 1280 °C</p>
+    <p style="font-size:1.125rem;max-width:58ch">body 18px · Every piece goes through the same four stages before it leaves the studio.</p>
+    <p style="font-size:.875rem">small 14px · Atelier Grès</p>
+  </div>
+
+  <h2 class="t">Spacing (8px base)</h2>
+  <div class="bars">
+    <div><span style="width:.25rem"></span>space-1 · 4px</div><div><span style="width:.5rem"></span>space-2 · 8px</div>
+    <div><span style="width:1rem"></span>space-3 · 16px</div><div><span style="width:1.5rem"></span>space-4 · 24px</div>
+    <div><span style="width:2rem"></span>space-5 · 32px</div><div><span style="width:3rem"></span>space-6 · 48px</div>
+    <div><span style="width:4rem"></span>space-7 · 64px</div><div><span style="width:6rem"></span>space-8 · 96px</div>
+    <div><span style="width:8rem"></span>space-9 · 128px</div>
+  </div>
+  <p>Band: at least 100svh per stage, 170svh for cooling. Text column starts at clamp(2rem, 12vw, 10rem).</p>
+
+  <h2 class="t">Radii and shadows</h2>
+  <p>radius-none: 0, the only radius. No shadows, no elevation. The only light is the spy-hole glow.</p>
+
+  <h2 class="t">Spy-hole glow: rise, peak, cooling</h2>
+  <div class="glowrow" id="glowrow"></div>
+
+  <h2 class="t">Motion tokens</h2>
+  <div class="demo" id="demo"><p style="margin:0;font-size:.875rem">3</p><h3 style="margin:0;font-size:1.75rem;font-weight:600">Glaze firing</h3><p style="margin:.25rem 0 0;color:var(--color-rust);font-size:1.25rem">Around 1280 °C, in reduction</p></div>
+  <p><button id="replay">Replay reveal</button></p>
+  <table>
+    <tr><td>ease-out</td><td>cubic-bezier(0.25, 1, 0.5, 1)</td></tr>
+    <tr><td>dur-reveal</td><td>700ms</td></tr>
+    <tr><td>stagger</td><td>120ms</td></tr>
+    <tr><td>rise</td><td>16px</td></tr>
+    <tr><td>ground</td><td>tied to scroll; changes over a 40vh zone at each band boundary, smoothstep</td></tr>
+    <tr><td>glow</td><td>tied to scroll; rises to the glaze centre, then opacity 1 − t² to the end of cooling, colour toward ember</td></tr>
+  </table>
+</div>
+<script>
+  const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+  const rgba=(a,b,t,o)=>{a=hex(a);b=hex(b);return `rgba(${a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")},${o})`;};
+  const row=document.getElementById("glowrow");
+  [["rise 50%",.5,0],["peak",1,0],["cooling 33%",1-.33*.33,.33],["cooling 66%",1-.66*.66,.66],["cooling end",0,1]].forEach(([l,o,c])=>{
+    const d=document.createElement("div");
+    d.style.background=`radial-gradient(circle, ${rgba("#FFC27A","#7A2A14",c,o)} 0%, ${rgba("#F08A3C","#7A2A14",c,o)} 28%, rgba(122,42,20,0) 70%), #17110E`;
+    d.innerHTML=`<span>${l} · opacity ${o.toFixed(2)}</span>`;
+    row.appendChild(d);
+  });
+  const demo=[...document.getElementById("demo").children]; demo.forEach(e=>e.classList.add("rv"));
+  function play(){ demo.forEach(e=>{e.style.transition="none";e.classList.remove("in");}); void document.body.offsetWidth;
+    demo.forEach((e,i)=>{e.style.transition="";e.style.transitionDelay=(i*120)+"ms";e.classList.add("in");}); }
+  document.getElementById("replay").onclick=play; setTimeout(play,300);
+</script>
+</body></html>

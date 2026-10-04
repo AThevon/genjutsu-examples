@@ -1,0 +1,3 @@
+{ "root": "../before/dist", "w": 1440, "h": 900, "settle": 800,
+  "probe": "(()=>{const g=[...document.querySelectorAll('.stage')].find(s=>/Glaze/.test(s.textContent));const b=g.getBoundingClientRect();return {y:Math.round(scrollY),glaze:[Math.round(b.top),Math.round(b.bottom)]}})()",
+  "steps": [ { "wait": 300 }, { "scroll": { "to": 1076, "duration": 1 } }, { "wait": 300 }, { "still": "before-glaze" } ] }

@@ -1,0 +1,109 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #2b2621;
+  background: #f4efe8;
+  line-height: 1.6;
+}
+
+body {
+  margin: 0;
+}
+
+.hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.brand {
+  margin: 0 0 2rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.1;
+  max-width: 14ch;
+}
+
+.hero-text {
+  max-width: 38ch;
+  font-size: 1.125rem;
+  color: #5b5148;
+}
+
+.firings {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+.firings h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.lede {
+  color: #5b5148;
+  margin: 0.5rem 0 2.5rem;
+}
+
+.stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.stage {
+  background: #fbf8f4;
+  border: 1px solid #e2d8cc;
+  border-radius: 4px;
+  padding: 1.75rem 2rem;
+}
+
+.stage-index {
+  font-size: 0.875rem;
+  color: #8a6f57;
+}
+
+.stage h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.stage-measure {
+  margin: 0.25rem 0 0.75rem;
+  font-style: italic;
+  color: #8a6f57;
+}
+
+.stage p:last-child {
+  margin-bottom: 0;
+  max-width: 60ch;
+}
+
+.footer {
+  border-top: 1px solid #e2d8cc;
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #5b5148;
+}
