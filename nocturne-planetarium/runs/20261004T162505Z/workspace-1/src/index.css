@@ -1,0 +1,435 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  background: var(--c-night);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  color: var(--c-ink-muted);
+  background: color-mix(in oklab, var(--c-dusk), var(--c-night) calc(var(--sky-p) * 100%));
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--c-ink);
+  font-weight: var(--fw-light);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  max-width: var(--measure);
+}
+
+strong {
+  color: var(--c-ink);
+  font-weight: var(--fw-label);
+}
+
+/* Layout: narrow is intro, pinned dome, content; wide puts the dome in a sticky right column. */
+.layout {
+  display: grid;
+  grid-template-areas: "intro" "sky" "rest";
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--sp-5);
+}
+
+.intro {
+  grid-area: intro;
+  padding: var(--sp-9) 0 var(--sp-7);
+  display: grid;
+  gap: var(--sp-6);
+  justify-items: start;
+}
+
+.display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+}
+
+.lead {
+  font-size: var(--fs-lg);
+  color: var(--c-ink);
+}
+
+.sky {
+  grid-area: sky;
+  margin: 0;
+  height: var(--pin-length);
+}
+
+.sky-pin {
+  position: sticky;
+  top: 0;
+  height: var(--screen);
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--sp-4);
+}
+
+.dome {
+  display: block;
+  width: min(100%, calc(var(--screen) - var(--sp-10)));
+  height: auto;
+}
+
+.caption {
+  font-size: var(--fs-xs);
+  max-width: var(--measure);
+  text-align: center;
+}
+
+.rest {
+  grid-area: rest;
+  display: grid;
+  gap: var(--sp-10);
+  padding-bottom: var(--sp-9);
+}
+
+@media (min-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, var(--measure)) minmax(0, 1fr);
+    grid-template-areas: "intro sky" "rest sky";
+    grid-template-rows: auto 1fr;
+    column-gap: var(--sp-8);
+    padding: 0 var(--sp-7);
+  }
+
+  .intro {
+    min-height: var(--screen);
+    align-content: center;
+    padding: var(--sp-9) 0;
+  }
+
+  .sky {
+    height: auto;
+  }
+
+  .rest {
+    padding-top: var(--sp-9);
+  }
+}
+
+/* Sections */
+.section {
+  display: grid;
+  gap: var(--sp-5);
+  justify-items: start;
+}
+
+.section h2 {
+  font-size: var(--fs-2xl);
+}
+
+.table-title {
+  font-size: var(--fs-xl);
+  margin-top: var(--sp-6);
+}
+
+.hint {
+  font-size: var(--fs-sm);
+}
+
+/* Facts */
+.facts {
+  display: grid;
+  gap: var(--sp-4);
+  margin: 0;
+  width: 100%;
+}
+
+.facts > div {
+  display: grid;
+  gap: var(--sp-1);
+}
+
+.facts dt {
+  font-size: var(--fs-sm);
+}
+
+.facts dd {
+  margin: 0;
+  color: var(--c-ink);
+  font-size: var(--fs-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+.facts-inline {
+  grid-template-columns: repeat(auto-fit, minmax(var(--fact-min), auto));
+  column-gap: var(--sp-6);
+}
+
+/* Timeline of the evening */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-4);
+}
+
+.timeline li {
+  display: grid;
+  grid-template-columns: var(--col-time) 1fr;
+  align-items: baseline;
+  gap: var(--sp-4);
+}
+
+.timeline time {
+  color: var(--c-ink);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-light);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Notes on tonight's sky */
+.notes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--sp-4);
+  max-width: var(--measure);
+}
+
+/* Star list */
+.star-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.star-head,
+.star-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) var(--col-num) var(--col-alt) minmax(0, 1.6fr);
+  gap: var(--sp-4);
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.star-head {
+  font-size: var(--fs-xs);
+  padding-bottom: var(--sp-2);
+}
+
+.star-row {
+  width: 100%;
+  min-height: var(--target);
+  padding: var(--sp-2) 0;
+  border: 0;
+  border-top: var(--bw) solid var(--c-rule);
+  border-radius: 0;
+  background: none;
+  color: var(--c-ink-muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.star-name {
+  color: var(--c-ink);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.star-dir {
+  font-size: var(--fs-sm);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .star-row:hover .star-name {
+    color: var(--c-accent);
+  }
+}
+
+.star-row:focus-visible {
+  outline: var(--focus-w) solid var(--c-ink);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--r-sm);
+}
+
+.star-row:active .star-name,
+.star-row[aria-pressed="true"] .star-name {
+  color: var(--c-accent);
+}
+
+.star-row[aria-pressed="true"] {
+  color: var(--c-ink);
+}
+
+.star-row:disabled {
+  color: var(--c-rule);
+  cursor: default;
+}
+
+.star-row:disabled .star-name {
+  color: var(--c-rule);
+}
+
+@media (max-width: 559px) {
+  .star-head,
+  .star-row {
+    grid-template-columns: minmax(0, 1fr) var(--col-num-sm) var(--col-alt-sm);
+  }
+
+  .star-head span:last-child,
+  .star-dir {
+    display: none;
+  }
+}
+
+/* Button: one action on the page, booking. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--r-sm);
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+  font-weight: var(--fw-label);
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--c-accent-hover);
+  }
+}
+
+.button:focus-visible {
+  outline: var(--focus-w) solid var(--c-ink);
+  outline-offset: var(--focus-offset);
+}
+
+.button:active {
+  background: var(--c-accent-active);
+}
+
+.button[aria-disabled="true"] {
+  background: var(--c-disabled);
+  color: var(--c-ink-muted);
+  pointer-events: none;
+}
+
+/* Text link */
+.link {
+  color: var(--c-ink);
+  text-decoration: underline;
+  text-decoration-thickness: var(--bw);
+  text-underline-offset: var(--focus-offset);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: var(--c-accent);
+  }
+}
+
+.link:focus-visible {
+  outline: var(--focus-w) solid var(--c-ink);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--r-sm);
+}
+
+.link:active {
+  color: var(--c-accent-active);
+}
+
+.credits {
+  font-size: var(--fs-xs);
+  border-top: var(--bw) solid var(--c-rule);
+  padding-top: var(--sp-5);
+}
+
+/* Dome chart */
+.dome-horizon,
+.dome-graticule {
+  fill: none;
+  stroke: var(--c-rule);
+}
+
+.dome-horizon {
+  stroke-width: var(--chart-stroke-strong);
+}
+
+.dome-graticule {
+  stroke-width: var(--chart-stroke);
+  stroke-dasharray: 2 6;
+}
+
+.dome-cardinal,
+.dome-scale {
+  fill: var(--c-ink-muted);
+  font-family: var(--font-sans);
+}
+
+.dome-cardinal {
+  font-size: var(--chart-cardinal);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.dome-scale {
+  font-size: var(--chart-scale);
+}
+
+/* A bin of stars of magnitude --m shows once the limiting magnitude passes it, over 0.5 mag. */
+.dome-bin {
+  opacity: clamp(0, calc((var(--sky-lim) - var(--m)) * 2 + 1), 1);
+}
+
+.dome-label {
+  fill: var(--c-ink-muted);
+  font-family: var(--font-sans);
+  font-size: var(--chart-label);
+}
+
+.dome-saturn circle {
+  fill: var(--c-saturn);
+}
+
+.dome-saturn ellipse {
+  fill: none;
+  stroke: var(--c-saturn);
+  stroke-width: var(--chart-stroke-strong);
+}
+
+.dome-saturn text {
+  fill: var(--c-saturn);
+  font-family: var(--font-sans);
+  font-size: var(--chart-label);
+}
+
+.dome-ring {
+  fill: none;
+  stroke: var(--c-accent);
+  stroke-width: var(--chart-stroke-ring);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.dome-ring.is-on {
+  opacity: 1;
+}

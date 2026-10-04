@@ -1,0 +1,432 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Dusk at the top of the document, night at the bottom: the scroll is the evening. */
+  background: linear-gradient(var(--c-dusk) 0, var(--c-night-1) 55%, var(--c-night-0) 100%);
+  background-color: var(--c-night-0);
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--f-body);
+  font-size: var(--t-base);
+  line-height: 1.55;
+  color: var(--c-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+p {
+  margin: 0 0 var(--s-4);
+  max-width: var(--measure);
+  color: var(--c-ink-dim);
+}
+
+a {
+  color: var(--c-ink);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--c-ink-faint);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--d-ui) var(--e-ui);
+}
+
+a:hover {
+  text-decoration-color: var(--c-ink);
+}
+
+a:active {
+  color: var(--c-ink-dim);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 3px;
+}
+
+.num,
+.hero__facts,
+.detail__pos,
+.footer {
+  font-variant-numeric: tabular-nums;
+}
+
+.skip {
+  position: absolute;
+  left: var(--s-4);
+  top: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  background: var(--c-night-0);
+  transform: translateY(-200%);
+  transition: transform var(--d-ui) var(--e-ui);
+}
+
+.skip:focus-visible {
+  transform: none;
+}
+
+/* Type */
+
+.display {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: var(--t-display);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  margin: 0 0 var(--s-6);
+}
+
+.h2 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: var(--t-2xl);
+  line-height: 1.1;
+  margin: 0 0 var(--s-7);
+}
+
+.h3 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: var(--t-lg);
+  line-height: 1.1;
+  margin: 0 0 var(--s-3);
+  color: var(--c-ink);
+}
+
+.lead {
+  font-size: var(--t-lg);
+  line-height: 1.45;
+  color: var(--c-ink);
+}
+
+.caption {
+  font-size: var(--t-sm);
+  color: var(--c-ink-dim);
+  max-width: var(--measure);
+}
+
+/* Button, primary */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-primary);
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-sm);
+  background: var(--c-saturn);
+  color: var(--c-on-saturn);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--d-ui) var(--e-ui);
+}
+
+.btn:hover {
+  background: var(--c-saturn-hi);
+}
+
+.btn:active {
+  color: var(--c-on-saturn);
+  filter: brightness(0.92);
+}
+
+.btn[aria-disabled="true"] {
+  background: var(--c-ink-faint);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Layout */
+
+.hero,
+.section,
+.footer {
+  width: min(100% - 2 * var(--s-5), var(--page));
+  margin-inline: auto;
+}
+
+.hero {
+  display: grid;
+  gap: var(--s-7);
+  padding-block: var(--s-9) var(--s-10);
+  align-items: center;
+}
+
+.hero__facts {
+  color: var(--c-ink);
+  margin-bottom: var(--s-6);
+}
+
+.hero__sky,
+.tonight__sky {
+  margin: 0;
+}
+
+.section {
+  padding-block: var(--s-9);
+  border-top: 1px solid var(--c-rule);
+}
+
+@media (min-width: 60rem) {
+  .hero {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    min-height: 100svh;
+    padding-block: var(--s-8);
+  }
+
+  .section {
+    padding-block: var(--s-10);
+  }
+}
+
+/* Sky chart */
+
+.sky {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  margin-bottom: var(--s-4);
+  touch-action: pan-y;
+}
+
+.sky__disc {
+  fill: var(--c-night-1);
+  stroke: var(--c-edge);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.sky--arrive .sky__band {
+  opacity: 0;
+  animation: sky-arrive var(--d-star) var(--e-star) forwards;
+}
+
+@keyframes sky-arrive {
+  to {
+    opacity: 1;
+  }
+}
+
+.sky__cardinals text,
+.sky__label {
+  font-family: var(--f-body);
+  font-size: var(--chart-label);
+  fill: var(--c-ink-faint);
+}
+
+.sky__label--planet {
+  fill: var(--c-saturn);
+}
+
+.sky__labels {
+  display: none;
+}
+
+@media (min-width: 40rem) {
+  .sky__labels {
+    display: inline;
+  }
+}
+
+.sky__ring {
+  fill: none;
+  stroke: var(--c-ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  transition: opacity var(--d-ui) var(--e-ui);
+}
+
+.sky__ring[data-on="true"] {
+  opacity: 1;
+}
+
+.sky__tip {
+  font-family: var(--f-body);
+  font-size: var(--chart-label);
+  fill: var(--c-ink-dim);
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  pointer-events: none;
+  /* Exit is quicker and accelerates away. */
+  transition: opacity var(--d-ui-exit) var(--e-exit);
+}
+
+.sky__tip[data-on="true"] {
+  opacity: 1;
+  transition: opacity var(--d-ui) var(--e-ui);
+}
+
+.sky__tip-name {
+  fill: var(--c-ink);
+  font-weight: 600;
+}
+
+/* Program */
+
+.program__parts {
+  list-style: none;
+  margin: 0 0 var(--s-6);
+  padding: 0;
+  display: grid;
+  gap: var(--s-7);
+}
+
+.program__when {
+  color: var(--c-ink);
+}
+
+@media (min-width: 48rem) {
+  .program__parts {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+/* Tonight */
+
+.tonight__intro {
+  margin-bottom: var(--s-7);
+}
+
+.tonight__intro .h2 {
+  margin-bottom: var(--s-4);
+}
+
+.tonight__body {
+  display: grid;
+  gap: var(--s-7);
+}
+
+@media (min-width: 60rem) {
+  .tonight__body {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: start;
+  }
+
+  .tonight__sky {
+    position: sticky;
+    top: var(--s-6);
+  }
+}
+
+.picks {
+  list-style: none;
+  margin: 0 0 var(--s-6);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.pick {
+  font: inherit;
+  min-height: var(--target-min);
+  padding: var(--s-2) var(--s-4);
+  background: transparent;
+  color: var(--c-ink);
+  border: 0;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: box-shadow var(--d-ui) var(--e-ui);
+}
+
+.pick:hover {
+  box-shadow: inset 0 0 0 1px var(--c-edge);
+}
+
+.pick[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px var(--c-ink);
+}
+
+.pick:active {
+  color: var(--c-ink-dim);
+}
+
+.pick:disabled {
+  color: var(--c-ink-faint);
+  cursor: not-allowed;
+}
+
+.detail {
+  border-top: 1px solid var(--c-rule);
+  padding-top: var(--s-5);
+  margin-bottom: var(--s-7);
+  min-height: 12rem;
+}
+
+.detail__name {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: var(--t-xl);
+  line-height: 1.1;
+  color: var(--c-ink);
+  margin-bottom: var(--s-3);
+}
+
+.detail__pos {
+  color: var(--c-ink);
+}
+
+.absent p {
+  font-size: var(--t-sm);
+}
+
+/* Practical */
+
+.times,
+.prices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-6) var(--s-8);
+  margin: 0 0 var(--s-7);
+}
+
+.times dt,
+.prices dt {
+  color: var(--c-ink-dim);
+  font-size: var(--t-sm);
+  margin-bottom: var(--s-1);
+}
+
+.times dd,
+.prices dd {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: var(--t-2xl);
+  line-height: 1;
+}
+
+.practical .btn {
+  margin-top: var(--s-4);
+}
+
+/* Footer */
+
+.footer {
+  padding-block: var(--s-8) var(--s-9);
+  border-top: 1px solid var(--c-rule);
+}
+
+.footer p {
+  font-size: var(--t-sm);
+  color: var(--c-ink-faint);
+}
+
+.footer a {
+  color: var(--c-ink-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky--arrive .sky__band {
+    animation: none;
+    opacity: 1;
+  }
+}

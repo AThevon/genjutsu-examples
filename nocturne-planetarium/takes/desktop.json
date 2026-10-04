@@ -1,0 +1,1 @@
+{ "root": "../build-1/dist", "w": 1440, "h": 900, "steps": [ { "wait": 500 }, { "still": "desktop" } ] }

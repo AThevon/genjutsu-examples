@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nocturne - design system preview (throwaway)</title>
+<link rel="stylesheet" href="../src/tokens.css" />
+<style>
+  body { margin: 0; padding: var(--s-7); font-family: var(--f-body); font-size: var(--t-base); line-height: 1.55; color: var(--c-ink); background: linear-gradient(var(--c-dusk), var(--c-night-1) 60%, var(--c-night-0)); font-variant-numeric: tabular-nums; }
+  h2 { font-family: var(--f-display); font-weight: 500; font-size: var(--t-xl); border-top: 1px solid var(--c-rule); padding-top: var(--s-5); margin: var(--s-8) 0 var(--s-5); }
+  p { color: var(--c-ink-dim); max-width: var(--measure); }
+  .row { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: flex-end; }
+  .sw { width: 140px; font-size: var(--t-sm); color: var(--c-ink-dim); }
+  .sw i { display: block; height: 64px; border-radius: var(--r-sm); box-shadow: inset 0 0 0 1px var(--c-rule); margin-bottom: var(--s-2); }
+  .bar { height: 12px; background: var(--c-edge); }
+  .btn { font: inherit; font-weight: 600; min-height: 48px; padding: var(--s-3) var(--s-5); border: 0; border-radius: var(--r-sm); background: var(--c-saturn); color: var(--c-on-saturn); cursor: pointer; transition: background-color var(--d-ui) var(--e-ui); }
+  .btn:hover, .btn.h { background: var(--c-saturn-hi); }
+  .btn:focus-visible, .btn.f { outline: 2px solid var(--c-focus); outline-offset: 3px; }
+  .btn:active, .btn.a { filter: brightness(0.92); }
+  .btn:disabled { background: var(--c-ink-faint); opacity: 0.6; cursor: not-allowed; }
+  .q { font: inherit; min-height: 44px; padding: var(--s-2) var(--s-4); background: transparent; color: var(--c-ink); border: 0; border-radius: var(--r-sm); cursor: pointer; transition: box-shadow var(--d-ui) var(--e-ui); }
+  .q:hover, .q.h { box-shadow: inset 0 0 0 1px var(--c-edge); }
+  .q:focus-visible, .q.f { outline: 2px solid var(--c-focus); outline-offset: 3px; }
+  .q[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--c-ink); }
+  .q:disabled { color: var(--c-ink-faint); cursor: not-allowed; }
+  .state { font-size: var(--t-xs); color: var(--c-ink-faint); text-align: center; margin-top: var(--s-1); }
+  a { color: var(--c-ink); text-decoration-color: var(--c-ink-faint); text-underline-offset: 0.2em; transition: text-decoration-color var(--d-ui) var(--e-ui); }
+  a:hover { text-decoration-color: var(--c-ink); }
+</style>
+</head>
+<body>
+  <p><strong>Visual thesis (UNVALIDATED):</strong> twilight-to-night ground, catalogue star colours, one Saturn-ochre accent, Futura display because its circles echo the chart's horizon circle and it ships offline, system sans body, tabular figures, airy 8px base, flat 2px components, hairline rules, no shadows. <strong>Allowed patterns:</strong> dark twilight-to-night ground, soft halo on brightest stars and Saturn, hairline rules, tabular figures, circular all-sky chart. This page is the proposal, not the build.</p>
+  <p>Dials: motion 3 ("once ... scroll animates nothing"), density 3 ("airy spacing"), variance not sent (thesis is silent on layout symmetry).</p>
+
+  <h2>Colour</h2>
+  <div class="row">
+    <div class="sw"><i style="background:var(--c-dusk)"></i>dusk #161C33<br />ground, top</div>
+    <div class="sw"><i style="background:var(--c-night-1)"></i>night-1 #0A0E1A<br />sky disc</div>
+    <div class="sw"><i style="background:var(--c-night-0)"></i>night-0 #05070D<br />ground, bottom</div>
+    <div class="sw"><i style="background:var(--c-ink)"></i>ink #E9ECF4<br />14.24:1 on dusk</div>
+    <div class="sw"><i style="background:var(--c-ink-dim)"></i>ink-dim #A3ABC2<br />7.34:1 on dusk</div>
+    <div class="sw"><i style="background:var(--c-ink-faint)"></i>ink-faint #7D86A0<br />4.64:1 on dusk</div>
+    <div class="sw"><i style="background:var(--c-rule)"></i>rule #2A3250<br />decorative only</div>
+    <div class="sw"><i style="background:var(--c-edge)"></i>edge #6B7491<br />3.63:1 UI boundary</div>
+    <div class="sw"><i style="background:var(--c-saturn)"></i>saturn #E8C77A<br />10.32:1 on dusk</div>
+    <div class="sw"><i style="background:var(--c-saturn-hi)"></i>saturn-hi #F2D894<br />hover</div>
+  </div>
+  <p>Star colour from B-V: <span style="color:#aabfff">-0.3 #AABFFF</span>, <span style="color:#f8f7ff">0.65 #F8F7FF</span>, <span style="color:#ffd6aa">1.6 #FFD6AA</span>.</p>
+
+  <h2>Type</h2>
+  <div style="font-family:var(--f-display);font-weight:500;font-size:var(--t-display);line-height:.95">Nocturne</div>
+  <div style="font-family:var(--f-display);font-weight:500;font-size:var(--t-2xl);line-height:1.1">Tonight's sky, 2xl</div>
+  <div style="font-family:var(--f-display);font-weight:500;font-size:var(--t-xl)">Practical, xl</div>
+  <div style="font-size:var(--t-lg)">Large 1.375rem: Doors 21:30, first show 22:00</div>
+  <div>Base 1.0625rem body. Saturn, 33.7° up, east-south-east. 12 EUR, students 8 EUR.</div>
+  <div style="font-size:var(--t-sm);color:var(--c-ink-dim)">Small 0.9375rem caption</div>
+  <div style="font-size:var(--t-xs);color:var(--c-ink-faint)">XS 0.8125rem chart label only</div>
+
+  <h2>Spacing</h2>
+  <div style="display:grid;gap:var(--s-2);max-width:400px">
+    <div class="bar" style="width:4px"></div><div class="bar" style="width:8px"></div><div class="bar" style="width:12px"></div><div class="bar" style="width:16px"></div><div class="bar" style="width:24px"></div><div class="bar" style="width:32px"></div><div class="bar" style="width:48px"></div><div class="bar" style="width:64px"></div><div class="bar" style="width:96px"></div><div class="bar" style="width:144px"></div>
+  </div>
+  <p>Radii: 0, 2px (components), 50% (sky chart only). Shadows: none.</p>
+
+  <h2>Components, five states</h2>
+  <div class="row">
+    <div><button class="btn">Book tickets</button><div class="state">default</div></div>
+    <div><button class="btn h">Book tickets</button><div class="state">hover</div></div>
+    <div><button class="btn f">Book tickets</button><div class="state">focus</div></div>
+    <div><button class="btn a">Book tickets</button><div class="state">active</div></div>
+    <div><button class="btn" disabled>Book tickets</button><div class="state">disabled</div></div>
+  </div>
+  <div class="row" style="margin-top:var(--s-5)">
+    <div><button class="q" aria-pressed="false">Vega</button><div class="state">default</div></div>
+    <div><button class="q h" aria-pressed="false">Vega</button><div class="state">hover</div></div>
+    <div><button class="q f" aria-pressed="false">Vega</button><div class="state">focus</div></div>
+    <div><button class="q" aria-pressed="true">Vega</button><div class="state">pressed</div></div>
+    <div><button class="q" disabled>Vega</button><div class="state">disabled</div></div>
+  </div>
+  <p style="margin-top:var(--s-5)"><a href="#">A link in body copy</a> (hover darkens the underline, 160ms).</p>
+  <p>Motion: UI 160ms cubic-bezier(0.2,0,0,1); stars 900ms cubic-bezier(0.22,1,0.36,1), bands at 0/180/360/720/1080/1440ms. See thesis.html for the live curve.</p>
+</body>
+</html>

@@ -1,0 +1,4 @@
+{ "_note": "Run once per build: root ../build-1/dist and ../build-2/dist. Selection stills: first screen, then half the scroll range.",
+  "root": "../build-1/dist", "w": 1440, "h": 900,
+  "probe": "({y: Math.round(scrollY), max: document.documentElement.scrollHeight - innerHeight, skyP: getComputedStyle(document.documentElement).getPropertyValue('--sky-p')})",
+  "steps": [ { "wait": 2500 }, { "still": "first" }, { "eval": "window.scrollTo(0, (document.documentElement.scrollHeight - innerHeight) * 0.5)" }, { "wait": 800 }, { "still": "mid" } ] }

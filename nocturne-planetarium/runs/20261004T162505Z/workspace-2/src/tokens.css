@@ -1,0 +1,64 @@
+/* Tokens mirrored from MASTER.md. Change MASTER.md first. */
+:root {
+  --c-dusk: #161c33;
+  --c-night-1: #0a0e1a;
+  --c-night-0: #05070d;
+  --c-ink: #e9ecf4;
+  --c-ink-dim: #a3abc2;
+  --c-ink-faint: #7d86a0;
+  --c-rule: #2a3250;
+  --c-edge: #6b7491;
+  --c-saturn: #e8c77a;
+  --c-saturn-hi: #f2d894;
+  --c-on-saturn: #05070d;
+  --c-focus: #e9ecf4;
+  --c-error: #f2998c;
+
+  --f-display: Futura, "Century Gothic", "Avenir Next", system-ui, sans-serif;
+  --f-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --t-xs: 0.8125rem;
+  --t-sm: 0.9375rem;
+  --t-base: 1.0625rem;
+  --t-lg: 1.375rem;
+  --t-xl: 2rem;
+  --t-2xl: clamp(2.25rem, 4.5vw, 3.25rem);
+  --t-display: clamp(3.5rem, 12vw, 9rem);
+
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 144px;
+  --measure: 62ch;
+  --page: 72rem;
+
+  --r-none: 0;
+  --r-sm: 2px;
+  --r-full: 50%;
+
+  --d-ui: 160ms;
+  --d-star: 900ms;
+  --e-ui: cubic-bezier(0.2, 0, 0, 1);
+  --e-star: cubic-bezier(0.22, 1, 0.36, 1);
+  --d-ui-exit: 120ms;
+  --e-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Sky chart, in SVG viewBox units (the horizon radius is 200). */
+  --chart-label: 9px;
+  /* Touch targets (mobile-principles). */
+  --target-min: 44px;
+  --target-primary: 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --d-ui: 0ms;
+    --d-ui-exit: 0ms;
+  }
+}

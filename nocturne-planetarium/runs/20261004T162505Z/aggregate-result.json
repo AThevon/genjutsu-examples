@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "claudeVersion": "2.1.289",
+  "startedAt": "2026-10-04T16:25:06.418Z",
+  "durationSeconds": 948,
+  "costUsd": 4.9093082,
+  "partial": false,
+  "suite": {
+    "root": "/private/tmp/genjutsu-eval-ex",
+    "ablation": "none",
+    "modelOverride": "claude-opus-5-5",
+    "caseFilter": "nocturne-planetarium",
+    "threshold": 1,
+    "concurrency": 1,
+    "plugins": [
+      {
+        "name": "genjutsu",
+        "version": "4.1.0",
+        "path": "/private/tmp/genjutsu-eval-ex"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "nocturne-planetarium",
+      "dir": "examples/nocturne-planetarium",
+      "source": "mixed",
+      "promptMarkdown": "/genjutsu:paint build the landing page for Nocturne, the late program of a planetarium in Lisbon.\n\nThe brief. The planetarium and its program are fictional, made up for this example: give the planetarium no name and do not name or suggest any real planetarium or venue. This is everything it has given us:\n\n- Nocturne is the planetarium's after-hours program. On Friday and Saturday nights the dome first shows the night sky above Lisbon as it is that evening, with a narrator, then a 40-minute show. Doors 21:30, first show 22:00, last show 23:30. Tickets 12 EUR, 8 EUR for students, booked at /tickets.\n- The hero is the sky over Lisbon as the dome will show it at 22:00 on Friday 9 October 2026. data/stars.json holds the brightest stars of the Yale Bright Star Catalogue (public domain) and the one bright planet above the horizon then, Saturn (from NASA JPL Horizons), with their altitude and azimuth already computed for that place and time, their magnitude and, for stars, their proper name when they have one. It also lists the Moon and the other planets, which are below the horizon or too faint at that time: do not draw them. Use it. Do not invent stars, constellation lines, events or claims that are not in the data or in this brief.\n- The page scrolls from dusk to the first show: the program, what is in tonight's sky, the practical information.\n- It is for adults in their 20s to 40s looking for an evening out, not school groups. There are no reviews and no attendance numbers yet: the program launches with this page.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+      "runsPerCase": 1,
+      "timeoutSeconds": 3600,
+      "maxTurns": 200,
+      "graders": [
+        {
+          "name": "page-has-content",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": {
+              "source": "file",
+              "path": "src/App.tsx"
+            },
+            "pattern": "<(main|section)(\\s[^>]*[^/])?>|^import\\s",
+            "flags": "m",
+            "match": "contains"
+          }
+        },
+        {
+          "name": "paint-fired",
+          "type": "tool_used",
+          "weight": 1,
+          "config": {
+            "tool": "Skill",
+            "input_match": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"",
+            "arm": "with-only"
+          }
+        },
+        {
+          "name": "paint-loaded",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "trace",
+            "pattern": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|#\\sPaint\\s-\\sThe\\sMaster\\sPainter",
+            "flags": "",
+            "match": "contains"
+          }
+        }
+      ],
+      "arms": {
+        "with": [
+          {
+            "score": 0.3333333333333333,
+            "passed": false,
+            "turns": 34,
+            "costUsd": 2.5326033999999997,
+            "judgeCostUsd": 0,
+            "durationSeconds": 496,
+            "startedAt": "2026-10-04T16:25:06.437Z",
+            "error": null,
+            "tracePath": "/private/tmp/e-Fqhl02/out/trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "page-has-content",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-fired",
+                "passed": false,
+                "weight": 1,
+                "explanation": "Skill called 0x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-loaded",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in trace",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          },
+          {
+            "score": 0.3333333333333333,
+            "passed": false,
+            "turns": 33,
+            "costUsd": 2.3767048000000006,
+            "judgeCostUsd": 0,
+            "durationSeconds": 452,
+            "startedAt": "2026-10-04T16:33:22.461Z",
+            "error": null,
+            "tracePath": "/private/tmp/e-nSbvC6/out/trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "page-has-content",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-fired",
+                "passed": false,
+                "weight": 1,
+                "explanation": "Skill called 0x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-loaded",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in trace",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          }
+        ]
+      },
+      "aggregates": {
+        "score": 0.3333333333333333,
+        "passRate": 0
+      }
+    }
+  ],
+  "aggregates": {
+    "casesTotal": 1,
+    "casesPassed": 0,
+    "overallScore": 0.3333333333333333,
+    "overallPassRate": 0
+  }
+}

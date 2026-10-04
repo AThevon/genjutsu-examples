@@ -1,0 +1,16 @@
+{
+ "_note": "Reads every star disc and the Saturn disc the built page drew (reduced motion, so all are at full opacity), with the SVG's on-screen box, for the sky check in receipt.md.",
+ "root": "../build-1/dist",
+ "w": 1440,
+ "h": 900,
+ "reduced": true,
+ "probe": "(()=>{const s=document.querySelector('svg.dome');const b=s.getBoundingClientRect();return {horizon:+s.querySelector('.dome-horizon').getAttribute('r'),center:[+s.querySelector('.dome-horizon').getAttribute('cx'),+s.querySelector('.dome-horizon').getAttribute('cy')],box:[b.left,b.top,b.width,b.height],vb:s.getAttribute('viewBox'),stars:[...s.querySelectorAll('.dome-bin circle')].map(c=>[+c.getAttribute('cx'),+c.getAttribute('cy'),+c.getAttribute('r')]),saturn:[...s.querySelectorAll('.dome-saturn circle')].map(c=>[+c.getAttribute('cx'),+c.getAttribute('cy')]),labels:[...s.querySelectorAll('.dome-label')].map(t=>[t.textContent,+t.getAttribute('x'),+t.getAttribute('y')]),opac:[...s.querySelectorAll('.dome-bin')].map(g=>+getComputedStyle(g).opacity)}})()",
+ "steps": [
+  {
+   "wait": 42
+  },
+  {
+   "still": "sky-check"
+  }
+ ]
+}

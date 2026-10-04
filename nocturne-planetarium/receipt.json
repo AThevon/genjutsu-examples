@@ -1,0 +1,248 @@
+{
+  "example": "nocturne-planetarium",
+  "skill": "paint",
+  "kind": "new product",
+  "stack": "React 19 + Vite + TypeScript, plain CSS, no animation library (template react)",
+  "prompt": "/genjutsu:paint build the landing page for Nocturne, the late program of a planetarium in Lisbon.\n\nThe brief. The planetarium and its program are fictional, made up for this example: give the planetarium no name and do not name or suggest any real planetarium or venue. This is everything it has given us:\n\n- Nocturne is the planetarium's after-hours program. On Friday and Saturday nights the dome first shows the night sky above Lisbon as it is that evening, with a narrator, then a 40-minute show. Doors 21:30, first show 22:00, last show 23:30. Tickets 12 EUR, 8 EUR for students, booked at /tickets.\n- The hero is the sky over Lisbon as the dome will show it at 22:00 on Friday 9 October 2026. data/stars.json holds the brightest stars of the Yale Bright Star Catalogue (public domain) and the one bright planet above the horizon then, Saturn (from NASA JPL Horizons), with their altitude and azimuth already computed for that place and time, their magnitude and, for stars, their proper name when they have one. It also lists the Moon and the other planets, which are below the horizon or too faint at that time: do not draw them. Use it. Do not invent stars, constellation lines, events or claims that are not in the data or in this brief.\n- The page scrolls from dusk to the first show: the program, what is in tonight's sky, the practical information.\n- It is for adults in their 20s to 40s looking for an evening out, not school groups. There are no reviews and no attendance numbers yet: the program launches with this page.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+  "genjutsu": {
+    "version": "4.1.0",
+    "commit": "09c177b"
+  },
+  "harness": {
+    "tool": "claude plugin eval",
+    "claudeCodeVersion": "2.1.289",
+    "headless": true,
+    "note": "Nobody answered the gates; the skill's 'When nobody is answering' rule applied."
+  },
+  "model": "claude-opus-5-5",
+  "costUsd": 2.5326,
+  "costUsdAllRuns": 4.9093,
+  "turns": 34,
+  "durationSeconds": 496,
+  "date": "2026-10-04",
+  "startedAt": "2026-10-04T16:25:06.437Z",
+  "runDir": "runs/20261004T162505Z",
+  "workspace": "workspace-1",
+  "tracePath": "/private/tmp/e-Fqhl02/out/trace.jsonl",
+  "modulesLoaded": [
+    "tells",
+    "ui-ux-pro-max",
+    "motion-principles",
+    "css-native",
+    "mobile-principles",
+    "design-audit"
+  ],
+  "referencesLoaded": [
+    "tells/references/web.md"
+  ],
+  "scriptsRun": [
+    "ui-ux-pro-max/scripts/search.py --design-system --variance 6 --motion 3 --density 3",
+    "design-audit/scripts/audit.py",
+    "design-audit/scripts/audit.py --group tells"
+  ],
+  "modulesLoadedNote": "From the trace: one load_skill/load_ref call (tells, tells/references/web.md), then cat of each module's SKILL.md. The run hit the 4.1.0 resolver bug ($1/$2 in the loader block substituted with words of the request) and said so: \"its module-loading block had a substitution error (`the/` where the module name should be). I used a corrected loader with the same lookup order.\" The paint skill came in through the /genjutsu:paint slash command, not a Skill tool call, so the graders paint-fired and paint-loaded scored it as not loaded (case score 0.33).",
+  "visualThesis": "the page is the dome at night. Ground: dusk blue (#1a2747) at the top, darkening to night (#06080f) as you scroll. Hero: the 22:00 Lisbon sky drawn from `data/stars.json`. Stars are sized by magnitude and tinted by their catalogue B-V colour; Saturn is marked and named. Accent: one dim red (#ef7b6a), used only for booking. It is the light people read star charts by in the dark. Type: the system sans, weight 300 for display and 400 for body, tabular figures, no monospace. There is no webfont because the build is offline. Spacing and shape: airy, 8px base, a sticky dome beside the text on wide screens, flat with 1px hairlines and 2px radii.",
+  "thesis": "the sky follows the scroll, never a timer. The ground goes from dusk to night and stars appear by magnitude, from 1.5 down to 4.5. Hover and focus are 160ms `cubic-bezier(0.2, 0, 0, 1)`, colour and opacity only. The ring that marks a chosen star uses the same curve. Forbidden: scroll reveals, parallax, twinkling or any other loop, bounce, scale, a scroll cue. Reduced motion shows the full sky from the start and sets every transition to 0ms.",
+  "allowedPatterns": "the dome chart from the data, its hairline altitude circles (0/30/60°) and N/E/S/W letters, a dark ground, the scroll-linked sky, tabular figures, a 1px rule between star-table rows, the Saturn ring marker, the dim red accent.",
+  "unvalidated": true,
+  "unvalidatedQuote": "Nobody was available to approve the theses or the design system, so both are **UNVALIDATED**.",
+  "audit": {
+    "summary": "Audit: 11 checked, 3 problems found, 3 handed over",
+    "checked": 11,
+    "problemsFound": 3,
+    "handedOver": 3,
+    "problems": [
+      "Important: on narrow screens, choosing a star rings it on the dome, but the dome has already scrolled out of view, so you don't see it happen.",
+      "Nice-to-have: a few literal numbers in Dome.tsx aren't in MASTER.md (label offsets, the -3.6° placement of N/E/S/W).",
+      "Nice-to-have: the media-query breakpoints (960px, 560px) are in MASTER.md but literals in the CSS."
+    ],
+    "tells": "audit.py --group tells returned 0 of 18; hover-no-transition argued as a false positive",
+    "runSelfReport": "The run could not build or open a browser (no Node runtime in the sandbox); it checked the TypeScript by reading it and handed over npm run build, a performance trace, the 375/768/1024/1440 px check and the reduced-motion check as UNVERIFIED."
+  },
+  "selection": "selected from 2 runs",
+  "runsRecorded": 2,
+  "selectedRun": 1,
+  "selectionWhy": [
+    "Run 2's first screen has a visible defect: the display word 'Nocturne' (Futura, 9rem) is 622 px wide in a 460 px column, runs 114 px under the sky chart, and its final 'e' is hidden behind the chart's disc (title right edge 766 px, chart left edge 652 px at 1440x900). Run 2 handed '1440px: nothing clipped' over as UNVERIFIED; it fails.",
+    "Run 1 carries the brief's 'the page scrolls from dusk to the first show' in the hero itself: sticky dome, the ground darkens and the stars come out by magnitude with the scroll. Run 2 shows the full sky at once (a one-time fade-in on load) and draws the same chart twice.",
+    "Run 2's hero sky is the richer first image; run 1's first screen shows only the brightest few bodies, by design (dusk). That is the cost of the choice."
+  ],
+  "otherRun": {
+    "run": 2,
+    "costUsd": 2.3767,
+    "turns": 33,
+    "durationSeconds": 452,
+    "tracePath": "/private/tmp/e-nSbvC6/out/trace.jsonl",
+    "audit": "Audit: 12 checked, 3 problems found, 3 handed over",
+    "modulesLoaded": [
+      "tells",
+      "ui-ux-pro-max",
+      "motion-principles",
+      "css-native",
+      "mobile-principles",
+      "design-audit"
+    ],
+    "previewFiles": [
+      "preview/thesis.html",
+      "preview/design-system.html"
+    ],
+    "build": "succeeded first try, 0 edits",
+    "defect": "display title overflows its column and is clipped by the sky chart at 1440x900"
+  },
+  "build": {
+    "succeeded": true,
+    "command": "npm run build (tsc --noEmit && vite build)",
+    "humanEdits": 0,
+    "editsDiff": null,
+    "note": "Both runs built clean on the first try in build-1/ and build-2/ with node_modules copied from the template. The runs themselves never got to build."
+  },
+  "humanEdits": 0,
+  "previewFiles": [
+    "preview/thesis.html",
+    "preview/design-system.html"
+  ],
+  "skyCheck": {
+    "method": "On the built page (takes/sky-check.json probe, takes/sky-check.py), not on its code: discs read from the SVG with reduced motion (all magnitude groups at opacity 1); each star's expected place computed from its alt/az in data/stars.json for a chart seen from below (zenith centre, horizon rim, north up, east left), scaled by the horizon circle the page drew; nearest drawn disc matched; pixel at the expected screen position read in the screenshot.",
+    "discsDrawn": 403,
+    "starsInData": 403,
+    "distinctDiscsMatched": 401,
+    "distinctNote": "79 Zeta UMa and 13 Delta Ser are each listed twice at the same position in the catalogue.",
+    "maxOffsetViewBoxUnits": 0.07,
+    "saturnExact": true,
+    "onlyPlanetDrawn": "Saturn",
+    "moonDrawn": false,
+    "orientation": "Capella (az 40, NE) drawn upper left; Altair (az 225, SW) drawn lower right.",
+    "brightestNamedChecked": [
+      "Vega",
+      "Capella",
+      "Altair",
+      "Fomalhaut",
+      "Deneb",
+      "Alnair",
+      "Alioth",
+      "Mirfak",
+      "Dubhe",
+      "Kaus Australis",
+      "Saturn"
+    ],
+    "result": "Every one is a lit star pixel at its expected screen position on a (6, 8, 15) sky; the page's text claims restate the data."
+  },
+  "media": [
+    {
+      "file": "media/clip.webp",
+      "what": "3 s hold on the hero at dusk (no time-based motion, no pointer reaction, so no pointer pass), then a steady 5 s scroll through the whole page: the ground darkens and the stars come out by magnitude on the sticky dome",
+      "viewport": "1440x900",
+      "size": "1200x750",
+      "bytes": 563894,
+      "frames": 41,
+      "fps": 8,
+      "durationSeconds": 8.7,
+      "quality": 30,
+      "encoder": "takes/encode-clip.sh"
+    },
+    {
+      "file": "media/desktop.png",
+      "what": "Desktop first screen (dusk: only the brightest bodies)",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 115862
+    },
+    {
+      "file": "media/mobile.png",
+      "what": "Mobile first screen: the intro only, the sky is below the fold",
+      "viewport": "390x844 @2x",
+      "size": "780x1688",
+      "bytes": 123413
+    },
+    {
+      "file": "media/mobile-sky.png",
+      "what": "Mobile, the pinned dome at the end of its pin (full night)",
+      "viewport": "390x844 @2x",
+      "size": "780x1688",
+      "bytes": 116459
+    },
+    {
+      "file": "media/full-desktop.webp",
+      "what": "The whole page as loaded (scroll 0, dusk), one tall captureBeyondViewport capture; the sticky dome is drawn once, where it sits at load",
+      "viewport": "1440 wide, 3529 tall document",
+      "size": "1000x2451",
+      "bytes": 65102,
+      "static": true,
+      "tool": "takes/fullpage.mjs"
+    },
+    {
+      "file": "media/reduced.png",
+      "what": "prefers-reduced-motion: reduce; first screen, full sky and night ground from the start",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 137676
+    },
+    {
+      "file": "media/preview.png",
+      "what": "preview/thesis.html, the thesis page the run wrote before touching src/, scrolled to 45% (limiting magnitude 3.09)",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 126233
+    },
+    {
+      "file": "media/design-system.png",
+      "what": "preview/design-system.html, first screen: colour tokens with contrast",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 103937
+    },
+    {
+      "file": "media/run-1-mid.png",
+      "what": "Selection still, run 1 at half the scroll range",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 181419
+    },
+    {
+      "file": "media/run-2-first.png",
+      "what": "Selection still, run 2 first screen (the clipped 'Nocturne')",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 226946
+    },
+    {
+      "file": "media/run-2-mid.png",
+      "what": "Selection still, run 2 at half the scroll range",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 228241
+    }
+  ],
+  "captureNotes": [
+    "Captured with bin/record.mjs: the static build served from disk over CDP, no server, virtual time. Takes are in takes/.",
+    "No console errors, uncaught exceptions or failed requests in any take.",
+    "clip.webp: record.mjs's own ladder only fit 600 KB at 600 px wide (the ground colour changes every frame). The 24 fps frames it kept were re-encoded with takes/encode-clip.sh: every 3rd scroll frame (8 fps), quality 30, 1200x750, the 3 s hold (72 byte-identical frames) as one 3000 ms frame. 8.7 s, under the 10 s asked, to fit the budget at 1200 px.",
+    "full-desktop.webp: record.mjs has no full-page mode; takes/fullpage.mjs serves the build the same way and takes one captureBeyondViewport screenshot at scroll 0."
+  ],
+  "defects": [
+    "Narrow screens: choosing a star in the list rings it on a dome 1241 px above the viewport (the run's own Important finding, confirmed at 390x844).",
+    "Mobile first screen has no sky: at 390x844 the first screen is the intro alone with empty space under the button, though the brief makes the sky the hero.",
+    "Mobile facts grid: '12 EUR, students 8 EUR' wraps and pushes 'Last show 23:30' beside it out of line."
+  ],
+  "notes": [
+    "On desktop the first screen shows only Capella, Vega, Deneb, Altair, Fomalhaut, Saturn and a half-faded Alnair; the rest come in with the scroll. That is the thesis, not a defect."
+  ],
+  "graders": [
+    {
+      "name": "page-has-content",
+      "passed": true,
+      "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s"
+    },
+    {
+      "name": "paint-fired",
+      "passed": false,
+      "explanation": "Skill called 0x (expected 1..∞)"
+    },
+    {
+      "name": "paint-loaded",
+      "passed": false,
+      "explanation": "pattern not found in trace"
+    }
+  ],
+  "score": 0.3333333333333333
+}

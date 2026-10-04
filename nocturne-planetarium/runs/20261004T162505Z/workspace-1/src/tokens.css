@@ -1,0 +1,88 @@
+/* Generated from MASTER.md. Change MASTER.md first, then this file. */
+:root {
+  /* Colour */
+  --c-night: #06080f;
+  --c-dusk: #1a2747;
+  --c-ink: #e6e9f0;
+  --c-ink-muted: #9aa3b5;
+  --c-rule: #6b7488;
+  --c-accent: #ef7b6a;
+  --c-accent-hover: #f59a8b;
+  --c-accent-active: #d9685a;
+  --c-on-accent: #06080f;
+  --c-saturn: #e9cf9a;
+  --c-disabled: #3a4255;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-label: 600;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.75rem;
+  --fs-2xl: clamp(2rem, 4vw, 2.75rem);
+  --fs-display: clamp(3.5rem, 9vw, 7rem);
+  --lh-tight: 1.05;
+  --lh-snug: 1.25;
+  --lh-body: 1.6;
+  --measure: 34rem;
+
+  /* Spacing, 8px base */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10: 160px;
+
+  /* Shape */
+  --r-sm: 2px;
+  --bw: 1px;
+  --target: 44px;
+  --focus-w: 2px;
+  --focus-offset: 3px;
+
+  /* Layout */
+  --max: 1360px;
+  --z-base: 0;
+  --z-content: 10;
+  --z-skip: 50;
+  --screen: 100svh;
+  --pin-length: 180svh;
+  --col-time: 5rem;
+  --col-num: 5rem;
+  --col-num-sm: 4rem;
+  --col-alt: 4rem;
+  --col-alt-sm: 3rem;
+  --fact-min: 8rem;
+
+  /* Chart, in SVG view units (viewBox 1000) */
+  --chart-cardinal: 24px;
+  --chart-label: 20px;
+  --chart-scale: 16px;
+  --chart-stroke: 1;
+  --chart-stroke-strong: 1.5;
+  --chart-stroke-ring: 2;
+
+  /* Motion */
+  --dur-fast: 160ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Sky progress, 0 at dusk, 1 at night. Written by useSkyProgress. */
+  --sky-p: 0;
+  --sky-lim: calc(1.5 + var(--sky-p) * 3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --sky-p: 1;
+  }
+}

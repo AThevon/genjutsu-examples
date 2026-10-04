@@ -1,0 +1,24 @@
+{
+ "_note": "Recorded at 24 fps with --keep-frames, then encoded by takes/encode-clip.sh (8 fps, quality 30, 1200x750; the 3 s hold, 72 identical frames, stored as one frame of 3000 ms), because record.mjs's own encoding ladder only got under 600 KB at 600 px wide.",
+ "root": "../build-1/dist",
+ "w": 1440,
+ "h": 900,
+ "fps": 24,
+ "width": 1200,
+ "probe": "({y: Math.round(scrollY), skyP: getComputedStyle(document.documentElement).getPropertyValue('--sky-p')})",
+ "steps": [
+  {
+   "wait": 3000
+  },
+  {
+   "scroll": {
+    "to": 2629,
+    "duration": 5000,
+    "ease": "linear"
+   }
+  },
+  {
+   "wait": 500
+  }
+ ]
+}

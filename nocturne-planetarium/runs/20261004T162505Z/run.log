@@ -1,0 +1,23 @@
+Note: --scaffold runs each case's scaffold_script as you. Only use it on case files you (or your org) authored.
+Plugin under test: "genjutsu" version "4.1.0" at "/private/tmp/genjutsu-eval-ex"
+  scaffold: /private/tmp/genjutsu-eval-ex/examples/nocturne-planetarium/fixture.sh
+  kept temp: /private/tmp/e-Fqhl02
+⚠ kept /private/tmp/e-Fqhl02: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-Fqhl02/sealed (mode 000; the kept directory is read-only) — open them with `chmod 700 /private/tmp/e-Fqhl02 /private/tmp/e-Fqhl02/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  nocturne-planetarium run 1/2: score 0.33  $2.53
+    ✓ page-has-content (weight 1): matched <(main|section)(\s[^>]*[^/])?>|^import\s
+    ✗ paint-fired (weight 1): Skill called 0x (expected 1..∞)
+    ✗ paint-loaded (weight 1): pattern not found in trace
+  scaffold: /private/tmp/genjutsu-eval-ex/examples/nocturne-planetarium/fixture.sh
+  kept temp: /private/tmp/e-nSbvC6
+⚠ kept /private/tmp/e-nSbvC6: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-nSbvC6/sealed (mode 000; the kept directory is read-only) — open them with `chmod 700 /private/tmp/e-nSbvC6 /private/tmp/e-nSbvC6/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  nocturne-planetarium run 2/2: score 0.33  $2.38
+    ✓ page-has-content (weight 1): matched <(main|section)(\s[^>]*[^/])?>|^import\s
+    ✗ paint-fired (weight 1): Skill called 0x (expected 1..∞)
+    ✗ paint-loaded (weight 1): pattern not found in trace
+✗ nocturne-planetarium  score 0.33  (2 runs)  $4.91
+
+CASE                  SCORE PASS% RUNS COST    NOTES
+nocturne-planetarium  0.33  0%    2    $4.91   paint-fired: Skill called 0x (expected 1..∞)
+
+1 case(s) · 948s · $4.91
+Report: nocturne-planetarium/runs/20261004T162505Z/report.html
