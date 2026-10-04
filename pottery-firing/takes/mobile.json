@@ -1,0 +1,1 @@
+{ "root": "../build-20261004T162515Z-1/dist", "w": 390, "h": 844, "dpr": 2, "steps": [ { "wait": 500 }, { "still": "mobile" } ] }

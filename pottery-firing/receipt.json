@@ -1,0 +1,140 @@
+{
+  "example": "pottery-firing",
+  "skill": "cast",
+  "stack": "React 19 + Vite + TypeScript, GSAP 3 ScrollTrigger (template react-gsap)",
+  "prompt": "/genjutsu:cast pin our pottery studio's four firing stages and scrub them with the scroll\n\nAtelier Grès is a fictional pottery studio, made up for this example.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the firing stages section. You may edit files under src/ and index.html, and write previews under preview/; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+  "genjutsu": {
+    "version": "4.1.0",
+    "commit": "09c177b"
+  },
+  "harness": {
+    "tool": "claude plugin eval",
+    "claudeCodeVersion": "2.1.289",
+    "headless": true,
+    "note": "Nobody answered the gates; the skill's 'When nobody is answering' rule applied."
+  },
+  "model": "claude-opus-5-5",
+  "costUsd": 1.5256,
+  "turns": 23,
+  "durationSeconds": 333,
+  "date": "2026-10-04",
+  "startedAt": "2026-10-04T16:25:16.639Z",
+  "modulesLoaded": [
+    "motion-principles",
+    "gsap",
+    "tells",
+    "mobile-principles"
+  ],
+  "referencesLoaded": [
+    "tells/references/web.md"
+  ],
+  "scriptsRun": [
+    "design-audit/scripts/audit.py --group tells"
+  ],
+  "modulesLoadedNote": "From the run's load_skill / load_ref calls in the trace. The cast skill itself came in through the /genjutsu:cast slash command, not a Skill tool call, so the harness graders cast-fired and cast-loaded scored it as not loaded (case score 0.33); the trace shows the skill's own setup script and module loader running.",
+  "thesis": "The firing stages section pins for 300% of the viewport height. A GSAP ScrollTrigger scrub (`scrub: 0.6`, timeline `ease: \"none\"`) draws the studio's own firing curve as one SVG line: room temperature, up to 950 °C, back down, up to 1280 °C, then a slow fall. As the line crosses into each stage's segment, that stage's text takes over from the previous one: out over 0.2 of a stage (opacity → 0, y → −24px, `power2.in`), then in over 0.2 of a stage (opacity 0 → 1, y 24 → 0, `power2.out`). With reduced motion, or on a viewport under 560px tall, it stays the static list with the full curve drawn.",
+  "allowedPatterns": "the pinned section, a schematic line chart (temperature vs. stage, not to scale in time).",
+  "unvalidated": true,
+  "unvalidatedQuote": "Interaction thesis (UNVALIDATED, headless run)",
+  "audit": {
+    "summary": "Audit: 10 checked, 2 problems found (1 in this run, 1 already in the project), 3 handed over",
+    "problemsFound": 2,
+    "problemsFromThisRun": 1,
+    "problemsAlreadyInProject": 1,
+    "handedOver": 3,
+    "tells": "audit.py --group tells: 18 checked, 0 findings, 0 tells to confront",
+    "tellsRow": "| Tells (`audit.py --group tells`) | pass | 18 checks, 0 findings. Manual read: no fake product, no em dash, and the copy is the original copy. The existing `stage-index` numbers 1–4 were already in the project and are left as they were. |",
+    "runSelfReport": "The run could not build or open a browser (no Node runtime in the sandbox); it checked types by hand and listed npm run build and browser checks as UNVERIFIED."
+  },
+  "selection": "first pass",
+  "runsRecorded": 1,
+  "build": {
+    "succeeded": true,
+    "command": "npm run build (tsc --noEmit && vite build)",
+    "humanEdits": 0,
+    "editsDiff": null,
+    "note": "Built as the run left it, node_modules copied from the template. The run itself never got to build; it built clean here on the first try."
+  },
+  "humanEdits": 0,
+  "previewFiles": [
+    "preview/thesis.html",
+    "preview/variants.html"
+  ],
+  "variantPicked": "A (subtle). B and C add a dot and a temperature readout the run rejected as invented data.",
+  "media": [
+    {
+      "file": "media/clip.webp",
+      "what": "Scroll from just above 'The four firings' through the whole pinned, scrubbed section: all four stages play, the firing curve draws",
+      "viewport": "1440x900",
+      "size": "1200x750",
+      "bytes": 576738,
+      "durationSeconds": 7.167,
+      "fps": 24
+    },
+    {
+      "file": "media/desktop.png",
+      "what": "Desktop first screen",
+      "viewport": "1440x900",
+      "bytes": 69475
+    },
+    {
+      "file": "media/mobile.png",
+      "what": "Mobile first screen",
+      "viewport": "390x844 @2x",
+      "bytes": 98298
+    },
+    {
+      "file": "media/mid-page.png",
+      "what": "Desktop, pinned section mid-scrub (glaze firing)",
+      "viewport": "1440x900",
+      "bytes": 78932
+    },
+    {
+      "file": "media/mobile-pinned.png",
+      "what": "Mobile, pinned section mid-scrub (glaze firing); the run handed this check over as UNVERIFIED: the card fits, no horizontal scroll",
+      "viewport": "390x844 @2x",
+      "bytes": 143802
+    },
+    {
+      "file": "media/reduced-motion.png",
+      "what": "prefers-reduced-motion: reduce; no pin, full curve drawn, static list",
+      "viewport": "1440x900",
+      "bytes": 92277
+    },
+    {
+      "file": "media/preview.png",
+      "what": "preview/thesis.html, the thesis page the run wrote before touching src/ (inner frame scrolled to 62%)",
+      "viewport": "1440x900",
+      "bytes": 168523
+    },
+    {
+      "file": "media/preview-variants.png",
+      "what": "preview/variants.html, variants A, B, C side by side (inner frames scrolled to 62%)",
+      "viewport": "1440x900",
+      "bytes": 165032
+    }
+  ],
+  "captureNotes": [
+    "Captured with bin/record.mjs: the static build served from disk over CDP, no server, virtual time. Takes are in takes/.",
+    "No console errors, uncaught exceptions or failed requests in any take.",
+    "In preview/thesis.html, during the scrub the stage text sits on top of the 'Drying' label under the curve (visible in preview.png). That is the preview as written; the built page does not do it."
+  ],
+  "graders": [
+    {
+      "name": "cast-fired",
+      "passed": false,
+      "explanation": "Skill called 0x (expected 1..∞)"
+    },
+    {
+      "name": "cast-loaded",
+      "passed": false,
+      "explanation": "pattern not found in trace"
+    },
+    {
+      "name": "page-has-content",
+      "passed": true,
+      "explanation": "matched gsap|ScrollTrigger|[Tt]imeline|useScroll|requestAnimationFrame|[Ss]croll|from\\s+[\"']\\.\\.?/"
+    }
+  ],
+  "score": 0.3333333333333333
+}

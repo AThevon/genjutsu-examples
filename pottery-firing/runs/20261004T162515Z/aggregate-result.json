@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "claudeVersion": "2.1.289",
+  "startedAt": "2026-10-04T16:25:16.614Z",
+  "durationSeconds": 333,
+  "costUsd": 1.5256328000000001,
+  "partial": false,
+  "suite": {
+    "root": "/private/tmp/genjutsu-eval-ex",
+    "ablation": "none",
+    "modelOverride": "claude-opus-5-5",
+    "caseFilter": "pottery-firing",
+    "threshold": 1,
+    "concurrency": 1,
+    "plugins": [
+      {
+        "name": "genjutsu",
+        "version": "4.1.0",
+        "path": "/private/tmp/genjutsu-eval-ex"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "pottery-firing",
+      "dir": "examples/pottery-firing",
+      "source": "mixed",
+      "promptMarkdown": "/genjutsu:cast pin our pottery studio's four firing stages and scrub them with the scroll\n\nAtelier Grès is a fictional pottery studio, made up for this example.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the firing stages section. You may edit files under src/ and index.html, and write previews under preview/; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+      "runsPerCase": 1,
+      "timeoutSeconds": 2400,
+      "maxTurns": 150,
+      "graders": [
+        {
+          "name": "cast-fired",
+          "type": "tool_used",
+          "weight": 1,
+          "config": {
+            "tool": "Skill",
+            "input_match": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?cast\"",
+            "arm": "with-only"
+          }
+        },
+        {
+          "name": "cast-loaded",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "trace",
+            "pattern": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?cast\"|#\\sCast\\s-\\sThe\\sIllusionist",
+            "flags": "",
+            "match": "contains"
+          }
+        },
+        {
+          "name": "page-has-content",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": {
+              "source": "file",
+              "path": "src/Firings.tsx"
+            },
+            "pattern": "gsap|ScrollTrigger|[Tt]imeline|useScroll|requestAnimationFrame|[Ss]croll|from\\s+[\"']\\.\\.?/",
+            "flags": "",
+            "match": "contains"
+          }
+        }
+      ],
+      "arms": {
+        "with": [
+          {
+            "score": 0.3333333333333333,
+            "passed": false,
+            "turns": 23,
+            "costUsd": 1.5256328000000001,
+            "judgeCostUsd": 0,
+            "durationSeconds": 333,
+            "startedAt": "2026-10-04T16:25:16.639Z",
+            "error": null,
+            "tracePath": "/private/tmp/e-qzma6T/out/trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "cast-fired",
+                "passed": false,
+                "weight": 1,
+                "explanation": "Skill called 0x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "cast-loaded",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in trace",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "page-has-content",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched gsap|ScrollTrigger|[Tt]imeline|useScroll|requestAnimationFrame|[Ss]croll|from\\s+[\"']\\.\\.?/",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          }
+        ]
+      },
+      "aggregates": {
+        "score": 0.3333333333333333,
+        "passRate": 0
+      }
+    }
+  ],
+  "aggregates": {
+    "casesTotal": 1,
+    "casesPassed": 0,
+    "overallScore": 0.3333333333333333,
+    "overallPassRate": 0
+  }
+}

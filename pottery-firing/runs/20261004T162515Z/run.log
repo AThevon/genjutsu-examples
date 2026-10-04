@@ -1,0 +1,16 @@
+Note: --scaffold runs each case's scaffold_script as you. Only use it on case files you (or your org) authored.
+Plugin under test: "genjutsu" version "4.1.0" at "/private/tmp/genjutsu-eval-ex"
+  scaffold: /private/tmp/genjutsu-eval-ex/examples/pottery-firing/fixture.sh
+  kept temp: /private/tmp/e-qzma6T
+⚠ kept /private/tmp/e-qzma6T: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-qzma6T/sealed (mode 000; the kept directory is read-only) — open them with `chmod 700 /private/tmp/e-qzma6T /private/tmp/e-qzma6T/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  pottery-firing run 1/1: score 0.33  $1.53
+    ✗ cast-fired (weight 1): Skill called 0x (expected 1..∞)
+    ✗ cast-loaded (weight 1): pattern not found in trace
+    ✓ page-has-content (weight 1): matched gsap|ScrollTrigger|[Tt]imeline|useScroll|requestAnimationFrame|[Ss]croll|from\s+["']\.\.?/
+✗ pottery-firing  score 0.33  (1 run)  $1.53
+
+CASE            SCORE PASS% RUNS COST    NOTES
+pottery-firing  0.33  0%    1    $1.53   cast-fired: Skill called 0x (expected 1..∞)
+
+1 case(s) · 333s · $1.53
+Report: pottery-firing/runs/20261004T162515Z/report.html

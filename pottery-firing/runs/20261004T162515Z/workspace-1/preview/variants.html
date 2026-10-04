@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Variants preview - firing stages pin + scrub (throwaway)</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, "Times New Roman", serif; color: #2b2621; background: #f4efe8; line-height: 1.5; }
+  main { max-width: 1280px; margin: 0 auto; padding: 2rem; }
+  h1 { font-weight: 400; margin: 0 0 .25rem; }
+  .note { color: #5b5148; max-width: 80ch; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+  .variant h2 { font-size: 1.05rem; font-weight: 400; margin: 0; }
+  .variant p.cap { margin: .25rem 0 .5rem; font-size: .9rem; color: #5b5148; min-height: 4.5em; }
+  button { font: inherit; padding: .35rem .8rem; border: 1px solid #8a6f57; background: #fbf8f4; color: #2b2621; border-radius: 4px; cursor: pointer; }
+  button:hover { background: #efe6db; }
+  button:focus-visible { outline: 2px solid #2b2621; outline-offset: 2px; }
+  .scroller { height: 380px; overflow-y: auto; border: 1px solid #e2d8cc; border-radius: 4px; margin-top: .5rem; }
+  .track { height: 400%; }
+  .panel { position: sticky; top: 0; height: 380px; padding: 1rem; display: grid; grid-template-rows: auto 1fr; gap: .5rem; transition: background-color 0s; }
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .stages { display: grid; list-style: none; margin: 0; padding: 0; }
+  .stage { grid-area: 1 / 1; }
+  .stage h3 { margin: 0; font-weight: 400; font-size: 1.1rem; }
+  .stage .m { margin: 0; font-style: italic; color: #8a6f57; font-size: .9rem; }
+  .stage p { margin: .2rem 0 0; font-size: .85rem; }
+  .temp { font-variant-numeric: tabular-nums; font-size: 13px; fill: #2b2621; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Firing stages - three variants of one thesis</h1>
+  <p class="note"><strong>Interaction thesis:</strong> pin the section for 300% of the viewport height. A <code>scrub: 0.6</code> timeline draws the studio's firing curve, and each stage's text takes over (0.2 of a stage, opacity + 24px, <code>power2.in</code> out / <code>power2.out</code> in) as the line crosses into its segment. <strong>Allowed patterns:</strong> the pinned section, a schematic line chart.<br>
+  The variants differ only in what rides on the line. This page is a proposal, not the build. Vanilla JS, no GSAP: the scrub smoothing is approximated.</p>
+  <button id="all" type="button">Play all three together</button>
+
+  <div class="row" id="row"></div>
+</main>
+
+<template id="tpl">
+  <section class="variant">
+    <h2></h2>
+    <p class="cap"></p>
+    <button class="one" type="button">Replay</button>
+    <div class="scroller">
+      <div class="track">
+        <div class="panel">
+          <svg viewBox="0 0 800 260" aria-hidden="true">
+            <path class="bg" fill="none" stroke="#e2d8cc" stroke-width="2" />
+            <path class="line" fill="none" stroke="#8a6f57" stroke-width="2.5" />
+            <circle class="dot" r="7" fill="#2b2621" style="display:none" />
+            <text class="temp" style="display:none"></text>
+            <g fill="#5b5148" font-size="15" text-anchor="middle">
+              <text x="100" y="250">Drying</text><text x="300" y="250">Bisque</text><text x="500" y="250">Glaze</text><text x="700" y="250">Cooling</text>
+            </g>
+          </svg>
+          <ol class="stages">
+            <li class="stage"><h3>1. Drying</h3><p class="m">About a week</p><p>Pieces dry slowly until they are bone dry.</p></li>
+            <li class="stage"><h3>2. Bisque firing</h3><p class="m">Around 950 °C</p><p>Dry clay becomes ceramic for good.</p></li>
+            <li class="stage"><h3>3. Glaze firing</h3><p class="m">Around 1280 °C, in reduction</p><p>The glaze melts, the body vitrifies.</p></li>
+            <li class="stage"><h3>4. Cooling</h3><p class="m">Slowly, over about 24 hours</p><p>The kiln stays shut while it cools.</p></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+  const D = "M0,217 L200,217 C240,217 270,79 300,79 L320,79 C350,79 370,217 400,217 C450,217 520,30 560,30 L600,30 C640,30 700,200 800,214";
+  const variants = [
+    { name: "A - Kiln log (subtle)", cap: "Exactly the thesis: the line draws, the text hands over. Nothing else moves.", dot: false, heat: false },
+    { name: "B - Kiln log with marker (balanced)", cap: "A, plus a dot riding the head of the line and a °C value read from the curve's height.", dot: true, heat: false },
+    { name: "C - Kiln log with heat (impressive)", cap: "B, plus the drawn line shifting from clay #8a6f57 toward #b4532a with temperature.", dot: true, heat: true },
+  ];
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const p2in = (x) => x * x, p2out = (x) => 1 - (1 - x) * (1 - x);
+  const mix = (a, b, k) => { const h = (s, i) => parseInt(s.slice(i, i + 2), 16); return "rgb(" + [1, 3, 5].map((i) => Math.round(h(a, i) + (h(b, i) - h(a, i)) * k)).join(",") + ")"; };
+  const tempAt = (y) => Math.max(20, Math.round(((220 - y) / 190) * 1280 / 10) * 10);
+
+  const instances = variants.map((v) => {
+    const node = document.getElementById("tpl").content.cloneNode(true);
+    const root = node.querySelector(".variant");
+    root.querySelector("h2").textContent = v.name;
+    root.querySelector(".cap").textContent = v.cap;
+    document.getElementById("row").appendChild(node);
+    const line = root.querySelector(".line"), dot = root.querySelector(".dot"), temp = root.querySelector(".temp");
+    root.querySelector(".bg").setAttribute("d", D); line.setAttribute("d", D);
+    const total = line.getTotalLength(), samples = [];
+    for (let i = 0; i <= 800; i++) { const l = (i / 800) * total, pt = line.getPointAtLength(l); samples.push([pt.x, l, pt.y]); }
+    const at = (x) => { let lo = 0, hi = samples.length - 1; while (lo < hi) { const m = (lo + hi) >> 1; samples[m][0] < x ? lo = m + 1 : hi = m; } return samples[lo]; };
+    line.style.strokeDasharray = total;
+    if (v.dot) { dot.style.display = ""; temp.style.display = ""; }
+    const stages = [...root.querySelectorAll(".stage")], scroller = root.querySelector(".scroller");
+    const inst = { scroller, target: 0, smooth: 0 };
+    inst.render = (t) => {
+      const [x, len, y] = at((t / 4) * 800);
+      line.style.strokeDashoffset = total - len;
+      if (v.dot) { dot.setAttribute("transform", `translate(${x},${y})`); temp.setAttribute("x", Math.min(x + 12, 740)); temp.setAttribute("y", y - 12); temp.textContent = tempAt(y) + " °C"; }
+      if (v.heat) line.style.stroke = mix("#8a6f57", "#b4532a", clamp((tempAt(y) - 20) / 1260));
+      stages.forEach((el, i) => {
+        let o = 1, yy = 0;
+        if (i > 0) { const k = clamp((t - i) / 0.2); o = p2out(k); yy = 24 * (1 - p2out(k)); }
+        if (i < 3 && t > i + 0.8) { const k = clamp((t - (i + 0.8)) / 0.2); o = 1 - p2in(k); yy = -24 * p2in(k); }
+        el.style.opacity = o; el.style.transform = `translateY(${yy}px)`;
+      });
+    };
+    scroller.addEventListener("scroll", () => { inst.target = scroller.scrollTop / (scroller.scrollHeight - scroller.clientHeight); });
+    inst.play = () => {
+      scroller.scrollTop = 0; inst.target = inst.smooth = 0;
+      const t0 = performance.now(), max = scroller.scrollHeight - scroller.clientHeight;
+      const step = (now) => { const k = clamp((now - t0) / 6000); scroller.scrollTop = k * max; if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    };
+    root.querySelector(".one").addEventListener("click", inst.play);
+    return inst;
+  });
+
+  let last = performance.now();
+  const tick = (now) => {
+    const dt = (now - last) / 1000; last = now;
+    instances.forEach((i) => { i.smooth += (i.target - i.smooth) * (1 - Math.exp(-dt / 0.2)); i.render(i.smooth * 4); });
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+  document.getElementById("all").addEventListener("click", () => instances.forEach((i) => i.play()));
+</script>
+</body>
+</html>

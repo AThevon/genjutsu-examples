@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thesis preview - firing stages pin + scrub (throwaway)</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, "Times New Roman", serif; color: #2b2621; background: #f4efe8; line-height: 1.6; }
+  main { max-width: 1040px; margin: 0 auto; padding: 2rem; }
+  h1 { font-weight: 400; margin: 0 0 .25rem; }
+  .note { color: #5b5148; max-width: 70ch; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+  .card { background: #fbf8f4; border: 1px solid #e2d8cc; border-radius: 4px; padding: 1.25rem; }
+  .card h2 { font-size: 1.1rem; font-weight: 400; margin: 0 0 .5rem; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  td { border-top: 1px solid #e2d8cc; padding: .35rem .25rem; vertical-align: top; }
+  td:first-child { color: #5b5148; width: 45%; }
+  code { font-size: .85rem; }
+  button { font: inherit; padding: .4rem .9rem; border: 1px solid #8a6f57; background: #fbf8f4; color: #2b2621; border-radius: 4px; cursor: pointer; }
+  button:hover { background: #efe6db; }
+  button:focus-visible { outline: 2px solid #2b2621; outline-offset: 2px; }
+  label { font-size: .9rem; color: #5b5148; }
+  .controls { display: flex; gap: 1rem; align-items: center; margin: 1rem 0 .5rem; flex-wrap: wrap; }
+  /* the demo: a scrollable frame standing in for the page; the panel is sticky (= pinned) */
+  .scroller { height: 400px; overflow-y: auto; border: 1px solid #e2d8cc; border-radius: 4px; background: #f4efe8; }
+  .track { height: 400%; position: relative; }
+  .panel { position: sticky; top: 0; height: 400px; padding: 1.25rem 1.5rem; display: grid; grid-template-rows: auto 1fr; gap: .75rem; }
+  .curve { width: 100%; height: auto; display: block; }
+  .stages { display: grid; margin: 0; padding: 0; list-style: none; }
+  .stage { grid-area: 1 / 1; }
+  .stage h3 { margin: 0; font-weight: 400; font-size: 1.3rem; }
+  .stage .m { margin: 0; font-style: italic; color: #8a6f57; }
+  .stage p { margin: .25rem 0 0; font-size: .95rem; max-width: 60ch; }
+  .reduced .stages { gap: 1rem; }
+  .reduced .stage { grid-area: auto; }
+  .reduced .track { height: auto; }
+  .reduced .panel { position: static; height: auto; }
+  .ease-plot text { font-size: 11px; fill: #5b5148; font-family: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Firing stages - interaction thesis</h1>
+  <p class="note"><strong>Interaction thesis:</strong> the firing stages section pins for 300% of the viewport height. A GSAP ScrollTrigger scrub (<code>scrub: 0.6</code>, timeline <code>ease: "none"</code>) draws the studio's own firing curve as one SVG line: ambient, up to 950 °C, back down, up to 1280 °C, then a slow fall. As the line crosses into each stage's segment, that stage's text takes over from the previous one: out over 0.2 of a stage (opacity → 0, y → −24px, <code>power2.in</code>), then in over 0.2 of a stage (opacity 0 → 1, y 24 → 0, <code>power2.out</code>). With reduced motion, or on a viewport under 560px tall, it stays the static list with the full curve drawn.<br>
+  <strong>Allowed patterns:</strong> the pinned section, a schematic line chart (temperature vs. stage, not to scale in time).</p>
+  <p class="note">This page is the proposal, not the build. It is vanilla JS with no GSAP, so the scrub smoothing is approximated. Scroll inside the frame, or press Replay.</p>
+
+  <div class="controls">
+    <button id="replay" type="button">Replay</button>
+    <label><input type="checkbox" id="rm" /> Reduced motion (degraded version)</label>
+    <span class="note" id="readout" aria-live="off"></span>
+  </div>
+
+  <div class="scroller" id="scroller">
+    <div class="track">
+      <div class="panel">
+        <svg class="curve" viewBox="0 0 800 240" role="img" aria-label="Firing curve: ambient, 950 °C bisque, 1280 °C glaze, slow cooling">
+          <path d="M0,217 L200,217 C240,217 270,79 300,79 L320,79 C350,79 370,217 400,217 C450,217 520,30 560,30 L600,30 C640,30 700,200 800,214" fill="none" stroke="#e2d8cc" stroke-width="2" />
+          <path id="line" d="M0,217 L200,217 C240,217 270,79 300,79 L320,79 C350,79 370,217 400,217 C450,217 520,30 560,30 L600,30 C640,30 700,200 800,214" fill="none" stroke="#8a6f57" stroke-width="2.5" />
+          <g fill="#5b5148" font-size="14" text-anchor="middle" font-family="Georgia, serif">
+            <text x="100" y="236">Drying</text><text x="300" y="236">Bisque</text><text x="500" y="236">Glaze</text><text x="700" y="236">Cooling</text>
+          </g>
+        </svg>
+        <ol class="stages" id="stages">
+          <li class="stage"><h3>1. Drying</h3><p class="m">About a week</p><p>Freshly thrown pieces dry slowly, first under plastic, then in the open air, until they are bone dry.</p></li>
+          <li class="stage"><h3>2. Bisque firing</h3><p class="m">Around 950 °C</p><p>The first firing turns dry clay into ceramic for good.</p></li>
+          <li class="stage"><h3>3. Glaze firing</h3><p class="m">Around 1280 °C, in reduction</p><p>The second firing melts the glaze and vitrifies the stoneware body.</p></li>
+          <li class="stage"><h3>4. Cooling</h3><p class="m">Slowly, over about 24 hours</p><p>The kiln stays shut while it cools.</p></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>The numbers</h2>
+      <table>
+        <tr><td>Pin length</td><td><code>end: "+=300%"</code></td></tr>
+        <tr><td>Scrub smoothing</td><td><code>scrub: 0.6</code> (seconds to catch up)</td></tr>
+        <tr><td>Timeline</td><td>4 units, one per stage, <code>ease: "none"</code></td></tr>
+        <tr><td>Curve draw</td><td>stroke-dashoffset, linear in x across the 4 units</td></tr>
+        <tr><td>Text out</td><td>0.2 unit before each boundary: opacity 1→0, y 0→−24px, <code>power2.in</code></td></tr>
+        <tr><td>Text in</td><td>0.2 unit after each boundary: opacity 0→1, y 24→0, <code>power2.out</code></td></tr>
+        <tr><td>Degrades when</td><td><code>prefers-reduced-motion: reduce</code> or <code>max-height: 559px</code>: static list, full curve</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h2>Easing curves</h2>
+      <svg class="ease-plot" viewBox="0 0 360 160" width="100%" aria-hidden="true">
+        <g transform="translate(10,10)">
+          <rect width="100" height="100" fill="none" stroke="#e2d8cc" />
+          <path d="M0,100 L100,0" stroke="#8a6f57" fill="none" stroke-width="2" />
+          <text x="0" y="125">none (timeline)</text>
+          <text x="0" y="140">y = x</text>
+        </g>
+        <g transform="translate(130,10)">
+          <rect width="100" height="100" fill="none" stroke="#e2d8cc" />
+          <path id="p2in" stroke="#8a6f57" fill="none" stroke-width="2" />
+          <text x="0" y="125">power2.in (text out)</text>
+          <text x="0" y="140">y = x²</text>
+        </g>
+        <g transform="translate(250,10)">
+          <rect width="100" height="100" fill="none" stroke="#e2d8cc" />
+          <path id="p2out" stroke="#8a6f57" fill="none" stroke-width="2" />
+          <text x="0" y="125">power2.out (text in)</text>
+          <text x="0" y="140">y = 1 − (1 − x)²</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</main>
+<script>
+  const plot = (id, f) => {
+    let d = "";
+    for (let i = 0; i <= 50; i++) { const x = i / 50; d += (i ? "L" : "M") + (x * 100).toFixed(1) + "," + (100 - f(x) * 100).toFixed(1); }
+    document.getElementById(id).setAttribute("d", d);
+  };
+  const p2in = (x) => x * x, p2out = (x) => 1 - (1 - x) * (1 - x);
+  plot("p2in", p2in); plot("p2out", p2out);
+
+  const scroller = document.getElementById("scroller");
+  const line = document.getElementById("line");
+  const stages = [...document.querySelectorAll(".stage")];
+  const total = line.getTotalLength();
+  // x -> path length lookup (the path's x never goes backwards)
+  const samples = [];
+  for (let i = 0; i <= 800; i++) { const l = (i / 800) * total; samples.push([line.getPointAtLength(l).x, l]); }
+  const lenAtX = (x) => { let lo = 0, hi = samples.length - 1; while (lo < hi) { const m = (lo + hi) >> 1; samples[m][0] < x ? lo = m + 1 : hi = m; } return samples[lo][1]; };
+  line.style.strokeDasharray = total;
+
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  let target = 0, smooth = 0, last = performance.now();
+  const render = (t) => {               // t in 0..4 timeline units
+    line.style.strokeDashoffset = total - lenAtX((t / 4) * 800);
+    stages.forEach((el, i) => {
+      let o = 1, y = 0;
+      if (i > 0) { const k = clamp((t - i) / 0.2); o = p2out(k); y = 24 * (1 - p2out(k)); }
+      if (i < 3 && t > i + 1 - 0.2) { const k = clamp((t - (i + 1 - 0.2)) / 0.2); o = 1 - p2in(k); y = -24 * p2in(k); }
+      el.style.opacity = o; el.style.transform = `translateY(${y}px)`;
+    });
+    document.getElementById("readout").textContent = `timeline ${t.toFixed(2)} / 4`;
+  };
+  const tick = (now) => {
+    const dt = (now - last) / 1000; last = now;
+    smooth += (target - smooth) * (1 - Math.exp(-dt / (0.6 / 3)));   // ~settles in 0.6s
+    if (!document.body.classList.contains("reduced")) render(smooth * 4);
+    requestAnimationFrame(tick);
+  };
+  scroller.addEventListener("scroll", () => { target = scroller.scrollTop / (scroller.scrollHeight - scroller.clientHeight); });
+  requestAnimationFrame(tick);
+
+  document.getElementById("replay").addEventListener("click", () => {
+    scroller.scrollTop = 0; target = smooth = 0;
+    const t0 = performance.now(), max = scroller.scrollHeight - scroller.clientHeight;
+    const step = (now) => { const k = clamp((now - t0) / 6000); scroller.scrollTop = k * max; if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+  document.getElementById("rm").addEventListener("change", (e) => {
+    document.body.classList.toggle("reduced", e.target.checked);
+    if (e.target.checked) { line.style.strokeDashoffset = 0; stages.forEach((el) => { el.style.opacity = 1; el.style.transform = "none"; }); document.getElementById("readout").textContent = "static list, full curve"; }
+  });
+</script>
+</body>
+</html>

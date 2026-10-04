@@ -1,0 +1,3 @@
+{ "root": "../build-20261004T162515Z-1/dist", "w": 390, "h": 844, "dpr": 2,
+  "probe": "(()=>{const s=document.querySelector('.firings');const g=document.querySelectorAll('.stage')[2].getBoundingClientRect();return {y:Math.round(scrollY),pinned:s.classList.contains('is-pinned'),glazeBottom:Math.round(g.bottom),docW:document.documentElement.scrollWidth,op:[...document.querySelectorAll('.stage')].map(e=>(+getComputedStyle(e).opacity).toFixed(2)).join(',')}})()",
+  "steps": [ { "wait": 300 }, { "eval": "window.scrollTo(0, document.querySelector('.firings').getBoundingClientRect().top + scrollY + innerHeight * 3 * 0.62)" }, { "wait": 1200 }, { "still": "mobile-pinned" } ] }

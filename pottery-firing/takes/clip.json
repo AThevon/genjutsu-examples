@@ -1,0 +1,38 @@
+{
+  "root": "../build-20261004T162515Z-1/dist",
+  "w": 1440,
+  "h": 900,
+  "fps": 24,
+  "width": 1200,
+  "steps": [
+    {
+      "scroll": {
+        "to": 500,
+        "duration": 1
+      }
+    },
+    {
+      "wait": 200
+    },
+    {
+      "scroll": {
+        "to": 2300,
+        "duration": 3918,
+        "ease": "linear"
+      }
+    },
+    {
+      "still": "mid-page"
+    },
+    {
+      "scroll": {
+        "to": 3440,
+        "duration": 2483,
+        "ease": "linear"
+      }
+    },
+    {
+      "wait": 500
+    }
+  ]
+}
