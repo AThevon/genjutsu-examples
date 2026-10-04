@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Records a static build in headless Chrome as a looping animated WebP, with no server and no
+// Records a static build (or, with `live`, a deployed site) in headless Chrome as a looping animated WebP, with no server and no
 // dependency (Node 22 or later, a Chrome binary, and ImageMagick's `magick` with WebP support).
 //
 // Every request to a fake origin (default http://site.test) is answered from the build folder on
@@ -29,7 +29,9 @@
 //                   [--origin http://site.test] [--chrome <path>] [--keep-frames]
 //
 // take.json:
-//   root      the static build folder, relative to the take file (required)
+//   root      the static build folder, relative to the take file (required unless live)
+//   live      a deployed site to film instead of a build, e.g. "https://chef-ovatio.vercel.app":
+//             requests go to the network and nothing is served from disk
 //   path      the route to open (default "/")
 //   w, h      the viewport in CSS pixels (required)
 //   dpr       device pixel ratio of the capture (default 1)
@@ -382,7 +384,8 @@ const cursorJs = (kind) => {
 
 export async function record({ take, takeDir = process.cwd(), out, maxKb = 600, width, origin = 'http://site.test', chrome, keepFrames = false }) {
   if (typeof WebSocket === 'undefined') throw new Error('record.mjs needs Node 22 or later (built-in WebSocket)')
-  if (!take || !take.root || !take.w || !take.h) throw new Error('a take needs root, w and h')
+  if (take && take.live) { origin = String(take.live).replace(/\/$/, ''); take = { ...take, root: take.root || '.' } }
+  if (!take || !take.root || !take.w || !take.h) throw new Error('a take needs root (or live), w and h')
   if (!Array.isArray(take.steps)) throw new Error('a take needs a steps array')
   const path = take.path || '/'
   if (!path.startsWith('/')) throw new Error(`the take path must start with "/": ${JSON.stringify(path)}`)
@@ -391,7 +394,7 @@ export async function record({ take, takeDir = process.cwd(), out, maxKb = 600, 
   const dpr = Number(take.dpr) || 1
   const base = resolve(takeDir, take.root)
   if (!existsSync(base)) throw new Error(`no build folder at ${base}`)
-  if (!resolveFile(base, path)) throw new Error(`the build at ${base} has no page for ${path}`)
+  if (!take.live && !resolveFile(base, path)) throw new Error(`the build at ${base} has no page for ${path}`)
   const bin = findChrome(chrome)
   if (!bin) throw new Error('no Chrome or Chromium found: pass --chrome <path> or set CHROME_PATH')
   try { execFileSync('magick', ['-version'], { stdio: 'ignore' }) } catch { throw new Error('ImageMagick (magick) is not on the PATH') }
@@ -494,7 +497,7 @@ export async function record({ take, takeDir = process.cwd(), out, maxKb = 600, 
         requestUrls.set(msg.params.requestId, msg.params.request.url)
       } else if (msg.method === 'Network.loadingFailed' && !msg.params.canceled) {
         summary.failedRequests.push(`${msg.params.errorText} ${(requestUrls.get(msg.params.requestId) || '').slice(0, 200)}`)
-      } else if (msg.method === 'Network.responseReceived' && msg.params.response.status >= 400 && !msg.params.response.url.startsWith(origin)) {
+      } else if (msg.method === 'Network.responseReceived' && msg.params.response.status >= 400 && (take.live || !msg.params.response.url.startsWith(origin))) {
         summary.failedRequests.push(`${msg.params.response.status} ${msg.params.response.url.slice(0, 200)}`)
       } else if (msg.method === 'Runtime.consoleAPICalled' && msg.params.type === 'error') {
         summary.consoleErrors.push(msg.params.args.map(a => a.value ?? a.description ?? '').join(' ').slice(0, 300))
@@ -504,7 +507,7 @@ export async function record({ take, takeDir = process.cwd(), out, maxKb = 600, 
       }
     })
 
-    await S('Fetch.enable', { patterns: [{ urlPattern: `${origin}/*` }] })
+    if (!take.live) await S('Fetch.enable', { patterns: [{ urlPattern: `${origin}/*` }] })
     await S('Network.enable')
     await S('Page.enable')
     await S('Runtime.enable')

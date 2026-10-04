@@ -1,0 +1,26 @@
+{
+  "live": "https://chef-ovatio.vercel.app",
+  "path": "/",
+  "w": 1440,
+  "h": 900,
+  "dpr": 1,
+  "fps": 24,
+  "width": 1200,
+  "settle": 1500,
+  "probe": "JSON.stringify({sy: Math.round(scrollY)})",
+  "steps": [
+    {
+      "wait": 1200
+    },
+    {
+      "scroll": {
+        "to": 1980,
+        "duration": 5500,
+        "ease": "inOut"
+      }
+    },
+    {
+      "wait": 1200
+    }
+  ]
+}

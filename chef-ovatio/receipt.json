@@ -1,0 +1,180 @@
+{
+  "example": "chef-ovatio",
+  "skill": "bunshin",
+  "client": "real: Chef Ovatio, private chef and culinary consultant (Touraine, South of France, Switzerland)",
+  "live": "https://chef-ovatio.vercel.app",
+  "source": "the client's private repository, not published",
+  "mode": "bunshin run, before v4.1.0: the run bunshin was extracted from, not a /genjutsu:bunshin call",
+  "stack": "Astro (static) on Vercel, French and English",
+  "genjutsu": {
+    "version": "4.0.0",
+    "commit": "a0f6e09",
+    "skill": "paint",
+    "with": "Impeccable"
+  },
+  "harness": {
+    "driver": "Claude Code 2.1.284",
+    "note": "one main session driving subagents through eight workflows: research, pages, review, fixes, verdict, round3, final-verdict, round4 (nine runs: the fixes workflow was started twice)"
+  },
+  "model": "claude-opus-5-5",
+  "date": "2026-09-29",
+  "startedAt": "2026-09-29T16:05:26Z",
+  "lastCommitAt": "2026-09-29T22:23:01Z",
+  "given": [
+    "the chef's public Instagram profile (posts listed by script, photos and captions read; not published here)",
+    "a short request in French for a first draft made with Impeccable, for a site the chef owns, edits with AI and ships by pushing to main (private message, not reproduced)"
+  ],
+  "humanAnswers": [
+    {
+      "gate": "product questions",
+      "answers": {
+        "stack": "Astro + Vercel",
+        "lead offer": "private chef first, consulting on its own B2B page",
+        "languages": "French and English",
+        "contact": "guided request form plus WhatsApp"
+      },
+      "note": "all four were the recommended option"
+    },
+    {
+      "gate": "direction",
+      "offered": [
+        "L'Affiche de la Riviera",
+        "Le Marbre du passe (Impeccable's pick)",
+        "a new draw",
+        "the sector standard"
+      ],
+      "answer": "L'Affiche de la Riviera"
+    }
+  ],
+  "humanEdits": 0,
+  "cost": {
+    "subagentTokens": "about 10.5M",
+    "duration": "six to eight hours",
+    "mainSession": "not measured",
+    "usd": null,
+    "source": "the figure genjutsu publishes for this run (skills/bunshin/SKILL.md, CHANGELOG 4.1.0)"
+  },
+  "pages": {
+    "home": [
+      "/",
+      "/en/"
+    ],
+    "private chef": [
+      "/chef-prive",
+      "/en/private-chef"
+    ],
+    "carnet": [
+      "/carnet",
+      "/en/menu"
+    ],
+    "consulting": [
+      "/consulting",
+      "/en/consulting"
+    ],
+    "the chef": [
+      "/le-chef",
+      "/en/the-chef"
+    ],
+    "request": [
+      "/demande",
+      "/en/enquiry"
+    ],
+    "legal notice": [
+      "/mentions-legales",
+      "/en/legal"
+    ]
+  },
+  "loop": [
+    {
+      "step": "research",
+      "angles": 4,
+      "sitesReviewed": 59
+    },
+    {
+      "step": "build",
+      "pageBuilders": 6,
+      "note": "home and shared components in the main session first"
+    },
+    {
+      "step": "review",
+      "lenses": [
+        "finish",
+        "mobile",
+        "desktop",
+        "copy",
+        "tech"
+      ],
+      "findings": 91,
+      "planFixes": 55,
+      "rejected": 21,
+      "questionsForChef": 12
+    },
+    {
+      "step": "refine 1",
+      "from": "the review plan",
+      "owners": 8,
+      "done": 68,
+      "notDone": 13,
+      "buildsPassing": true
+    },
+    {
+      "step": "verdict 1",
+      "finish": "36 of 38 priority fixes resolved",
+      "artDirector": "12 items, 1 critical",
+      "disposition": "fix"
+    },
+    {
+      "step": "refine 2",
+      "from": "decisions file (round3.md)",
+      "owners": 8,
+      "done": 104,
+      "notDone": 39,
+      "buildsPassing": false,
+      "note": "one owner's build check failed on a file another owner was editing"
+    },
+    {
+      "step": "verdict 2",
+      "finish": "15 of 17 resolved, 2 partial, 3 minor left",
+      "artDirector": "8 left, 5 major",
+      "disposition": "fix"
+    },
+    {
+      "step": "refine 3",
+      "from": "verdict 2",
+      "owners": 6,
+      "done": 50,
+      "notDone": 26,
+      "buildsPassing": true
+    }
+  ],
+  "stop": "no stop rule yet: the session stopped after refine 3 and committed; no verdict read the site after it",
+  "leftForTheChef": "110 lines marked À VALIDER or À COMPLÉTER in src/content (name, WhatsApp, phone, email, legal notice, career facts)",
+  "media": {
+    "cover": "media/home-desktop.png",
+    "readmeCover": "readme-media/chef-ovatio/home-desktop.webp",
+    "clip": {
+      "file": "media/clip.webp",
+      "take": "takes/home-clip.json",
+      "viewport": "1440x900",
+      "output": "1200x750",
+      "seconds": 7.875,
+      "fps": 8,
+      "quality": 15,
+      "bytes": 693282,
+      "encoder": "takes/encode-clip.py"
+    },
+    "stills": [
+      "media/home-desktop.png",
+      "media/home-mobile.png",
+      "media/carnet-desktop.png",
+      "media/carnet-mobile.png"
+    ],
+    "recordedFrom": "the live site (record.mjs take option live)",
+    "failedRequests": [
+      "404 /_vercel/insights/script.js (Web Analytics not enabled on the project)"
+    ],
+    "consoleErrors": 0,
+    "exceptions": 0
+  },
+  "caption": "A real client's site, from his public Instagram profile and two answers: the stack, the lead offer, the languages and the contact in one round of questions, then the direction. Seven pages in French and English, live at chef-ovatio.vercel.app. Scrolling the home, the noon-yellow sky turns to sunset orange as the plate-sun sets behind the cobalt horizon, before the two doors, Recevoir and Conseiller, and the first plates. 1440x900 viewport, scaled to 1200x750."
+}

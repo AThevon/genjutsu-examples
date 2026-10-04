@@ -1,0 +1,17 @@
+{
+  "live": "https://chef-ovatio.vercel.app",
+  "path": "/carnet",
+  "w": 390,
+  "h": 844,
+  "dpr": 2,
+  "settle": 1500,
+  "probe": "JSON.stringify({sy: scrollY, h: document.documentElement.scrollHeight})",
+  "steps": [
+    {
+      "wait": 1500
+    },
+    {
+      "still": "carnet-mobile"
+    }
+  ]
+}
