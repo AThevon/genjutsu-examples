@@ -1,0 +1,219 @@
+{
+  "example": "etale-landing",
+  "skill": "paint",
+  "stack": "React 19 + Vite + TypeScript, vanilla CSS, no animation library (template react)",
+  "prompt": "/genjutsu:paint build the landing page for Étale.\n\nThe brief. Étale is a fictional product made up for this example, and this is everything its founders have given us:\n\n- Étale is an iPhone app for people who swim in the cold water of Aquatic Park, San Francisco, all year round. It answers one question before you walk down to the beach: when is the water slack (étale is the French word for slack water, the still moment between ebb and flood, when the current is weakest), and how strong the current runs between two slacks.\n- Its numbers come from two NOAA CO-OPS stations, and data/tide.json holds one real day of both, 2 October 2026, as fetched from NOAA: the tide predictions of station 9414290 San Francisco, and the slack water and current predictions of station SFB1204 (Alcatraz Island, southwest of, the closest predicted current station, in the bay off the cove). The file names each station, where it is, its datum and its units. Use those numbers and label each one with its date and its station. Slack water is not high or low tide: take the slack times from the current predictions. The app shows no water temperature, so the page must not either. Do not invent any other figure.\n- The swimmers it is for train there before work, mostly without a wetsuit. They already know the cove and read the tide themselves on a printed table or a weather site. They want the next slack window at a glance, and an alert the evening before.\n- What exists: an iOS beta on TestFlight. No Android, no web app, no prices, no user numbers, no testimonials. The page has one job: get a swimmer onto the TestFlight beta, at /beta.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+  "genjutsu": {
+    "version": "4.1.0",
+    "commit": "09c177b"
+  },
+  "harness": {
+    "tool": "claude plugin eval",
+    "claudeCodeVersion": "2.1.289",
+    "headless": true,
+    "note": "Nobody answered the gates; the skill's 'When nobody is answering' rule applied."
+  },
+  "model": "claude-opus-5-5",
+  "costUsd": 2.8694,
+  "turns": 42,
+  "durationSeconds": 534,
+  "date": "2026-10-04",
+  "startedAt": "2026-10-04T16:33:29.429Z",
+  "runsDir": "runs/20261004T162451Z",
+  "chosenWorkspace": "workspace-1",
+  "chosenTrace": "/private/tmp/e-elnz6V/out/trace.jsonl",
+  "workspaceToRunNote": "workspace-1 holds the output of the harness's run 2/2 (trace /private/tmp/e-elnz6V, started 16:33:29Z) and workspace-2 the output of run 1/2 (trace /private/tmp/e-ybGOkd, started 16:24:53Z): checked by the files each trace writes (data.ts, CurrentDay.tsx, TideChart.tsx, src/tokens.css vs tide.ts, DayChart.tsx, src/styles/tokens.css) and by file times. The cost, turns and duration here are run 2's.",
+  "otherRun": {
+    "workspace": "workspace-2",
+    "trace": "/private/tmp/e-ybGOkd/out/trace.jsonl",
+    "costUsd": 2.7404,
+    "turns": 34,
+    "durationSeconds": 516
+  },
+  "totalCostBothRunsUsd": 5.6098,
+  "modulesLoaded": [
+    "tells",
+    "ui-ux-pro-max",
+    "motion-principles",
+    "css-native",
+    "mobile-principles",
+    "design-audit"
+  ],
+  "referencesLoaded": [
+    "tells/references/web.md"
+  ],
+  "scriptsRun": [
+    "ui-ux-pro-max/scripts/search.py --design-system (variance 3, motion 2, density 4)",
+    "design-audit/scripts/audit.py",
+    "design-audit/scripts/audit.py --group tells"
+  ],
+  "modulesLoadedNote": "From the trace: this run loaded each module by cat of _jutsu/<module>/SKILL.md (or GUIDE.md), not through load_skill, because the skill's resolver block reached it with broken paths ('the/...'): the known 4.1.0 bug where Claude Code substitutes $1/$2 in the resolver with words of the typed request (fixed on fix/skill-arguments, to ship as 4.1.1). The run said so in its report. The paint skill itself came in through the /genjutsu:paint slash command, not a Skill tool call, and its text is not in the trace, so the harness graders paint-fired and paint-loaded scored it as not loaded (case score 0.33 on both runs).",
+  "thesis": {
+    "visual": "- **Colour:** a cold green-black ground (#0F1615) and pale cool ink (#E6ECE9). The current is drawn in sea-glass green (#8DB3A6), flood above the line and ebb below. One warm colour, slack amber (#EDB95E), is used only for slack times and the beta button.\n- **Type:** the iPhone's own system face (SF Pro through `system-ui`) with tabular figures. Slack times are large and light (300), headings medium (500).\n- **Spacing:** airy, on an 8px base.\n- **Shapes:** flat filled surfaces, 2px corners, no borders, no shadows.",
+    "interaction": "nothing moves on load or on scroll.\n- Picking a slack slides the marker in 240ms with `cubic-bezier(0.2, 0, 0, 1)` and crossfades its figures (160ms out, then 160ms in).\n- Hover and press change colour only, in 160ms.\n- Forbidden: scroll reveals, parallax, loops or waves, bounce, scale on hover, and anything that plays on load."
+  },
+  "allowedPatterns": "tabular figures (no monospace), and a zero line and hour ticks inside the two charts. Because the thesis is unvalidated, this allows nothing, and the audit found neither as a problem.",
+  "unvalidated": true,
+  "unvalidatedQuote": "## Theses (UNVALIDATED)",
+  "audit": {
+    "summary": "Audit: checked here (11 checked, 1 small problem)",
+    "problemsFound": 1,
+    "problem": "index.html repeats the ground colour (#0f1615) in theme-color, because HTML can't read a CSS token.",
+    "tells": "--group tells ran 18 checks with 0 findings",
+    "handedOver": [
+      "npm run build (node is blocked here)",
+      "smoothness in DevTools Performance while switching slacks",
+      "layout at 375 / 768 / 1024 / 1440 px: no horizontal scroll; chart labels don't overlap at 375 px",
+      "reduced motion: marker and figures change instantly"
+    ],
+    "runSelfReport": "The sandbox blocked node and npm; the run type-checked with the native TypeScript 7 binary from node_modules (tsc --noEmit passed) and listed the Vite build and the browser checks as not verified."
+  },
+  "selection": "selected from 2 runs",
+  "runsRecorded": 2,
+  "selectionWhy": "workspace-1 puts the product's answer on the first screen: next to the headline and the beta button sits a panel with the day's three slacks (05:57, 10:31, 16:17 at SFB1204), a picker, the strongest current before and after the picked slack, and a strip of the four current peaks with the slacks marked. Mid-page, its tide curve at 9414290 with the slack lines drawn on it shows the brief's main point (slack is not high or low tide) as a picture, then a table of the gaps. workspace-2 is a good, careful single column, but its first screen is a headline, a paragraph and the button with the first slack below them, and its middle is a list of the strongest currents and a plain table: it reads as a text page, weaker as a homepage example. Both builds are honest to the data. workspace-1 has a horizontal overflow workspace-2 does not have (workspace-2 measured at 390, 768 and 1440: scrollWidth equals the viewport); it was picked anyway as the stronger homepage, and the defect is documented below, not hidden.",
+  "comparisonStills": [
+    "compare/1/first-1.png",
+    "compare/1/mid-1.png",
+    "compare/2/first-2.png",
+    "compare/2/mid-2.png"
+  ],
+  "build": {
+    "succeeded": true,
+    "command": "npm run build (tsc --noEmit && vite build)",
+    "humanEdits": 0,
+    "editsDiff": null,
+    "note": "Both workspaces built clean on the first try with node_modules copied from the react template (build-1, build-2). The run itself never ran the Vite build."
+  },
+  "humanEdits": 0,
+  "previewFiles": [
+    "preview/thesis.html",
+    "preview/design-system.html"
+  ],
+  "masterMd": "MASTER.md (written by the run)",
+  "media": [
+    {
+      "file": "media/desktop.png",
+      "what": "Desktop first screen",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 159085
+    },
+    {
+      "file": "media/mobile.png",
+      "what": "Mobile first screen",
+      "viewport": "390x844 @2x",
+      "size": "780x1688",
+      "bytes": 183410
+    },
+    {
+      "file": "media/full-desktop.webp",
+      "what": "The whole page, static, captured in one 1440x3135 viewport (the page is 3135 px tall at 1440 and uses no vh units, so the layout is the same as at 1440x900) and scaled down",
+      "viewport": "1440x3135",
+      "size": "1000x2177",
+      "bytes": 93636
+    },
+    {
+      "file": "media/clip.webp",
+      "what": "First screen held 2 s, then a steady linear scroll from the top to the bottom of the page (0 to 2235 px) in 9 s, then 0.6 s at the footer",
+      "viewport": "1440x900",
+      "size": "600x375",
+      "bytes": 589594,
+      "durationSeconds": 11.625,
+      "fps": 8,
+      "frames": 74,
+      "quality": 28,
+      "note": "Not 1200 px wide: a 9 s scroll through this text-dense page does not fit 600 KB at 1200 px at any watchable frame rate (1200 px at 4 fps q25 was 748 KB; at 8 fps q50 1944 KB). Kept the budget and a steady 8 fps, and gave up width. The 1200 px version is media/clip-1200.webp."
+    },
+    {
+      "file": "media/clip-1200.webp",
+      "what": "The same take at 1200 px, over the 600 KB budget (alternative, not the README clip)",
+      "viewport": "1440x900",
+      "size": "1200x750",
+      "bytes": 1808254,
+      "durationSeconds": 11.625,
+      "fps": 8,
+      "frames": 74,
+      "quality": 40
+    },
+    {
+      "file": "media/mid-page.png",
+      "what": "Desktop, scrolled to the middle of the page (1118 px): tide curve with slack lines, the turns table, 'The evening before'",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 127799
+    },
+    {
+      "file": "media/reduced.png",
+      "what": "prefers-reduced-motion: reduce, first screen. Pixel-identical to desktop.png: nothing moves on load in either mode; the probe shows --dur-slide at 0s, so only the slack picker's slide and crossfade change",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 159085
+    },
+    {
+      "file": "media/preview.png",
+      "what": "preview/thesis.html, the thesis page the run wrote before touching src/ (top of the page)",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 188086
+    },
+    {
+      "file": "media/preview-design-system.png",
+      "what": "preview/design-system.html, the design system page (scrolled 210 px: colour tokens with computed contrast, start of the type scale)",
+      "viewport": "1440x900",
+      "size": "1440x900",
+      "bytes": 132598
+    }
+  ],
+  "captureNotes": [
+    "Captured with bin/record.mjs: the static build served from disk over CDP, no server, virtual time. Takes are in takes/.",
+    "The clip frames come from takes/clip.json (record.mjs, --keep-frames); record.mjs's own ladder could not get under 600 KB (650 KB at 420 px), so they were re-encoded with takes/encode-clip.py (magick, 8 fps, identical frames merged).",
+    "No console errors, uncaught exceptions or failed requests in any take."
+  ],
+  "defects": [
+    {
+      "what": "Horizontal overflow from the slack marker in the hero panel. .strip__marker is a full-width layer (inset: 0) moved with translateX(<slack minute as % of the day>), so it sticks out of the plot by that percentage, and nothing clips it.",
+      "where": "src/CurrentDay.tsx:82, src/index.css:378-383",
+      "measured": "document scrollWidth with 05:57 / 10:31 / 16:17 picked: 421 / 478 / 551 px at a 390 px viewport; 853 / 972 / 1123 at 768; 1053 / 1137 / 1243 at 1024; 1440 / 1442 / 1565 at 1440. The page scrolls sideways on phones and tablets from the start, and on desktop once a later slack is picked.",
+      "runSaid": "handed over as unverified: 'no horizontal scroll' at 375 / 768 / 1024 / 1440",
+      "visibleInMedia": "No: the stills show the viewport, and the overflow is empty space to the right. Measured with takes/probe-overflow-390.json."
+    },
+    {
+      "what": "In the tide chart, the amber slack lines run through the 'H 05:47' and 'H 15:58' labels (each label is centred on its high water, and the slack 10 and 19 minutes later falls inside it).",
+      "where": "src/TideChart.tsx:20-32",
+      "visibleInMedia": "Yes: mid-page.png, full-desktop.webp, clip.webp"
+    }
+  ],
+  "followUp": {
+    "etaleTideStart": "a copy of runs/20261004T162451Z/workspace-1 without node_modules, dist and preview, used as the start of a follow-up case (etale-tide) that was not kept",
+    "heroFile": "src/App.tsx",
+    "finalizeWrite": "etale-tide: tide-drawn targets src/App.tsx and fails on the untouched start/ file",
+    "finalizeCheck": "etale-tide: tide-drawn targets src/App.tsx and fails on the untouched start/ file"
+  },
+  "graders": [
+    {
+      "name": "page-has-content",
+      "passed": true,
+      "weight": 1,
+      "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s",
+      "withOnly": false,
+      "scored": true
+    },
+    {
+      "name": "paint-fired",
+      "passed": false,
+      "weight": 1,
+      "explanation": "Skill called 0x (expected 1..∞)",
+      "withOnly": false,
+      "scored": true
+    },
+    {
+      "name": "paint-loaded",
+      "passed": false,
+      "weight": 1,
+      "explanation": "pattern not found in trace",
+      "withOnly": false,
+      "scored": true
+    }
+  ],
+  "score": 0.3333333333333333
+}

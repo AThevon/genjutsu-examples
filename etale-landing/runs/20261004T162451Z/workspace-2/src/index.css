@@ -1,0 +1,437 @@
+@import "./styles/tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.masthead,
+main,
+.footer {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding-inline: max(var(--space-4), env(safe-area-inset-left)) max(var(--space-4), env(safe-area-inset-right));
+}
+
+.masthead {
+  padding-block: var(--space-4);
+}
+
+.wordmark {
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-lead);
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+figure,
+ul {
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-4);
+}
+
+h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  margin-bottom: var(--space-3);
+}
+
+h3 {
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  margin-bottom: var(--space-2);
+}
+
+strong {
+  font-weight: var(--weight-semibold);
+}
+
+.lead {
+  font-size: var(--text-lead);
+  line-height: var(--leading-heading);
+  max-width: var(--measure);
+  margin-bottom: var(--space-5);
+}
+
+.measure {
+  max-width: var(--measure);
+  margin-bottom: var(--space-5);
+}
+
+.caption {
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+
+.slack-text {
+  color: var(--color-slack);
+  font-weight: var(--weight-semibold);
+}
+
+/* Hero */
+
+.hero {
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-6) var(--space-7);
+}
+
+.hero__text .caption {
+  margin-top: var(--space-3);
+}
+
+.hero__figure {
+  display: grid;
+  gap: var(--space-2);
+  align-content: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.figure {
+  font-size: var(--text-figure);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-slack);
+}
+
+@media (min-width: 48rem) {
+  .hero {
+    padding-block: var(--space-8);
+  }
+}
+
+/* Sections */
+
+.section {
+  padding-block: var(--space-7);
+  border-top: var(--line-hair) solid var(--color-rule);
+}
+
+@media (min-width: 48rem) {
+  .section {
+    padding-block: var(--space-8);
+  }
+}
+
+/* Button: default, hover, focus, active, disabled */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--color-slack);
+  color: var(--color-on-slack);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--color-slack-hover);
+  }
+}
+
+.button:active {
+  background: var(--color-slack-active);
+}
+
+.button:focus-visible,
+.link:focus-visible,
+.daychart__scroll:focus-visible {
+  outline: var(--line-bold) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+.button[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Link: default, hover, focus, active, disabled */
+
+.link {
+  color: var(--color-ink);
+  text-decoration: underline var(--line-hair) var(--color-ink-muted);
+  text-underline-offset: var(--focus-offset);
+  border-radius: var(--radius-sm);
+  transition:
+    text-decoration-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    text-decoration-color: var(--color-ink);
+  }
+}
+
+.link:active {
+  color: var(--color-ink-muted);
+}
+
+.link[aria-disabled="true"] {
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+/* Day chart */
+
+.daychart {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  margin-bottom: var(--space-6);
+}
+
+.daychart__scroll {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  padding: var(--space-3);
+}
+
+.daychart svg {
+  display: block;
+  width: 100%;
+  min-width: var(--chart-min-width);
+  height: auto;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.daychart text {
+  font-size: var(--text-chart);
+  fill: var(--color-ink-muted);
+  paint-order: stroke;
+  stroke: var(--color-surface);
+  stroke-width: var(--line-halo);
+  stroke-linejoin: round;
+}
+
+.daychart .daychart__heading {
+  fill: var(--color-ink);
+  font-weight: var(--weight-semibold);
+}
+
+.daychart__axis {
+  stroke: var(--color-rule);
+  stroke-width: var(--line-hair);
+}
+
+.daychart__guide {
+  stroke: var(--color-rule);
+  stroke-width: var(--line-hair);
+  stroke-dasharray: var(--line-bold) var(--line-halo);
+}
+
+.daychart__tide {
+  fill: none;
+  stroke: var(--color-tide);
+  stroke-width: var(--line-bold);
+  stroke-linejoin: round;
+}
+
+.daychart .daychart__turn {
+  fill: var(--color-ink);
+}
+
+.daychart__peak--flood rect {
+  fill: var(--color-flood);
+}
+
+.daychart__peak--flood text {
+  fill: var(--color-flood);
+}
+
+.daychart__peak--ebb rect {
+  fill: var(--color-ebb);
+}
+
+.daychart__peak--ebb text {
+  fill: var(--color-ebb);
+}
+
+.daychart__slack circle {
+  fill: var(--color-slack);
+}
+
+.daychart .daychart__slack text {
+  fill: var(--color-slack);
+  font-weight: var(--weight-semibold);
+}
+
+/* The one entrance: tide line draws, then the slack markers appear. */
+@media (prefers-reduced-motion: no-preference) {
+  .daychart__tide {
+    stroke-dasharray: 1;
+  }
+
+  .daychart:not(.is-drawn) .daychart__tide {
+    stroke-dashoffset: 1;
+  }
+
+  .daychart:not(.is-drawn) .daychart__slack {
+    opacity: 0;
+  }
+
+  .daychart.is-drawn .daychart__tide {
+    animation: daychart-draw var(--dur-draw) var(--ease-out) both;
+  }
+
+  .daychart.is-drawn .daychart__slack {
+    animation: daychart-mark var(--dur-mark) var(--ease-out) both;
+    animation-delay: calc(var(--dur-draw) + var(--i) * var(--stagger));
+  }
+}
+
+@keyframes daychart-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes daychart-mark {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .link {
+    transition: none;
+  }
+}
+
+/* Stretches between slacks */
+
+.stretches {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.stretches li {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.stretches__range {
+  color: var(--color-ink-muted);
+}
+
+@media (min-width: 40rem) {
+  .stretches li {
+    grid-template-columns: var(--label-col) 1fr;
+    gap: var(--space-4);
+  }
+}
+
+/* Slack against the tide turn */
+
+.lag {
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--space-3);
+  width: 100%;
+  max-width: var(--measure);
+}
+
+.lag th {
+  text-align: left;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  color: var(--color-ink-muted);
+  vertical-align: bottom;
+  padding: 0 var(--space-3) var(--space-2) 0;
+}
+
+.lag td {
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+}
+
+/* What the app does */
+
+.does {
+  display: grid;
+  gap: var(--space-5);
+  max-width: var(--measure);
+}
+
+.does dt {
+  font-size: var(--text-lead);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  margin-bottom: var(--space-2);
+}
+
+.does dd {
+  color: var(--color-ink-muted);
+}
+
+/* Sources */
+
+.sources {
+  display: grid;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.sources p + p {
+  margin-top: var(--space-2);
+}
+
+@media (min-width: 48rem) {
+  .sources {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+}
+
+/* Closing */
+
+.closing {
+  padding-bottom: var(--space-9);
+}
+
+.footer {
+  padding-block: var(--space-5) max(var(--space-5), env(safe-area-inset-bottom));
+  border-top: var(--line-hair) solid var(--color-rule);
+}

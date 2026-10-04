@@ -1,0 +1,1 @@
+{"root": "../build-1/dist", "w": 390, "h": 844, "dpr": 2, "probe": "({iw:innerWidth,sw:document.documentElement.scrollWidth,sel:document.querySelector('.pick[aria-pressed=true]').textContent})", "steps": [{"wait": 300}, {"click": ".pick", "nth": 1}, {"wait": 600}, {"click": ".pick", "nth": 2}, {"wait": 600}]}

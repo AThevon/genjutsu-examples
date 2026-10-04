@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale: design system preview (throwaway)</title>
+<style>
+  :root {
+    --color-ground:#0f1615; --color-surface:#17201e; --color-surface-2:#1f2a27; --color-surface-2-hover:#283532;
+    --color-surface-2-active:#121a19; --color-ink:#e6ece9; --color-ink-muted:#9aa9a3; --color-ink-faint:#7d8c86;
+    --color-current:#8db3a6; --color-tide:#6f9187; --color-slack:#edb95e; --color-slack-hover:#f4cb80;
+    --color-slack-active:#d9a54a; --color-on-slack:#17110a; --color-focus:#e6ece9;
+    --font-system: system-ui, -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    --ease-settle: cubic-bezier(0.2,0,0,1); --dur-colour:160ms;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--color-ground); color:var(--color-ink); font:400 1.0625rem/1.55 var(--font-system); font-variant-numeric: tabular-nums; }
+  main { max-width: 72rem; margin: 0 auto; padding: 48px clamp(20px,5vw,48px) 128px; }
+  h1 { font-weight:500; font-size:2rem; margin:0 0 8px; }
+  h2 { font-weight:500; font-size:1.25rem; margin:64px 0 24px; }
+  .note { color: var(--color-ink-muted); font-size: .875rem; max-width: 62ch; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 8px; }
+  .sw { background:var(--color-surface); border-radius:2px; font-size:.875rem; }
+  .sw i { display:block; height:56px; border-radius:2px 2px 0 0; }
+  .sw div { padding: 8px 12px 12px; color: var(--color-ink-muted); }
+  .sw b { display:block; color: var(--color-ink); font-weight:500; }
+  .row { display:flex; gap: 32px; align-items: baseline; margin: 16px 0; flex-wrap: wrap; }
+  .row small { width: 200px; color: var(--color-ink-faint); font-size: .875rem; }
+  .bar { height: 16px; background: var(--color-current); border-radius: 2px; }
+  .states { display:grid; grid-template-columns: 120px repeat(5, minmax(120px,1fr)); gap: 16px; align-items:center; overflow-x:auto; }
+  .states .h { color: var(--color-ink-faint); font-size: .875rem; }
+  .btn { display:inline-flex; align-items:center; min-height:48px; padding: 16px 32px; border:0; border-radius:2px; font:inherit; font-weight:500;
+    background:var(--color-slack); color:var(--color-on-slack); text-decoration:none; transition: background-color var(--dur-colour) var(--ease-settle); cursor:pointer; white-space:nowrap; }
+  .btn:hover,.btn.is-hover { background: var(--color-slack-hover); }
+  .btn:active,.btn.is-active { background: var(--color-slack-active); }
+  .btn:focus-visible,.btn.is-focus,.pick:focus-visible,.pick.is-focus,a.link.is-focus,a.link:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+  .btn:disabled { background: var(--color-surface-2); color: var(--color-ink-faint); cursor:not-allowed; }
+  .pick { min-height:44px; padding: 8px 16px; border:0; border-radius:2px; font:inherit; background: var(--color-surface-2); color: var(--color-ink);
+    transition: background-color var(--dur-colour) var(--ease-settle), color var(--dur-colour) var(--ease-settle); cursor:pointer; }
+  .pick:hover,.pick.is-hover { background: var(--color-surface-2-hover); }
+  .pick:active,.pick.is-active { background: var(--color-surface-2-active); }
+  .pick[aria-pressed="true"] { background: var(--color-slack); color: var(--color-on-slack); }
+  .pick:disabled { color: var(--color-ink-faint); cursor: not-allowed; }
+  a.link { color: var(--color-ink); text-decoration: underline; text-decoration-thickness:1px; text-underline-offset: .2em; transition: color var(--dur-colour) var(--ease-settle); }
+  a.link:hover, a.link.is-hover { color: var(--color-slack); }
+  a.link:active, a.link.is-active { color: var(--color-ink-muted); }
+  .panel { background: var(--color-surface); border-radius: 2px; padding: 32px; max-width: 520px; }
+  .panel .t { font-weight:300; font-size: 5rem; line-height:1; letter-spacing:-.02em; color: var(--color-slack); }
+  .panel .c { color: var(--color-ink-muted); font-size:.875rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Étale: design system</h1>
+  <p class="note">The proposal, not the build: this page is throwaway and is not ported into src/. Every value here is in MASTER.md. Display face is the system face named in the visual thesis (SF Pro on iPhone and Mac); there is no light theme, so no light column.</p>
+
+  <h2>Colour, contrast computed against the ground (#0F1615)</h2>
+  <div class="grid">
+    <div class="sw"><i style="background:#0f1615;box-shadow:inset 0 0 0 1px #1f2a27"></i><div><b>ground</b>#0F1615</div></div>
+    <div class="sw"><i style="background:#17201e;box-shadow:inset 0 0 0 1px #1f2a27"></i><div><b>surface</b>#17201E</div></div>
+    <div class="sw"><i style="background:#1f2a27"></i><div><b>surface-2</b>#1F2A27</div></div>
+    <div class="sw"><i style="background:#283532"></i><div><b>surface-2-hover</b>#283532, ink 10.66:1</div></div>
+    <div class="sw"><i style="background:#121a19;box-shadow:inset 0 0 0 1px #1f2a27"></i><div><b>surface-2-active</b>#121A19, ink 14.77:1</div></div>
+    <div class="sw"><i style="background:#e6ece9"></i><div><b>ink</b>#E6ECE9, 15.31:1</div></div>
+    <div class="sw"><i style="background:#9aa9a3"></i><div><b>ink-muted</b>#9AA9A3, 7.49:1</div></div>
+    <div class="sw"><i style="background:#7d8c86"></i><div><b>ink-faint</b>#7D8C86, 5.21:1</div></div>
+    <div class="sw"><i style="background:#8db3a6"></i><div><b>current</b>#8DB3A6, 7.97:1</div></div>
+    <div class="sw"><i style="background:#6f9187"></i><div><b>tide</b>#6F9187, 5.30:1</div></div>
+    <div class="sw"><i style="background:#edb95e"></i><div><b>slack</b>#EDB95E, 10.21:1</div></div>
+    <div class="sw"><i style="background:#f4cb80"></i><div><b>slack-hover</b>#F4CB80, on-slack 12.22:1</div></div>
+    <div class="sw"><i style="background:#d9a54a"></i><div><b>slack-active</b>#D9A54A, on-slack 8.41:1</div></div>
+    <div class="sw"><i style="background:#17110a;box-shadow:inset 0 0 0 1px #1f2a27"></i><div><b>on-slack</b>#17110A, 10.44:1 on slack</div></div>
+  </div>
+
+  <h2>Type scale, system face, tabular figures</h2>
+  <div class="row"><small>time-xl / 300</small><span style="font-size:clamp(4rem,2.5rem + 7vw,7.5rem);font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--color-slack)">05:57</span></div>
+  <div class="row"><small>display / 500</small><span style="font-size:clamp(2.25rem,1.5rem + 3.2vw,3.5rem);font-weight:500;line-height:1.08;letter-spacing:-.02em">Slack water at Aquatic Park</span></div>
+  <div class="row"><small>heading / 500</small><span style="font-size:clamp(1.75rem,1.3rem + 1.9vw,2.5rem);font-weight:500;line-height:1.15">Slack is not high tide</span></div>
+  <div class="row"><small>statement / 400</small><span style="font-size:clamp(1.5rem,1.1rem + 1.8vw,2.25rem);line-height:1.3">The evening before, Étale tells you.</span></div>
+  <div class="row"><small>time-l / 300</small><span style="font-size:2.5rem;font-weight:300;line-height:1">10:31</span></div>
+  <div class="row"><small>lead / 400</small><span style="font-size:1.25rem">The next slack, and how hard the current runs between two.</span></div>
+  <div class="row"><small>body / 400</small><span>Predicted at SFB1204, Alcatraz Island, southwest of.</span></div>
+  <div class="row"><small>caption / 400</small><span style="font-size:.875rem;color:var(--color-ink-muted)">NOAA CO-OPS prediction, 2 October 2026, Pacific Daylight Time</span></div>
+
+  <h2>Spacing (8px base)</h2>
+  <div class="row"><small>space-1 · 4px</small><div class="bar" style="width:4px"></div></div>
+  <div class="row"><small>space-2 · 8px</small><div class="bar" style="width:8px"></div></div>
+  <div class="row"><small>space-3 · 12px</small><div class="bar" style="width:12px"></div></div>
+  <div class="row"><small>space-4 · 16px</small><div class="bar" style="width:16px"></div></div>
+  <div class="row"><small>space-5 · 24px</small><div class="bar" style="width:24px"></div></div>
+  <div class="row"><small>space-6 · 32px</small><div class="bar" style="width:32px"></div></div>
+  <div class="row"><small>space-7 · 48px</small><div class="bar" style="width:48px"></div></div>
+  <div class="row"><small>space-8 · 64px</small><div class="bar" style="width:64px"></div></div>
+  <div class="row"><small>space-9 · 96px</small><div class="bar" style="width:96px"></div></div>
+  <div class="row"><small>space-10 · 128px</small><div class="bar" style="width:128px"></div></div>
+
+  <h2>Radii and elevation</h2>
+  <p class="note">radius-0: 0, radius-1: 2px on every surface. One elevation level: flat, no shadow.</p>
+
+  <h2>Five states</h2>
+  <div class="states">
+    <span class="h"></span><span class="h">default</span><span class="h">hover</span><span class="h">focus</span><span class="h">active</span><span class="h">disabled</span>
+    <span class="h">primary</span>
+    <a class="btn" href="#">Join the beta</a><a class="btn is-hover" href="#">Join the beta</a><a class="btn is-focus" href="#">Join the beta</a><a class="btn is-active" href="#">Join the beta</a><button class="btn" disabled>Join the beta</button>
+    <span class="h">slack picker</span>
+    <button class="pick">10:31</button><button class="pick is-hover">10:31</button><button class="pick is-focus">10:31</button><button class="pick is-active">10:31</button><button class="pick" disabled>10:31</button>
+    <span class="h">picker, selected</span>
+    <button class="pick" aria-pressed="true">05:57</button><span class="note">no hover change when selected</span><button class="pick is-focus" aria-pressed="true">05:57</button><span></span><span></span>
+    <span class="h">text link</span>
+    <a class="link" href="#">NOAA CO-OPS</a><a class="link is-hover" href="#">NOAA CO-OPS</a><a class="link is-focus" href="#">NOAA CO-OPS</a><a class="link is-active" href="#">NOAA CO-OPS</a><span class="note">no disabled link</span>
+  </div>
+
+  <h2>Panel</h2>
+  <div class="panel"><div class="c">Slack, 2 October 2026</div><div class="t">05:57</div><div class="c">SFB1204, Alcatraz Island, southwest of</div></div>
+
+  <h2>Motion tokens</h2>
+  <p class="note">dur-colour 160ms · dur-fade 160ms · dur-slide 240ms · ease-settle cubic-bezier(0.2, 0, 0, 1) · all 0ms under prefers-reduced-motion. The curve and the slide are on preview/thesis.html.</p>
+</main>
+</body>
+</html>

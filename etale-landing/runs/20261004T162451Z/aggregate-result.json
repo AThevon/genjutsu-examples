@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "claudeVersion": "2.1.289",
+  "startedAt": "2026-10-04T16:24:53.047Z",
+  "durationSeconds": 1050,
+  "costUsd": 5.6097748,
+  "partial": false,
+  "suite": {
+    "root": "/private/tmp/genjutsu-eval-ex",
+    "ablation": "none",
+    "modelOverride": "claude-opus-5-5",
+    "caseFilter": "etale-landing",
+    "threshold": 1,
+    "concurrency": 1,
+    "plugins": [
+      {
+        "name": "genjutsu",
+        "version": "4.1.0",
+        "path": "/private/tmp/genjutsu-eval-ex"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "etale-landing",
+      "dir": "examples/etale-landing",
+      "source": "mixed",
+      "promptMarkdown": "/genjutsu:paint build the landing page for Étale.\n\nThe brief. Étale is a fictional product made up for this example, and this is everything its founders have given us:\n\n- Étale is an iPhone app for people who swim in the cold water of Aquatic Park, San Francisco, all year round. It answers one question before you walk down to the beach: when is the water slack (étale is the French word for slack water, the still moment between ebb and flood, when the current is weakest), and how strong the current runs between two slacks.\n- Its numbers come from two NOAA CO-OPS stations, and data/tide.json holds one real day of both, 2 October 2026, as fetched from NOAA: the tide predictions of station 9414290 San Francisco, and the slack water and current predictions of station SFB1204 (Alcatraz Island, southwest of, the closest predicted current station, in the bay off the cove). The file names each station, where it is, its datum and its units. Use those numbers and label each one with its date and its station. Slack water is not high or low tide: take the slack times from the current predictions. The app shows no water temperature, so the page must not either. Do not invent any other figure.\n- The swimmers it is for train there before work, mostly without a wetsuit. They already know the cove and read the tide themselves on a printed table or a weather site. They want the next slack window at a glance, and an alert the evening before.\n- What exists: an iOS beta on TestFlight. No Android, no web app, no prices, no user numbers, no testimonials. The page has one job: get a swimmer onto the TestFlight beta, at /beta.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+      "runsPerCase": 1,
+      "timeoutSeconds": 3600,
+      "maxTurns": 200,
+      "graders": [
+        {
+          "name": "page-has-content",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": {
+              "source": "file",
+              "path": "src/App.tsx"
+            },
+            "pattern": "<(main|section)(\\s[^>]*[^/])?>|^import\\s",
+            "flags": "m",
+            "match": "contains"
+          }
+        },
+        {
+          "name": "paint-fired",
+          "type": "tool_used",
+          "weight": 1,
+          "config": {
+            "tool": "Skill",
+            "input_match": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"",
+            "arm": "with-only"
+          }
+        },
+        {
+          "name": "paint-loaded",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "trace",
+            "pattern": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|#\\sPaint\\s-\\sThe\\sMaster\\sPainter",
+            "flags": "",
+            "match": "contains"
+          }
+        }
+      ],
+      "arms": {
+        "with": [
+          {
+            "score": 0.3333333333333333,
+            "passed": false,
+            "turns": 34,
+            "costUsd": 2.740393,
+            "judgeCostUsd": 0,
+            "durationSeconds": 516,
+            "startedAt": "2026-10-04T16:24:53.071Z",
+            "error": null,
+            "tracePath": "/private/tmp/e-ybGOkd/out/trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "page-has-content",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-fired",
+                "passed": false,
+                "weight": 1,
+                "explanation": "Skill called 0x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-loaded",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in trace",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          },
+          {
+            "score": 0.3333333333333333,
+            "passed": false,
+            "turns": 42,
+            "costUsd": 2.8693818,
+            "judgeCostUsd": 0,
+            "durationSeconds": 534,
+            "startedAt": "2026-10-04T16:33:29.429Z",
+            "error": null,
+            "tracePath": "/private/tmp/e-elnz6V/out/trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "page-has-content",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-fired",
+                "passed": false,
+                "weight": 1,
+                "explanation": "Skill called 0x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-loaded",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in trace",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          }
+        ]
+      },
+      "aggregates": {
+        "score": 0.3333333333333333,
+        "passRate": 0
+      }
+    }
+  ],
+  "aggregates": {
+    "casesTotal": 1,
+    "casesPassed": 0,
+    "overallScore": 0.3333333333333333,
+    "overallPassRate": 0
+  }
+}

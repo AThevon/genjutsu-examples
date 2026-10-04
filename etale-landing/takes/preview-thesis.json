@@ -1,0 +1,1 @@
+{ "root": "../build-1/preview", "path": "/thesis.html", "w": 1440, "h": 900, "probe": "({docH:document.documentElement.scrollHeight})", "steps": [ { "wait": 800 }, { "still": "preview" } ] }

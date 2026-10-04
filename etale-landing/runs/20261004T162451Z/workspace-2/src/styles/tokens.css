@@ -1,0 +1,62 @@
+/* Generated from MASTER.md. Edit MASTER.md first, then this file. */
+:root {
+  --color-ground: #0d1412;
+  --color-surface: #131c19;
+  --color-ink: #e4eae6;
+  --color-ink-muted: #93a39d;
+  --color-rule: #2a3632;
+  --color-tide: #5c6d67;
+  --color-flood: #6fa59a;
+  --color-ebb: #8e9bb0;
+  --color-slack: #f0c04a;
+  --color-slack-hover: #f6d27a;
+  --color-slack-active: #d9ac3e;
+  --color-on-slack: #0d1412;
+  --color-focus: #e4eae6;
+
+  --font-sans: system-ui, -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --weight-regular: 400;
+  --weight-semibold: 600;
+
+  --text-caption: 0.875rem;
+  --text-chart: 0.75rem;
+  --text-body: 1.0625rem;
+  --text-lead: 1.25rem;
+  --text-h2: 1.75rem;
+  --text-h1: clamp(2.25rem, 6vw, 3.5rem);
+  --text-figure: clamp(4.5rem, 16vw, 8rem);
+  --leading-tight: 1.1;
+  --leading-heading: 1.25;
+  --leading-body: 1.55;
+  --tracking-tight: -0.02em;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4rem;
+  --space-8: 6rem;
+  --space-9: 8rem;
+
+  --measure: 38rem;
+  --label-col: 10rem;
+  --chart-min-width: 46rem;
+  --target-min: 2.75rem;
+  --page-max: 64rem;
+
+  --radius-sm: 2px;
+  --radius: 4px;
+
+  --line-hair: 1px;
+  --line-bold: 2px;
+  --line-halo: 4px;
+  --focus-offset: 3px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-mark: 240ms;
+  --dur-draw: 900ms;
+  --stagger: 120ms;
+}

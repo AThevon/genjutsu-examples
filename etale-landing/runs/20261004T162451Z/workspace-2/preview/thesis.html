@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Étale - thesis preview (throwaway)</title>
+<style>
+  :root { --ground:#0D1412; --ink:#E4EAE6; --muted:#93A39D; --rule:#2A3632; --tide:#5C6D67;
+          --flood:#6FA59A; --ebb:#8E9BB0; --slack:#F0C04A; --ease:cubic-bezier(0.22,1,0.36,1); }
+  body { margin:0; background:var(--ground); color:var(--ink); font:16px/1.5 system-ui,-apple-system,"SF Pro Text",sans-serif; }
+  main { max-width:60rem; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:20px; font-weight:600; margin:0 0 8px; }
+  h2 { font-size:15px; font-weight:600; color:var(--muted); margin:48px 0 16px; border-top:1px solid var(--rule); padding-top:16px; }
+  p { margin:0 0 12px; max-width:44rem; }
+  .note { color:var(--muted); font-size:14px; }
+  .thesis { border-left:2px solid var(--slack); padding-left:16px; }
+  .row { display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start; }
+  .sw { width:150px; font-size:13px; } .sw i { display:block; height:56px; border-radius:4px; border:1px solid var(--rule); margin-bottom:8px; }
+  .big { font-size:72px; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; line-height:1; }
+  .bar { height:8px; background:var(--muted); border-radius:2px; margin:6px 0; }
+  .btn { display:inline-block; background:var(--slack); color:var(--ground); font-weight:600; padding:12px 20px; border-radius:4px; text-decoration:none; transition:background 150ms var(--ease); }
+  .btn:hover { background:#F6D27A; } .btn:focus-visible { outline:2px solid var(--ink); outline-offset:3px; }
+  .card { border:1px solid var(--rule); border-radius:4px; padding:16px; max-width:280px; }
+  button.ctl { font:inherit; color:var(--ink); background:none; border:1px solid var(--rule); border-radius:4px; padding:6px 12px; cursor:pointer; }
+  svg text { fill:var(--muted); font-size:11px; font-variant-numeric:tabular-nums; }
+  #tideLine { stroke-dasharray:1; stroke-dashoffset:1; }
+  .play #tideLine { animation:draw 900ms var(--ease) forwards; }
+  .mk { opacity:0; } .play .mk { animation:fade 240ms var(--ease) forwards; }
+  .play .mk:nth-of-type(1){animation-delay:900ms} .play .mk:nth-of-type(2){animation-delay:1020ms} .play .mk:nth-of-type(3){animation-delay:1140ms}
+  .reduced #tideLine { stroke-dashoffset:0; animation:none; } .reduced .mk { opacity:1; animation:none; }
+  @keyframes draw { to { stroke-dashoffset:0; } } @keyframes fade { to { opacity:1; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Étale: thesis preview</h1>
+  <p class="note">This page is the proposal, not the build. It is throwaway; the landing page is built from MASTER.md after the theses stand. Status: UNVALIDATED (nobody was available to answer).</p>
+
+  <h2>Visual thesis</h2>
+  <p class="thesis">A pre-dawn page on a near-black slate-green ground with cool off-white ink and one signal amber kept for slack only (the slack markers and the beta button, nothing else). The type is the iPhone's own system face (SF Pro through system-ui), because the page should read like the app it sells: regular and semibold only, slack times set very large in tabular figures over 16-17px body copy. Airy single column on an 8px base, with one dense, fully labelled day chart. Flat components, 4px radii, 1px hairline rules like a printed tide table, no shadows. New identity: no existing brand to preserve.</p>
+  <h2>Interaction thesis</h2>
+  <p class="thesis">Still by design. There is one entrance: the day chart draws its tide line left to right in 900ms, then its three slack markers fade in (240ms each, 120ms stagger), all on cubic-bezier(0.22, 1, 0.36, 1), once, the first time the chart enters the viewport. Hovers are fast (150ms): colour and underline only, no scale, no lift. Nothing else moves on scroll: no parallax, no looping wave, no bounce or spring, no counters ticking up. With reduced motion everything is drawn at once.</p>
+  <p class="note"><strong>Allowed patterns:</strong> hairline rules (the tide table), tabular figures at display size, a dark ground, one entrance draw on the data chart.</p>
+  <p class="note">Assumptions taken from the brief: audience reads tides fluently; they check on an iPhone before dawn; no references given; the printed tide table is the only model.</p>
+
+  <h2>Motion: curve and numbers</h2>
+  <div class="row">
+    <svg width="200" height="200" viewBox="-10 -10 220 220" aria-label="easing curve">
+      <rect x="0" y="0" width="200" height="200" fill="none" stroke="#2A3632"/>
+      <path d="M0 200 C44 0, 72 0, 200 0" fill="none" stroke="#F0C04A" stroke-width="2"/>
+      <text x="0" y="214">cubic-bezier(0.22, 1, 0.36, 1)</text>
+    </svg>
+    <div>
+      <p>Chart draw: <strong>900ms</strong>, delay 0</p>
+      <p>Slack markers: <strong>240ms</strong> fade each, start at 900ms, stagger <strong>120ms</strong></p>
+      <p>Hover (links, button): <strong>150ms</strong>, colour only</p>
+      <p>Springs: none</p>
+      <button class="ctl" id="replay">Replay</button>
+      <label class="note"><input type="checkbox" id="rm" /> reduced motion</label>
+    </div>
+  </div>
+  <div id="stage" class="play" style="margin-top:24px">
+    <svg viewBox="0 0 480 140" width="100%" style="max-width:640px" role="img" aria-label="Sketch of the chart entrance">
+      <line x1="0" y1="70" x2="480" y2="70" stroke="#2A3632"/>
+      <path id="tideLine" pathLength="1" d="M0 110 C60 60, 90 40, 120 42 S190 70, 200 66 S300 20, 320 18 S420 90, 480 112" fill="none" stroke="#5C6D67" stroke-width="2"/>
+      <g><circle class="mk" cx="124" cy="70" r="6" fill="#F0C04A"/><circle class="mk" cx="210" cy="70" r="6" fill="#F0C04A"/><circle class="mk" cx="330" cy="70" r="6" fill="#F0C04A"/></g>
+    </svg>
+    <p class="note">Shape only. The real chart uses the NOAA values of 2 October 2026.</p>
+  </div>
+
+  <h2>Visual identity</h2>
+  <div class="row">
+    <div class="sw"><i style="background:#0D1412"></i>ground #0D1412</div>
+    <div class="sw"><i style="background:#E4EAE6"></i>ink #E4EAE6<br/>15.29:1</div>
+    <div class="sw"><i style="background:#93A39D"></i>muted #93A39D<br/>7.08:1</div>
+    <div class="sw"><i style="background:#F0C04A"></i>slack #F0C04A<br/>10.96:1</div>
+    <div class="sw"><i style="background:#6FA59A"></i>flood #6FA59A<br/>6.68:1</div>
+    <div class="sw"><i style="background:#8E9BB0"></i>ebb #8E9BB0<br/>6.63:1</div>
+    <div class="sw"><i style="background:#5C6D67"></i>tide line #5C6D67<br/>3.41:1 (graphic)</div>
+    <div class="sw"><i style="background:#2A3632"></i>rule #2A3632<br/>decorative</div>
+  </div>
+  <p class="note">Ratios against the ground, computed (WCAG 2.x).</p>
+  <div class="big">05:57</div>
+  <p style="font-size:24px;font-weight:600;margin-top:16px">Slack at Alcatraz SW, before work.</p>
+  <p>Body 17px, system-ui. The swimmers know the cove; the copy speaks to them as such.</p>
+  <p class="note">Caption 14px, muted.</p>
+  <div style="margin:24px 0">
+    <div class="bar" style="width:8px"></div><div class="bar" style="width:16px"></div><div class="bar" style="width:24px"></div><div class="bar" style="width:32px"></div><div class="bar" style="width:48px"></div><div class="bar" style="width:64px"></div><div class="bar" style="width:96px"></div><div class="bar" style="width:128px"></div>
+    <p class="note">Spacing 8 16 24 32 48 64 96 128. Radii 2 / 4. No shadows.</p>
+  </div>
+  <div class="row">
+    <a class="btn" href="#">Join the TestFlight beta</a>
+    <div class="card"><strong>Alert the evening before</strong><p class="note" style="margin:8px 0 0">Flat, ruled, no elevation.</p></div>
+  </div>
+</main>
+<script>
+  const s=document.getElementById('stage'), rm=document.getElementById('rm');
+  document.getElementById('replay').onclick=()=>{ s.classList.remove('play'); void s.offsetWidth; s.classList.add('play'); };
+  rm.onchange=()=>s.classList.toggle('reduced', rm.checked);
+</script>
+</body>
+</html>

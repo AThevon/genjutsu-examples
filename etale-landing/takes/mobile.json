@@ -1,0 +1,1 @@
+{ "root": "../build-1/dist", "w": 390, "h": 844, "dpr": 2, "probe": "({y:Math.round(scrollY),docH:document.documentElement.scrollHeight,docW:document.documentElement.scrollWidth,vw:innerWidth})", "steps": [ { "wait": 1000 }, { "still": "mobile" } ] }

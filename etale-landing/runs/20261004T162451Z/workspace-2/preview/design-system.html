@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Étale - design system preview (throwaway)</title>
+<link rel="stylesheet" href="../src/styles/tokens.css" />
+<style>
+  body { margin:0; background:var(--color-ground); color:var(--color-ink); font:var(--weight-regular) var(--text-body)/var(--leading-body) var(--font-sans); }
+  main { max-width:var(--page-max); margin:0 auto; padding:var(--space-6) var(--space-4) var(--space-8); }
+  h1 { font-size:var(--text-lead); font-weight:var(--weight-semibold); margin:0 0 var(--space-2); }
+  h2 { font-size:var(--text-caption); color:var(--color-ink-muted); font-weight:var(--weight-semibold); margin:var(--space-7) 0 var(--space-3); padding-top:var(--space-3); border-top:1px solid var(--color-rule); }
+  .note { color:var(--color-ink-muted); font-size:var(--text-caption); margin:0 0 var(--space-2); }
+  .grid { display:flex; flex-wrap:wrap; gap:var(--space-4); }
+  .sw { width:9.5rem; font-size:var(--text-caption); font-variant-numeric:tabular-nums; }
+  .sw i { display:block; height:var(--space-7); border-radius:var(--radius); border:1px solid var(--color-rule); margin-bottom:var(--space-2); }
+  .figure { font-size:var(--text-figure); font-weight:var(--weight-semibold); line-height:var(--leading-tight); letter-spacing:var(--tracking-tight); font-variant-numeric:tabular-nums; color:var(--color-slack); }
+  .h1 { font-size:var(--text-h1); font-weight:var(--weight-semibold); line-height:var(--leading-tight); letter-spacing:var(--tracking-tight); margin:var(--space-4) 0; }
+  .h2 { font-size:var(--text-h2); font-weight:var(--weight-semibold); line-height:var(--leading-heading); margin:0 0 var(--space-3); }
+  .lead { font-size:var(--text-lead); line-height:var(--leading-heading); margin:0 0 var(--space-3); }
+  .space { background:var(--color-ink-muted); height:var(--space-2); border-radius:var(--radius-sm); margin:var(--space-1) 0; }
+  .button { display:inline-block; font:inherit; font-weight:var(--weight-semibold); background:var(--color-slack); color:var(--color-on-slack); border:0; border-radius:var(--radius); padding:var(--space-3) var(--space-4); text-decoration:none; cursor:pointer; transition:background-color var(--dur-fast) var(--ease-out); }
+  .button:hover, .button.is-hover { background:var(--color-slack-hover); }
+  .button:active, .button.is-active { background:var(--color-slack-active); }
+  .button:focus-visible, .button.is-focus { outline:2px solid var(--color-focus); outline-offset:3px; }
+  .button[aria-disabled="true"] { opacity:.4; cursor:not-allowed; }
+  .link { color:var(--color-ink); text-decoration:underline 1px var(--color-ink-muted); text-underline-offset:3px; transition:text-decoration-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+  .link:hover, .link.is-hover { text-decoration-color:var(--color-ink); }
+  .link:active, .link.is-active { color:var(--color-ink-muted); }
+  .link:focus-visible, .link.is-focus { outline:2px solid var(--color-focus); outline-offset:3px; border-radius:var(--radius-sm); }
+  .link[aria-disabled="true"] { color:var(--color-ink-muted); text-decoration:none; cursor:not-allowed; }
+  .state { display:flex; flex-direction:column; gap:var(--space-2); align-items:flex-start; font-size:var(--text-caption); color:var(--color-ink-muted); }
+  .well { background:var(--color-surface); border-radius:var(--radius); padding:var(--space-4); }
+  table { border-collapse:collapse; font-size:var(--text-caption); font-variant-numeric:tabular-nums; }
+  td, th { text-align:left; padding:var(--space-1) var(--space-4) var(--space-1) 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Étale: design system preview</h1>
+  <p class="note">The proposal, not the build: throwaway, it reads the real tokens from src/styles/tokens.css. Theses UNVALIDATED.</p>
+  <p class="note">This thesis allows four known reflexes: hairline rules, tabular figures at display size, a dark ground, one entrance draw. Unvalidated, so the audit counts them anyway.</p>
+  <p class="note">Display face: the system face (SF Pro on iPhone). Reason: the visitors hold the iPhone the app runs on; the page should read like the app.</p>
+
+  <h2>Colour, ratio against the ground</h2>
+  <div class="grid">
+    <div class="sw"><i style="background:var(--color-ground)"></i>ground #0D1412</div>
+    <div class="sw"><i style="background:var(--color-surface)"></i>surface #131C19</div>
+    <div class="sw"><i style="background:var(--color-ink)"></i>ink #E4EAE6, 15.29:1</div>
+    <div class="sw"><i style="background:var(--color-ink-muted)"></i>muted #93A39D, 7.08:1</div>
+    <div class="sw"><i style="background:var(--color-rule)"></i>rule #2A3632, 1.49:1</div>
+    <div class="sw"><i style="background:var(--color-tide)"></i>tide #5C6D67, 3.41:1</div>
+    <div class="sw"><i style="background:var(--color-flood)"></i>flood #6FA59A, 6.68:1</div>
+    <div class="sw"><i style="background:var(--color-ebb)"></i>ebb #8E9BB0, 6.63:1</div>
+    <div class="sw"><i style="background:var(--color-slack)"></i>slack #F0C04A, 10.96:1</div>
+    <div class="sw"><i style="background:var(--color-slack-hover)"></i>slack hover #F6D27A</div>
+    <div class="sw"><i style="background:var(--color-slack-active)"></i>slack active #D9AC3E</div>
+  </div>
+
+  <h2>Type</h2>
+  <div class="figure">05:57</div>
+  <p class="h1">Slack water at Aquatic Park, before you walk down to the beach.</p>
+  <p class="h2">Slack is not high tide</p>
+  <p class="lead">Lead 20px. The strongest current between two slacks, in knots.</p>
+  <p>Body 17px, line height 1.55. Regular 400 and semibold 600 only.</p>
+  <p class="note">Caption 14px, muted.</p>
+
+  <h2>Spacing, radii, elevation</h2>
+  <div style="width:var(--space-1)" class="space"></div><div style="width:var(--space-2)" class="space"></div><div style="width:var(--space-3)" class="space"></div><div style="width:var(--space-4)" class="space"></div><div style="width:var(--space-5)" class="space"></div><div style="width:var(--space-6)" class="space"></div><div style="width:var(--space-7)" class="space"></div><div style="width:var(--space-8)" class="space"></div><div style="width:var(--space-9)" class="space"></div>
+  <p class="note">4 8 16 24 32 48 64 96 128. Radii 2px and 4px. Elevation 0, no shadows.</p>
+
+  <h2>Button, five states</h2>
+  <div class="grid">
+    <div class="state">default<a class="button" href="#">Join the TestFlight beta</a></div>
+    <div class="state">hover<a class="button is-hover" href="#">Join the TestFlight beta</a></div>
+    <div class="state">focus<a class="button is-focus" href="#">Join the TestFlight beta</a></div>
+    <div class="state">active<a class="button is-active" href="#">Join the TestFlight beta</a></div>
+    <div class="state">disabled<a class="button" aria-disabled="true">Join the TestFlight beta</a></div>
+  </div>
+  <h2>Link, five states</h2>
+  <div class="grid">
+    <div class="state">default<a class="link" href="#">NOAA CO-OPS</a></div>
+    <div class="state">hover<a class="link is-hover" href="#">NOAA CO-OPS</a></div>
+    <div class="state">focus<a class="link is-focus" href="#">NOAA CO-OPS</a></div>
+    <div class="state">active<a class="link is-active" href="#">NOAA CO-OPS</a></div>
+    <div class="state">disabled<a class="link" aria-disabled="true">NOAA CO-OPS</a></div>
+  </div>
+
+  <h2>Chart well and data table (no card, no badge, no input on this page)</h2>
+  <div class="well">
+    <table>
+      <tr><th>Tide turns, 9414290</th><th>Slack, SFB1204</th><th>Later by</th></tr>
+      <tr><td>High 05:47</td><td style="color:var(--color-slack)">05:57</td><td>10 min</td></tr>
+    </table>
+  </div>
+
+  <h2>Motion tokens</h2>
+  <p class="note">ease-out cubic-bezier(0.22, 1, 0.36, 1); fast 150ms; mark 240ms; draw 900ms; stagger 120ms. See preview/thesis.html for the curve and the replay.</p>
+</main>
+</body>
+</html>

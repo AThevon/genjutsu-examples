@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale: thesis preview (throwaway)</title>
+<style>
+  :root {
+    --ground: #0F1615; --surface: #17201E; --surface-2: #1F2A27;
+    --ink: #E6ECE9; --muted: #9AA9A3; --faint: #7D8C86;
+    --current: #8DB3A6; --tide: #6F9187; --slack: #EDB95E; --on-slack: #17110A;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+    --slide: 240ms; --fade: 160ms; --hover: 160ms;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink);
+    font: 400 16px/1.5 system-ui, -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+    font-variant-numeric: tabular-nums; }
+  main { max-width: 960px; margin: 0 auto; padding: 48px 24px 96px; }
+  h1 { font-weight: 500; font-size: 28px; margin: 0 0 8px; }
+  h2 { font-weight: 500; font-size: 20px; margin: 64px 0 16px; }
+  p { color: var(--muted); max-width: 64ch; }
+  .thesis { background: var(--surface); padding: 24px; border-radius: 2px; margin: 16px 0; }
+  .thesis b { color: var(--ink); font-weight: 500; }
+  .thesis p { color: var(--ink); margin: 8px 0 0; }
+  .note { color: var(--faint); font-size: 14px; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .sw { background: var(--surface); border-radius: 2px; overflow: hidden; font-size: 14px; }
+  .sw i { display: block; height: 64px; }
+  .sw div { padding: 8px 12px; color: var(--muted); }
+  .sw strong { color: var(--ink); font-weight: 500; display: block; }
+  .spec .t { font-weight: 300; font-size: 72px; line-height: 1; letter-spacing: -0.02em; }
+  .spec .h { font-weight: 500; font-size: 32px; line-height: 1.15; }
+  .spec .b { font-size: 17px; color: var(--ink); }
+  .spec .s { font-size: 14px; color: var(--muted); }
+  .spec > div { margin: 16px 0; }
+  .spec small { display: block; color: var(--faint); font-size: 12px; }
+  .btn { display: inline-block; background: var(--slack); color: var(--on-slack); font: inherit; font-weight: 500;
+    padding: 12px 24px; border-radius: 2px; border: 0; text-decoration: none; cursor: pointer;
+    transition: background-color var(--hover) var(--ease); }
+  .btn:hover { background: #F4CB80; }
+  .btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .ghost { background: var(--surface-2); color: var(--ink); }
+  .ghost:hover { background: #283532; }
+  /* interaction demo */
+  .demo { background: var(--surface); padding: 24px; border-radius: 2px; }
+  .strip { position: relative; height: 120px; margin: 16px 0; }
+  .strip svg { width: 100%; height: 100%; display: block; }
+  .marker { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--slack);
+    transition: transform var(--slide) var(--ease); }
+  .picks { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pick { background: var(--surface-2); color: var(--ink); border: 0; border-radius: 2px; padding: 8px 16px;
+    font: inherit; cursor: pointer; transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease); }
+  .pick:hover { background: #283532; }
+  .pick[aria-pressed="true"] { background: var(--slack); color: var(--on-slack); }
+  .pick:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .figs { position: relative; height: 96px; margin-top: 16px; }
+  .fig { position: absolute; inset: 0; opacity: 0; transition: opacity var(--fade) var(--ease); }
+  .fig.on { opacity: 1; transition-delay: var(--fade); }
+  .fig .t { font-weight: 300; font-size: 48px; line-height: 1; color: var(--slack); }
+  .fig .s { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  .curve { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 24px; }
+  .curve svg { background: var(--surface-2); border-radius: 2px; }
+  .nums { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .nums b { color: var(--ink); font-weight: 500; }
+  body.reduced .marker, body.reduced .fig, body.reduced .pick, body.reduced .btn { transition: none !important; }
+  label { color: var(--muted); font-size: 14px; display: inline-flex; gap: 8px; align-items: center; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Étale: the two theses</h1>
+  <p class="note">This page is the proposal, not the build. It is throwaway and will not be ported into the app. Figures below are from data/tide.json (NOAA CO-OPS, 2 October 2026).</p>
+
+  <div class="thesis"><b>Visual thesis:</b>
+    <p>A cold green-black ground (#0F1615) meant to be read before sunrise, pale cool ink (#E6ECE9), the current drawn in one sea-glass green (#8DB3A6) with flood above the line and ebb below it, and one warm colour, slack amber (#EDB95E), kept for slack times and the beta button only. Display face: the iPhone's own system face (SF Pro through system-ui), because the page should read like the app it sells, on the phone it is read on; tabular figures, slack times set large and light (300) against medium headings (500). Airy spacing on an 8px base around compact, exact figure blocks. Flat filled surfaces, square corners (2px), no borders, no shadows.</p>
+  </div>
+  <div class="thesis"><b>Interaction thesis:</b>
+    <p>Still by default: nothing moves on load or on scroll. The only motion answers a choice: picking one of the day's slacks slides the marker along the current strip (240ms, cubic-bezier(0.2, 0, 0, 1)) and crossfades its figures (160ms out, then 160ms in). Hover and press change colour only, 160ms, no scale. Forbidden: scroll reveals, parallax, looping or wave animation, bounce or overshoot, scale on hover, anything that plays on page load.</p>
+  </div>
+  <div class="thesis"><b>Allowed patterns:</b>
+    <p>tabular figures in the system face for times, heights and speeds (no monospace); a zero line and hour ticks inside the two data charts only.</p>
+  </div>
+
+  <h2>Palette, with contrast against the ground</h2>
+  <div class="swatches">
+    <div class="sw"><i style="background:#0F1615;outline:1px solid #1F2A27;outline-offset:-1px"></i><div><strong>ground</strong>#0F1615</div></div>
+    <div class="sw"><i style="background:#17201E"></i><div><strong>surface</strong>#17201E</div></div>
+    <div class="sw"><i style="background:#E6ECE9"></i><div><strong>ink</strong>#E6ECE9 · 15.31:1</div></div>
+    <div class="sw"><i style="background:#9AA9A3"></i><div><strong>muted</strong>#9AA9A3 · 7.49:1</div></div>
+    <div class="sw"><i style="background:#8DB3A6"></i><div><strong>current</strong>#8DB3A6 · 7.97:1</div></div>
+    <div class="sw"><i style="background:#EDB95E"></i><div><strong>slack</strong>#EDB95E · 10.21:1</div></div>
+  </div>
+
+  <h2>Type, system face</h2>
+  <div class="spec">
+    <div><small>slack time · 72 / 300</small><div class="t">05:57</div></div>
+    <div><small>heading · 32 / 500</small><div class="h">Know when the water goes slack</div></div>
+    <div><small>body · 17 / 400</small><div class="b">Slack at Alcatraz Island, southwest of (SFB1204), 2 October 2026.</div></div>
+    <div><small>caption · 14 / 400</small><div class="s">NOAA CO-OPS prediction, Pacific Daylight Time</div></div>
+  </div>
+  <p><a class="btn" href="#">Join the TestFlight beta</a>&nbsp;&nbsp;<button class="btn ghost">Secondary</button></p>
+
+  <h2>The one motion: picking a slack</h2>
+  <div class="demo">
+    <div class="picks" role="group" aria-label="Slacks, 2 October 2026">
+      <button class="pick" aria-pressed="true" data-i="0">05:57</button>
+      <button class="pick" aria-pressed="false" data-i="1">10:31</button>
+      <button class="pick" aria-pressed="false" data-i="2">16:17</button>
+    </div>
+    <div class="strip">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="0" x2="1440" y1="60" y2="60" stroke="#7D8C86" stroke-width="1"/>
+        <!-- bars at max flood/ebb, height ∝ knots (2.11 kn = 56px) -->
+        <rect x="183" width="8" y="29" height="31" fill="#8DB3A6"/>
+        <rect x="482" width="8" y="60" height="25" fill="#8DB3A6"/>
+        <rect x="813" width="8" y="22" height="38" fill="#8DB3A6"/>
+        <rect x="1186" width="8" y="60" height="56" fill="#8DB3A6"/>
+      </svg>
+      <div class="marker" id="marker"></div>
+    </div>
+    <div class="figs">
+      <div class="fig on"><div class="t">05:57</div><div class="s">after flood 1.17 kn at 03:07, before ebb 0.94 kn at 08:06</div></div>
+      <div class="fig"><div class="t">10:31</div><div class="s">after ebb 0.94 kn at 08:06, before flood 1.44 kn at 13:37</div></div>
+      <div class="fig"><div class="t">16:17</div><div class="s">after flood 1.44 kn at 13:37, before ebb 2.11 kn at 19:50</div></div>
+    </div>
+    <p class="note">SFB1204 Alcatraz Island, southwest of · 2 October 2026 · NOAA predictions</p>
+    <div class="curve">
+      <svg width="160" height="160" viewBox="0 0 160 160" aria-label="Easing curve cubic-bezier(0.2, 0, 0, 1)">
+        <line x1="16" y1="144" x2="144" y2="16" stroke="#34433F" stroke-dasharray="3 3"/>
+        <path d="M16 144 C 41.6 144, 16 16, 144 16" fill="none" stroke="#EDB95E" stroke-width="2"/>
+      </svg>
+      <div class="nums">
+        <div>easing <b>cubic-bezier(0.2, 0, 0, 1)</b></div>
+        <div>marker slide <b>240ms</b>, transform only</div>
+        <div>figures <b>160ms out</b>, then <b>160ms in</b>, opacity only</div>
+        <div>hover / press <b>160ms</b>, colour only</div>
+        <div><button class="btn ghost" id="replay">Replay</button></div>
+        <div><label><input type="checkbox" id="rm"> reduced motion (instant swap)</label></div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+  const times = [5*60+57, 10*60+31, 16*60+17];
+  const strip = document.querySelector('.strip'), marker = document.getElementById('marker');
+  const picks = [...document.querySelectorAll('.pick')], figs = [...document.querySelectorAll('.fig')];
+  let cur = 0;
+  function go(i) {
+    cur = i;
+    marker.style.transform = `translateX(${strip.clientWidth * times[i] / 1440}px)`;
+    picks.forEach((p, j) => p.setAttribute('aria-pressed', j === i));
+    figs.forEach((f, j) => f.classList.toggle('on', j === i));
+  }
+  picks.forEach((p, i) => p.addEventListener('click', () => go(i)));
+  document.getElementById('replay').onclick = () => { go(0); setTimeout(() => go(1), 600); setTimeout(() => go(2), 1200); };
+  document.getElementById('rm').onchange = e => document.body.classList.toggle('reduced', e.target.checked);
+  addEventListener('resize', () => go(cur));
+  marker.style.transition = 'none'; go(0); marker.offsetWidth; marker.style.transition = '';
+</script>
+</body>
+</html>
