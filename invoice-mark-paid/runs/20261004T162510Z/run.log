@@ -2,7 +2,7 @@ Note: --scaffold runs each case's scaffold_script as you. Only use it on case fi
 Plugin under test: "genjutsu" version "4.1.0" at "/private/tmp/genjutsu-eval-ex"
   scaffold: /private/tmp/genjutsu-eval-ex/examples/invoice-mark-paid/fixture.sh
   kept temp: /private/tmp/e-EBXfY6
-⚠ kept /private/tmp/e-EBXfY6: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-EBXfY6/sealed (mode 000; the kept directory is read-only) — open them with `chmod 700 /private/tmp/e-EBXfY6 /private/tmp/e-EBXfY6/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+⚠ kept /private/tmp/e-EBXfY6: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-EBXfY6/sealed (mode 000; the kept directory is read-only) - open them with `chmod 700 /private/tmp/e-EBXfY6 /private/tmp/e-EBXfY6/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
   invoice-mark-paid run 1/1: score 0.33  $1.88
     ✓ button-has-interaction (weight 1): matched motion|[Aa]nimat|[Tt]ransition|keyframes|[Ss]pring|requestAnimationFrame|from\s+["']\.\.?/(?!data["'])
     ✗ cast-fired (weight 1): Skill called 0x (expected 1..∞)

@@ -4,11 +4,17 @@ dist/
 # Build copies: source/ or a workspace with node_modules and dist added, the root of every take
 */build/
 */build-*/
+# bin/run.sh output when no output root is given, and kept eval temp dirs
+results/
+*/runs/*/kept/
+# bin/build-demos.sh output, if built inside the repository
+demos/out/
 # Raw converse.mjs output: the account's email, connector names and home paths
 calls/
 session/
-# Recorder scratch (record.mjs --keep-frames)
+# Recorder scratch (record.mjs --keep-frames) and Python caches
 frames/
+__pycache__/
 # Sandbox write markers left in eval workspaces
 .cc-writes/
 # Client material that must never be published (scraped social media, local tooling, secrets)

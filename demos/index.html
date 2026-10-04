@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>genjutsu demos</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Live builds of the recorded genjutsu example runs, served exactly as each run left its code.">
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --fg: #1d1c1a;
+    --muted: #6b675f;
+    --rule: #dcd8cf;
+    --link: #1d1c1a;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141413;
+      --fg: #ebe8e1;
+      --muted: #9a958b;
+      --rule: #2e2d2a;
+      --link: #ebe8e1;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.6 ui-sans-serif, -apple-system, "Segoe UI", system-ui, sans-serif;
+  }
+  main { max-width: 44rem; margin: 0 auto; padding: 4rem 1rem 5rem; }
+  h1 { font-size: 1.5rem; font-weight: 600; margin: 0 0 .75rem; letter-spacing: -.01em; }
+  p { margin: 0 0 1rem; color: var(--muted); }
+  h2 { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 3rem 0 .5rem; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { border-top: 1px solid var(--rule); padding: 1rem 0; }
+  li:last-child { border-bottom: 1px solid var(--rule); }
+  a { color: var(--link); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+  li a { font-weight: 600; }
+  .skill { font: 13px/1 ui-monospace, "SF Mono", Menlo, monospace; color: var(--muted); margin-left: .5rem; }
+  li p { margin: .25rem 0 0; }
+  .back { margin-top: 3rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>genjutsu demos</h1>
+  <p>Each page below is the code a recorded genjutsu run left behind, built as it stands. Nothing was edited after the run, and nothing was added to the pages.</p>
+  <p>The prompts, transcripts, costs and known defects of every run are in the <a href="https://github.com/AThevon/genjutsu-examples">genjutsu-examples</a> repository and on the <a href="https://genjutsu.athevon.dev/examples">examples page</a>.</p>
+
+  <h2>Examples</h2>
+  <ul>
+    <li>
+      <a href="/nocturne/">Nocturne</a><span class="skill">paint</span>
+      <p>A planetarium's late program, scrolling from dusk to the real 22:00 sky over Lisbon.</p>
+    </li>
+    <li>
+      <a href="https://chef-ovatio.vercel.app">Chef Ovatio</a><span class="skill">bunshin</span>
+      <p>A private chef's seven-page site in French and English, built by the run bunshin was extracted from. The client's own deployment, not built here.</p>
+    </li>
+    <li>
+      <a href="/pottery-firing/">Atelier Grès, firing stages</a><span class="skill">cast</span>
+      <p>A pottery studio's four firing stages, pinned and scrubbed with the scroll.</p>
+    </li>
+    <li>
+      <a href="/etale/">Étale</a><span class="skill">paint</span>
+      <p>A slack-water app's beta page, built from one real day of NOAA tide predictions.</p>
+    </li>
+    <li>
+      <a href="/invoice-mark-paid/">Folio, mark as paid</a><span class="skill">cast</span>
+      <p>An invoice list whose "Mark as paid" action now feels like the money landed.</p>
+    </li>
+  </ul>
+
+  <h2>Also recorded</h2>
+  <ul>
+    <li>
+      <a href="/gres-redesign/">Atelier Grès, redesign</a><span class="skill">paint</span>
+      <p>A full visual redesign of the pottery studio page, copy kept word for word. Recorded, not featured.</p>
+    </li>
+  </ul>
+
+  <p class="back"><a href="https://genjutsu.athevon.dev/examples">Back to genjutsu.athevon.dev/examples</a></p>
+</main>
+</body>
+</html>
