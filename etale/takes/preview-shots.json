@@ -1,0 +1,4 @@
+[{"path":"/thesis.html","w":1440,"h":900,"out":"media/preview/thesis.png","wait":2500},
+ {"path":"/thesis.html","w":1440,"h":900,"out":"media/preview/thesis-card-chart.png","wait":2500,"scrollTo":"#stage","offset":24},
+ {"path":"/design-system.html","w":1440,"h":900,"out":"media/preview/design-system.png","wait":2500},
+ {"path":"/design-system.html","w":1440,"h":900,"out":"media/preview/design-system-states.png","wait":2500,"before":"window.scrollTo(0,[...document.querySelectorAll('section')][3].getBoundingClientRect().top+scrollY-24)"}]

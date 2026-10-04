@@ -1,0 +1,1 @@
+{ "root": "../build/dist", "w": 390, "h": 844, "dpr": 2, "settle": 1500, "steps": [ { "wait": 2500 }, { "still": "mobile" } ] }

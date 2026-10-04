@@ -1,0 +1,2 @@
+{ "root": "../build/dist", "w": 1440, "h": 900, "fromLoad": true,
+  "steps": [ { "wait": 330 }, { "still": "entrance" }, { "wait": 2000 }, { "scroll": { "to": 1100, "duration": 1 } }, { "wait": 300 }, { "still": "charts" }, { "scroll": { "to": 1960, "duration": 1 } }, { "wait": 300 }, { "still": "table" } ] }

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale - design system preview (throwaway)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* THROWAWAY PREVIEW of MASTER.md. Token values copied from src/tokens.css so this file stands alone. */
+  :root {
+    --color-ground:#1a1e21; --color-surface:#22272b; --color-rule:#3a4247; --color-rule-strong:#6e787f;
+    --color-ink:#dce1e4; --color-ink-2:#9aa4ab; --color-ink-3:#879198; --color-slack:#a9ccc5;
+    --font-sans:"Public Sans", system-ui, sans-serif;
+    --text-display:clamp(2.75rem, 11vw, 4rem); --text-h1:clamp(1.75rem, 5.5vw, 2.25rem); --text-h2:1.5rem;
+    --text-body:1rem; --text-small:.875rem; --text-label:.75rem; --tracking-label:.08em;
+    --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.5rem; --space-6:2.5rem; --space-7:4rem; --space-8:6rem;
+    --radius:2px; --radius-notif:12px; --target-min:44px;
+    --ease-settle:cubic-bezier(0.32, 0, 0.16, 1); --dur-hover:160ms; --dur-enter:480ms; --dur-draw:1200ms; --stagger:80ms; --rise:8px;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--color-ground); color:var(--color-ink); font:400 var(--text-body)/1.55 var(--font-sans); font-variant-numeric:tabular-nums; }
+  .wrap { max-width:60rem; margin:0 auto; padding:var(--space-7) var(--space-5) var(--space-8); }
+  section { border-top:1px solid var(--color-rule); padding:var(--space-6) 0; }
+  .label { font-size:var(--text-label); letter-spacing:var(--tracking-label); text-transform:uppercase; color:var(--color-ink-2); font-weight:500; margin:0 0 var(--space-4); }
+  .note { color:var(--color-ink-2); font-size:var(--text-small); max-width:34rem; }
+  table { border-collapse:collapse; width:100%; font-size:var(--text-small); }
+  td, th { text-align:left; padding:var(--space-2) var(--space-3) var(--space-2) 0; border-top:1px solid var(--color-rule); vertical-align:middle; }
+  th { color:var(--color-ink-3); font-weight:500; font-size:var(--text-label); text-transform:uppercase; letter-spacing:var(--tracking-label); }
+  .chip { display:inline-block; width:2.5rem; height:1.5rem; border:1px solid var(--color-rule); vertical-align:middle; }
+  .states { display:grid; grid-template-columns:repeat(auto-fill, minmax(10rem, 1fr)); gap:var(--space-5); }
+  .states figure { margin:0; } .states figcaption { font-size:var(--text-label); color:var(--color-ink-3); margin-top:var(--space-2); text-transform:uppercase; letter-spacing:var(--tracking-label); }
+  .btn { font:inherit; font-weight:500; display:inline-flex; align-items:center; min-height:var(--target-min); padding:var(--space-3) var(--space-5);
+    background:var(--color-ink); color:var(--color-ground); border:1px solid var(--color-ink); border-radius:var(--radius); text-decoration:none; cursor:pointer;
+    transition:background-color var(--dur-hover) var(--ease-settle), border-color var(--dur-hover) var(--ease-settle); }
+  .btn:hover, .btn.is-hover { background:var(--color-slack); border-color:var(--color-slack); }
+  .btn:focus-visible, .btn.is-focus { outline:2px solid var(--color-slack); outline-offset:3px; }
+  .btn:active, .btn.is-active { background:var(--color-ink-2); border-color:var(--color-ink-2); }
+  .btn[aria-disabled="true"] { background:transparent; color:var(--color-ink-3); border-color:var(--color-rule-strong); cursor:not-allowed; }
+  .link { color:var(--color-ink); text-decoration:underline; text-decoration-color:var(--color-rule-strong); text-underline-offset:.2em; text-decoration-thickness:1px;
+    transition:text-decoration-color var(--dur-hover) var(--ease-settle), color var(--dur-hover) var(--ease-settle); }
+  .link:hover, .link.is-hover { text-decoration-color:var(--color-ink); }
+  .link:focus-visible, .link.is-focus { outline:2px solid var(--color-slack); outline-offset:3px; border-radius:var(--radius); }
+  .link:active, .link.is-active { color:var(--color-ink-2); }
+  .link[aria-disabled="true"] { color:var(--color-ink-3); text-decoration-color:var(--color-rule); cursor:not-allowed; }
+  .card { background:var(--color-surface); border:1px solid var(--color-rule); border-radius:var(--radius); padding:var(--space-5); }
+  .row { display:flex; justify-content:space-between; gap:var(--space-4); border-top:1px solid var(--color-rule); padding:var(--space-2) 0; font-size:var(--text-small); }
+  .row span:first-child { color:var(--color-ink-2); }
+  .src { font-size:var(--text-label); color:var(--color-ink-3); margin:var(--space-4) 0 0; line-height:1.4; }
+  .notif { background:var(--color-surface); border:1px solid var(--color-rule); border-radius:var(--radius-notif); padding:var(--space-3) var(--space-4); font-size:var(--text-small); }
+  .two { display:grid; gap:var(--space-4); } @media (min-width:52rem) { .two { grid-template-columns:1.4fr 1fr; } }
+  .bars div { display:flex; align-items:center; gap:var(--space-4); font-size:var(--text-label); color:var(--color-ink-2); margin:var(--space-1) 0; }
+  .bars i { display:block; height:var(--space-2); background:var(--color-rule-strong); }
+  .mover { width:var(--space-6); height:var(--space-6); background:var(--color-slack); border-radius:var(--radius); opacity:0; transform:translateY(var(--rise)); }
+  .go .mover { opacity:1; transform:none; transition:opacity var(--dur-enter) var(--ease-settle), transform var(--dur-enter) var(--ease-settle); transition-delay:calc(var(--i) * var(--stagger)); }
+  .ghost { font:inherit; font-size:var(--text-small); background:none; color:var(--color-ink-2); border:1px solid var(--color-rule-strong); border-radius:var(--radius); padding:var(--space-2) var(--space-3); cursor:pointer; min-height:var(--target-min); }
+  .ghost:hover { color:var(--color-ink); } .ghost:focus-visible { outline:2px solid var(--color-slack); outline-offset:3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="label">Étale · design system preview · throwaway, generated from MASTER.md</p>
+  <h1 style="font-size:var(--text-h1);font-weight:500;line-height:1.15;margin:0 0 var(--space-4)">Design system</h1>
+  <p class="note">Dark only. One accent. No shadows, no gradients, no blur. Every value below is a token in <code>src/tokens.css</code>.</p>
+
+  <section>
+    <p class="label">Colour, computed contrast (WCAG)</p>
+    <table>
+      <tr><th></th><th>Token</th><th>Hex</th><th>On ground</th><th>On surface</th><th>Use</th></tr>
+      <tr><td><span class="chip" style="background:#1a1e21"></span></td><td>ground</td><td>#1A1E21</td><td>-</td><td>-</td><td>page</td></tr>
+      <tr><td><span class="chip" style="background:#22272b"></span></td><td>surface</td><td>#22272B</td><td>-</td><td>-</td><td>cards, notification</td></tr>
+      <tr><td><span class="chip" style="background:#3a4247"></span></td><td>rule</td><td>#3A4247</td><td>1.64</td><td>1.47</td><td>hairlines only</td></tr>
+      <tr><td><span class="chip" style="background:#6e787f"></span></td><td>rule-strong</td><td>#6E787F</td><td>3.72</td><td>3.34</td><td>UI borders, axis</td></tr>
+      <tr><td><span class="chip" style="background:#dce1e4"></span></td><td>ink</td><td>#DCE1E4</td><td>12.73</td><td>11.44</td><td>text, figures</td></tr>
+      <tr><td><span class="chip" style="background:#9aa4ab"></span></td><td>ink-2</td><td>#9AA4AB</td><td>6.61</td><td>5.94</td><td>secondary, labels</td></tr>
+      <tr><td><span class="chip" style="background:#879198"></span></td><td>ink-3</td><td>#879198</td><td>5.22</td><td>4.69</td><td>source lines</td></tr>
+      <tr><td><span class="chip" style="background:#a9ccc5"></span></td><td>slack</td><td>#A9CCC5</td><td>9.69</td><td>8.71</td><td>slack water, CTA hover, focus</td></tr>
+    </table>
+    <p class="note" style="margin-top:var(--space-4)">Button text: ground on ink 12.73:1, ground on slack 9.69:1.</p>
+  </section>
+
+  <section>
+    <p class="label">Type, Public Sans 400 / 500, tabular figures</p>
+    <table>
+      <tr><td style="width:9rem;color:var(--color-ink-3)">display</td><td style="font-size:var(--text-display);line-height:1;font-weight:500;color:var(--color-slack)">05:57</td></tr>
+      <tr><td style="color:var(--color-ink-3)">h1</td><td style="font-size:var(--text-h1);line-height:1.15;font-weight:500">Slack water, before work.</td></tr>
+      <tr><td style="color:var(--color-ink-3)">h2</td><td style="font-size:var(--text-h2);line-height:1.25;font-weight:500">An alert the evening before</td></tr>
+      <tr><td style="color:var(--color-ink-3)">body</td><td>The slack times come from the NOAA current predictions at SFB1204, not from high and low tide.</td></tr>
+      <tr><td style="color:var(--color-ink-3)">small</td><td style="font-size:var(--text-small)">Then ebb, strongest 0.94 kn at 08:06</td></tr>
+      <tr><td style="color:var(--color-ink-3)">label</td><td><span class="label" style="margin:0">Slack water, SFB1204, 2 October 2026</span></td></tr>
+    </table>
+  </section>
+
+  <section class="bars">
+    <p class="label">Spacing, 4px base</p>
+    <div><i style="width:var(--space-1)"></i>space-1 4</div><div><i style="width:var(--space-2)"></i>space-2 8</div>
+    <div><i style="width:var(--space-3)"></i>space-3 12</div><div><i style="width:var(--space-4)"></i>space-4 16</div>
+    <div><i style="width:var(--space-5)"></i>space-5 24</div><div><i style="width:var(--space-6)"></i>space-6 40</div>
+    <div><i style="width:var(--space-7)"></i>space-7 64</div><div><i style="width:var(--space-8)"></i>space-8 96</div>
+    <p class="note" style="margin-top:var(--space-4)">Radius 2px everywhere, 12px on the notification illustration only. Elevation: none.</p>
+  </section>
+
+  <section>
+    <p class="label">Button, five states</p>
+    <div class="states">
+      <figure><a class="btn" href="#">Join the beta</a><figcaption>default</figcaption></figure>
+      <figure><a class="btn is-hover" href="#">Join the beta</a><figcaption>hover</figcaption></figure>
+      <figure><a class="btn is-focus" href="#">Join the beta</a><figcaption>focus</figcaption></figure>
+      <figure><a class="btn is-active" href="#">Join the beta</a><figcaption>active</figcaption></figure>
+      <figure><span class="btn" aria-disabled="true">Join the beta</span><figcaption>disabled</figcaption></figure>
+    </div>
+    <p class="label" style="margin-top:var(--space-6)">Text link, five states</p>
+    <div class="states">
+      <figure><a class="link" href="#">NOAA CO-OPS</a><figcaption>default</figcaption></figure>
+      <figure><a class="link is-hover" href="#">NOAA CO-OPS</a><figcaption>hover</figcaption></figure>
+      <figure><a class="link is-focus" href="#">NOAA CO-OPS</a><figcaption>focus</figcaption></figure>
+      <figure><a class="link is-active" href="#">NOAA CO-OPS</a><figcaption>active</figcaption></figure>
+      <figure><span class="link" aria-disabled="true">NOAA CO-OPS</span><figcaption>disabled</figcaption></figure>
+    </div>
+    <p class="note" style="margin-top:var(--space-4)">The real ones respond to hover and Tab too. No input field: the beta is a link to /beta.</p>
+  </section>
+
+  <section>
+    <p class="label">Card, data rows, source line, notification</p>
+    <div class="two">
+      <div class="card">
+        <p class="label" style="margin-bottom:var(--space-2)">Slack water, Friday 2 October 2026</p>
+        <div style="font-size:var(--text-display);line-height:1;font-weight:500;color:var(--color-slack)">05:57 <span style="font-size:var(--text-body);color:var(--color-ink-2);font-weight:400">PDT</span></div>
+        <div style="margin-top:var(--space-4)">
+          <div class="row"><span>Then ebb, strongest</span><span>0.94 kn at 08:06</span></div>
+          <div class="row"><span>Next slack</span><span>10:31</span></div>
+        </div>
+        <p class="src">NOAA CO-OPS current predictions, station SFB1204, Alcatraz Island, southwest of. 2 October 2026.</p>
+      </div>
+      <div>
+        <p class="label" style="margin-bottom:var(--space-2)">Illustration</p>
+        <div class="notif"><div class="label" style="margin:0">Étale</div><strong style="font-weight:600">Tomorrow, Friday 2 Oct: slack at 05:57</strong><div style="color:var(--color-ink-2)">Then the ebb builds to 0.94 kn by 08:06. SFB1204.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="m">
+    <p class="label">Motion tokens: settle cubic-bezier(0.32, 0, 0.16, 1) · enter 480ms · stagger 80ms · rise 8px · hover 160ms · draw 1200ms</p>
+    <div style="display:flex;gap:var(--space-3);margin-bottom:var(--space-4)">
+      <div class="mover" style="--i:0"></div><div class="mover" style="--i:1"></div><div class="mover" style="--i:2"></div><div class="mover" style="--i:3"></div>
+    </div>
+    <button class="ghost" id="replay">Replay entrance</button>
+  </section>
+</div>
+<script>
+  const m = document.getElementById('m');
+  const play = () => { m.classList.remove('go'); void m.offsetWidth; requestAnimationFrame(() => m.classList.add('go')); };
+  document.getElementById('replay').onclick = play; play();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) m.querySelectorAll('.mover').forEach(e => { e.style.opacity = 1; e.style.transform = 'none'; e.style.transition = 'none'; });
+</script>
+</body>
+</html>
