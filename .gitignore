@@ -1,0 +1,23 @@
+# Dependencies and build output: rebuilt from source/, runs/*/workspace-N and before/
+node_modules/
+dist/
+# Build copies: source/ or a workspace with node_modules and dist added, the root of every take
+*/build/
+*/build-*/
+# Raw converse.mjs output: the account's email, connector names and home paths
+calls/
+session/
+# Recorder scratch (record.mjs --keep-frames)
+frames/
+# Sandbox write markers left in eval workspaces
+.cc-writes/
+# Client material that must never be published (scraped social media, local tooling, secrets)
+.research/
+*instagram*
+.playwright-mcp/
+.vercel/
+.env
+.env.*
+# OS and editor
+.DS_Store
+*.swp
