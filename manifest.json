@@ -1,6 +1,6 @@
 {
   "repo": "AThevon/genjutsu-examples",
-  "demo_site": null,
+  "demo_site": "https://genjutsu-examples.vercel.app",
   "examples": [
     {
       "id": "nocturne",

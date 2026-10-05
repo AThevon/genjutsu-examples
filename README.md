@@ -23,7 +23,7 @@ Runs that are not in the gallery stay here, with their receipts, so that what wa
 
 ## Live demos
 
-Each demo is the code a run left, built as it stands under its own path: [`bin/build-demos.sh`](./bin/build-demos.sh) copies the run's code, installs its lockfile and builds it with `--base /<id>/`, without touching a line. The index page is [`demos/index.html`](./demos/index.html). The static result is deployed on Vercel as the project `genjutsu-examples`; rebuilding it from this repository gives the same files byte for byte.
+Each demo is the code a run left, built as it stands under its own path: [`bin/build-demos.sh`](./bin/build-demos.sh) copies the run's code, installs its lockfile and builds it with `--base /<id>/`, without touching a line. The index page is [`demos/index.html`](./demos/index.html). The static result is live at https://genjutsu-examples.vercel.app (Vercel project `genjutsu-examples`); rebuilding it from this repository gives the same files byte for byte.
 
 Chef Ovatio is not built here: it is a real client's site, live on the client's own deployment, and its code is the client's private repository.
 
