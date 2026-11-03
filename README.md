@@ -2,7 +2,7 @@
 
 The recorded runs behind the examples in the [genjutsu](https://github.com/AThevon/genjutsu) README and on [genjutsu.athevon.dev/examples](https://genjutsu.athevon.dev/examples).
 
-Every example here is one real run of the plugin, kept as it came out: the code the run wrote, its receipt (what ran, on which genjutsu commit and model, what it cost, what the build did, which defects are known), the conversation when there was one, and the media filmed from the build. Nothing a run wrote was edited by hand: every receipt counts its human edits, and all of them are 0.
+Every example here is one real run of the plugin, kept as it came out: the code the run wrote, its receipt (what ran, on which genjutsu commit and model, what it cost, what the build did, which defects are known), the conversation when there was one, and the media filmed from the build. Nothing a run wrote was edited by hand, with one exception, named in its receipt: every receipt counts its human edits, all of them are 0 but chef-ovatio's, one fix made to its live site after the run (its door titles crossed their photos in an ink that could not be read there).
 
 The genjutsu repository keeps none of this. Its README gallery is generated from [`manifest.json`](./manifest.json) here, and every image and link in it points at a tag of this repository, so what it shows cannot move under it.
 

@@ -37,7 +37,7 @@ These are the only two times a person answered the run before the site was commi
 | Cost | about 10.5M subagent tokens over six to eight hours, the figure genjutsu publishes for this run; the main session's own tokens were not measured; no dollar figure |
 | Loop | one review, three refine rounds (one from the review's plan, two from decisions files), two verdicts |
 | Human answers | 2 (above) |
-| Human edits | 0: the repository's three commits were all made by the session |
+| Human edits | 1, after the run: the repository's first three commits were all made by the session; a fourth, by hand on 2026-11-04 at the owner's request (`4fa8f3a`), sets the Recevoir and Conseiller titles on the top edge of their photos, which they used to cross in a dark ink that could not be read there |
 
 ## What it produced
 
@@ -83,7 +83,7 @@ Filmed from the live site, not from a build: `bin/record.mjs` with the take's `l
 
 | File | Viewport | Output | What it shows |
 |---|---|---|---|
-| `media/clip.webp` | 1440x900 | 1200x750, 7.9 s, 8 fps, quality 15, 693,282 bytes | The home: first screen held 1.2 s, then a scroll from the top to the "Ce qui arrive à table" section (0 to 1980 px, eased in and out) in 5.5 s, then 1.2 s held. The sky turns from noon yellow to sunset orange as the plate sets, the header turns to the compact bar, then the line "La même cuisine, deux façons de la partager", the two doors (Recevoir, Conseiller) and the first plates. |
+| `media/clip.webp` | 1440x900 | 1200x750, 7.9 s, 8 fps, quality 15, 690,224 bytes, filmed again on 2026-11-04 after the hand fix to the door titles | The home: first screen held 1.2 s, then a scroll from the top to the "Ce qui arrive à table" section (0 to 1980 px, eased in and out) in 5.5 s, then 1.2 s held. The sky turns from noon yellow to sunset orange as the plate sets, the header turns to the compact bar, then the line "La même cuisine, deux façons de la partager", the two doors (Recevoir, Conseiller) and the first plates. |
 | `media/home-desktop.png` (cover) | 1440x900 | 1440x900, 890,106 bytes | Home, first screen: OVATIO across the sky, the beetroot plate as the sun on the horizon, "Chef privé méditerranéen, là où vous recevez." |
 | `media/home-mobile.png` | 390x844 @2x | 780x1688 | Home on a phone: wordmark, plate-sun, the call to compose a table and the WhatsApp button within reach of a thumb |
 | `media/carnet-desktop.png` | 1440x900 | 1440x900 | The carnet, first screen: night sky, the crudo plate cut out as the moon |

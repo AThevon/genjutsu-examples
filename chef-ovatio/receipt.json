@@ -46,7 +46,8 @@
       "answer": "L'Affiche de la Riviera"
     }
   ],
-  "humanEdits": 0,
+  "humanEdits": 1,
+  "humanEditsNote": "One, after the run: on 4 November 2026, at the owner's request, commit 4fa8f3a of AThevon/chef-ovatio sets the Recevoir and Conseiller titles on the top edge of their photos. The run had them cross the photos in its dark Nuit ink, which could not be read on the garden's foliage or on the steel of the mise en place. The clip was filmed again after it.",
   "cost": {
     "subagentTokens": "about 10.5M",
     "duration": "six to eight hours",
@@ -160,7 +161,8 @@
       "seconds": 7.875,
       "fps": 8,
       "quality": 15,
-      "bytes": 693282,
+      "bytes": 690224,
+      "filmed": "2026-11-04, from the live site after the hand fix to the door titles (first filmed 2026-09-29)",
       "encoder": "takes/encode-clip.py"
     },
     "stills": [
