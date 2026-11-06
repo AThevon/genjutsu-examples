@@ -1,0 +1,147 @@
+{
+  "live": "https://genjutsu.athevon.dev",
+  "w": 1280,
+  "h": 720,
+  "dpr": 1.5,
+  "fps": 24,
+  "settle": 1500,
+  "cursor": true,
+  "probe": "JSON.stringify({y:Math.round(scrollY),open:!!document.querySelector('[data-grid]')?.inert})",
+  "steps": [
+    {
+      "wait": 700
+    },
+    {
+      "pointer": {
+        "path": [
+          [
+            1190,
+            500
+          ],
+          [
+            905,
+            280
+          ]
+        ],
+        "duration": 650,
+        "ease": "inOut"
+      }
+    },
+    {
+      "pointer": {
+        "path": [
+          [
+            905,
+            280
+          ],
+          [
+            835,
+            395
+          ],
+          [
+            925,
+            470
+          ],
+          [
+            880,
+            300
+          ],
+          [
+            1010,
+            285
+          ],
+          [
+            1020,
+            475
+          ]
+        ],
+        "duration": 3000,
+        "ease": "inOut"
+      }
+    },
+    {
+      "still": "b-lens"
+    },
+    {
+      "pointer": {
+        "path": [
+          [
+            1020,
+            475
+          ],
+          [
+            1250,
+            560
+          ]
+        ],
+        "duration": 450,
+        "ease": "in"
+      }
+    },
+    {
+      "wait": 300
+    },
+    {
+      "eval": "[...document.documentElement.children].at(-1).style.visibility='hidden'"
+    },
+    {
+      "scroll": {
+        "to": "#cast",
+        "duration": 42
+      }
+    },
+    {
+      "wait": 3800
+    },
+    {
+      "still": "d-gallery-open"
+    },
+    {
+      "scroll": {
+        "to": "#paint",
+        "duration": 42
+      }
+    },
+    {
+      "wait": 1600
+    },
+    {
+      "still": "e-paint"
+    },
+    {
+      "scroll": {
+        "to": "#bunshin",
+        "duration": 42
+      }
+    },
+    {
+      "wait": 500
+    },
+    {
+      "scroll": {
+        "to": "#bunshin",
+        "offset": -650,
+        "duration": 1800,
+        "ease": "linear"
+      }
+    },
+    {
+      "wait": 400
+    },
+    {
+      "still": "f-fork"
+    },
+    {
+      "scroll": {
+        "to": 99999,
+        "duration": 42
+      }
+    },
+    {
+      "wait": 1600
+    },
+    {
+      "still": "g-install"
+    }
+  ]
+}

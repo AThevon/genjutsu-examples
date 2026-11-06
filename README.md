@@ -53,6 +53,7 @@ cases/                   the headless eval cases, and _templates/ (sources and l
 demos/                   the demos index page and its vercel.json
 readme-media/            the images of the genjutsu README's hero and gallery (one cover and
                          one clip per featured example)
+  takes/                 the take and the encode script behind hero-site.webp
 <example>/
   receipt.md             the run, its cost, the build, known defects, how the media was made
   receipt.json           the same, as data
@@ -91,7 +92,7 @@ cp -R runs/20261004T162515Z/workspace-1 build-20261004T162515Z-1
 (cd build-20261004T162515Z-1 && npm ci && npm run build)
 ```
 
-`etale-landing` and `nocturne-planetarium` name theirs `build-1` and `build-2`, from `workspace-1` and `workspace-2`. For `gres-redesign`, also run `npm ci && npm run build` in `before/`. Chef Ovatio's takes need no build: they film the live site.
+`etale-landing` and `nocturne-planetarium` name theirs `build-1` and `build-2`, from `workspace-1` and `workspace-2`. For `gres-redesign`, also run `npm ci && npm run build` in `before/`. Chef Ovatio's takes and the README hero's need no build: they film the live site.
 
 Then film a take:
 
@@ -100,6 +101,15 @@ node bin/record.mjs --take etale/takes/clip.json --out /tmp/etale-clip
 ```
 
 It writes the stills and `clip.webp` under `--out` and prints a JSON summary; its header documents every take option.
+
+The README hero is cut from one take of genjutsu.athevon.dev and has its own encode script, which replaces the recorder's encoder (`--max-kb` is raised only so that the recorder's own encoder stops at its first attempt). Film it again whenever the site's homepage changes:
+
+```sh
+node bin/record.mjs --take readme-media/takes/hero-site.json --out /tmp/hero-site --max-kb 100000 --keep-frames
+python3 readme-media/takes/encode-hero.py /tmp/hero-site/frames readme-media/hero-site.webp 70 1200 0:123:16 123=900,134:162:20 162=1500 217=1700 254=800,267:311:8,311=500 320=1900
+```
+
+The frame numbers are the take's own, so a changed take needs its cuts found again. `readme-media/hero-site-poster.png` is its first frame at 1200 px.
 
 The demos:
 
