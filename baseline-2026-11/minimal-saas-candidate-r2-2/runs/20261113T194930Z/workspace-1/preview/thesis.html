@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk: thesis preview (throwaway, not the build)</title>
+<style>
+  :root {
+    --ground: #FFFFFF; --surface: #F4F5F6; --rule: #DADDE1; --rule-control: #8C939B;
+    --ink: #15191E; --ink-2: #4A525C; --ink-3: #69717B;
+    --exception: #A63A12; --exception-tint: #FBF1EC;
+    --ease-out: cubic-bezier(0.2, 0, 0, 1);
+    --dur-fast: 120ms; --dur-normal: 180ms; --dur-settle: 240ms;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink);
+    font: 400 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-variant-numeric: tabular-nums; }
+  main { max-width: 1120px; margin: 0 auto; padding: 48px 24px 96px; }
+  h1 { font-size: 20px; font-weight: 600; margin: 0 0 8px; }
+  h2 { font-size: 14px; font-weight: 600; margin: 48px 0 12px; padding-top: 12px; border-top: 1px solid var(--rule); }
+  p { max-width: 68ch; margin: 0 0 12px; color: var(--ink-2); }
+  .note { color: var(--ink-3); font-size: 14px; }
+  .thesis { color: var(--ink); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .sw { border: 1px solid var(--rule); }
+  .sw div { height: 56px; }
+  .sw p { font-size: 13px; margin: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 600; color: var(--ink-2); }
+  td.num, th.num { text-align: right; }
+  tr.matched td { color: var(--ink-3); }
+  tr.exc td { color: var(--ink); }
+  tr.exc td.bad { color: var(--exception); font-weight: 600; }
+  .mark { display: inline-block; width: 18px; text-align: center; }
+  .ring { display: inline-block; width: 18px; height: 18px; border: 1.5px solid var(--exception); border-radius: 50%; color: var(--exception); font-size: 11px; line-height: 15px; text-align: center; font-weight: 600; }
+  button { font: inherit; font-size: 15px; padding: 10px 16px; border-radius: 2px; cursor: pointer;
+    transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+  .primary { background: var(--ink); color: #fff; border: 1px solid var(--ink); }
+  .primary:hover { background: #2A3038; }
+  .quiet { background: transparent; color: var(--ink); border: 1px solid var(--rule-control); }
+  .quiet:hover { border-color: var(--ink); }
+  button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .row { transition: opacity var(--dur-normal) var(--ease-out); }
+  .demo.only .row.matched { opacity: 0; }
+  .demo.collapsed .row.matched { display: none; }
+  .rm .row, .rm .exc { transition: none !important; }
+  .scale div { background: var(--ink); height: 8px; margin: 6px 0; }
+  .spec > * { margin: 0 0 8px; }
+  label { font-size: 14px; color: var(--ink-2); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk: thesis preview</h1>
+  <p class="note">This page is the proposal, not the build. It is throwaway; the landing page is built from MASTER.md, not from this markup. Status: <strong>UNVALIDATED</strong>, because nobody was available to approve it in this session.</p>
+
+  <h2>Visual thesis</h2>
+  <p class="thesis">Ploverdesk looks like an auditor's reconciliation worksheet: a cool white ground, near-black ink, ruled with 1px hairlines. Exactly one accent, a burnt-orange exception mark (#A63A12), appears only where a line does not match, never on buttons or decoration. The type is the system sans with tabular figures, set at 400 and 600 only, with a moderate size contrast. There is no web face: the voice comes from the aligned figure columns. Spacing is airy on an 8px base, and every section starts from the same left edge on a 12-column grid, with text held at about 60ch. Components are sharp (2px radius), bordered, flat and unshadowed.</p>
+  <p class="thesis">First screen: the headline, one sentence and the trial button sit at reading measure on the left. The width belongs to a worksheet for one invoice, labelled as an illustrative example. Five lines carry a quiet tick, and one line, quantity invoiced against quantity delivered, is circled in the exception colour. At rest it already shows the product's idea, that only that one line needs a person. On a phone the worksheet sits under the CTA. Matched lines shrink to one row each (item and tick), and the exception line keeps its three values (Invoice / PO / Delivery) whole.</p>
+
+  <h2>Interaction thesis</h2>
+  <p class="thesis">The motion is fast and dry: 120ms for colour changes on hover, 180ms for fades, all on cubic-bezier(0.2, 0, 0, 1). On hover only colour and underline change, and nothing moves or scales. Nothing happens on scroll. Forbidden: scroll reveals, parallax, bounce or overshoot, scale on hover, loops, count-ups and staggers. The one motion is the worksheet's real toggle, "Show exceptions only". Pressing it fades the matched lines out over 180ms, and the exception line then slides up into place over 240ms (FLIP, transform only). Before it runs, and if it never runs, all six lines are visible and the exception is already circled. With reduced motion, the toggle switches instantly.</p>
+  <p class="thesis"><strong>Allowed patterns:</strong> hairline rules (the worksheet's ruling); tick marks and the circled exception mark (auditor's tick-and-tie); tabular figures in columns.</p>
+  <p class="note">Assumptions from the brief: product = landing page whose single CTA is /trial, with /demo as a quieter link; audience = finance leads at mid-size EU wholesalers, reading at a desk; mood = quiet, precise, restrained, exact; references = none given, so none borrowed; stack = scanned. No web font is requested, because nobody could approve a third-party font request; the system face stands in, and tabular figures carry the voice.</p>
+  <p class="note">Set aside: SaaS routine (centred hero, dashboard screenshot in a browser frame, three icon cards, logo strip); its opposite (one huge sentence on a blank page); world 1 (spreadsheet grid); world 2 (bank statement). Kept: the auditor's tick-and-tie reconciliation worksheet.</p>
+
+  <h2>Easing</h2>
+  <svg width="220" height="220" viewBox="0 0 220 220" role="img" aria-label="cubic-bezier(0.2, 0, 0, 1)">
+    <rect x="10" y="10" width="200" height="200" fill="none" stroke="#DADDE1"/>
+    <path d="M10 210 C 50 210, 10 10, 210 10" fill="none" stroke="#15191E" stroke-width="2"/>
+  </svg>
+  <p>cubic-bezier(0.2, 0, 0, 1). Durations: hover 120ms, fade 180ms, settle 240ms. No delay, no stagger.</p>
+
+  <h2>The one motion</h2>
+  <p><button class="quiet" id="toggle" aria-pressed="false">Show exceptions only</button>
+     <label style="margin-left:16px"><input type="checkbox" id="rm"> Simulate reduced motion</label></p>
+  <p class="note">Illustrative example, not customer data. Amended after the first draft: no invented quantities or prices (the brief allows no invented figure). The thesis text above still names quantities; MASTER.md holds the amended sentence.</p>
+  <table class="demo" id="demo">
+    <thead><tr><th>Item</th><th>PO quantity</th><th>PO price</th><th>Delivery</th></tr></thead>
+    <tbody>
+      <tr class="row matched"><td>Line 1</td><td><span class="mark">✓</span></td><td><span class="mark">✓</span></td><td><span class="mark">✓</span></td></tr>
+      <tr class="row matched"><td>Line 2</td><td><span class="mark">✓</span></td><td><span class="mark">✓</span></td><td><span class="mark">✓</span></td></tr>
+      <tr class="row exc" id="exc"><td>Line 3</td><td><span class="mark">✓</span></td><td><span class="mark">✓</span></td><td class="bad"><span class="ring">!</span> Differs</td></tr>
+      <tr class="row matched"><td>Line 4</td><td><span class="mark">✓</span></td><td><span class="mark">✓</span></td><td><span class="mark">✓</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Palette (contrast against #FFFFFF)</h2>
+  <div class="grid">
+    <div class="sw"><div style="background:#15191E"></div><p>ink #15191E · 17.65:1</p></div>
+    <div class="sw"><div style="background:#4A525C"></div><p>ink-2 #4A525C · 7.92:1</p></div>
+    <div class="sw"><div style="background:#69717B"></div><p>ink-3 #69717B · 4.94:1</p></div>
+    <div class="sw"><div style="background:#A63A12"></div><p>exception #A63A12 · 6.49:1</p></div>
+    <div class="sw"><div style="background:#8C939B"></div><p>rule-control #8C939B · 3.11:1 (UI boundary)</p></div>
+    <div class="sw"><div style="background:#DADDE1"></div><p>rule #DADDE1 · decorative ruling only</p></div>
+    <div class="sw"><div style="background:#F4F5F6"></div><p>surface #F4F5F6</p></div>
+  </div>
+
+  <h2>Type (system sans, not a web face)</h2>
+  <div class="spec">
+    <p style="font-size:44px;font-weight:600;line-height:1.1;color:var(--ink);letter-spacing:-0.01em">Only the lines that don't match.</p>
+    <p style="font-size:20px;color:var(--ink)">Lead 20px / 400</p>
+    <p style="font-size:16px;color:var(--ink)">Body 16px / 400. 290 EUR per month.</p>
+    <p style="font-size:14px">Small 14px / 400. Tabular figures: 290 EUR</p>
+  </div>
+
+  <h2>Spacing (8px base)</h2>
+  <div class="scale"><div style="width:8px"></div><div style="width:16px"></div><div style="width:24px"></div><div style="width:32px"></div><div style="width:48px"></div><div style="width:64px"></div><div style="width:96px"></div><div style="width:128px"></div></div>
+
+  <h2>Button and card</h2>
+  <p><button class="primary">Start the 14-day trial</button> &nbsp; <button class="quiet">Book a demo</button></p>
+  <div style="border:1px solid var(--rule);border-radius:2px;padding:24px;max-width:360px"><strong>Card</strong><p style="margin:8px 0 0">1px rule, 2px radius, no shadow.</p></div>
+</main>
+<script>
+  const t = document.getElementById('toggle'), d = document.getElementById('demo'), exc = document.getElementById('exc'), rm = document.getElementById('rm');
+  t.addEventListener('click', () => {
+    const on = t.getAttribute('aria-pressed') !== 'true';
+    t.setAttribute('aria-pressed', String(on));
+    t.textContent = on ? 'Show all lines' : 'Show exceptions only';
+    const reduced = rm.checked;
+    d.classList.toggle('rm', reduced);
+    if (reduced) { d.classList.toggle('only', on); d.classList.toggle('collapsed', on); return; }
+    if (on) {
+      d.classList.add('only');
+      setTimeout(() => {
+        const before = exc.getBoundingClientRect().top;
+        d.classList.add('collapsed');
+        const after = exc.getBoundingClientRect().top;
+        exc.animate([{ transform: `translateY(${before - after}px)` }, { transform: 'none' }], { duration: 240, easing: 'cubic-bezier(0.2, 0, 0, 1)' });
+      }, 180);
+    } else {
+      d.classList.remove('collapsed');
+      requestAnimationFrame(() => d.classList.remove('only'));
+    }
+  });
+</script>
+</body>
+</html>

@@ -33,6 +33,7 @@ BASE="$(dirname "$HERE")"
 REPO="$(dirname "$BASE")"
 # ARM_LABEL names the output folder when the plugin under test is a candidate checkout of an arm
 # (ARM_LABEL=candidate-r1 with arm genjutsu writes <case>-candidate-r1-<n>); it changes nothing else.
+# MAX_COST_USD lowers the cap of the session (8 USD when unset), to keep a round under its budget.
 LABEL="${ARM_LABEL:-$ARM}"
 WORK=/private/tmp/gj-baseline/eval-$LABEL-$ID-$N
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
@@ -107,7 +108,7 @@ claude plugin eval . \
   --no-publish \
   --trust-plugin \
   --model claude-opus-5-5 \
-  --max-cost-usd 8 \
+  --max-cost-usd "${MAX_COST_USD:-8}" \
   --output-dir "$OUT" 2>&1 | tee "$OUT/run.log"
 STATUS="${PIPESTATUS[0]}"
 set -e

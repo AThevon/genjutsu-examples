@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nocturne - thesis preview (throwaway)</title>
+<style>
+  :root{--ground:#1c2735;--dome:#04060a;--ink:#ece6da;--dim:#9aa3ae;--red:#ff6a55;--line:#2e3a49;--strong:#6b7788;
+    --dur:420ms;--ease:cubic-bezier(0.2,0,0,1)}
+  body{margin:0;background:var(--ground);color:var(--ink);font:1.0625rem/1.6 system-ui,sans-serif;padding:2rem}
+  main{max-width:64rem;margin:auto}
+  .note{color:var(--dim);max-width:40rem}
+  .row{display:flex;flex-wrap:wrap;gap:2rem;margin-top:2rem;align-items:flex-start}
+  figure{margin:0}
+  figcaption{color:var(--dim);font-size:.8125rem;margin-top:.5rem}
+  button{font:inherit;background:none;color:var(--ink);border:1px solid var(--strong);min-height:44px;padding:0 1rem;cursor:pointer}
+  button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  #ring{transition:transform var(--dur) var(--ease)}
+  .rm #ring{transition:none}
+  em{font-family:"Iowan Old Style",Charter,Georgia,serif}
+  dl{display:grid;grid-template-columns:auto 1fr;gap:.25rem 1rem;font-variant-numeric:tabular-nums}
+  dt{color:var(--dim)}
+</style>
+</head>
+<body>
+<main>
+  <p class="note">Throwaway preview: this page is the proposal, not the build. Status: UNVALIDATED (headless run).</p>
+  <p><strong>Visual thesis:</strong> an observer's all-sky chart printed in light on night, ground darkening section by section from dusk blue-slate to near-black, stars as warm-white dots sized by magnitude and tinted by B-V, one night-vision red for the pointer, times and ticket action; system sans with tabular figures, star names in italic system serif.</p>
+  <p><strong>Interaction thesis:</strong> 160ms ease-out colour hovers only, nothing moves with scroll, no twinkle, particles, glow, load-in, bounce or hover scale; the one motion is the narrator's pointer ring travelling 420ms on cubic-bezier(0.2, 0, 0, 1) to the object you hover, focus or tap, resting on Saturn before any input; reduced motion makes it jump.</p>
+  <p><strong>Allowed patterns:</strong> hairline rules and altitude rings; italic serif object labels; tabular figures; a stepped dusk-to-night ground; a red pointer ring; small uppercase letter-spaced labels for cardinal points and section stamps.</p>
+
+  <div class="row">
+    <figure>
+      <svg width="220" height="220" viewBox="-10 -10 120 120" role="img" aria-label="Easing curve cubic-bezier(0.2, 0, 0, 1)">
+        <rect x="0" y="0" width="100" height="100" fill="none" stroke="#2e3a49"/>
+        <path d="M0 100 C20 100 0 0 100 0" fill="none" stroke="#ff6a55" stroke-width="1.5"/>
+        <line x1="0" y1="100" x2="20" y2="100" stroke="#6b7788" stroke-dasharray="2 2"/>
+        <line x1="100" y1="0" x2="0" y2="0" stroke="#6b7788" stroke-dasharray="2 2"/>
+      </svg>
+      <figcaption>cubic-bezier(0.2, 0, 0, 1), 420ms</figcaption>
+    </figure>
+
+    <figure id="stage">
+      <svg width="320" height="320" viewBox="-112 -112 224 224" role="img" aria-label="Sample of the chart with the pointer">
+        <circle r="100" fill="#04060a"/>
+        <circle r="100" fill="none" stroke="#2e3a49" stroke-width=".6"/>
+        <circle r="66.67" fill="none" stroke="#2e3a49" stroke-width=".4"/>
+        <circle r="33.33" fill="none" stroke="#2e3a49" stroke-width=".4"/>
+        <g fill="#9aa3ae" font-size="7" text-anchor="middle" letter-spacing="1">
+          <text y="-104">N</text><text x="-106" y="2.5">E</text><text y="110">S</text><text x="106" y="2.5">W</text>
+        </g>
+        <g id="dots"></g>
+        <g id="ring"><circle r="7" fill="none" stroke="#ff6a55" stroke-width="1"/></g>
+      </svg>
+      <figcaption>Five real objects from data/stars.json (alt/az copied for this preview only).</figcaption>
+    </figure>
+
+    <div>
+      <div id="list" style="display:grid;gap:.5rem"></div>
+      <p style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button id="replay">Replay tour</button>
+        <button id="rm" aria-pressed="false">Reduced motion: off</button>
+      </p>
+      <dl>
+        <dt>hover</dt><dd>160ms ease-out, colour only</dd>
+        <dt>pointer</dt><dd>420ms cubic-bezier(0.2, 0, 0, 1), transform</dd>
+        <dt>reduced</dt><dd>0ms, the ring jumps</dd>
+        <dt>at rest</dt><dd>ring on Saturn</dd>
+      </dl>
+    </div>
+  </div>
+</main>
+<script>
+  const objs=[["Saturn",33.67,119.05,0.36],["Vega",55.36,284.63,0.03],["Capella",12.62,40.03,0.08],["Deneb",77.83,307.56,1.25],["Altair",51.99,225.37,0.77]];
+  const xy=(alt,az)=>{const r=(90-alt)/90*100,a=az*Math.PI/180;return[-Math.sin(a)*r,-Math.cos(a)*r]};
+  const dots=document.getElementById('dots'),ring=document.getElementById('ring'),list=document.getElementById('list');
+  const go=i=>{const[x,y]=xy(objs[i][1],objs[i][2]);ring.style.transform=`translate(${x}px,${y}px)`};
+  objs.forEach((o,i)=>{const[x,y]=xy(o[1],o[2]);const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',Math.max(.35,2.5-.48*o[3]));c.setAttribute('fill','#f4efe6');dots.appendChild(c);
+    const b=document.createElement('button');b.innerHTML=`<em>${o[0]}</em>`;b.onmouseenter=b.onfocus=b.onclick=()=>go(i);list.appendChild(b)});
+  go(0);
+  document.getElementById('replay').onclick=()=>{let i=0;const t=setInterval(()=>{go(i%objs.length);if(++i>objs.length){clearInterval(t)}},700)};
+  const rmb=document.getElementById('rm');rmb.onclick=()=>{const on=document.getElementById('stage').classList.toggle('rm');rmb.setAttribute('aria-pressed',on);rmb.textContent='Reduced motion: '+(on?'on':'off')};
+</script>
+</body>
+</html>

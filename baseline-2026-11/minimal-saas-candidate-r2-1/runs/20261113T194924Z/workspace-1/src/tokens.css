@@ -1,0 +1,73 @@
+/* Mirrors MASTER.md. Do not add values here that are not in MASTER.md. */
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #f5f6f8;
+  --color-ink: #15171a;
+  --color-text-secondary: #4a505b;
+  --color-text-muted: #6b717c;
+  --color-rule: #e2e5e9;
+  --color-border-control: #8a909a;
+  --color-accent: #2839c8;
+  --color-accent-strong: #1f2da3;
+  --color-accent-wash: #eef0fb;
+  --color-on-accent: #ffffff;
+  --color-disabled: #c9cdd3;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-display: clamp(2rem, 1.2rem + 3.2vw, 3.25rem);
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --leading-display: 1.1;
+  --leading-heading: 1.3;
+  --leading-prose: 1.55;
+  --leading-sheet: 1.4;
+  --tracking-display: -0.02em;
+  --measure: 60ch;
+  --measure-display: 18ch;
+  --target-min: 44px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  --container: 1120px;
+  --gutter: var(--space-5);
+  --section-pad: var(--space-9);
+
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --hairline: 1px solid var(--color-rule);
+
+  --dur-hover: 120ms;
+  --dur-status: 160ms;
+  --dur-max: 200ms;
+  --stagger: 60ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gutter: var(--space-4);
+    --section-pad: var(--space-7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-hover: 0ms;
+    --dur-status: 0ms;
+    --dur-max: 0ms;
+    --stagger: 0ms;
+  }
+}
