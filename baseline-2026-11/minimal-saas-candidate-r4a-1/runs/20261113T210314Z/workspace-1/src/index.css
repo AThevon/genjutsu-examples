@@ -1,0 +1,518 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  font-weight: var(--w-regular);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-ink);
+  background: var(--c-ground);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+/* ---------- Layout ---------- */
+
+.wrap {
+  max-width: var(--w-container);
+  margin-inline: auto;
+  padding-inline: var(--s-5);
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    padding-inline: var(--s-4);
+  }
+}
+
+.site-header {
+  padding-block: var(--s-5);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--h-control);
+  font-weight: var(--w-strong);
+  color: var(--c-ink);
+  text-decoration: none;
+}
+
+/* ---------- Links and buttons: default, hover, focus, active, disabled ---------- */
+
+a:focus-visible {
+  outline: var(--focus-width) solid var(--c-ink);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--r-1);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--h-control);
+  padding: 0 var(--s-5);
+  border-radius: var(--r-1);
+  background: var(--c-ink);
+  color: var(--c-on-ink);
+  font-weight: var(--w-strong);
+  text-decoration: none;
+  transition: background-color var(--d-hover) var(--ease-out);
+}
+
+.btn:active {
+  background: var(--c-ink-active);
+}
+
+.btn[aria-disabled="true"] {
+  background: var(--c-sheet);
+  color: var(--c-ink-3);
+  pointer-events: none;
+}
+
+.quiet {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--h-control);
+  color: var(--c-ink);
+  text-decoration: underline;
+  text-decoration-thickness: var(--stroke);
+  text-underline-offset: var(--underline-offset);
+  transition: text-decoration-thickness var(--d-hover) var(--ease-out);
+}
+
+.quiet:active {
+  color: var(--c-ink-2);
+}
+
+.quiet[aria-disabled="true"] {
+  color: var(--c-ink-3);
+  text-decoration: none;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: var(--c-ink-hover);
+  }
+  .btn:active {
+    background: var(--c-ink-active);
+  }
+  .quiet:hover {
+    text-decoration-thickness: var(--focus-width);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3) var(--s-5);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: grid;
+  gap: var(--s-7);
+  padding-block: var(--s-7) 0;
+}
+
+.hero h1 {
+  font-size: var(--t-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  font-weight: var(--w-strong);
+  max-width: var(--w-measure);
+  margin-bottom: var(--s-5);
+}
+
+.lead {
+  font-size: var(--t-lead);
+  line-height: var(--lh-lead);
+  color: var(--c-ink-2);
+  max-width: var(--w-measure);
+  margin-bottom: var(--s-6);
+}
+
+.terms {
+  margin-top: var(--s-3);
+  font-size: var(--t-label);
+  line-height: var(--lh-label);
+  color: var(--c-ink-3);
+  max-width: var(--w-measure);
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--s-5);
+    padding-top: var(--s-8);
+  }
+  .hero-text {
+    grid-column: 1 / span 4;
+  }
+  .sheet {
+    grid-column: 5 / -1;
+    align-self: start;
+  }
+}
+
+/* ---------- The worksheet ---------- */
+
+.sheet {
+  margin: 0;
+  min-width: 0;
+  padding: var(--s-5) var(--s-4);
+  background: var(--c-sheet);
+  border-radius: var(--r-1);
+}
+
+.match {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-figure);
+  line-height: var(--lh-figure);
+}
+
+.match caption {
+  caption-side: top;
+  text-align: left;
+  padding: 0 var(--s-2) var(--s-4);
+  font-size: var(--t-label);
+  line-height: var(--lh-label);
+  color: var(--c-ink-3);
+}
+
+.match thead th {
+  padding: var(--s-1) var(--s-2);
+  font-size: var(--t-label);
+  line-height: var(--lh-label);
+  font-weight: var(--w-strong);
+  color: var(--c-ink-3);
+  text-align: right;
+  vertical-align: bottom;
+}
+
+/* The one rule: under the header, where the columns begin. */
+.match thead tr:first-child th[rowspan],
+.match thead tr:last-child th {
+  border-bottom: var(--stroke) solid var(--c-rule);
+  padding-bottom: var(--s-2);
+}
+
+.match thead .c-group {
+  text-align: center;
+}
+
+.match tbody th,
+.match tbody td {
+  padding: var(--s-3) var(--s-2);
+  text-align: right;
+  vertical-align: middle;
+}
+
+/* Invoice columns leave room on the right for the tickmark. */
+.match thead tr:last-child th:nth-child(1),
+.match thead tr:last-child th:nth-child(4),
+.match td[data-label^="Invoice"] {
+  padding-right: calc(var(--s-2) + var(--s-4));
+}
+
+.match .c-line {
+  text-align: left;
+  font-weight: var(--w-regular);
+}
+
+.match .c-result {
+  text-align: left;
+  padding-left: var(--s-4);
+}
+
+.match .c-result.is-matched {
+  color: var(--c-ink-3);
+}
+
+.match .is-exception,
+.match .is-exception > * {
+  background: var(--c-flag-wash);
+}
+
+.match .is-exception .c-result {
+  color: var(--c-flag);
+  font-weight: var(--w-strong);
+}
+
+.fig,
+.ringed {
+  position: relative;
+  display: inline-block;
+}
+
+.tick {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: var(--s-3);
+  height: var(--s-3);
+  margin-top: calc(var(--s-3) / -2);
+  margin-left: var(--s-1);
+  overflow: visible;
+  fill: none;
+  stroke: var(--c-ink-3);
+  stroke-width: var(--stroke-mark);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ring {
+  position: absolute;
+  top: calc(-1 * var(--s-1));
+  left: calc(-1 * var(--s-2));
+  width: calc(100% + 2 * var(--s-2));
+  height: calc(100% + 2 * var(--s-1));
+  overflow: visible;
+  fill: none;
+  stroke: var(--c-flag);
+  stroke-width: var(--stroke-mark);
+}
+
+.ring ellipse {
+  vector-effect: non-scaling-stroke;
+}
+
+/* The one motion: the match runs once, row by row. The resting state is the final state. */
+.tick path,
+.ring ellipse {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.tick path {
+  animation: mark-draw var(--d-tick) var(--ease-out) backwards;
+  animation-delay: calc(var(--d-start) + var(--row, 0) * var(--d-stagger));
+}
+
+.ring ellipse {
+  animation: mark-draw var(--d-ring) var(--ease-out) backwards;
+  animation-delay: calc(var(--d-start) + var(--row, 0) * var(--d-stagger) + var(--d-ring-lag));
+}
+
+@keyframes mark-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+.sheet figcaption {
+  padding: var(--s-4) var(--s-2) 0;
+  font-size: var(--t-label);
+  line-height: var(--lh-label);
+  color: var(--c-ink-2);
+  max-width: var(--w-measure);
+}
+
+/* Narrowest frames: one block per line, each figure beside its label. */
+@media (max-width: 719px) {
+  .sheet {
+    padding: var(--s-4) var(--s-3);
+  }
+  .match,
+  .match tbody,
+  .match caption {
+    display: block;
+  }
+  .match caption {
+    padding-inline: 0;
+  }
+  .match thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .match tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--s-4);
+    padding: var(--s-3);
+  }
+  .match tbody tr + tr {
+    margin-top: var(--s-2);
+  }
+  .match tbody .c-line {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0 0 var(--s-2);
+    font-weight: var(--w-strong);
+  }
+  .match tbody .c-result {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0 0 var(--s-2);
+    text-align: right;
+  }
+  .match tbody td[data-label] {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-4);
+    padding: var(--s-1) 0;
+  }
+  .match tbody td[data-label^="Invoice"] {
+    padding-right: var(--s-4);
+  }
+  .match tbody td[data-label]::before {
+    content: attr(data-label);
+    font-size: var(--t-label);
+    color: var(--c-ink-3);
+    text-align: left;
+  }
+  .sheet figcaption {
+    padding-inline: 0;
+  }
+}
+
+/* ---------- Sections ---------- */
+
+.flow-section,
+.terms-section {
+  padding-top: var(--s-10);
+}
+
+.flow-section h2,
+.terms-section h2 {
+  font-size: var(--t-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  font-weight: var(--w-strong);
+  margin-bottom: var(--s-6);
+}
+
+.flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-6);
+}
+
+.flow h3 {
+  font-size: var(--t-body);
+  font-weight: var(--w-strong);
+  margin-bottom: var(--s-2);
+}
+
+.flow p {
+  color: var(--c-ink-2);
+  max-width: var(--w-measure);
+}
+
+.fork {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.fork-exception h3 {
+  color: var(--c-flag);
+}
+
+@media (min-width: 720px) {
+  .flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--s-5);
+  }
+}
+
+@media (min-width: 1024px) {
+  .flow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.facts {
+  display: grid;
+  gap: var(--s-5);
+  margin: 0 0 var(--s-7);
+}
+
+.facts dt {
+  font-size: var(--t-label);
+  line-height: var(--lh-label);
+  font-weight: var(--w-strong);
+  color: var(--c-ink-3);
+  margin-bottom: var(--s-1);
+}
+
+.facts dd {
+  margin: 0;
+  font-size: var(--t-lead);
+  line-height: var(--lh-lead);
+}
+
+@media (min-width: 720px) {
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--s-5);
+  }
+}
+
+@media (min-width: 1024px) {
+  .terms-section {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--s-5);
+  }
+  .terms-section h2 {
+    grid-column: 1 / span 4;
+  }
+  .terms-body {
+    grid-column: 5 / -1;
+  }
+}
+
+@media (max-width: 719px) {
+  .flow-section,
+  .terms-section {
+    padding-top: var(--s-8);
+  }
+}
+
+.site-footer {
+  padding-block: var(--s-10) var(--s-6);
+  font-size: var(--t-label);
+  line-height: var(--lh-label);
+  color: var(--c-ink-3);
+}
+
+/* ---------- Reduced motion: no draw-in, no transitions. The marks are simply there. ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .tick path,
+  .ring ellipse {
+    animation: none;
+  }
+  .btn,
+  .quiet {
+    transition: none;
+  }
+}

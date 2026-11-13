@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ploverdesk - thesis preview (proposal, not the build)</title>
+<style>
+  :root {
+    --ground: #FFFFFF; --sheet: #F5F6F7; --ink: #15181B; --ink-2: #474E55; --ink-3: #646C74;
+    --rule: #DCDFE2; --rule-strong: #8A9198; --flag: #B3261E; --flag-wash: #FBEEEC;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+    --font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.5 var(--font); color: var(--ink); background: var(--ground); font-variant-numeric: tabular-nums; }
+  main { max-width: 1120px; margin: 0 auto; padding: 48px 24px 96px; }
+  h1 { font-size: 14px; font-weight: 600; margin: 0 0 4px; }
+  h2 { font-size: 14px; font-weight: 600; margin: 64px 0 16px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  p { max-width: 64ch; color: var(--ink-2); margin: 0 0 12px; }
+  .note { font-size: 14px; color: var(--ink-3); }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+  .sw div { height: 56px; border: 1px solid var(--rule); border-radius: 2px; }
+  .sw b { display: block; font-size: 14px; margin-top: 8px; }
+  .sw span { display: block; font-size: 13px; color: var(--ink-3); }
+  .spec > * { margin: 0 0 16px; }
+  .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; background: var(--ink); color: #fff; border-radius: 2px; text-decoration: none; font-weight: 600; font-size: 16px; transition: background-color 160ms var(--ease); }
+  .btn:hover { background: #2E343A; }
+  .btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .quiet { color: var(--ink); text-underline-offset: 3px; text-decoration-thickness: 1px; transition: text-decoration-thickness 160ms var(--ease); }
+  .quiet:hover { text-decoration-thickness: 2px; }
+  table { border-collapse: collapse; width: 100%; max-width: 680px; font-size: 15px; }
+  th { text-align: right; font-weight: 600; font-size: 13px; color: var(--ink-3); padding: 8px 12px; border-bottom: 1px solid var(--rule-strong); }
+  th:first-child, td:first-child { text-align: left; }
+  td { padding: 12px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+  tr.ex td { background: var(--flag-wash); }
+  .v { position: relative; display: inline-flex; align-items: center; gap: 6px; }
+  .tick { width: 12px; height: 12px; color: var(--ink-3); }
+  .tick path { stroke-dasharray: 20; stroke-dashoffset: 0; }
+  .ring { position: absolute; inset: -5px -8px; width: calc(100% + 16px); height: calc(100% + 10px); color: var(--flag); overflow: visible; }
+  .ring ellipse { stroke-dasharray: 260; stroke-dashoffset: 0; }
+  .flagtxt { color: var(--flag); font-weight: 600; }
+  .run .tick path { animation: draw 180ms var(--ease) backwards; animation-delay: calc(300ms + var(--i) * 90ms); }
+  .run .ring ellipse { animation: ring 240ms var(--ease) backwards; animation-delay: calc(300ms + var(--i) * 90ms + 120ms); }
+  @keyframes draw { from { stroke-dashoffset: 20; } }
+  @keyframes ring { from { stroke-dashoffset: 260; } }
+  .reduced .tick path, .reduced .ring ellipse { animation: none !important; }
+  @media (prefers-reduced-motion: reduce) { .tick path, .ring ellipse { animation: none !important; } }
+  .controls { display: flex; gap: 16px; align-items: center; margin: 16px 0; font-size: 14px; }
+  button.ctl { font: inherit; font-size: 14px; min-height: 36px; padding: 0 14px; border: 1px solid var(--rule-strong); background: var(--ground); color: var(--ink); border-radius: 2px; cursor: pointer; }
+  .curve { border: 1px solid var(--rule); }
+  .nums { font-size: 14px; color: var(--ink-2); }
+  .nums dt { font-weight: 600; color: var(--ink); }
+  .nums dd { margin: 0 0 8px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk: visual + interaction thesis</h1>
+  <p class="note">This page is the proposal, not the build. It is throwaway. UNVALIDATED: headless run, decided without a reviewer.</p>
+
+  <h2>Visual thesis</h2>
+  <p><strong>A white page with graphite ink. The one image is an auditor's three-way-match worksheet: tabular figures in the system sans, quiet graphite tickmarks on every value that ties, and a single red pencil ring around each value that does not. Red means exactly one thing: this line needs a person.</strong></p>
+  <p><strong>First screen:</strong> left five columns: headline, one sentence, "Start the 14-day trial" (ink button), "or book a demo" (underlined link), terms line. Right seven columns: an example invoice worksheet (labelled as an example) with four lines checked against order and delivery note; one wrong quantity, one wrong unit price and one missing delivery are ringed in red, and one line is matched and ticked. At 375px each line becomes a stacked block with each value beside its document label.</p>
+
+  <div class="swatches">
+    <div class="sw"><div style="background:#FFFFFF"></div><b>ground #FFFFFF</b><span>page</span></div>
+    <div class="sw"><div style="background:#F5F6F7"></div><b>sheet #F5F6F7</b><span>worksheet ground</span></div>
+    <div class="sw"><div style="background:#15181B"></div><b>ink #15181B</b><span>text, action button: 17.9:1 on white</span></div>
+    <div class="sw"><div style="background:#474E55"></div><b>ink-2 #474E55</b><span>body secondary: 8.4:1</span></div>
+    <div class="sw"><div style="background:#646C74"></div><b>ink-3 #646C74</b><span>labels, tickmarks: 5.3:1</span></div>
+    <div class="sw"><div style="background:#DCDFE2"></div><b>rule #DCDFE2</b><span>hairlines (non-UI)</span></div>
+    <div class="sw"><div style="background:#8A9198"></div><b>rule-strong #8A9198</b><span>UI boundaries: 3.2:1</span></div>
+    <div class="sw"><div style="background:#B3261E"></div><b>flag #B3261E</b><span>exception only: 6.6:1</span></div>
+    <div class="sw"><div style="background:#FBEEEC"></div><b>flag-wash #FBEEEC</b><span>exception row ground</span></div>
+  </div>
+
+  <h2>Type: system sans, tabular figures (no web face: none approved, no network)</h2>
+  <div class="spec">
+    <div style="font-size:44px;font-weight:600;letter-spacing:-0.02em;line-height:1.1">Only the lines that don't match reach your desk.</div>
+    <div style="font-size:24px;font-weight:600;letter-spacing:-0.01em">How an invoice travels: 24px / 600</div>
+    <div style="font-size:18px;color:var(--ink-2)">Lead paragraph, 18px / 400 / 1.55</div>
+    <div style="font-size:16px;color:var(--ink-2)">Body 16px / 400 / 1.5, measure 60ch</div>
+    <div style="font-size:13px;color:var(--ink-3);font-weight:600">Column label 13px / 600</div>
+    <div style="font-size:15px">Figures 15px tabular: 120 × 4.20 · 400 × 0.86 · 60 × 2.10</div>
+  </div>
+  <p><a class="btn" href="#">Start the 14-day trial</a>&nbsp;&nbsp;&nbsp;<a class="quiet" href="#">or book a demo</a></p>
+
+  <h2>Interaction thesis</h2>
+  <p><strong>Fast and dry: 160ms colour/underline changes on hover with cubic-bezier(0.2, 0, 0, 1). No lift, scale or shadow. Nothing moves on scroll.</strong></p>
+  <p><strong>The one motion:</strong> on first load the worksheet runs its match once. Row by row (300ms start, 90ms stagger), each tied value's tickmark draws in (180ms) and each mismatched value gets its red ring (240ms), about 0.9s in total. Before it runs, the values are on screen without marks. If it never runs, the marks are simply there. With reduced motion, no animation runs and the marks are there from the start.</p>
+  <p><strong>Allowed patterns:</strong> auditor tickmarks and red ring marks on the example worksheet; hairline rules; tabular figures; a once-only, non-looping draw-in of those marks; an example worksheet built as a real HTML table, labelled as an example.</p>
+  <p><strong>Forbidden:</strong> scroll reveals, parallax, bounce or spring overshoot, scale on hover, shadows, gradients, looping animation, counters, logo strips, invented testimonials or metrics.</p>
+  <p class="note">Set aside: hero + dashboard screenshot + logo strip + three feature cards + pricing tiers; the bare one-line centred page; the accounting ledger; the bank statement. Kept: the auditor's tickmarked worksheet.</p>
+
+  <div class="controls">
+    <button class="ctl" id="replay">Replay</button>
+    <label><input type="checkbox" id="rm" /> Reduced-motion version</label>
+  </div>
+  <div id="sheet" class="run">
+  <table>
+    <thead><tr><th>Line</th><th>Invoice</th><th>Order</th><th>Delivered</th></tr></thead>
+    <tbody>
+      <tr style="--i:0"><td>Pallet wrap</td>
+        <td><span class="v">120 × 4.20<svg class="tick" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 6.5 4.5 9.5 10.5 2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span></td>
+        <td><span class="v">120 × 4.20<svg class="tick" viewBox="0 0 12 12"><path d="M1.5 6.5 4.5 9.5 10.5 2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span></td>
+        <td><span class="v">120<svg class="tick" viewBox="0 0 12 12"><path d="M1.5 6.5 4.5 9.5 10.5 2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span></td></tr>
+      <tr class="ex" style="--i:1"><td>Corrugated boxes</td>
+        <td><span class="v">400 × 0.86<svg class="ring" viewBox="0 0 100 40" preserveAspectRatio="none"><ellipse cx="50" cy="20" rx="48" ry="18" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></span></td>
+        <td>400 × 0.86</td><td><span class="flagtxt">360</span></td></tr>
+      <tr class="ex" style="--i:2"><td>Packing tape</td>
+        <td><span class="v">60 × 2.10<svg class="ring" viewBox="0 0 100 40" preserveAspectRatio="none"><ellipse cx="50" cy="20" rx="48" ry="18" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></span></td>
+        <td>60 × 1.95</td><td>60</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 style="font-size:14px;margin:32px 0 8px">Easing: cubic-bezier(0.2, 0, 0, 1)</h3>
+  <svg class="curve" width="200" height="200" viewBox="0 0 100 100" aria-label="easing curve">
+    <path d="M0 100 C20 100 0 0 100 0" fill="none" stroke="#15181B" stroke-width="1.2"/>
+  </svg>
+  <dl class="nums">
+    <dt>Hover</dt><dd>160ms, colour / underline thickness only</dd>
+    <dt>Tick draw</dt><dd>180ms, stagger 90ms per row, start 300ms</dd>
+    <dt>Ring draw</dt><dd>240ms, +120ms after its row's ticks</dd>
+  </dl>
+</main>
+<script>
+  const sheet = document.getElementById('sheet');
+  document.getElementById('replay').onclick = () => { sheet.classList.remove('run'); void sheet.offsetWidth; sheet.classList.add('run'); };
+  document.getElementById('rm').onchange = e => sheet.classList.toggle('reduced', e.target.checked);
+</script>
+</body>
+</html>

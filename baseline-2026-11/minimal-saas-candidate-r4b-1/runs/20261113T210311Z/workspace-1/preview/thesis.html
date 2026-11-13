@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ploverdesk: thesis preview (throwaway)</title>
+<style>
+  :root {
+    --bg: #FFFFFF; --surface: #F5F6F7; --ink: #14181D; --ink-2: #4A525B; --recede: #646C75;
+    --rule: #DDE1E5; --signal: #9C3D08; --signal-tint: #FCF0E8;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1rem/1.55 var(--font); font-variant-numeric: tabular-nums; }
+  main { max-width: 72rem; margin: 0 auto; padding: 48px 24px 96px; }
+  h1 { font-size: 1.5rem; font-weight: 600; margin: 0 0 8px; }
+  h2 { font-size: 1rem; font-weight: 600; margin: 64px 0 16px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  p { max-width: 40rem; margin: 0 0 12px; color: var(--ink-2); }
+  .note { font-size: .875rem; color: var(--recede); }
+  .label { font-weight: 600; color: var(--ink); }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 16px; }
+  .sw { border: 1px solid var(--rule); }
+  .sw div { height: 64px; }
+  .sw p { margin: 0; padding: 8px; font-size: .875rem; color: var(--ink); }
+  .type p { color: var(--ink); max-width: none; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 12px 16px 12px 0; border-bottom: 1px solid var(--rule); font-size: .9375rem; }
+  th { font-size: .875rem; font-weight: 600; color: var(--ink-2); }
+  .flag { color: var(--signal); background: var(--signal-tint); padding: 2px 6px; font-weight: 600; }
+  .matched td { animation: recede 400ms var(--ease) 500ms both; color: var(--recede); }
+  @keyframes recede { from { color: var(--ink); } to { color: var(--recede); } }
+  body.reduced .matched td { animation: none; }
+  button { font: inherit; padding: 8px 16px; border: 1px solid var(--ink); background: var(--bg); color: var(--ink); border-radius: 2px; cursor: pointer; }
+  .controls { display: flex; gap: 12px; margin: 16px 0; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk: theses (proposal, not the build)</h1>
+  <p class="note">This page is the proposal for the two theses. It is throwaway and is not ported into the build. Headless run: UNVALIDATED.</p>
+
+  <h2>Visual thesis</h2>
+  <p><span class="label">Visual thesis:</span> a white, cool-neutral page set like an auditor's tick-and-tie sheet: near-black ink, hairline rules, and one colour only, a burnt-orange signal that marks a line that does not match; the action is solid ink. Type is the system sans with tabular figures, weights 400 and 600, on a tight scale. Airy on an 8px base, one left edge on a 72rem container, square 2px corners, flat, no shadows.</p>
+  <p><span class="label">First screen:</span> headline and actions at reading measure; below them, at container width, an example match sheet, one supplier invoice against its purchase order and delivery note, with no figures, only the brief's words. On a narrow frame each row stacks, every value beside its document name.</p>
+  <p><span class="label">Allowed patterns:</span> hairline rules on the rows of the match sheet and the spec list; the example match sheet, labelled "Example"; the tabular layout of the specs.</p>
+  <p><span class="label">Set aside:</span> SaaS hero with feature cards and logo strip; one centred sentence; ledger grid; Swiss minimal type. <span class="label">Kept:</span> the auditor's tick-and-tie sheet.</p>
+
+  <h2>Colour, with contrast against its ground</h2>
+  <div class="swatches">
+    <div class="sw"><div style="background:#14181D"></div><p>ink #14181D<br>17.8:1 on white. Text and the action.</p></div>
+    <div class="sw"><div style="background:#4A525B"></div><p>ink-2 #4A525B<br>7.9:1 on white. Secondary text.</p></div>
+    <div class="sw"><div style="background:#646C75"></div><p>recede #646C75<br>5.3:1 on white, 4.9:1 on surface. Matched lines.</p></div>
+    <div class="sw"><div style="background:#9C3D08"></div><p>signal #9C3D08<br>6.1:1 on its tint. Mismatch only.</p></div>
+    <div class="sw"><div style="background:#FCF0E8"></div><p>signal-tint #FCF0E8<br>Ground of a flagged cell.</p></div>
+    <div class="sw"><div style="background:#F5F6F7"></div><p>surface #F5F6F7<br>Sheet header band.</p></div>
+    <div class="sw"><div style="background:#DDE1E5"></div><p>rule #DDE1E5<br>Hairlines.</p></div>
+  </div>
+
+  <h2>Type, system sans (no web face loaded: nothing is fetched offline)</h2>
+  <div class="type">
+    <p style="font-size:2.75rem;font-weight:600;line-height:1.15;letter-spacing:-0.01em">Pay what matches. Look at what doesn't.</p>
+    <p style="font-size:1.5rem;font-weight:600;line-height:1.3">290 EUR per month, per company</p>
+    <p style="font-size:1.125rem">Ploverdesk reads supplier invoices that arrive by email.</p>
+    <p style="font-size:1rem">Body 1rem / 1.55, weight 400.</p>
+    <p style="font-size:.875rem;color:var(--ink-2)">Small 0.875rem, labels and notes.</p>
+  </div>
+
+  <h2>The one motion: matched lines recede</h2>
+  <p>400ms, cubic-bezier(0.2, 0, 0, 1), 500ms delay, once on load. Reduced motion: no animation, the row is grey from the start.</p>
+  <svg width="200" height="120" viewBox="-10 -10 120 120" aria-label="Easing curve cubic-bezier(0.2, 0, 0, 1)">
+    <rect x="0" y="0" width="100" height="100" fill="none" stroke="#DDE1E5" />
+    <path d="M0 100 C 20 100, 0 0, 100 0" fill="none" stroke="#14181D" stroke-width="1.5" />
+  </svg>
+  <div class="controls">
+    <button id="replay">Replay</button>
+    <button id="rm">Reduced motion: off</button>
+  </div>
+  <table id="sheet">
+    <thead><tr><th>Line</th><th>Invoice</th><th>Purchase order</th><th>Delivery note</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr class="matched"><td>Every other line</td><td>Agrees</td><td>Agrees</td><td>Agrees</td><td>To payment approval</td></tr>
+      <tr><td>Wrong quantity</td><td><span class="flag">Quantity differs</span></td><td>Agrees</td><td>Agrees</td><td>Shown to a person</td></tr>
+      <tr><td>Wrong unit price</td><td><span class="flag">Price differs</span></td><td>Agrees</td><td>Agrees</td><td>Shown to a person</td></tr>
+      <tr><td>Delivery never arrived</td><td>Agrees</td><td>Agrees</td><td><span class="flag">No delivery note</span></td><td>Shown to a person</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Hover on links and the button: 150ms colour change only. Forbidden: scroll reveals, parallax, scale, shadows, loops, bounce.</p>
+</main>
+<script>
+  document.getElementById('replay').onclick = () => { const s = document.getElementById('sheet'); s.replaceWith(s.cloneNode(true)); };
+  document.getElementById('rm').onclick = (e) => { const on = document.body.classList.toggle('reduced'); e.target.textContent = 'Reduced motion: ' + (on ? 'on' : 'off'); };
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk - design system preview (throwaway)</title>
+<style>
+  :root{--g:#FAFBFC;--s:#FFF;--ink:#0E1621;--ink2:#46505C;--q:#6A737E;--rule:#DDE2E7;--rs:#8C96A1;--a:#0B4F5C;--ah:#083B45;--aa:#062D35;--sig:#B3321A;--tint:#FBEEEA;--e:cubic-bezier(0.2,0,0,1)}
+  body{margin:0;background:var(--g);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;padding:48px 24px}
+  main{max-width:960px;margin:0 auto}
+  h1{font-size:28px;font-weight:500;margin:0 0 8px} h2{font-size:19px;font-weight:600;margin:48px 0 16px}
+  .note{font-size:14px;color:var(--ink2)}
+  .sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+  .sw div{background:var(--s);border:1px solid var(--rule);font-size:14px}
+  .sw i{display:block;height:56px;border-bottom:1px solid var(--rule)} .sw span{display:block;padding:8px 12px}
+  .spec p{margin:0 0 12px}
+  .bar{height:12px;background:var(--ink2);margin:4px 0} .bars{font-size:14px}
+  .row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+  .btn{display:inline-flex;align-items:center;min-height:44px;padding:12px 24px;border-radius:2px;background:var(--a);color:#fff;font-weight:500;text-decoration:none;transition:background-color 120ms var(--e)}
+  .btn.h{background:var(--ah)} .btn.ac{background:var(--aa)} .btn.f{outline:2px solid var(--a);outline-offset:3px}
+  .btn.d{background:var(--rule);color:var(--q)}
+  .lk{color:var(--a);text-decoration:underline 1px;text-underline-offset:.2em} .lk.h{text-decoration-thickness:2px;color:var(--ah)}
+  .tg{font:inherit;font-size:14px;font-weight:500;background:var(--s);border:1px solid var(--rs);border-radius:2px;padding:6px 12px;color:var(--ink)}
+  .tg.h{border-color:var(--ink2)} .tg.p{border-color:var(--ink);background:var(--g)} .tg.f{outline:2px solid var(--a);outline-offset:3px} .tg.d{color:var(--q);border-color:var(--rule)}
+  small{display:block;font-size:12px;color:var(--ink2);text-align:center}
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk: design system</h1>
+  <p class="note">This page is the proposal, not the build. Headless session: UNVALIDATED. Source: MASTER.md. Face: the system sans (no web font, so nothing here is left unrendered).</p>
+
+  <h2>Colour, with contrast</h2>
+  <div class="sw">
+    <div><i style="background:#FAFBFC"></i><span>ground #FAFBFC</span></div>
+    <div><i style="background:#FFFFFF"></i><span>surface #FFFFFF</span></div>
+    <div><i style="background:#0E1621"></i><span>ink #0E1621 · 17.5:1</span></div>
+    <div><i style="background:#46505C"></i><span>ink-2 #46505C · 7.9:1</span></div>
+    <div><i style="background:#6A737E"></i><span>ink-quiet #6A737E · 4.6:1</span></div>
+    <div><i style="background:#DDE2E7"></i><span>rule #DDE2E7 · decorative</span></div>
+    <div><i style="background:#8C96A1"></i><span>rule-strong #8C96A1 · 3.0:1</span></div>
+    <div><i style="background:#0B4F5C"></i><span>action #0B4F5C · white 9.2:1</span></div>
+    <div><i style="background:#B3321A"></i><span>signal #B3321A · 6.2:1</span></div>
+    <div><i style="background:#FBEEEA"></i><span>signal-tint #FBEEEA</span></div>
+  </div>
+
+  <h2>Type scale</h2>
+  <div class="spec">
+    <p style="font-size:42px;line-height:1.15;font-weight:500">Display 42 / 500</p>
+    <p style="font-size:24px;line-height:1.25;font-weight:500">H2 24 / 500</p>
+    <p style="font-size:17px;font-weight:600">H3 17 / 600</p>
+    <p style="font-size:19px">Lead 19 / 400</p>
+    <p>Body 16 / 400. Running text holds to sixty characters a line.</p>
+    <p style="font-size:14px;font-variant-numeric:tabular-nums">Small 14 tabular: 1 111.00 / 9 999.00</p>
+  </div>
+
+  <h2>Spacing (4px base)</h2>
+  <div class="bars">
+    <div class="bar" style="width:4px"></div>4
+    <div class="bar" style="width:8px"></div>8
+    <div class="bar" style="width:12px"></div>12
+    <div class="bar" style="width:16px"></div>16
+    <div class="bar" style="width:24px"></div>24
+    <div class="bar" style="width:32px"></div>32
+    <div class="bar" style="width:48px"></div>48
+    <div class="bar" style="width:64px"></div>64
+    <div class="bar" style="width:96px"></div>96
+    <div class="bar" style="width:128px"></div>128
+  </div>
+  <p class="note">Radii: 0 and 2px. Shadows: none.</p>
+
+  <h2>Primary button: default, hover, focus, active, disabled</h2>
+  <div class="row">
+    <div><a class="btn">Start the trial</a><small>default</small></div>
+    <div><a class="btn h">Start the trial</a><small>hover</small></div>
+    <div><a class="btn f">Start the trial</a><small>focus</small></div>
+    <div><a class="btn ac">Start the trial</a><small>active</small></div>
+    <div><a class="btn d">Start the trial</a><small>disabled</small></div>
+  </div>
+  <h2>Quiet link and toggle</h2>
+  <div class="row">
+    <div><a class="lk">Book a demo</a><small>default</small></div>
+    <div><a class="lk h">Book a demo</a><small>hover</small></div>
+    <div><button class="tg">Hide matched lines</button><small>default</small></div>
+    <div><button class="tg h">Hide matched lines</button><small>hover</small></div>
+    <div><button class="tg f">Hide matched lines</button><small>focus</small></div>
+    <div><button class="tg p">Show all lines</button><small>pressed</small></div>
+    <div><button class="tg d">Hide matched lines</button><small>disabled</small></div>
+  </div>
+</main>
+</body>
+</html>

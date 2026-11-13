@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ploverdesk - design system preview (proposal, not the build)</title>
+<style>
+  :root {
+    --c-ground:#ffffff; --c-sheet:#f5f6f7; --c-ink:#15181b; --c-ink-hover:#33393f; --c-ink-active:#000000;
+    --c-ink-2:#474e55; --c-ink-3:#5e666e; --c-rule:#8a9198; --c-flag:#b3261e; --c-flag-wash:#fbeeec; --c-on-ink:#ffffff;
+    --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --ease-out: cubic-bezier(0.2,0,0,1); --d-hover:160ms; --r-1:2px;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font:16px/1.5 var(--font-sans); color:var(--c-ink); background:var(--c-ground); font-variant-numeric:tabular-nums; }
+  main { max-width:1120px; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:13px; font-weight:600; margin:0; } h2 { font-size:13px; font-weight:600; color:var(--c-ink-3); margin:64px 0 16px; }
+  p { color:var(--c-ink-2); max-width:60ch; }
+  .row { display:flex; flex-wrap:wrap; gap:24px; align-items:center; }
+  .sw { width:150px; font-size:13px; } .sw i { display:block; height:48px; border:1px solid var(--c-rule); border-radius:2px; } .sw b { display:block; margin-top:8px; } .sw span { color:var(--c-ink-3); }
+  .btn { display:inline-flex; align-items:center; min-height:44px; padding:0 20px; border:0; border-radius:var(--r-1); background:var(--c-ink); color:var(--c-on-ink); font:600 16px var(--font-sans); text-decoration:none; transition:background-color var(--d-hover) var(--ease-out); }
+  .btn:hover, .btn.is-hover { background:var(--c-ink-hover); }
+  .btn:active, .btn.is-active { background:var(--c-ink-active); }
+  .btn:focus-visible, .btn.is-focus, .ln.is-focus, .ln:focus-visible { outline:2px solid var(--c-ink); outline-offset:3px; }
+  .btn[aria-disabled="true"] { background:var(--c-sheet); color:var(--c-ink-3); pointer-events:none; }
+  .ln { color:var(--c-ink); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; transition:text-decoration-thickness var(--d-hover) var(--ease-out); }
+  .ln:hover, .ln.is-hover { text-decoration-thickness:2px; }
+  .ln:active, .ln.is-active { color:var(--c-ink-2); }
+  .ln[aria-disabled="true"] { color:var(--c-ink-3); text-decoration:none; pointer-events:none; }
+  .state { font-size:13px; color:var(--c-ink-3); display:block; margin-top:8px; }
+  .bar { height:8px; background:var(--c-ink); }
+  .sp { display:grid; grid-template-columns:80px 1fr; gap:8px 16px; align-items:center; font-size:13px; max-width:520px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk design system: proposal, not the build. UNVALIDATED (headless run).</h1>
+  <p>Display face: none. This is the platform system sans with tabular figures. No web face was approved and the build has no network, so no third-party font request is added.</p>
+
+  <h2>Colour</h2>
+  <div class="row">
+    <div class="sw"><i style="background:#ffffff"></i><b>ground #FFFFFF</b><span>page</span></div>
+    <div class="sw"><i style="background:#f5f6f7"></i><b>sheet #F5F6F7</b><span>worksheet</span></div>
+    <div class="sw"><i style="background:#15181b"></i><b>ink #15181B</b><span>17.8:1, action</span></div>
+    <div class="sw"><i style="background:#33393f"></i><b>ink-hover #33393F</b><span>white 11.7:1</span></div>
+    <div class="sw"><i style="background:#474e55"></i><b>ink-2 #474E55</b><span>8.4:1</span></div>
+    <div class="sw"><i style="background:#5e666e"></i><b>ink-3 #5E666E</b><span>5.8:1 / 5.4:1 sheet</span></div>
+    <div class="sw"><i style="background:#8a9198"></i><b>rule #8A9198</b><span>3.2:1 boundary</span></div>
+    <div class="sw"><i style="background:#b3261e"></i><b>flag #B3261E</b><span>exception only, 6.5:1</span></div>
+    <div class="sw"><i style="background:#fbeeec"></i><b>flag-wash #FBEEEC</b><span>exception row</span></div>
+  </div>
+
+  <h2>Type scale</h2>
+  <div style="font-size:clamp(2rem,1.25rem + 2.2vw,2.75rem);font-weight:600;letter-spacing:-0.02em;line-height:1.1">Only the invoice lines that don't match reach your desk.</div>
+  <div style="font-size:1.5rem;font-weight:600;letter-spacing:-0.01em;margin-top:16px">How an invoice travels</div>
+  <div style="font-size:1.125rem;color:var(--c-ink-2);margin-top:12px">Lead 18 / 1.55</div>
+  <div style="margin-top:8px;color:var(--c-ink-2)">Body 16 / 1.5</div>
+  <div style="font-size:.9375rem;margin-top:8px">Figures 15: 400 &times; 0.86 &nbsp; 60 &times; 2.10</div>
+  <div style="font-size:.8125rem;font-weight:600;color:var(--c-ink-3);margin-top:8px">Label 13 / 600</div>
+
+  <h2>Spacing (base 4)</h2>
+  <div class="sp">
+    <span>4</span><div class="bar" style="width:4px"></div><span>8</span><div class="bar" style="width:8px"></div>
+    <span>12</span><div class="bar" style="width:12px"></div><span>16</span><div class="bar" style="width:16px"></div>
+    <span>24</span><div class="bar" style="width:24px"></div><span>32</span><div class="bar" style="width:32px"></div>
+    <span>48</span><div class="bar" style="width:48px"></div><span>64</span><div class="bar" style="width:64px"></div>
+    <span>96</span><div class="bar" style="width:96px"></div><span>128</span><div class="bar" style="width:128px"></div>
+  </div>
+  <p style="font-size:13px">Radius: 0 and 2px. Shadows: none (elevation 0 everywhere).</p>
+
+  <h2>Button: five states</h2>
+  <div class="row">
+    <div><a class="btn" href="#">Start the 14-day trial</a><span class="state">default</span></div>
+    <div><a class="btn is-hover" href="#">Start the 14-day trial</a><span class="state">hover</span></div>
+    <div><a class="btn is-focus" href="#">Start the 14-day trial</a><span class="state">focus</span></div>
+    <div><a class="btn is-active" href="#">Start the 14-day trial</a><span class="state">active</span></div>
+    <div><a class="btn" aria-disabled="true">Start the 14-day trial</a><span class="state">disabled</span></div>
+  </div>
+
+  <h2>Quiet link: five states</h2>
+  <div class="row">
+    <div><a class="ln" href="#">Book a demo</a><span class="state">default</span></div>
+    <div><a class="ln is-hover" href="#">Book a demo</a><span class="state">hover</span></div>
+    <div><a class="ln is-focus" href="#">Book a demo</a><span class="state">focus</span></div>
+    <div><a class="ln is-active" href="#">Book a demo</a><span class="state">active</span></div>
+    <div><a class="ln" aria-disabled="true">Book a demo</a><span class="state">disabled</span></div>
+  </div>
+
+  <h2>Motion tokens</h2>
+  <p style="font-size:14px">ease-out cubic-bezier(0.2, 0, 0, 1). Hover 160ms. Tick 180ms. Ring 240ms. Stagger 90ms. Start 300ms.</p>
+</main>
+</body>
+</html>

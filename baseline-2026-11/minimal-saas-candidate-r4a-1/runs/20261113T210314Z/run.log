@@ -1,0 +1,16 @@
+Note: --scaffold runs each case's scaffold_script as you. Only use it on case files you (or your org) authored.
+Plugin under test: "genjutsu" version "4.2.0" at "/private/tmp/gj-baseline/eval-candidate-r4a-minimal-saas-1"
+  scaffold: /private/tmp/gj-baseline/eval-candidate-r4a-minimal-saas-1/examples/minimal-saas/fixture.sh
+  kept temp: /private/tmp/e-542Vd5
+⚠ kept /private/tmp/e-542Vd5: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-542Vd5/sealed (mode 000; the kept directory is read-only) - open them with `chmod 700 /private/tmp/e-542Vd5 /private/tmp/e-542Vd5/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  minimal-saas run 1/1: score 1.00  $2.19
+    ✓ page-has-content (weight 1): matched <(main|section)(\s[^>]*[^/])?>|^import\s
+    ✓ paint-fired (weight 1): matched "skill"\s*:\s*"(?:[\w-]+:)?paint"|[/]_jutsu\b
+    ✓ paint-loaded (weight 1): matched "skill"\s*:\s*"(?:[\w-]+:)?paint"|Modules\snot\sloaded:
+✓ minimal-saas  score 1.00  (1 run)  $2.19
+
+CASE          SCORE PASS% RUNS COST    NOTES
+minimal-saas  1.00  100%  1    $2.19   
+
+1 case(s) · 445s · $2.19
+Report: baseline-2026-11/minimal-saas-candidate-r4a-1/runs/20261113T210314Z/report.html

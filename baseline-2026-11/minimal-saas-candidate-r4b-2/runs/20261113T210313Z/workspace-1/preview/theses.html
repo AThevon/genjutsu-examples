@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk &#8212; theses preview (throwaway)</title>
+<style>
+  :root{--ground:#FFFFFF;--surface:#F5F6F7;--ink:#16191D;--ink-2:#4A5058;--ink-3:#646A72;--rule:#DCDFE3;--signal:#B23A1C;--signal-tint:#FBEFEC;--ease:cubic-bezier(0.2,0,0,1);--fast:140ms}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font:400 16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-variant-numeric:tabular-nums}
+  main{max-width:72rem;margin:0 auto;padding:48px 24px 96px}
+  h1{font-size:14px;font-weight:600;letter-spacing:.02em;color:var(--ink-2);margin:0 0 8px}
+  h2{font-size:20px;font-weight:600;margin:64px 0 16px;padding-top:16px;border-top:1px solid var(--rule)}
+  p{max-width:40rem;margin:0 0 12px}
+  .note{color:var(--ink-3);font-size:14px}
+  .label{font-weight:600}
+  .sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:16px}
+  .sw div{border:1px solid var(--rule);padding:12px;font-size:13px}
+  .sw i{display:block;height:48px;margin-bottom:8px;border:1px solid var(--rule)}
+  .spec p{max-width:none;margin:0 0 8px}
+  table{border-collapse:collapse;width:100%;font-size:15px}
+  th,td{text-align:left;padding:12px 16px 12px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+  th{font-size:13px;font-weight:600;color:var(--ink-2)}
+  td.ok{color:var(--ink-3)} td.no{color:var(--signal);font-weight:600}
+  tr.x td:first-child{box-shadow:inset 2px 0 0 var(--signal);padding-left:12px}
+  tr.rest td{color:var(--ink-3)}
+  tr{transition:background-color var(--fast) var(--ease)} tbody tr:hover{background:var(--surface)}
+  .btn{display:inline-block;background:var(--ink);color:#fff;padding:12px 20px;border-radius:2px;text-decoration:none;font-weight:600;transition:background-color var(--fast) var(--ease)}
+  .btn:hover{background:#2C3138}
+  .link{color:var(--ink);text-underline-offset:3px;text-decoration-color:var(--rule);transition:text-decoration-color var(--fast) var(--ease)}
+  .link:hover{text-decoration-color:var(--ink)}
+  .row{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .reduce *{transition:none!important}
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk · theses preview · this page is the proposal, not the build</h1>
+  <p class="note">Headless run: these theses were not validated by anyone. They are marked UNVALIDATED in the final report.</p>
+
+  <h2>Visual thesis</h2>
+  <p><span class="label">Visual thesis:</span> A cool white page laid out like an auditor's tie-out sheet: three documents set side by side in columns tied by hairline rules, near-black ink in the system sans at two weights with tabular figures, and one hue only, a vermilion that marks a mismatch and nothing else, because the page gives colour to the same thing the product shows a person. The action is solid ink, never the signal colour; corners nearly square, flat, no shadows; an airy page around one dense table.</p>
+  <p><span class="label">First screen:</span> the headline and the trial action at reading measure on the left; on the right, taking the rest of the width and whole before any scroll, a sample tie-out labelled "Example": rows for the three kinds of mismatch the brief names (quantity, unit price, a delivery that never arrived), columns for Purchase order, Delivery note, Invoice and Outcome. Only the cell that disagrees is vermilion; one grey closing row says every other line agreed and went to payment approval. No figures: the cells hold the brief's own words. On the narrowest frame each row becomes a block, each value beside its column name.</p>
+  <p><span class="label">Interaction thesis:</span> Fast and dry: 140ms colour and background transitions on cubic-bezier(0.2, 0, 0, 1), on hover and focus only; nothing moves on scroll; no reveals, parallax, scale, bounce, loops or counting numbers.</p>
+  <p><span class="label">The one motion:</span> none. The table states the idea at rest, with the matched work folded into one grey row and the only colour on the page sitting on the exceptions. A page for people who check numbers for a living does not perform the match.</p>
+  <p><span class="label">Allowed patterns:</span> hairline rules (the tie-out grid); the sample tie-out table, labelled as an example; one hue, vermilion, as the mismatch signal only; tabular figures.</p>
+  <p class="note">Set aside: SaaS hero with a dashboard screenshot, logo strip and feature cards; a blank page with one sentence and a button; a ledger / spreadsheet grid; the invoice as a paper document. Kept: the auditor's tie-out sheet.</p>
+  <p class="note">Assumptions, from the brief: audience = finance leads at mid-size wholesalers; mood = quiet, exact, restrained; no references; English copy. System face chosen on purpose: an EU-hosted product's page makes no third-party font request, and this session has no network. Without a display face the voice comes from size contrast, weight and tabular figures.</p>
+
+  <h2>Colour, with contrast against white</h2>
+  <div class="sw">
+    <div><i style="background:#16191D"></i>ink #16191D<br>17.63:1 · text, action</div>
+    <div><i style="background:#4A5058"></i>ink-2 #4A5058<br>8.14:1 · secondary text</div>
+    <div><i style="background:#646A72"></i>ink-3 #646A72<br>5.46:1 · "agrees" cells, notes</div>
+    <div><i style="background:#DCDFE3"></i>rule #DCDFE3<br>1.34:1 · hairlines only</div>
+    <div><i style="background:#F5F6F7"></i>surface #F5F6F7<br>row hover, price block</div>
+    <div><i style="background:#B23A1C"></i>signal #B23A1C<br>5.97:1 · mismatch only</div>
+    <div><i style="background:#FBEFEC"></i>signal-tint #FBEFEC<br>signal on it 5.31:1</div>
+  </div>
+
+  <h2>Type, system sans</h2>
+  <div class="spec">
+    <p style="font-size:44px;font-weight:600;line-height:1.1;letter-spacing:-.02em">Only the lines that don't match.</p>
+    <p style="font-size:20px;color:var(--ink-2)">Ploverdesk reads supplier invoices and checks every line.</p>
+    <p>Body 16 / 1.55 · 400</p>
+    <p style="font-size:13px;font-weight:600;color:var(--ink-2)">Column label 13 · 600</p>
+    <p style="font-size:32px;font-weight:600">290 EUR <span style="font-size:16px;font-weight:400;color:var(--ink-2)">per month per company</span></p>
+  </div>
+
+  <h2>The tie-out (example)</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Purchase order</th><th>Delivery note</th><th>Invoice</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr class="x"><td>Quantity</td><td class="ok">agrees</td><td class="no">fewer received</td><td class="ok">billed as ordered</td><td>To a person</td></tr>
+      <tr class="x"><td>Unit price</td><td class="ok">agreed price</td><td class="ok">&#8212;</td><td class="no">different price</td><td>To a person</td></tr>
+      <tr class="x"><td>Delivery</td><td class="ok">ordered</td><td class="no">never arrived</td><td class="ok">billed</td><td>To a person</td></tr>
+      <tr class="rest"><td>Every other line</td><td>agrees</td><td>agrees</td><td>agrees</td><td>Payment approval</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Interaction: 140ms, cubic-bezier(0.2, 0, 0, 1)</h2>
+  <svg width="200" height="200" viewBox="0 0 100 100" role="img" aria-label="Easing curve cubic-bezier 0.2 0 0 1">
+    <rect x="0" y="0" width="100" height="100" fill="none" stroke="#DCDFE3"/>
+    <path d="M0 100 C20 100 0 0 100 0" fill="none" stroke="#16191D" stroke-width="1.5"/>
+  </svg>
+  <p class="note">duration 140ms · delay 0 · stagger none · properties: color, background-color, text-decoration-color.</p>
+  <div class="row" id="demo">
+    <a class="btn" href="#">Start the 14-day trial</a>
+    <a class="link" href="#">Book a demo</a>
+    <label class="note"><input type="checkbox" id="rm"> reduced motion (transitions off, states still change)</label>
+  </div>
+  <p class="note">Hover the button, the link and the table rows to see the transitions.</p>
+</main>
+<script>document.getElementById('rm').onchange=e=>document.body.classList.toggle('reduce',e.target.checked)</script>
+</body>
+</html>

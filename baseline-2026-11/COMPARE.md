@@ -4,11 +4,12 @@ This folder holds one measurement and what was done about it, in the order it ha
 
 1. **The baseline.** On one landing-page brief asking for a minimal, restrained style, run headless, genjutsu 4.1.3's `paint` came last: behind Anthropic's `frontend-design` skill and behind no plugin at all, in both rounds, at about 3.7 times the cost of a no-plugin run.
 2. **The diagnosis.** With nobody to ask, `paint` removed the picture of the product and put nothing in its place. Restraint came out as absence.
-3. **The change.** A branch of genjutsu (released as v4.2.0) makes the thesis name a first screen, colour roles, the one motion and what stands in place of anything an assumption removes, and adds a static reading of the page before the audit.
+3. **The change.** A branch of genjutsu (v4.2.0) makes the thesis name a first screen, colour roles, the one motion and what stands in place of anything an assumption removes, and adds a static reading of the page before the audit.
 4. **Three tuning rounds.** The branch was run and scored blind three times, and its rules were edited between rounds. Every run and every score is here.
 5. **Round 3.** The two new pages score 2.3 and 3.3 points out of 10 above the 4.1.3 pages, 1.7 and 2.0 above the no-plugin pages, and level with `frontend-design` (0.2 and 0.5 ahead, inside the judges' noise). A run now costs about 4.3 times a no-plugin run.
+6. **Round 4.** The round 3 pages put an example invoice on the first screen and invented its quantities and prices, on a brief that says "invent no other figure". The text was also edited from review after round 3. Round 4 ran that edited text twice as it stood (arm A) and twice with one more sentence that bounds the example to what the brief gives (arm B). Both arm B pages show an example made of words, with no figure the brief does not give; both arm A pages still invent quantities and prices. The judges were told this time to weigh "invent no figure" as the brief's author would. Under that instruction arm B scores 8.0 and 7.83, first in both sets, and arm A 6.5 and 6.83. Arm B's text is the v4.2.0 text. Round 4 scores are not comparable with rounds 1 to 3.
 
-Read ["What this does not show"](#what-this-does-not-show) before quoting any of it. The short version: one brief, two runs per arm, a model as judge, rules tuned on that same brief, and an example invoice whose values the brief asked not to invent.
+Read ["What this does not show"](#what-this-does-not-show) before quoting any of it. The short version: one brief, two runs per arm, a model as judge, rules tuned on that same brief, an example invoice with invented values through round 3, and a round 4 whose judging instruction points at the very thing its arm B was written to fix.
 
 ## Before and after
 
@@ -34,7 +35,9 @@ For comparison, the two `frontend-design` first screens the candidate was tuned 
 |---|---|
 | ![frontend-design run 1, first screen](./minimal-saas-frontend-design-1/media/desktop.png) | ![frontend-design run 2, first screen](./minimal-saas-frontend-design-2/media/desktop.png) |
 
-The new pages are close to these: an example invoice set as a ruled table, the lines that match in grey, the values that disagree in red. Candidate run 2 and `frontend-design` run 1 have the same headline, word for word ("Only the invoice lines that don't match reach your desk.").
+The round 3 pages are close to these: an example invoice set as a ruled table, the lines that match in grey, the values that disagree in red. Candidate run 2 and `frontend-design` run 1 have the same headline, word for word ("Only the invoice lines that don't match reach your desk.").
+
+The round 4 pages, where the example carries no invented figure, are in [section 6](#6-round-4-the-example-without-invented-figures).
 
 ## 1. The baseline
 
@@ -152,15 +155,17 @@ Nine commits on the genjutsu branch `feat/headless-presence`, on top of v4.1.4 (
 
 The validated thesis stays the only authority in conversation; these rules were written for, and measured on, the headless case. The release notes are the v4.2.0 entry of the genjutsu `CHANGELOG.md`.
 
-**What was run is the branch, not the tag.** The three rounds ran the branch at `8d57853` (three commits), `e4c31a6` (six) and `5e3f9c4` (nine). Its manifest still said 4.1.4 at each of them, which is the version the receipts carry. Edits made after `5e3f9c4`, including those that came out of the review before the release, were not run.
+**What was run is the branch, not the tag.** The three rounds ran the branch at `8d57853` (three commits), `e4c31a6` (six) and `5e3f9c4` (nine). Its manifest still said 4.1.4 at each of them, which is the version the receipts carry. Edits made after `5e3f9c4`, including those that came out of the review, were not run in rounds 1 to 3. Round 4 ran them, on `minimal-saas` only (section 6).
 
-The release holds two more commits than what was run, so the list above describes the measured text, not v4.2.0 word for word. In v4.2.0 as published: `First screen:` and `The one motion:` are labelled lines under a one-sentence thesis; the question of "a fake product drawn in divs" asks about the project's own material and keeps its last clause ("or does the page need a picture of it at all?"); the tells module loads once the thesis is written and, when someone is there to answer, validated; the limits in preserve and partial mode and the native reading were added; and `paint`'s `SKILL.md` is 73,208 characters. The CHANGELOG entry lists every one of these edits as not rerun.
+**Which text is v4.2.0.** Not the text of rounds 1 to 3: the list above describes that measured text, not v4.2.0 word for word. The v4.2.0 text is the one round 4 ran as arm B, the branch at `1548e63`: the nine commits above, three more that hold the review edits, the release notes and a README line (up to `164cd3e`, round 4's arm A, manifest 4.2.0), and one commit that bounds the first-screen example (section 6). The release adds merges on top of `1548e63` that do not touch `paint`'s thesis text; they edit native modules and add one audit check to `paint`, `cast` and `bunshin`, which no run here had.
+
+What the review edits changed, against the list above: `First screen:` and `The one motion:` are labelled lines under a one-sentence thesis; the question of "a fake product drawn in divs" asks about the project's own material and keeps its last clause ("or does the page need a picture of it at all?"); the tells module loads once the thesis is written and, when someone is there to answer, validated; the limits in preserve and partial mode and the native reading were added; a report asked short keeps the six reading entries, one line each. `paint`'s `SKILL.md` is 73,208 characters at `164cd3e` and 73,572 at `1548e63`.
 
 ## 4. Three tuning rounds
 
 ### Method
 
-Each round ran the branch four times with [`bin/run-arm.sh`](./bin/run-arm.sh), same model, harness and flags as the baseline: twice on `minimal-saas`, once on `etale-landing`, once on `nocturne-planetarium` (the two existing headless `paint` cases of this repository, [`../cases/`](../cases)). The rules were then edited and the next round run. Every run launched is kept: twelve candidate runs, no re-run, no selection.
+Each round ran the branch four times with [`bin/run-arm.sh`](./bin/run-arm.sh), same model, harness and flags as the baseline: twice on `minimal-saas`, once on `etale-landing`, once on `nocturne-planetarium` (the two existing headless `paint` cases of this repository, [`../cases/`](../cases)). The rules were then edited and the next round run. Every run launched in these three rounds is kept: twelve candidate runs, no re-run, no selection.
 
 Each round was scored blind in four sets:
 
@@ -173,7 +178,7 @@ Each round was scored blind in four sets:
 
 The judge is one Claude model in three reviewer roles (a designer, a founder, a reader hunting for generated-looking pages), each role in its own session, new sessions in every round. A judge was given the brief and three stills per page (first screen at 1440x900, whole page at 1440 px, whole page at 390 px) under a letter, with the letters shuffled in every round, and gave each page a score out of 10. No human scored anything. The baseline pages, the `frontend-design` pages and the two 4.1.0 pages never changed: they were scored again in every round, which is what the noise figures below come from.
 
-The per-role scores and the map from letters to runs are in [`judging/scores.json`](./judging/scores.json). The map was rebuilt after judging by hashing the stills of each blind set against the `media/` folders. The judges' written notes are not published. The stills of the two 4.1.0 pages that the judges saw were shot again for this from the published workspaces, with the same script, and are not in this folder.
+The per-role scores and the map from letters to runs are in [`judging/scores.json`](./judging/scores.json), round 4 included. The map was rebuilt after judging by hashing the stills of each blind set against the `media/` folders. The judges' written notes are not published. The stills of the two 4.1.0 pages that the judges saw were shot again for this from the published workspaces, with the same script, and are not in this folder.
 
 ### Every mean
 
@@ -249,22 +254,113 @@ On `minimal-saas`, the branch at `5e3f9c4`, mean of three roles out of 10:
 
 What changed on the page is visible in the stills at the top: both new pages put an example invoice on the first screen, with the three kinds of mismatch the brief names in red, where the 4.1.3 pages had text only. Run 1 keeps its one motion for a toggle that hides the matching lines; run 2 plays it once on load (the matched lines settle from ink to grey) and rests in the final state if it never runs.
 
+## 6. Round 4: the example without invented figures
+
+### Why
+
+Two things were open after round 3.
+
+- **The example invented figures.** The brief says "invent none, and invent no other figure". Both round 3 pages showed an example invoice with made-up quantities and unit prices, labelled as illustrative. `paint` allowed "an example labelled as an example", and nothing in the text stopped the values.
+- **The text had moved.** The review edits listed in section 3 were made after `5e3f9c4` and had never been run.
+
+So round 4 has two arms, both on the edited text, with one difference between them.
+
+| Arm | Plugin under test | Difference |
+|---|---|---|
+| A, `candidate-r4a` | the branch at `164cd3e` (manifest 4.2.0) | the edited text as it stood |
+| B, `candidate-r4b` | `feat/headless-presence-bound` at `1548e63`, one commit on `164cd3e` | one line of `skills/paint/SKILL.md` changed |
+
+The commit of arm B changes the `First screen` point of the visual thesis in two places. An example labelled as an example is now also "named in `Allowed patterns:`". And these sentences are added: "An example takes its values from the brief or the project. When the brief says to invent no figure, it carries no figure the brief does not give, and shows the mechanism with the brief's own material and words (the names of the things compared, the kinds of mismatch, the states), unless the thesis says otherwise with its reason."
+
+### What was run
+
+Four runs on `minimal-saas`, two per arm, launched together on 2026-11-13 with [`bin/run-arm.sh`](./bin/run-arm.sh): same model (`claude-opus-5-5`), same flags and same prompt as every other run here. All four are kept. Two things differ from rounds 1 to 3: Claude Code was 2.1.325 (2.1.323 before), and each run had a cost ceiling of 3.4 USD, which none reached. The held cases (`etale-landing`, `nocturne-planetarium`) were not run in round 4.
+
+| Run | Arm | Cost | Turns | Duration |
+|---|---|---|---|---|
+| [`minimal-saas-candidate-r4a-1`](./minimal-saas-candidate-r4a-1/receipt.md) | A | $2.19 | 25 | 444 s |
+| [`minimal-saas-candidate-r4a-2`](./minimal-saas-candidate-r4a-2/receipt.md) | A | $2.07 | 30 | 382 s |
+| [`minimal-saas-candidate-r4b-1`](./minimal-saas-candidate-r4b-1/receipt.md) | B | $1.95 | 34 | 349 s |
+| [`minimal-saas-candidate-r4b-2`](./minimal-saas-candidate-r4b-2/receipt.md) | B | $1.93 | 26 | 366 s |
+| **Total, four runs** | | **$8.14** | | |
+
+All four built with `npm ci && npm run build` on the first try, unchanged, with 0 human edits. All four passed the three graders (score 1.00). The tells audit returns 18 checked, 0 to confront on each. No sideways overflow, no console error. `minimal-saas-candidate-r4b-2` wrote three U+2014 (one in `MASTER.md`, two in a preview file, none on the page or in its final message); the committed copies hold the character reference. The judging sessions are not in these figures.
+
+### What the pages show
+
+First screens at 1440x900. Left: arm A. Right: arm B. Each row is one blind set.
+
+| Arm A, without the bound | Arm B, with the bound (the v4.2.0 text) |
+|---|---|
+| ![Arm A run 1, first screen: a headline beside an example invoice of five lines with quantities and unit prices, three lines in red](./minimal-saas-candidate-r4a-1/media/desktop.png) | ![Arm B run 1, first screen: a headline above an example table whose cells hold words only: Agrees, Quantity differs, Price differs, No delivery note](./minimal-saas-candidate-r4b-1/media/desktop.png) |
+| [`minimal-saas-candidate-r4a-1`](./minimal-saas-candidate-r4a-1/receipt.md), set M1, mean 6.5 | [`minimal-saas-candidate-r4b-1`](./minimal-saas-candidate-r4b-1/receipt.md), set M1, mean 8.0 |
+| ![Arm A run 2, first screen: a headline beside an example invoice from a food supplier, six lines with quantities and prices, three in red](./minimal-saas-candidate-r4a-2/media/desktop.png) | ![Arm B run 2, first screen: a headline beside an example table of four checks whose cells hold words only: ordered, fewer received, different price, never arrived](./minimal-saas-candidate-r4b-2/media/desktop.png) |
+| [`minimal-saas-candidate-r4a-2`](./minimal-saas-candidate-r4a-2/receipt.md), set M2, mean 6.83 | [`minimal-saas-candidate-r4b-2`](./minimal-saas-candidate-r4b-2/receipt.md), set M2, mean 7.83 |
+
+Whole pages, 1440 px wide, same order:
+
+| Arm A, without the bound | Arm B, with the bound |
+|---|---|
+| ![Arm A run 1, whole page](./minimal-saas-candidate-r4a-1/media/desktop-full.png) | ![Arm B run 1, whole page](./minimal-saas-candidate-r4b-1/media/desktop-full.png) |
+| ![Arm A run 2, whole page](./minimal-saas-candidate-r4a-2/media/desktop-full.png) | ![Arm B run 2, whole page](./minimal-saas-candidate-r4b-2/media/desktop-full.png) |
+
+- **Arm A.** Both pages show an example invoice with invented quantities and unit prices (five lines in run 1, six in run 2, with invented product names), labelled "Example invoice with illustrative values" and "Illustrative values, not customer data". Both final reports flag it: each says it read "invent no figure" as covering claims about the company, and that the example has to go if the founders meant it literally. This is the round 3 behaviour again: the review edits did not change it.
+- **Arm B.** Both pages keep an example on the first screen, labelled as an example, and its cells hold words: "Agrees", "Quantity differs", "Price differs", "No delivery note" in run 1; "ordered", "fewer received", "different price", "never arrived" in run 2. The only figures in the source of either page are the brief's: 14 days, 290 EUR, 2025. Both runs name the example in `Allowed patterns:` of their `MASTER.md`.
+
+### Judging
+
+Same judge as before (one Claude model, three roles, each in its own session, letters shuffled), with three differences, so **round 4 scores are not comparable with rounds 1 to 3**:
+
+- Each role was asked to list every figure on the page that the brief does not give, and was told: "The brief says to invent no figure: weigh that as the brief's author would." Rounds 1 to 3 did not say this.
+- The judges saw two stills per page (whole page at 1440 px and at 390 px), not three.
+- The sets are different. M1: arm A run 1, arm B run 1, `frontend-design` run 1, none run 1. M2: arm A run 2, arm B run 2, `frontend-design` run 2, genjutsu 4.1.3 run 1. There is no 4.1.3 page in M1 and no no-plugin page in M2.
+
+The per-role scores and the letter map are in [`judging/scores.json`](./judging/scores.json). The map was checked by hashing the 16 stills of the blind sets against the `media/` folders. Every mean below was recomputed from the three raw votes.
+
+**Set M1**
+
+| Page | Designer | Founder | Slop hunter | Mean | Roles that listed a figure outside the brief |
+|---|---|---|---|---|---|
+| arm B run 1 | 8 | 8 | 8 | 8.0 | 0 of 3 |
+| none run 1 | 7.5 | 7.5 | 7 | 7.33 | 3 of 3 (line counts of its illustration; no quantity, no price) |
+| frontend-design run 1 | 7 | 7 | 6 | 6.67 | 3 of 3 |
+| arm A run 1 | 6.5 | 6.5 | 6.5 | 6.5 | 3 of 3 |
+
+**Set M2**
+
+| Page | Designer | Founder | Slop hunter | Mean | Roles that listed a figure outside the brief |
+|---|---|---|---|---|---|
+| arm B run 2 | 8 | 7.5 | 8 | 7.83 | 0 of 3 |
+| genjutsu 4.1.3 run 1 | 7 | 7 | 7 | 7.0 | 0 of 3 |
+| arm A run 2 | 7 | 7 | 6.5 | 6.83 | 3 of 3 |
+| frontend-design run 2 | 6.5 | 6.5 | 6 | 6.33 | 3 of 3 |
+
+### What round 4 says
+
+- **Arm B against arm A:** +1.5 and +1.0. All six votes put the arm B page above the arm A page of its set.
+- **Arm B is first in both sets**, in every vote: +1.33 and +1.5 over `frontend-design`, +0.67 over the no-plugin page in M1, +0.83 over the 4.1.3 page in M2.
+- **Arm A is not.** It is below the no-plugin page in M1 (6.5 against 7.33) and below the 4.1.3 page in M2 (6.83 against 7.0), and level with `frontend-design` (-0.17 and +0.5).
+- **The instruction moved the pages that never changed.** From round 3 to round 4 the 4.1.3 page of set M2 went from 4.33 to 7.0, the no-plugin page of M1 from 5.83 to 7.33, and the two `frontend-design` pages from 7.33 and 7.17 to 6.67 and 6.33. In both sets the pages on which no role found a quantity or a price sit above those where all three did. Round 4 ranks first by whether a page obeys "invent no figure". That is what the instruction asked, and it is why these scores cannot be set beside round 3.
+- **Cost:** arm B $1.95 and $1.93, arm A $2.19 and $2.07, against $0.46 for no plugin and $0.64 to $0.68 for `frontend-design`. Arm B is at about 4.2 times a no-plugin run. Two runs per arm do not show that the bound makes a run cheaper.
+- **The reading lines still do not open the report.** None of the four final reports opens its checked group with the six labelled entries, although the text both arms ran says "a report asked short keeps them, one line each". One of the labels appears as a plain bullet in three of the reports (`First screen:` twice, `The one motion:` once); none carries a `file:line`.
+
 ## What this does not show
 
 - **Not that genjutsu is ahead of frontend-design.** The lead is 0.17 and 0.5 points. The pages that never changed moved by more than that from one judging round to the next: the mean of the same minimal-saas page shifted by up to 0.83 (none run 1: 6.67, 6.33, 5.83), and the 4.1.0 nocturne page by 1.5 (5.67, 4.17, 5.33). The anchors also drifted down in round 3: the two `frontend-design` pages averaged 7.75 in rounds 1 and 2 and 7.25 in round 3 without changing. In set M1 the candidate gained 0.17 between rounds 2 and 3 and `frontend-design` lost 0.33: most of the "overtaking" is the anchor moving.
-- **Two runs per arm.** With the same rules, the two round 2 runs scored 7.33 and 6.17. Two runs do not separate that from a real difference, and the candidate had six draws on this brief of which the last two are reported as the result.
+- **Round 4 is a different measurement.** Its judges were told to weigh "invent no figure" as the brief's author would, saw two stills per page instead of three, and scored sets with a different make-up, on a newer Claude Code (2.1.325 against 2.1.323). No round 4 score can be set beside a score of rounds 1 to 3. The instruction also points at the one thing arm B was written to fix: a page with no invented figure was going to gain from it. The 4.1.3 page of set M2, a column of text with no example at all, rose from 4.33 to 7.0 under it without changing. Round 4 shows that the bound removes the invented figures and that the example survives as words; it does not show that a reader not given that instruction would prefer the arm B pages to the round 3 pages.
+- **Two runs per arm.** With the same rules, the two round 2 runs scored 7.33 and 6.17. Two runs do not separate that from a real difference, and the candidate had six draws on this brief of which the last two are reported as the round 3 result. Round 4 adds two draws per arm. The bound held in two runs of two; that is all that is known about how often it holds.
 - **The judge is a model.** One Claude model in three roles, each role seeing all four sets in one session. Its three scores usually sit within a point of each other, which is agreement between prompts, not independent confirmation. No human panel. Scores are relative to the set they were given in.
-- **Tuned on this case.** The rules were written after reading the winning pages, then tuned for three rounds on this one brief against the same two `frontend-design` pages. The new pages converged on them: the same kind of example table, in one run the same headline. This is an in-sample result. Nothing here says what the rules do on a brief they were not tuned on.
+- **Tuned on this case.** The rules were written after reading the winning pages, then tuned for three rounds on this one brief against the same two `frontend-design` pages. The bound of round 4 was written for this brief's own sentence, "invent no other figure", and tried on this brief only. The new pages converged on them: the same kind of example table, in one run the same headline. This is an in-sample result. Nothing here says what the rules do on a brief they were not tuned on.
 - **The held cases only check for regressions.** One candidate run per case per round. On etale-landing the difference was −0.17, +0.17 and +0.33 over the three rounds, with at least one role of three preferring the old page each time: no measurable gap. On nocturne-planetarium the candidate scored 4.83, 8.33 and 6.83 from round to round. Quoting round 2's 8.33 against 4.17 as a gain would be picking a draw. The 4.1.0 etale page also overflows sideways on a phone (421 px in a 390 px frame), which helps the candidate a little in set E.
-- **Cost.** The factor over no plugin rose, from about 3.7 to about 4.3 on this brief. Over the six candidate runs on it a run cost $1.94 to $3.07; on the held cases, $2.47 to $3.13. The arm it is level with, `frontend-design`, costs $0.64 to $0.68.
-- **The example invoice uses made-up values.** The brief says "invent no other figure". Both round 3 pages show quantities and unit prices that come from nowhere (seven lines in run 1, six in run 2), labelled "The values are illustrative" and "Illustrative lines, not customer data", and both runs said so in their reports. This is the same breach the baseline held against `frontend-design`, and "no invented figure" was one of the things 4.1.3 did right: the new pages no longer have it. Part of the gain comes from adopting that breach, and the judges did not penalise it. Run 2's prices also carry no currency.
-- **Version gap.** Three different things are compared under one name. The baseline is 4.1.3 (`5e00595`); the candidate is a branch on top of 4.1.4, which also added a feedback link to the final report; the release is 4.2.0, and edits made after `5e3f9c4` were not run. The two held "old" pages are older still: genjutsu 4.1.0, Claude Code 2.1.289, a month earlier, each picked from two runs when it was published, and their briefs use the "Up-front answers to the gates" wording while the minimal brief does not.
-- **The reading lines are not printed on minimal-saas.** The new static reading is meant to appear in the final report as labelled lines. The minimal brief asks for "a short report", and neither round 3 run printed them, so on this case there is no trace that the reading took place beyond its effect on the page. The etale and nocturne reports, which ask for the full report, carry the labelled lines.
-- **One failed grader, one U+2014.** `minimal-saas-candidate-r3-2`, the higher scored of the two round 3 pages, failed the `paint-loaded` grader (score 0.67): its trace does not show that the modules `paint` asks for were loaded. The set M2 result rests on that run. The same run wrote one U+2014 in its final message, against genjutsu's own rule (the committed copy holds the character reference). The 4.1.3 run 2 failed the same grader.
-- **Judged on stills.** Scroll, hover and on-load motion were not seen by the judges. Visible defects in the round 3 stills: on a phone, run 2's "Book a demo" wraps to two lines in the header, against the button; run 1's example starts below the first phone screen.
+- **Cost.** The factor over no plugin rose, from about 3.7 to about 4.3 on this brief. Over the six candidate runs on it a run cost $1.94 to $3.07; on the held cases, $2.47 to $3.13. The arm it is level with, `frontend-design`, costs $0.64 to $0.68. In round 4 the four runs cost $1.93 to $2.19: about 4.2 times a no-plugin run for arm B, 4.5 to 4.8 for arm A.
+- **Through round 3, the example invoice uses made-up values.** The brief says "invent no other figure". Both round 3 pages show quantities and unit prices that come from nowhere (seven lines in run 1, six in run 2), labelled "The values are illustrative" and "Illustrative lines, not customer data", and both runs said so in their reports. This is the same breach the baseline held against `frontend-design`, and "no invented figure" was one of the things 4.1.3 did right: the new pages no longer have it. Part of the round 3 gain comes from adopting that breach, and the round 3 judges did not penalise it. Run 2's prices also carry no currency. In round 4 the two arm A pages do the same on the edited text. The two arm B pages do not, and theirs is the v4.2.0 text; but the round 3 scores quoted in section 5 belong to pages with the breach, and no page without it was scored under the round 3 instruction. An example in words is also a thinner picture than an invoice with values: whether it explains the product as well was not asked.
+- **Version gap.** Three different things are compared under one name. The baseline is 4.1.3 (`5e00595`); the candidate is a branch on top of 4.1.4, which also added a feedback link to the final report; the v4.2.0 text is that branch at `1548e63` (round 4's arm B) plus merges that edit native modules and add an audit check no run here had, and it was run on `minimal-saas` only, twice, never on the held cases. The two held "old" pages are older still: genjutsu 4.1.0, Claude Code 2.1.289, a month earlier, each picked from two runs when it was published, and their briefs use the "Up-front answers to the gates" wording while the minimal brief does not.
+- **The reading lines are not printed on minimal-saas.** The new static reading is meant to appear in the final report as labelled lines. The minimal brief asks for "a short report", and neither round 3 run printed them, so on this case there is no trace that the reading took place beyond its effect on the page. The etale and nocturne reports, which ask for the full report, carry the labelled lines. The text of round 4 says a report asked short keeps them, one line each; none of its four reports does.
+- **One failed grader, one U+2014.** `minimal-saas-candidate-r3-2`, the higher scored of the two round 3 pages, failed the `paint-loaded` grader (score 0.67): its trace does not show that the modules `paint` asks for were loaded. The set M2 result rests on that run. The same run wrote one U+2014 in its final message, against genjutsu's own rule (the committed copy holds the character reference). The 4.1.3 run 2 failed the same grader. The four round 4 runs passed all three graders.
+- **Judged on stills.** Scroll, hover and on-load motion were not seen by the judges. Visible defects in the round 3 stills: on a phone, run 2's "Book a demo" wraps to two lines in the header, against the button; run 1's example starts below the first phone screen. In round 4, both arm B examples start below the hero on a phone: the first phone screen of run 1 shows only the agreeing line and the title of the first mismatch, and that of run 2 shows the first mismatch. On a desktop, arm B run 1 leaves the right of its hero empty and arm B run 2 has no trial button in its header.
 - **Headless, web, one model, one day.** No run could build or look at its own page. This is `paint` with nobody to talk to, which is not how it is meant to be used; the conversation examples in this repository are the other half of the picture. Nothing was measured in conversation, on `cast` or `bunshin` (which carry two of the changed regions), or on Compose or SwiftUI. Captured on macOS, where `frontend-design`'s Avenir Next is present.
 
-The sentence this supports: on one minimal landing brief, run headless, the pages no longer come out empty; scored blind by a model in three reviewer roles, the two new pages are 2.3 and 3.3 points out of 10 above the 4.1.3 pages, 1.7 and 2.0 above the no-plugin pages, and level with `frontend-design`, for about 2 USD a run against 0.66 and 0.46.
+The sentences this supports. Round 3: on one minimal landing brief, run headless, the pages no longer come out empty; scored blind by a model in three reviewer roles, the two new pages are 2.3 and 3.3 points out of 10 above the 4.1.3 pages, 1.7 and 2.0 above the no-plugin pages, and level with `frontend-design`, for about 2 USD a run against 0.66 and 0.46; their example invents its values. Round 4: with one more sentence in the text, two runs of two keep the example and invent no figure; judges told to hold the brief's "invent no figure" against a page put both first in their set (8.0 and 7.83 out of 10), and the same text without the sentence at 6.5 and 6.83.
 
 ## Layout of this folder
 
@@ -279,9 +375,9 @@ bin/
 cases/minimal-saas/      the case: case.yaml, fixture.sh, prompt.md, graders/
 arms/                    the empty plugin of the none arm; the extra grader of the frontend-design arm
 compare/                 the baseline's side-by-side images
-judging/scores.json      the blind scores of the three rounds, per role, with the letter-to-run maps
+judging/scores.json      the blind scores of the four rounds, per role, with the letter-to-run maps
 <case>-<arm>-<n>/        a baseline run (arms none, frontend-design, genjutsu)
-<case>-candidate-r<round>-<n>/   a run of the branch in a tuning round
+<case>-candidate-r<round>-<n>/   a run of the branch in a tuning round (round 4: r4a and r4b, its two arms)
   receipt.md, receipt.json
   runs/<UTC stamp>/      run.log, report.html, aggregate-result.json, prompt.md (as sent),
                          trace-facts.json, workspace-1/ (without node_modules and dist)
@@ -303,4 +399,4 @@ python3 baseline-2026-11/bin/hygiene.py baseline-2026-11/minimal-saas-none-3
 baseline-2026-11/bin/capture.sh baseline-2026-11/minimal-saas-none-3 /path/to/genjutsu
 ```
 
-A candidate run adds `ARM_LABEL=candidate-r<round>` to the genjutsu line and points `GENJUTSU` at the branch checkout.
+A candidate run adds `ARM_LABEL=candidate-r<round>` to the genjutsu line and points `GENJUTSU` at the branch checkout. The round 4 runs used `candidate-r4a` and `candidate-r4b`, with `MAX_COST_USD=3.4`.
