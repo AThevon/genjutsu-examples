@@ -1,0 +1,198 @@
+{
+  "run": "minimal-saas-genjutsu-1",
+  "case": "minimal-saas",
+  "arm": "genjutsu",
+  "run_of_arm": 1,
+  "plugin_under_test": {
+    "name": "genjutsu",
+    "version": "4.1.3",
+    "commit": "5e00595"
+  },
+  "prompt": "/genjutsu:paint build the landing page for Ploverdesk.\n\nThe brief. Ploverdesk is a fictional product made up for this example, and this is everything its founders have given us:\n\n- Ploverdesk is software for the finance teams of mid-size wholesalers, sold to companies, not to individuals. It reads the supplier invoices that arrive by email as PDF, matches every line against the purchase order and the delivery note (a three-way match), and shows a person only the lines that do not match: a wrong quantity, a wrong unit price, a delivery that never arrived. Invoices that match go straight to payment approval.\n- Matched invoices are exported to the accounting system as a CSV file or through an API. Data is hosted in Frankfurt, in the EU.\n- Price: 290 EUR per month per company, with no limit on users. A 14-day trial needs no credit card.\n- The company was founded in 2025 and is six people in Rotterdam. It has no customer logos, no testimonials and no usage numbers to show yet: invent none, and invent no other figure.\n- The page has one job: get a finance lead to start the trial, at /trial. A second, quieter link books a demo, at /demo.\n- Style: they want it minimal and restrained. Quiet, precise, nothing decorative.\n\nNobody is available to answer questions during this session: where your process would ask something or wait for an approval, decide yourself and carry on.\n- If your process shows previews before it builds, write each one as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with a short report of what you built and what you left unverified.",
+  "prompt_note": "The case prompt as written, `/genjutsu:paint` first.",
+  "harness": {
+    "tool": "claude plugin eval",
+    "claude_code": "2.1.323",
+    "headless": true,
+    "ablation": "none",
+    "command": "baseline-2026-11/bin/run-arm.sh genjutsu minimal-saas 1"
+  },
+  "model": "claude-opus-5-5",
+  "date": "2026-11-13",
+  "started_at": "2026-11-13T18:34:03.052Z",
+  "cost_usd": 1.73,
+  "cost_usd_exact": 1.7347855999999997,
+  "turns": 29,
+  "duration_seconds": 308,
+  "subagents": 0,
+  "runs_dir": "runs/20261113T183357Z",
+  "session_start": {
+    "skills_added_by_the_plugin": [
+      "genjutsu:bunshin",
+      "genjutsu:cast",
+      "genjutsu:paint"
+    ],
+    "built_in_skills": [
+      "deep-research",
+      "dataviz",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring"
+    ],
+    "plugins": [
+      "genjutsu",
+      "cc-plugin-agents-md",
+      "cc-plugin-privacy",
+      "cc-plugin-plugin-authoring"
+    ],
+    "mcp_servers": [],
+    "tools": [
+      "Task",
+      "Bash",
+      "Edit",
+      "Glob",
+      "Grep",
+      "NotebookEdit",
+      "Read",
+      "Skill",
+      "TaskStop",
+      "ToolSearch",
+      "Write"
+    ]
+  },
+  "skill_tool_calls": [],
+  "tool_calls": {
+    "Bash": 15,
+    "Edit": 6,
+    "Write": 7
+  },
+  "stack": "React 19 + Vite + TypeScript, vanilla CSS, no animation library (template react)",
+  "files_in_workspace": [
+    "MASTER.md",
+    "index.html",
+    "package-lock.json",
+    "package.json",
+    "preview/design-system.html",
+    "preview/thesis.html",
+    "src/App.tsx",
+    "src/index.css",
+    "src/main.tsx",
+    "src/tokens.css",
+    "tsconfig.json",
+    "vite.config.ts"
+  ],
+  "what_it_built": "Header with the name and one text link to the trial, the headline \"Only the invoice lines that don't match reach your desk.\", a paragraph, the trial button and a demo link, then three text blocks (\"A three-way match on every line\"), a three-row table of mismatch kinds with the kind in vermilion, two definition rows, a grey price band, one footer line. White ground, the system sans, near-black ink, one vermilion accent. At 1440 px the text sits in a left column 576 px wide (x 224 to 800) and the two tables reach x = 928; apart from the header link, nothing is placed in the right 500 px of the screen. No animation beyond 140 ms hovers. Wrote `MASTER.md`, `src/tokens.css`, `preview/thesis.html` and `preview/design-system.html`.",
+  "build": {
+    "result": "success",
+    "command": "npm ci && npm run build (tsc --noEmit && vite build)",
+    "first_try": true,
+    "note": "the run could not build (npm and node are blocked in its sandbox); it built here unchanged"
+  },
+  "human_edits": 0,
+  "u2014_written_by_the_run": {},
+  "u2014_note": null,
+  "tells_audit": {
+    "command": "python3 skills/_jutsu/design-audit/scripts/audit.py <workspace> --group tells (genjutsu 4.1.3)",
+    "checked": 18,
+    "tells_to_confront": 0,
+    "fired": []
+  },
+  "graders": [
+    {
+      "name": "page-has-content",
+      "passed": true,
+      "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s"
+    },
+    {
+      "name": "paint-fired",
+      "passed": true,
+      "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|[/]_jutsu\\b"
+    },
+    {
+      "name": "paint-loaded",
+      "passed": true,
+      "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|Modules\\snot\\sloaded:"
+    }
+  ],
+  "score": 1,
+  "media": [
+    {
+      "file": "media/desktop.png",
+      "what": "First screen, desktop",
+      "viewport": "1440x900",
+      "output": "1440x900",
+      "kb": 88,
+      "page_height": 2677,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": [
+        "/favicon.ico"
+      ]
+    },
+    {
+      "file": "media/desktop-full.png",
+      "what": "Whole page, desktop",
+      "viewport": "1440x900",
+      "output": "1440x2677",
+      "kb": 219,
+      "page_height": 2677,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    },
+    {
+      "file": "media/mobile.png",
+      "what": "First screen, phone",
+      "viewport": "390x844 at 2x",
+      "output": "780x1688",
+      "kb": 143,
+      "page_height": 2845,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    },
+    {
+      "file": "media/mobile-full.png",
+      "what": "Whole page, phone",
+      "viewport": "390x844 at 2x",
+      "output": "780x5690",
+      "kb": 448,
+      "page_height": 2845,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    }
+  ],
+  "capture": {
+    "tool": "genjutsu skills/_jutsu/orchestration/scripts/shoot.mjs via baseline-2026-11/bin/capture.sh",
+    "served": "from disk over the DevTools protocol, no server",
+    "machine": "macOS, headless Chrome",
+    "wait": "4 s after preparation, so on-load motion has ended"
+  },
+  "read_by_eye": {
+    "what_a_designer_would_say": "A well-typeset text document. Nothing is wrong and nothing is there: one narrow left column of system sans on white, no picture of the product, no example, no figure, and more than a third of the screen left blank at desktop width with nothing holding it. Restraint was asked for and this is restraint, but restraint needs one thing to be restrained around, and the page has none; the vermilion that the thesis reserves for mismatches first appears two screens down, on three small table labels. The run wrote in its own design notes that it would show \"no drawn product UI and no example numbers\" because no screenshot exists and no figure may be invented. That obeys the brief to the letter and removes the only element that made the other arms' pages readable at a glance. A designer would say: this is the wireframe before the design.",
+    "one_visual_idea": "No. The stated idea (colour spent only on mismatches) is not visible on the first screen.",
+    "distinguishable_from_a_default_template": "Distinguishable from a SaaS template only by having less in it. It looks like a default document, not like a default landing page."
+  },
+  "defects_and_notes": [
+    "No visual on the first screen at either width; the first non-text element is a table 1377 px down the page at 1440 px wide, 1465 px down at 390.",
+    "At 1440 px the text column ends at x = 800 and the tables at x = 928; the header link is the only thing to the right of that.",
+    "System sans only, 400 and 500 weights, modest size steps: no typographic character."
+  ]
+}

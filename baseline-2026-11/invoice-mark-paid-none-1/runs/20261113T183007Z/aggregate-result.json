@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "claudeVersion": "2.1.323",
+  "startedAt": "2026-11-13T18:30:08.939Z",
+  "durationSeconds": 211,
+  "costUsd": 0.9103617999999998,
+  "partial": false,
+  "suite": {
+    "root": "/private/tmp/gj-baseline/eval-none-invoice-mark-paid-1",
+    "ablation": "none",
+    "modelOverride": "claude-opus-5-5",
+    "caseFilter": "invoice-mark-paid",
+    "threshold": 1,
+    "concurrency": 1,
+    "plugins": [
+      {
+        "name": "baseline-none",
+        "version": "0.0.0",
+        "path": "/private/tmp/gj-baseline/eval-none-invoice-mark-paid-1"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "invoice-mark-paid",
+      "dir": "examples/invoice-mark-paid",
+      "source": "mixed",
+      "promptMarkdown": "the \"Mark as paid\" action in our invoice list is dead, make it feel like the money landed\n\nFolio, its user and its clients are fictional, made up for this example.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the invoice list and its \"Mark as paid\" action. You may edit files under src/ and write previews under preview/; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+      "runsPerCase": 1,
+      "timeoutSeconds": 2400,
+      "maxTurns": 150,
+      "graders": [
+        {
+          "name": "button-has-interaction",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": {
+              "source": "file",
+              "path": "src/InvoiceList.tsx"
+            },
+            "pattern": "motion|[Aa]nimat|[Tt]ransition|keyframes|[Ss]pring|requestAnimationFrame|from\\s+[\"']\\.\\.?/(?!data[\"'])",
+            "flags": "",
+            "match": "contains"
+          }
+        }
+      ],
+      "arms": {
+        "with": [
+          {
+            "score": 1,
+            "passed": true,
+            "turns": 19,
+            "costUsd": 0.9103617999999998,
+            "judgeCostUsd": 0,
+            "durationSeconds": 211,
+            "startedAt": "2026-11-13T18:30:08.974Z",
+            "error": null,
+            "tracePath": "/private/tmp/e-UMYlpF/out/trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "button-has-interaction",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched motion|[Aa]nimat|[Tt]ransition|keyframes|[Ss]pring|requestAnimationFrame|from\\s+[\"']\\.\\.?/(?!data[\"'])",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          }
+        ]
+      },
+      "aggregates": {
+        "score": 1,
+        "passRate": 1
+      }
+    }
+  ],
+  "aggregates": {
+    "casesTotal": 1,
+    "casesPassed": 1,
+    "overallScore": 1,
+    "overallPassRate": 1
+  }
+}

@@ -1,0 +1,72 @@
+[
+ {
+  "path": "/",
+  "viewport": "1440x900",
+  "files": [
+   "media/desktop.png"
+  ],
+  "consoleErrors": [],
+  "exceptions": [],
+  "missing": [],
+  "scrollWidth": 1440,
+  "clientWidth": 1440,
+  "overflow": false,
+  "height": 2936
+ },
+ {
+  "path": "/",
+  "viewport": "1440x900",
+  "files": [
+   "media/desktop-full.png"
+  ],
+  "consoleErrors": [],
+  "exceptions": [],
+  "missing": [],
+  "scrollWidth": 1440,
+  "clientWidth": 1440,
+  "overflow": false,
+  "height": 2936
+ },
+ {
+  "path": "/",
+  "viewport": "390x844",
+  "files": [
+   "media/mobile.png"
+  ],
+  "consoleErrors": [],
+  "exceptions": [],
+  "missing": [],
+  "scrollWidth": 390,
+  "clientWidth": 390,
+  "overflow": false,
+  "height": 3500
+ },
+ {
+  "path": "/",
+  "viewport": "390x844",
+  "files": [
+   "media/mobile-full.png"
+  ],
+  "consoleErrors": [],
+  "exceptions": [],
+  "missing": [],
+  "scrollWidth": 390,
+  "clientWidth": 390,
+  "overflow": false,
+  "height": 3500
+ },
+ {
+  "path": "/",
+  "viewport": "1440x900",
+  "files": [
+   "media/desktop-full-at-load.png"
+  ],
+  "consoleErrors": [],
+  "exceptions": [],
+  "missing": [],
+  "scrollWidth": 1440,
+  "clientWidth": 1440,
+  "overflow": false,
+  "height": 2936
+ }
+]

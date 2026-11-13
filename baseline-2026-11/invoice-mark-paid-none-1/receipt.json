@@ -1,0 +1,179 @@
+{
+  "run": "invoice-mark-paid-none-1",
+  "case": "invoice-mark-paid",
+  "arm": "none",
+  "run_of_arm": 1,
+  "plugin_under_test": {
+    "name": "baseline-none",
+    "version": "0.0.0"
+  },
+  "prompt": "the \"Mark as paid\" action in our invoice list is dead, make it feel like the money landed\n\nFolio, its user and its clients are fictional, made up for this example.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the invoice list and its \"Mark as paid\" action. You may edit files under src/ and write previews under preview/; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+  "prompt_note": "The prompt of cases/invoice-mark-paid without its leading /genjutsu:cast; nothing else changed.",
+  "harness": {
+    "tool": "claude plugin eval",
+    "claude_code": "2.1.323",
+    "headless": true,
+    "ablation": "none",
+    "command": "baseline-2026-11/bin/run-arm.sh none invoice-mark-paid 1"
+  },
+  "model": "claude-opus-5-5",
+  "date": "2026-11-13",
+  "started_at": "2026-11-13T18:30:08.974Z",
+  "cost_usd": 0.91,
+  "cost_usd_exact": 0.9103617999999998,
+  "turns": 19,
+  "duration_seconds": 211,
+  "subagents": 0,
+  "runs_dir": "runs/20261113T183007Z",
+  "session_start": {
+    "skills_added_by_the_plugin": [],
+    "built_in_skills": [
+      "deep-research",
+      "dataviz",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring"
+    ],
+    "plugins": [
+      "baseline-none",
+      "cc-plugin-agents-md",
+      "cc-plugin-privacy",
+      "cc-plugin-plugin-authoring"
+    ],
+    "mcp_servers": [],
+    "tools": [
+      "Task",
+      "Bash",
+      "Edit",
+      "Glob",
+      "Grep",
+      "NotebookEdit",
+      "Read",
+      "Skill",
+      "TaskStop",
+      "ToolSearch",
+      "Write"
+    ]
+  },
+  "skill_tool_calls": [],
+  "tool_calls": {
+    "Bash": 14,
+    "Read": 2,
+    "Write": 2
+  },
+  "stack": "React 19 + Vite + TypeScript, motion 14 (installed, unused before the run)",
+  "compared_with": {
+    "run": "invoice-mark-paid/runs/20261004T162510Z",
+    "arm": "genjutsu",
+    "genjutsu": "4.1.0 at 09c177b",
+    "claude_code": "2.1.289",
+    "date": "2026-10-04",
+    "cost_usd": 1.88,
+    "turns": 45,
+    "duration_seconds": 329,
+    "note": "the existing run, not re-run: an older genjutsu and an older Claude Code than this arm, same model, same fixture"
+  },
+  "files_changed": {
+    "src/InvoiceList.tsx": "rewritten: row tint, animated status pill with a drawn check, press scale, an Undo offer for 8 s, focus handling",
+    "src/App.tsx": "counting totals, a signed amount and a ring on the Paid card, undo, a screen-reader announcement",
+    "src/AnimatedAmount.tsx": "new: the counting number",
+    "src/index.css": "styles added",
+    "preview/mark-as-paid.html": "new: a standalone preview"
+  },
+  "build": {
+    "result": "success",
+    "command": "npm ci && npm run build (tsc --noEmit && vite build)",
+    "first_try": true,
+    "note": "the run could not build (npm and node are blocked in its sandbox); it built here unchanged"
+  },
+  "human_edits": 0,
+  "tells_audit": {
+    "command": "python3 skills/_jutsu/design-audit/scripts/audit.py <workspace> --group tells (genjutsu 4.1.3)",
+    "checked": 18,
+    "tells_to_confront": 0,
+    "fired": []
+  },
+  "graders": [
+    {
+      "name": "button-has-interaction",
+      "passed": true,
+      "explanation": "matched motion|[Aa]nimat|[Tt]ransition|keyframes|[Ss]pring|requestAnimationFrame|from\\s+[\"']\\.\\.?/(?!data[\"'])"
+    }
+  ],
+  "score": 1,
+  "media": [
+    {
+      "file": "media/rest.png",
+      "viewport": "1440x900",
+      "console_errors": 0,
+      "exceptions": 0,
+      "overflow": false
+    },
+    {
+      "file": "media/mobile.png",
+      "viewport": "390x844",
+      "console_errors": 0,
+      "exceptions": 0,
+      "overflow": true
+    },
+    {
+      "file": "media/click-120ms.png",
+      "viewport": "1440x900",
+      "console_errors": 0,
+      "exceptions": 0,
+      "overflow": false
+    },
+    {
+      "file": "media/click-350ms.png",
+      "viewport": "1440x900",
+      "console_errors": 0,
+      "exceptions": 0,
+      "overflow": false
+    },
+    {
+      "file": "media/click-800ms.png",
+      "viewport": "1440x900",
+      "console_errors": 0,
+      "exceptions": 0,
+      "overflow": false
+    },
+    {
+      "file": "media/click-3000ms.png",
+      "viewport": "1440x900",
+      "console_errors": 0,
+      "exceptions": 0,
+      "overflow": false
+    },
+    {
+      "file": "media/strip.png",
+      "what": "the four after-click stills cropped to the cards and first rows, stacked: 120, 350, 800 and 3000 ms"
+    }
+  ],
+  "capture": {
+    "tool": "genjutsu skills/_jutsu/orchestration/scripts/shoot.mjs via baseline-2026-11/bin/capture-cast.sh",
+    "served": "from disk over the DevTools protocol, no server",
+    "time": "real time, one page load and one click per still",
+    "click": "\"Mark as paid\" on FOL-2026-032 (Overdue, 4,200.00 EUR)"
+  },
+  "read_by_eye": {
+    "what_a_designer_would_say": "More happens than in the genjutsu run, and more of it happens where you clicked. The row turns pale green and fades back, its amount goes green, a check mark draws itself in the new Paid pill, the Paid card takes a green ring and a \"+€4,200.00\" beside its total while Paid counts up and Outstanding counts down, and \"Paid just now · Undo\" takes the button's place for eight seconds. As an answer to \"make it feel like the money landed\" it is the more literal and the more satisfying of the two. It is also less disciplined: four things confirm one click, the Outstanding card loses 4,200.00 with no sign of where it went, and the status cell is empty in the stills at 120 ms and 350 ms after the click (the old pill has left and the Paid pill has not arrived), on the very row the eye is on. It added an Undo nobody asked for and put a check mark in every Paid pill of the list."
+  },
+  "defects_and_notes": [
+    "The status cell of the clicked row is empty in the stills taken 120 ms and 350 ms after the click (media/click-120ms.png, media/click-350ms.png); the Paid pill is there at 800 ms.",
+    "The signed amount appears on the Paid card only; Outstanding counts down with no signed amount.",
+    "The run added an Undo (8 s) and a check mark in every Paid pill; neither was asked for.",
+    "mobile.png overflows sideways (page 778 px wide at 390): the fixture has no small-screen rules, as in the genjutsu run."
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "baseline-none",
+  "description": "Empty plugin for the no-plugin arm: no skills, commands, agents, hooks or servers.",
+  "version": "0.0.0"
+}

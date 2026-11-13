@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk: theses preview (throwaway)</title>
+<style>
+  :root {
+    --ground: #FBFCFD; --surface: #F1F3F6; --ink: #14181F; --ink-2: #4A5260; --ink-3: #5F6775;
+    --rule: #DCE0E6; --flag-ink: #8A4B00; --flag-ground: #FCF0DA; --ink-hover: #2E3540;
+    --ease: cubic-bezier(0.2, 0, 0, 1); --fast: 120ms; --base: 160ms;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 400 1rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  main { max-width: 52rem; margin: 0 auto; padding: 4rem 1.5rem; }
+  h1 { font-size: 1.5rem; font-weight: 500; margin: 0 0 1rem; }
+  h2 { font-size: 1.125rem; font-weight: 500; margin: 3rem 0 1rem; }
+  p { margin: 0 0 1rem; max-width: 40rem; color: var(--ink-2); }
+  .note { border: 1px solid var(--rule); border-radius: 2px; padding: 1rem; color: var(--ink-3); font-size: .875rem; }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.5rem; margin: 0; font-variant-numeric: tabular-nums; }
+  dt { color: var(--ink-3); } dd { margin: 0; }
+  .row { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
+  .btn { font: inherit; font-weight: 500; background: var(--ink); color: #fff; border: 0; border-radius: 2px; padding: .75rem 1.25rem; cursor: pointer;
+         transition: background-color var(--base) var(--ease); }
+  .btn:hover, .btn.forced { background: var(--ink-hover); }
+  .link { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; text-decoration-color: var(--rule);
+          transition: text-decoration-color var(--fast) var(--ease); }
+  .link:hover, .link.forced { text-decoration-color: var(--ink); }
+  .reduced * { transition: none !important; }
+  table { border-collapse: collapse; width: 100%; font-size: .9375rem; }
+  th, td { text-align: left; padding: .75rem 1rem; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 500; color: var(--ink-3); background: var(--surface); }
+  td.flag { background: var(--flag-ground); color: var(--flag-ink); box-shadow: inset 2px 0 0 var(--flag-ink); }
+  label { font-size: .875rem; color: var(--ink-2); }
+  button.ctrl { font: inherit; font-size: .875rem; background: none; border: 1px solid var(--rule); border-radius: 2px; padding: .375rem .75rem; cursor: pointer; color: var(--ink); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk: the two theses</h1>
+  <p class="note">This page is the proposal, not the build. It is throwaway. The landing page is built from MASTER.md, not from this markup. Status: <strong>UNVALIDATED</strong>, because nobody is answering in this session.</p>
+
+  <h2>Visual thesis</h2>
+  <p>A light, cool-white page in graphite ink, with one amber accent used only to mark a mismatching value (never the CTA). No display face: the system sans throughout at weights 400 and 500, modest size contrast and tabular figures, chosen so the page makes no third-party request, like a product that keeps data in Frankfurt. Airy 8px-based spacing in one left-aligned reading column. Flat components: 1px borders, 2px radii, no shadows.</p>
+
+  <h2>Interaction thesis</h2>
+  <p>Fast, dry transitions of 120 to 160ms on cubic-bezier(0.2, 0, 0, 1). Hover changes colour and underline only, never scale or movement. Nothing moves on scroll. Forbidden: scroll reveals, parallax, entrance animations, bounce, infinite loops, transforms on hover.</p>
+
+  <h2>Allowed patterns</h2>
+  <p>Hairline rules on the rows of the match table, where the reader tracks across document columns. One accent, used only on mismatch cells. The founding year and city stated as plain facts in the company section, as given in the brief.</p>
+
+  <h2>Easing</h2>
+  <div class="row">
+    <svg width="160" height="160" viewBox="-10 -10 120 120" aria-label="Easing curve cubic-bezier(0.2, 0, 0, 1)">
+      <rect x="0" y="0" width="100" height="100" fill="none" stroke="#DCE0E6"/>
+      <path d="M0,100 C20,100 0,0 100,0" fill="none" stroke="#14181F" stroke-width="1.5"/>
+    </svg>
+    <dl>
+      <dt>Easing</dt><dd>cubic-bezier(0.2, 0, 0, 1)</dd>
+      <dt>Fast</dt><dd>120ms (link underline)</dd>
+      <dt>Base</dt><dd>160ms (button background)</dd>
+      <dt>Delay</dt><dd>0ms</dd>
+      <dt>Stagger</dt><dd>none</dd>
+      <dt>Scroll</dt><dd>none</dd>
+    </dl>
+  </div>
+
+  <h2>The interaction, performed</h2>
+  <div id="demo" class="row">
+    <button class="btn" id="b">Start the 14-day trial</button>
+    <a class="link" id="l" href="#">Book a demo</a>
+  </div>
+  <p style="margin-top:1rem" class="row">
+    <button class="ctrl" id="replay">Replay hover</button>
+    <label><input type="checkbox" id="rm"> Reduced motion (states swap instantly)</label>
+  </p>
+
+  <h2>Accent, used only for a mismatch</h2>
+  <table>
+    <thead><tr><th>Line</th><th>Purchase order</th><th>Delivery note</th><th>Invoice</th></tr></thead>
+    <tbody>
+      <tr><td>Quantity</td><td>as ordered</td><td>as delivered</td><td class="flag">differs from delivery note</td></tr>
+      <tr><td>Unit price</td><td>agreed price</td><td>n/a</td><td>matches</td></tr>
+    </tbody>
+  </table>
+</main>
+<script>
+  const b = document.getElementById('b'), l = document.getElementById('l');
+  document.getElementById('replay').onclick = () => {
+    b.classList.add('forced'); l.classList.add('forced');
+    setTimeout(() => { b.classList.remove('forced'); l.classList.remove('forced'); }, 900);
+  };
+  document.getElementById('rm').onchange = e => document.getElementById('demo').classList.toggle('reduced', e.target.checked);
+  l.onclick = e => e.preventDefault();
+</script>
+</body>
+</html>

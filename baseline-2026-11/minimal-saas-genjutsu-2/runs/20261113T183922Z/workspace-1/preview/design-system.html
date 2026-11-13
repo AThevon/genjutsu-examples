@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk: design system preview (throwaway)</title>
+<link rel="stylesheet" href="../src/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-ground); color: var(--color-ink); font: var(--weight-regular) var(--text-base)/var(--leading-body) var(--font-sans); }
+  main { max-width: var(--column-wide); margin: 0 auto; padding: var(--space-8) var(--space-5); }
+  h1 { font-size: var(--text-h2); font-weight: var(--weight-medium); margin: 0 0 var(--space-4); }
+  h2 { font-size: var(--text-lead); font-weight: var(--weight-medium); margin: var(--space-8) 0 var(--space-4); }
+  p { color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 var(--space-4); }
+  .note { border: var(--hairline) solid var(--color-rule); border-radius: var(--radius-sm); padding: var(--space-4); font-size: var(--text-sm); color: var(--color-ink-3); }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: var(--space-4); }
+  .sw { border: var(--hairline) solid var(--color-rule); border-radius: var(--radius-sm); font-size: var(--text-sm); }
+  .sw div { height: var(--space-8); border-bottom: var(--hairline) solid var(--color-rule); }
+  .sw p { margin: 0; padding: var(--space-2) var(--space-3); color: var(--color-ink); font-variant-numeric: tabular-nums; }
+  .spec > * { margin: 0 0 var(--space-4); }
+  .bars div { height: var(--space-3); background: var(--color-ink); margin-bottom: var(--space-2); }
+  .bars span { font-size: var(--text-sm); color: var(--color-ink-3); display: block; }
+  .states { display: grid; grid-template-columns: repeat(5, max-content); gap: var(--space-5); align-items: center; }
+  .states small { display: block; color: var(--color-ink-3); font-size: var(--text-sm); margin-bottom: var(--space-2); }
+  .button { display: inline-block; font-weight: var(--weight-medium); background: var(--color-ink); color: var(--color-on-ink); text-decoration: none; padding: var(--space-3) var(--space-5); border-radius: var(--radius-sm); }
+  .button.hover { background: var(--color-ink-hover); }
+  .button.focus, .link.focus { outline: var(--focus-width) solid var(--color-ink); outline-offset: var(--focus-offset); }
+  .button.active { background: var(--color-ink-active); }
+  .button.disabled { background: var(--color-surface); color: var(--color-disabled); }
+  .link { color: var(--color-ink); text-decoration: underline; text-decoration-thickness: var(--hairline); text-underline-offset: 0.25em; text-decoration-color: var(--color-rule); border-radius: var(--radius-sm); }
+  .link.hover { text-decoration-color: var(--color-ink); }
+  .link.active { color: var(--color-ink-2); }
+  .link.disabled { color: var(--color-disabled); text-decoration: none; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; padding: var(--space-3) var(--space-4); border-bottom: var(--hairline) solid var(--color-rule); vertical-align: top; }
+  th { background: var(--color-surface); color: var(--color-ink-3); font-weight: var(--weight-medium); font-size: var(--text-sm); }
+  td.flag { background: var(--color-flag-ground); color: var(--color-flag-ink); box-shadow: inset var(--flag-edge) 0 0 var(--color-flag-ink); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk: design system</h1>
+  <p class="note">Throwaway preview of MASTER.md. It reads <code>src/tokens.css</code> directly. Status: <strong>UNVALIDATED</strong>. No web face: the system sans renders here as it will on the site.</p>
+  <p>This thesis allows two known reflexes: hairline rules on table rows, and a single accent colour. Both are listed under Allowed patterns in MASTER.md, each with its reason.</p>
+
+  <h2>Color, with contrast</h2>
+  <div class="swatches">
+    <div class="sw"><div style="background:var(--color-ground)"></div><p>ground #FBFCFD</p></div>
+    <div class="sw"><div style="background:var(--color-surface)"></div><p>surface #F1F3F6</p></div>
+    <div class="sw"><div style="background:var(--color-ink)"></div><p>ink #14181F, 17.32:1</p></div>
+    <div class="sw"><div style="background:var(--color-ink-2)"></div><p>ink-2 #4A5260, 7.67:1</p></div>
+    <div class="sw"><div style="background:var(--color-ink-3)"></div><p>ink-3 #5F6775, 5.55:1</p></div>
+    <div class="sw"><div style="background:var(--color-ink-hover)"></div><p>ink-hover #2E3540</p></div>
+    <div class="sw"><div style="background:var(--color-rule)"></div><p>rule #DCE0E6</p></div>
+    <div class="sw"><div style="background:var(--color-disabled)"></div><p>disabled #8A939F, 3.03:1</p></div>
+    <div class="sw"><div style="background:var(--color-flag-ink)"></div><p>flag-ink #8A4B00, 6.03:1</p></div>
+    <div class="sw"><div style="background:var(--color-flag-ground)"></div><p>flag-ground #FCF0DA</p></div>
+  </div>
+
+  <h2>Type, system sans, at the real steps</h2>
+  <div class="spec">
+    <p style="font-size:var(--text-h1);line-height:var(--leading-h1);font-weight:var(--weight-medium);letter-spacing:var(--tracking-tight);color:var(--color-ink)">h1, 500. Pay the invoices that match.</p>
+    <p style="font-size:var(--text-price);line-height:var(--leading-price);font-weight:var(--weight-medium);font-variant-numeric:tabular-nums;color:var(--color-ink)">price, 500, tabular. 290 EUR per month</p>
+    <p style="font-size:var(--text-h2);line-height:var(--leading-h2);font-weight:var(--weight-medium);color:var(--color-ink)">h2, 500. What reaches your team</p>
+    <p style="font-size:var(--text-lead)">lead, 400. Ploverdesk reads the PDF invoices your suppliers send by email.</p>
+    <p style="color:var(--color-ink)">body, 400. Each line is checked against the purchase order and the delivery note.</p>
+    <p style="font-size:var(--text-sm);color:var(--color-ink-3)">small, 400. No credit card.</p>
+  </div>
+
+  <h2>Spacing</h2>
+  <div class="bars">
+    <span>space-1, 4px</span><div style="width:var(--space-1)"></div>
+    <span>space-2, 8px</span><div style="width:var(--space-2)"></div>
+    <span>space-3, 12px</span><div style="width:var(--space-3)"></div>
+    <span>space-4, 16px</span><div style="width:var(--space-4)"></div>
+    <span>space-5, 24px</span><div style="width:var(--space-5)"></div>
+    <span>space-6, 32px</span><div style="width:var(--space-6)"></div>
+    <span>space-7, 48px</span><div style="width:var(--space-7)"></div>
+    <span>space-8, 64px</span><div style="width:var(--space-8)"></div>
+    <span>space-9, 96px</span><div style="width:var(--space-9)"></div>
+    <span>space-10, 128px</span><div style="width:var(--space-10)"></div>
+  </div>
+  <p>Radii: 0 and 2px. Elevation: none. Separation uses hairlines and the surface ground.</p>
+
+  <h2>Primary button, five states</h2>
+  <div class="states">
+    <div><small>default</small><a class="button">Start the 14-day trial</a></div>
+    <div><small>hover</small><a class="button hover">Start the 14-day trial</a></div>
+    <div><small>focus</small><a class="button focus">Start the 14-day trial</a></div>
+    <div><small>active</small><a class="button active">Start the 14-day trial</a></div>
+    <div><small>disabled</small><a class="button disabled">Start the 14-day trial</a></div>
+  </div>
+
+  <h2>Text link, five states</h2>
+  <div class="states">
+    <div><small>default</small><a class="link">Book a demo</a></div>
+    <div><small>hover</small><a class="link hover">Book a demo</a></div>
+    <div><small>focus</small><a class="link focus">Book a demo</a></div>
+    <div><small>active</small><a class="link active">Book a demo</a></div>
+    <div><small>disabled</small><a class="link disabled">Book a demo</a></div>
+  </div>
+
+  <h2>Match table</h2>
+  <table>
+    <thead><tr><th>Case</th><th>Purchase order</th><th>Delivery note</th><th>Invoice</th></tr></thead>
+    <tbody>
+      <tr><td>Wrong quantity</td><td>Quantity ordered</td><td>Quantity received</td><td class="flag">Quantity billed differs</td></tr>
+      <tr><td>Everything agrees</td><td>Agrees</td><td>Agrees</td><td>Agrees</td></tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

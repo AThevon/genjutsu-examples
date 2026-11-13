@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk - design system preview (throwaway)</title>
+<style>
+  :root { --ground:#FFFFFF; --surface:#F4F5F6; --ink:#16191C; --ink-hover:#2E3338; --ink-active:#000; --muted:#596067; --rule:#D9DCDF; --border:#80868C; --signal:#B03A0E; --disabled:#A3A8AD;
+    --ease: cubic-bezier(0.2,0,0,1); --dur:140ms;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--ink); }
+  body { margin:0; padding:48px 32px; max-width:68rem; line-height:1.55; }
+  h1 { font-size:1.5rem; font-weight:600; margin:0 0 8px; }
+  h2 { font-size:1rem; font-weight:600; margin:48px 0 16px; }
+  .note { color:var(--muted); font-size:.875rem; max-width:44rem; }
+  table.t { border-collapse:collapse; font-size:.875rem; }
+  table.t td, table.t th { text-align:left; padding:8px 24px 8px 0; border-bottom:1px solid var(--rule); vertical-align:middle; }
+  table.t th { color:var(--muted); font-weight:500; font-size:.8125rem; }
+  .chip { width:48px; height:28px; border:1px solid var(--rule); border-radius:2px; }
+  .bar { height:12px; background:var(--ink); }
+  .grid { display:grid; grid-template-columns: 9rem repeat(5, auto); gap:16px 24px; align-items:center; justify-items:start; font-size:.8125rem; color:var(--muted); }
+  .btn { font:inherit; font-size:1rem; font-weight:500; padding:12px 24px; border-radius:2px; text-decoration:none; display:inline-block; cursor:pointer;
+    transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+  .p { background:var(--ink); color:#fff; border:1px solid var(--ink); }
+  .p:hover,.p.h { background:var(--ink-hover); border-color:var(--ink-hover); }
+  .p:active,.p.a { background:var(--ink-active); border-color:var(--ink-active); }
+  .s { background:transparent; color:var(--ink); border:1px solid var(--border); }
+  .s:hover,.s.h { border-color:var(--ink); background:var(--surface); }
+  .s:active,.s.a { background:var(--rule); }
+  .btn:focus-visible,.btn.f,.l:focus-visible,.l.f { outline:2px solid var(--ink); outline-offset:2px; }
+  .btn.d { background:var(--ground); color:var(--disabled); border-color:var(--disabled); cursor:not-allowed; }
+  .l { color:var(--ink); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.2em; text-decoration-color:var(--border); transition: text-decoration-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+  .l:hover,.l.h { text-decoration-color:var(--ink); }
+  .l:active,.l.a { color:var(--muted); }
+</style>
+</head>
+<body>
+<h1>Ploverdesk design system</h1>
+<p class="note">Throwaway preview of MASTER.md. The build reads <code>src/tokens.css</code>, never this file. Status: <strong>UNVALIDATED</strong>.
+Light only: the brief gives no reason for a dark mode, so none is shown. Typeface: system-ui. What renders here is the visitor's OS sans, which is exactly what ships.</p>
+
+<h2>Color, with computed contrast</h2>
+<table class="t">
+<tr><th></th><th>Token</th><th>Hex</th><th>Contrast</th><th>Role</th></tr>
+<tr><td><div class="chip" style="background:#FFFFFF"></div></td><td>ground</td><td>#FFFFFF</td><td>-</td><td>page</td></tr>
+<tr><td><div class="chip" style="background:#F4F5F6"></div></td><td>surface</td><td>#F4F5F6</td><td>-</td><td>price band, secondary hover</td></tr>
+<tr><td><div class="chip" style="background:#16191C"></div></td><td>ink</td><td>#16191C</td><td>17.65:1 on ground, 16.17:1 on surface</td><td>text, primary fill, ring</td></tr>
+<tr><td><div class="chip" style="background:#2E3338"></div></td><td>ink-hover</td><td>#2E3338</td><td>white on it 12.75:1</td><td>primary hover</td></tr>
+<tr><td><div class="chip" style="background:#596067"></div></td><td>muted</td><td>#596067</td><td>6.38:1 / 5.84:1 on surface</td><td>secondary text</td></tr>
+<tr><td><div class="chip" style="background:#D9DCDF"></div></td><td>rule</td><td>#D9DCDF</td><td>1.38:1 (decorative)</td><td>two allowed hairlines</td></tr>
+<tr><td><div class="chip" style="background:#80868C"></div></td><td>border</td><td>#80868C</td><td>3.68:1 / 3.37:1 on surface</td><td>secondary button boundary</td></tr>
+<tr><td><div class="chip" style="background:#B03A0E"></div></td><td>signal</td><td>#B03A0E</td><td>6.07:1 / 5.56:1 on surface</td><td>mismatch only</td></tr>
+<tr><td><div class="chip" style="background:#A3A8AD"></div></td><td>disabled</td><td>#A3A8AD</td><td>2.4:1 (exempt)</td><td>disabled controls</td></tr>
+</table>
+
+<h2>Type scale (system-ui)</h2>
+<p style="font-size:clamp(2.25rem,1.55rem + 2.4vw,3.25rem);font-weight:600;line-height:1.1;letter-spacing:-0.01em;margin:0 0 16px;max-width:36rem">Display: one per page</p>
+<p style="font-size:1.5rem;font-weight:600;line-height:1.25;margin:0 0 12px">H2, 1.5rem / 600</p>
+<p style="font-size:1.125rem;font-weight:600;line-height:1.35;margin:0 0 12px">H3, 1.125rem / 600</p>
+<p style="font-size:2rem;font-weight:500;line-height:1.1;font-variant-numeric:tabular-nums;margin:0 0 12px">290 EUR <span style="font-size:1rem;font-weight:400;color:#596067">price, 2rem / 500, tabular</span></p>
+<p style="font-size:1.125rem;color:#596067;max-width:36rem;margin:0 0 12px">Lead, 1.125rem / 1.55, muted.</p>
+<p style="max-width:36rem;margin:0 0 12px">Body, 1rem / 1.55. Measure 36rem.</p>
+<p style="font-size:.875rem;color:#596067;margin:0">Small, 0.875rem.</p>
+
+<h2>Spacing (8px base)</h2>
+<table class="t">
+<tr><td>space-1 4px</td><td><div class="bar" style="width:4px"></div></td></tr>
+<tr><td>space-2 8px</td><td><div class="bar" style="width:8px"></div></td></tr>
+<tr><td>space-3 12px</td><td><div class="bar" style="width:12px"></div></td></tr>
+<tr><td>space-4 16px</td><td><div class="bar" style="width:16px"></div></td></tr>
+<tr><td>space-5 24px</td><td><div class="bar" style="width:24px"></div></td></tr>
+<tr><td>space-6 32px</td><td><div class="bar" style="width:32px"></div></td></tr>
+<tr><td>space-7 48px</td><td><div class="bar" style="width:48px"></div></td></tr>
+<tr><td>space-8 64px</td><td><div class="bar" style="width:64px"></div></td></tr>
+<tr><td>space-9 96px</td><td><div class="bar" style="width:96px"></div></td></tr>
+<tr><td>space-10 128px</td><td><div class="bar" style="width:128px"></div></td></tr>
+</table>
+
+<h2>Radii and elevation</h2>
+<p class="note">radius-none 0, radius-sm 2px. Shadow level 0 only (none). No cards on this page.</p>
+
+<h2>Components, five states</h2>
+<div class="grid">
+  <span></span><span>default</span><span>hover</span><span>focus</span><span>active</span><span>disabled</span>
+  <span>Primary</span>
+  <a class="btn p" href="#">Start the 14-day trial</a><a class="btn p h" href="#">Start the 14-day trial</a><a class="btn p f" href="#">Start the 14-day trial</a><a class="btn p a" href="#">Start the 14-day trial</a><a class="btn p d" href="#" aria-disabled="true">Start the 14-day trial</a>
+  <span>Secondary</span>
+  <a class="btn s" href="#">Book a demo</a><a class="btn s h" href="#">Book a demo</a><a class="btn s f" href="#">Book a demo</a><a class="btn s a" href="#">Book a demo</a><a class="btn s d" href="#" aria-disabled="true">Book a demo</a>
+  <span>Text link</span>
+  <a class="l" href="#">Book a demo</a><a class="l h" href="#">Book a demo</a><a class="l f" href="#">Book a demo</a><a class="l a" href="#">Book a demo</a><span>n/a</span>
+</div>
+
+<h2>Motion</h2>
+<p class="note">dur-fast 140ms, ease-out cubic-bezier(0.2, 0, 0, 1), colour properties only, no stagger. Reduced motion: 0ms. Hover the first column above to feel it.</p>
+
+<h2>Dials</h2>
+<p class="note">variance 2: "left-aligned single column", "components are flat". motion 1: "Nothing moves on scroll". density 3: "Spacing is airy on an 8px base" (spacing scale written by hand; density only labels it).</p>
+<script>document.querySelectorAll('a[href="#"]').forEach(a=>a.onclick=e=>e.preventDefault());</script>
+</body>
+</html>

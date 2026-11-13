@@ -1,0 +1,14 @@
+Note: --scaffold runs each case's scaffold_script as you. Only use it on case files you (or your org) authored.
+Plugin under test: "baseline-none" version "0.0.0" at "/private/tmp/gj-baseline/eval-none-minimal-saas-1"
+  scaffold: /private/tmp/gj-baseline/eval-none-minimal-saas-1/examples/minimal-saas/fixture.sh
+  kept temp: /private/tmp/e-DYh739
+⚠ kept /private/tmp/e-DYh739: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-DYh739/sealed (mode 000; the kept directory is read-only) - open them with `chmod 700 /private/tmp/e-DYh739 /private/tmp/e-DYh739/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  minimal-saas run 1/1: score 1.00  $0.46
+    ✓ page-has-content (weight 1): matched <(main|section)(\s[^>]*[^/])?>|^import\s
+✓ minimal-saas  score 1.00  (1 run)  $0.46
+
+CASE          SCORE PASS% RUNS COST    NOTES
+minimal-saas  1.00  100%  1    $0.46   
+
+1 case(s) · 110s · $0.46
+Report: baseline-2026-11/minimal-saas-none-1/runs/20261113T183353Z/report.html

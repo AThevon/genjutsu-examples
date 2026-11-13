@@ -1,0 +1,495 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --paper: #f5f6f7;
+  --sheet: #ffffff;
+  --ink: #1a2533;
+  --pencil: #6a7380;
+  --rule: #d6dbe1;
+  --flag: #b3261e;
+  --flag-wash: #fbeeed;
+
+  /* 1.25 scale on an 18px base */
+  --t-sm: 0.8rem; /* 14.4 */
+  --t-base: 1rem; /* 18 */
+  --t-md: 1.25rem; /* 22.5 */
+  --t-lg: 1.5625rem; /* 28 */
+  --t-xl: 1.953rem; /* 35 */
+  --t-display: clamp(2.2rem, 1.4rem + 3.2vw, 3.1rem); /* ~40–56 */
+
+  --measure: 62ch;
+  --wrap: 68rem;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+  font-family: "Avenir Next", Avenir, "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 112.5%;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+ol,
+figure {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--ink);
+  color: var(--sheet);
+}
+
+.skip:focus {
+  top: 0.75rem;
+}
+
+/* ---------- Layout ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.block {
+  padding-block: clamp(3.5rem, 8vw, 6rem) 0;
+}
+
+.block > h2 {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+
+/* ---------- Header ---------- */
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.5rem;
+}
+
+.wordmark {
+  font-weight: 600;
+  font-size: var(--t-md);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.bar-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.quiet {
+  color: var(--pencil);
+  text-decoration: none;
+}
+
+.quiet:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.4rem;
+  background: var(--ink);
+  color: var(--sheet);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 3px;
+  line-height: 1.2;
+}
+
+.btn:hover {
+  background: #2c3b4f;
+}
+
+.btn-small {
+  padding: 0.55rem 1rem;
+  font-size: var(--t-sm);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding-block: clamp(3rem, 9vw, 6.5rem) clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.hero h1 {
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  max-width: 17ch;
+  margin-bottom: 1.5rem;
+}
+
+.lead {
+  font-size: var(--t-md);
+  line-height: 1.5;
+  max-width: var(--measure);
+  color: var(--ink);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.actions-note {
+  color: var(--pencil);
+  font-size: var(--t-sm);
+}
+
+.actions-note a {
+  color: var(--ink);
+}
+
+/* ---------- Example invoice ---------- */
+
+.sheet {
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.sheet-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.sheet-title {
+  font-weight: 600;
+}
+
+.sheet-sub {
+  color: var(--pencil);
+  font-size: var(--t-sm);
+}
+
+.toggle {
+  font: inherit;
+  font-size: var(--t-sm);
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  border-color: var(--pencil);
+}
+
+.toggle[aria-pressed="true"] {
+  background: var(--paper);
+}
+
+.match {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-sm);
+}
+
+.match th,
+.match td {
+  text-align: left;
+  padding: 0.7rem 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: baseline;
+}
+
+.match th:first-child,
+.match td:first-child {
+  padding-left: 0;
+}
+
+.match thead th {
+  font-weight: 500;
+  color: var(--pencil);
+  border-bottom-color: var(--ink);
+}
+
+.match tbody th {
+  font-weight: 500;
+}
+
+.match .num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.match .result {
+  padding-left: 1.5rem;
+}
+
+/* Matched lines recede once; mismatched lines keep their ink. */
+.row-ok > * {
+  color: var(--pencil);
+  animation: recede 700ms ease-out 900ms backwards;
+}
+
+.row-off .result {
+  color: var(--flag);
+  font-weight: 500;
+}
+
+.match .is-off {
+  color: var(--flag);
+  font-weight: 600;
+  background: linear-gradient(var(--flag-wash), var(--flag-wash)) no-repeat;
+  animation: mark 500ms ease-out 1300ms backwards;
+}
+
+.row-off .result {
+  animation: mark 500ms ease-out 1300ms backwards;
+}
+
+@keyframes recede {
+  from {
+    color: var(--ink);
+  }
+}
+
+@keyframes mark {
+  from {
+    color: var(--ink);
+    background-color: transparent;
+    background-image: none;
+  }
+}
+
+.only-off .row-ok {
+  display: none;
+}
+
+.sheet-note {
+  margin-top: 1rem;
+  color: var(--pencil);
+  font-size: var(--t-sm);
+}
+
+/* ---------- Steps (a real sequence) ---------- */
+
+.steps {
+  list-style: none;
+  padding: 0;
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.steps li {
+  counter-increment: step;
+  border-top: 1px solid var(--ink);
+  padding-top: 1rem;
+}
+
+.steps li::before {
+  content: counter(step);
+  display: block;
+  font-variant-numeric: tabular-nums;
+  color: var(--pencil);
+  margin-bottom: 0.5rem;
+}
+
+.steps h3 {
+  font-size: var(--t-base);
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.steps p {
+  color: var(--pencil);
+}
+
+/* ---------- Facts ---------- */
+
+.facts {
+  max-width: 48rem;
+}
+
+.facts > div {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  gap: 0.25rem 2rem;
+  padding-block: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.facts > div:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.facts dt {
+  color: var(--pencil);
+}
+
+/* ---------- Closing ---------- */
+
+.close p {
+  max-width: var(--measure);
+}
+
+.close .actions-note {
+  max-width: none;
+}
+
+.foot {
+  margin-top: clamp(4rem, 10vw, 7rem);
+  padding-block: 2rem 3rem;
+  color: var(--pencil);
+  font-size: var(--t-sm);
+}
+
+.foot p {
+  max-width: var(--measure);
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 60rem) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 40rem) {
+  .bar-nav .quiet {
+    display: none;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .facts > div {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 48rem) {
+  /* The table becomes one block per line, each cell labelled. */
+  .match thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .match,
+  .match tbody,
+  .match tr,
+  .match th,
+  .match td {
+    display: block;
+  }
+
+  .match tr {
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .match th,
+  .match td {
+    border: 0;
+    padding: 0.15rem 0;
+  }
+
+  .match tbody th {
+    margin-bottom: 0.25rem;
+  }
+
+  .match td {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: right;
+  }
+
+  .match td::before {
+    content: attr(data-label);
+    color: var(--pencil);
+    font-weight: 400;
+    text-align: left;
+  }
+
+  .match .result {
+    padding-left: 0;
+  }
+
+  .match .is-off {
+    padding-inline: 0.25rem;
+    margin-inline: -0.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
