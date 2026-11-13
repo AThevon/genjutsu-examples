@@ -154,6 +154,8 @@ The validated thesis stays the only authority in conversation; these rules were 
 
 **What was run is the branch, not the tag.** The three rounds ran the branch at `8d57853` (three commits), `e4c31a6` (six) and `5e3f9c4` (nine). Its manifest still said 4.1.4 at each of them, which is the version the receipts carry. Edits made after `5e3f9c4`, including those that came out of the review before the release, were not run.
 
+The release holds two more commits than what was run, so the list above describes the measured text, not v4.2.0 word for word. In v4.2.0 as published: `First screen:` and `The one motion:` are labelled lines under a one-sentence thesis; the question of "a fake product drawn in divs" asks about the project's own material and keeps its last clause ("or does the page need a picture of it at all?"); the tells module loads once the thesis is written and, when someone is there to answer, validated; the limits in preserve and partial mode and the native reading were added; and `paint`'s `SKILL.md` is 73,208 characters. The CHANGELOG entry lists every one of these edits as not rerun.
+
 ## 4. Three tuning rounds
 
 ### Method
