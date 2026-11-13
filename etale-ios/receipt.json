@@ -483,7 +483,7 @@
         "Etale/TideDetailView.swift": "20 lines added inside TideCurve (the marker rule trims in, the dot scales from 0.5 and fades in, once, on appear; at rest under Reduce Motion)",
         "stat": "3 files, 78 insertions, 0 deletions against the starting app"
       },
-      "screens_at_rest_vs_starting_app": "unchanged: media/run-2/today.png against before/today.png and media/run-2/detail.png against before/detail.png show no difference at a 2% colour tolerance (98 and 6 pixels of 790533 without tolerance)",
+      "screens_at_rest_vs_starting_app": "unchanged: media/run-2/today.png against before/today.png and media/run-2/detail.png against before/detail.png differ only by video-compression noise; of 790533 pixels, 66 and 0 differ by more than 2% of the colour range (5 of 255), scattered along text edges, largest difference 25 and 5 of 255; 26705 and 1810 differ at all (frames of an H.264 recording, not screenshots)",
       "previews": [
         "preview/thesis.html",
         "preview/variants.html"
@@ -537,7 +537,8 @@
         {
           "what": "a white rounded rectangle, the zoom source's own background, shows inside the still-highlighted grey cell for about 0.4 s after the detail lands back",
           "where": "Etale/TideTransition.swift:29-33",
-          "evidence": "media/run-2/defect-source-box.png, the end of each return in media/run-2/clip.webp"
+          "evidence": "media/run-2/defect-source-box.png, the end of each return in media/run-2/clip.webp",
+          "measured": "at 60 fps: when the zoom has landed, about 0.5 s after Back, the cell outside the box is at 251 of 255 against the box's 255, and snaps to white 0.92 s after Back; on screen about 0.4 s at a faint contrast"
         },
         {
           "what": "the marker's 0.35 s delay is a constant guessed against a duration the system owns; right on this simulator, not guaranteed elsewhere",
@@ -570,9 +571,7 @@
         "opening a row after the list has scrolled; the 16:17 row at accessibility-large (below the fold, the driver cannot reach it)",
         "Dynamic Type beyond accessibility-large, right-to-left, Increase Contrast, iPad",
         "what the system zoom does under Reduce Motion (the run switches it off)",
-        "dark appearance contrast (filmed once, not computed)",
-        "the trace's Write of TideTransition.swift equals the published file; the six Edit calls were not replayed",
-        "no second, separate checking pass (run 1 had one)"
+        "dark appearance contrast (filmed once, not computed)"
       ],
       "capture": {
         "device": "iPhone 17 simulator, iOS 26.5, 1206x2622 px (402x874 pt at 3x)",
@@ -740,7 +739,12 @@
           "kb": 188,
           "what": "preview/variants.html, first screen"
         }
-      ]
+      ],
+      "thesis_note": "the thesis misdates the API: the zoom navigation transition shipped in iOS 18, not iOS 26; the code is right at this deployment target either way",
+      "suspected_from_code": [
+        "the marker's one-time flag is @State of TideCurve (TideDetailView.swift:70) in a row of the detail's List, started in that row's onAppear (line 116): where the detail scrolls, a curve below the fold would start its delay only when it scrolls in, and could draw again if the list drops the row's state off screen; the detail does not scroll on the iPhone 17 at the default size, so no take shows it"
+      ],
+      "second_check": "a separate pass replayed the trace's three Write and six Edit calls on the starting app (the three Swift files and the two previews are byte for byte the run's), rebuilt a fresh copy of workspace-1 with new derived data (BUILD SUCCEEDED, no compiler error or warning), dumped the two drag recordings again at 60 fps and tracked the curve with its own script (downward drag 1171 to 1874 px with no reversal, edge swipe 94 to 873 px with one turn at the release; in the committed clips 0 reversals in media/run-2/drag-down.webp against 56 in media/defect-drag.webp), searched the trace (nothing before the thesis page names the zoom API, the edge swipe or a shared element; the plugin copy is identical to 3e0d6d3), and checked cost, turns, duration, tokens, subagents, the audit quotes and the file:line citations; it corrected the pixel counts of the screens at rest and added the white box measurement, the misdated API and the List row item; no new recording was filmed"
     }
   ]
 }
