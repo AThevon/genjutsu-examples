@@ -1,0 +1,60 @@
+/* Mirrors MASTER.md. Every value used in src/ comes from here. */
+:root {
+  /* Colour */
+  --c-ground: #F7F8F8;
+  --c-surface: #FFFFFF;
+  --c-ink: #15181C;          /* text, and the action */
+  --c-ink-hover: #2A2F35;
+  --c-ink-2: #5A6169;        /* secondary text, matched tick */
+  --c-rule: #D9DDE1;         /* hairlines, non-interactive */
+  --c-control: #80868C;      /* quiet control boundary, 3.68:1 on surface */
+  --c-signal: #B3261E;       /* a value that does not match. Nothing else. */
+  --c-signal-tint: #FBEFEE;  /* exception row */
+  --c-disabled: #8A9199;
+  --c-on-ink: #FFFFFF;
+
+  /* Type */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --t-xs: 0.8125rem;
+  --t-sm: 0.875rem;
+  --t-base: 1rem;
+  --t-md: 1.125rem;
+  --t-lg: 1.5rem;
+  --t-xl: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  --w-regular: 400;
+  --w-strong: 600;
+  --lh-body: 1.5;
+  --lh-display: 1.15;
+  --lh-table: 1.35;
+  --track-display: -0.015em;
+
+  /* Spacing, 8px base */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+
+  /* Layout */
+  --frame: 72rem;
+  --gutter: clamp(16px, 4vw, 32px);
+  --measure: 36rem;
+  --term-col: 15rem;
+  --tap: 44px;
+
+  /* Shape */
+  --r-sm: 2px;
+  --hairline: 1px solid var(--c-rule);
+  --control-line: 1px solid var(--c-control);
+  --focus-ring: 2px solid var(--c-ink);
+  --focus-offset: 2px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --d-fast: 120ms;
+  --d-collapse: 160ms;
+}

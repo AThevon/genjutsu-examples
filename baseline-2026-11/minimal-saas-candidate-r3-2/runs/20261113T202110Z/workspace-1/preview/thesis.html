@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk - thesis preview (throwaway, not the build)</title>
+<style>
+  :root{
+    --bg:#FFFFFF; --surface:#F5F6F7; --line:#DADDE1; --ink:#15171A; --muted:#5C636B; --signal:#B42318;
+    --ease:cubic-bezier(0.2,0,0,1); --settle:240ms; --stagger:60ms; --delay:400ms;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans)}
+  main{max-width:1120px;margin:0 auto;padding:48px}
+  h1{font-size:28px;font-weight:600;margin:0 0 8px} h2{font-size:18px;font-weight:600;margin:48px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+  p{max-width:68ch;margin:0 0 12px} .note{color:var(--muted);font-size:14px}
+  .label{font-weight:600}
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px}
+  .sw{border:1px solid var(--line);border-radius:2px} .sw div{height:56px} .sw p{font-size:13px;margin:8px;font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px}
+  th{font-size:13px;font-weight:500;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--ink)}
+  td{padding:10px 12px;border-bottom:1px solid var(--line)} td.num,th.num{text-align:right}
+  tr.ok td{color:var(--muted)} tr.bad .diff{color:var(--signal);text-decoration:underline;text-underline-offset:3px}
+  tr.bad .res{color:var(--signal);font-weight:500}
+  .run tr.ok td{animation:settle var(--settle) var(--ease) backwards;animation-delay:calc(var(--delay) + var(--i) * var(--stagger))}
+  @keyframes settle{from{color:var(--ink)}}
+  .reduced .run tr.ok td{animation:none}
+  button{font:inherit;font-size:15px;font-weight:500;border-radius:2px;cursor:pointer;padding:10px 16px;border:1px solid var(--ink);background:var(--ink);color:#fff;transition:background-color 120ms var(--ease)}
+  button:hover{background:#2B2F35} button.q{background:transparent;color:var(--ink)} button.q:hover{background:var(--surface)}
+  button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .controls{display:flex;gap:12px;margin:16px 0}
+  .spec{font-size:28px;line-height:1.15;font-weight:600} .spec2{font-size:18px} .spec3{font-size:13px;color:var(--muted)}
+  .bar{height:8px;background:var(--ink);margin:4px 0}
+  code{font-size:14px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk - thesis preview</h1>
+  <p class="note">This page is the proposal, not the build. It is throwaway; the landing page is built from the theses, not from this markup. Status: <strong>UNVALIDATED</strong> (headless run, nobody to approve).</p>
+
+  <h2>Visual thesis</h2>
+  <p><span class="label">Visual thesis:</span> A cool white page set in graphite ink, flat and hairline-ruled like an auditor's working paper. One deep near-black marks the action (the trial button). One audit red is used for nothing except a line that does not match. The type is the system sans with tabular figures, because the product's voice is its numbers lining up. The first screen is a three-way match of one example invoice, at rest: matched lines receded to grey, the exceptions in full ink with the differing value in red.</p>
+  <p><span class="label">Allowed patterns:</span> hairline rules (they are the table rules of a working paper); tabular figures; one table as the hero object, labelled as an example; the system font stack (a choice, see type).</p>
+
+  <h3>Colour roles</h3>
+  <div class="swatches">
+    <div class="sw"><div style="background:#FFFFFF"></div><p>bg #FFFFFF<br>ground</p></div>
+    <div class="sw"><div style="background:#F5F6F7"></div><p>surface #F5F6F7<br>quiet hover, terms band</p></div>
+    <div class="sw"><div style="background:#DADDE1"></div><p>line #DADDE1<br>hairline rules</p></div>
+    <div class="sw"><div style="background:#15171A"></div><p>ink #15171A<br>text + action. 17.9:1 on bg</p></div>
+    <div class="sw"><div style="background:#5C636B"></div><p>muted #5C636B<br>matched lines, labels. 6.1:1</p></div>
+    <div class="sw"><div style="background:#B42318"></div><p>signal #B42318<br>mismatch only. 6.6:1</p></div>
+  </div>
+  <p class="note">The red is not an accent. It never appears on a button, a link or a heading: it is the pencil mark on a discrepancy. The action stays in ink.</p>
+
+  <h3>Type (system sans, tabular figures)</h3>
+  <p class="spec">Only the lines that do not match reach your desk.</p>
+  <p class="spec2">Lead 18/1.5 - Ploverdesk reads supplier invoices that arrive by email as PDF.</p>
+  <p>Body 16/1.5 - weight 400; 500 for labels and buttons; 600 for headings only.</p>
+  <p class="spec3">Small 13 - column headers, the example label.</p>
+  <p class="note">Why no web face: no font request leaves the page. A product that sells "data hosted in Frankfurt" should not send each visitor's IP to a third-party font CDN, and finance teams will see the page in the same system face their accounting tools use. The voice comes from tabular figures, weight contrast (400 / 600) and the table, not from a face.</p>
+
+  <h3>Spacing</h3>
+  <p class="note">4px base. One left edge (1120px container, 48px side padding wide, 16px narrow). Running text at 62ch; the match table takes the full container, its width set by its five columns.</p>
+  <div class="bar" style="width:4px"></div><div class="bar" style="width:8px"></div><div class="bar" style="width:16px"></div><div class="bar" style="width:24px"></div><div class="bar" style="width:32px"></div><div class="bar" style="width:48px"></div><div class="bar" style="width:64px"></div><div class="bar" style="width:96px"></div>
+
+  <h2>Interaction thesis</h2>
+  <p><span class="label">Interaction thesis:</span> Fast and dry (120-240ms, <code>cubic-bezier(0.2, 0, 0, 1)</code>): hovers change only a background or an underline in 120ms, scroll does nothing, and the one motion is the match itself. On load the matched lines settle from full ink to grey (240ms each, 60ms stagger, after 400ms), so the exceptions are what stay. Forbidden: scroll reveals, parallax, scale on hover, bounce, looping animation, counters, shadows, gradients, glass.</p>
+  <p><span class="label">The one motion:</span> trigger: first paint. Before it runs: every line in full ink. If it never runs, or with reduced motion: the resting state is the end state (matched grey, exceptions red), so the idea is shown with no motion at all.</p>
+
+  <svg width="240" height="160" viewBox="0 0 240 160" aria-label="easing curve cubic-bezier(0.2,0,0,1)">
+    <rect x="20" y="10" width="200" height="130" fill="none" stroke="#DADDE1"/>
+    <path d="M20 140 C 60 140, 20 10, 220 10" fill="none" stroke="#15171A" stroke-width="2"/>
+    <text x="20" y="156" font-size="11" fill="#5C636B">cubic-bezier(0.2, 0, 0, 1)</text>
+  </svg>
+  <p class="note">Settle 240ms - stagger 60ms - delay 400ms - hover 120ms.</p>
+
+  <div class="controls">
+    <button id="replay">Replay the match</button>
+    <button class="q" id="rm" aria-pressed="false">Reduced motion: off</button>
+  </div>
+
+  <p class="spec3">Example invoice - illustrative, not customer data</p>
+  <div id="stage">
+  <table>
+    <thead><tr><th>Line</th><th class="num">Invoice</th><th class="num">Purchase order</th><th class="num">Delivery note</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr class="ok" style="--i:0"><td>Stretch film 500 mm</td><td class="num">24 × 18.40</td><td class="num">24 × 18.40</td><td class="num">24</td><td>Matched</td></tr>
+      <tr class="bad"><td>Corner boards 1200 mm</td><td class="num"><span class="diff">40</span> × 1.15</td><td class="num">40 × 1.15</td><td class="num diff">36</td><td class="res">Quantity: 4 not delivered</td></tr>
+      <tr class="ok" style="--i:1"><td>Pallet labels A5</td><td class="num">10 × 31.00</td><td class="num">10 × 31.00</td><td class="num">10</td><td>Matched</td></tr>
+      <tr class="bad"><td>Strapping band 12 mm</td><td class="num">6 × <span class="diff">54.90</span></td><td class="num">6 × 49.90</td><td class="num">6</td><td class="res">Unit price: 5.00 above order</td></tr>
+      <tr class="ok" style="--i:2"><td>Cartons 600 × 400</td><td class="num">50 × 0.92</td><td class="num">50 × 0.92</td><td class="num">50</td><td>Matched</td></tr>
+      <tr class="bad"><td>Tape dispenser</td><td class="num">2 × 22.50</td><td class="num">2 × 22.50</td><td class="num diff">none</td><td class="res">Not delivered</td></tr>
+    </tbody>
+  </table>
+  </div>
+</main>
+<script>
+  const stage=document.getElementById('stage'), rm=document.getElementById('rm');
+  function run(){stage.classList.remove('run');void stage.offsetWidth;stage.classList.add('run');}
+  document.getElementById('replay').onclick=run;
+  rm.onclick=()=>{const on=document.body.classList.toggle('reduced');rm.setAttribute('aria-pressed',on);rm.textContent='Reduced motion: '+(on?'on':'off');run();};
+  run();
+</script>
+</body>
+</html>

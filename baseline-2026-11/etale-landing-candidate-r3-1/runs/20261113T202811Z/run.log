@@ -1,0 +1,16 @@
+Note: --scaffold runs each case's scaffold_script as you. Only use it on case files you (or your org) authored.
+Plugin under test: "genjutsu" version "4.1.4" at "/private/tmp/gj-baseline/eval-candidate-r3-etale-landing-1"
+  scaffold: /private/tmp/gj-baseline/eval-candidate-r3-etale-landing-1/examples/etale-landing/fixture.sh
+  kept temp: /private/tmp/e-ABbe6J
+⚠ kept /private/tmp/e-ABbe6J: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-ABbe6J/sealed (mode 000; the kept directory is read-only) - open them with `chmod 700 /private/tmp/e-ABbe6J /private/tmp/e-ABbe6J/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  etale-landing run 1/1: score 1.00  $2.92
+    ✓ page-has-content (weight 1): matched <(main|section)(\s[^>]*[^/])?>|^import\s
+    ✓ paint-fired (weight 1): matched "skill"\s*:\s*"(?:[\w-]+:)?paint"|[/]_jutsu\b
+    ✓ paint-loaded (weight 1): matched "skill"\s*:\s*"(?:[\w-]+:)?paint"|Modules\snot\sloaded:
+✓ etale-landing  score 1.00  (1 run)  $2.92
+
+CASE           SCORE PASS% RUNS COST    NOTES
+etale-landing  1.00  100%  1    $2.92   
+
+1 case(s) · 634s · $2.92
+Report: baseline-2026-11/etale-landing-candidate-r3-1/runs/20261113T202811Z/report.html

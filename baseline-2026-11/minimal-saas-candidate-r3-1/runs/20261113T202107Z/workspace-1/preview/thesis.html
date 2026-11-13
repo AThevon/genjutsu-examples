@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk - thesis preview (throwaway)</title>
+<style>
+  /* Throwaway preview. Shows only values named in the theses. Not the build. */
+  :root {
+    --ground: #F7F8F8; --surface: #FFFFFF; --ink: #15181C; --ink-2: #5A6169;
+    --rule: #D9DDE1; --signal: #B3261E;
+    --ease: cubic-bezier(0.2, 0, 0, 1); --fast: 120ms; --collapse: 160ms;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 16px/1.5 var(--sans); }
+  main { max-width: 72rem; margin: 0 auto; padding: 48px 24px 96px; }
+  h1 { font-size: 1.25rem; font-weight: 600; margin: 0 0 8px; }
+  h2 { font-size: 0.875rem; font-weight: 600; margin: 48px 0 16px; color: var(--ink-2); }
+  p { max-width: 40rem; margin: 0 0 12px; }
+  .label { font-size: 0.875rem; color: var(--ink-2); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 16px; }
+  .sw { border: 1px solid var(--rule); background: var(--surface); }
+  .sw div { height: 56px; }
+  .sw p { font-size: 0.8125rem; padding: 8px 12px; margin: 0; font-variant-numeric: tabular-nums; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 12px 16px; border-top: 1px solid var(--rule); font-size: 0.9375rem; }
+  th { font-weight: 500; color: var(--ink-2); font-size: 0.8125rem; border-top: 0; }
+  td.num, th.num { text-align: right; }
+  .bad { color: var(--signal); font-weight: 600; }
+  .ok { color: var(--ink-2); }
+  tr.matched { view-transition-class: row; }
+  .exceptions-only tr.matched { display: none; }
+  ::view-transition-group(*) { animation-duration: var(--collapse); animation-timing-function: var(--ease); }
+  ::view-transition-old(*), ::view-transition-new(*) { animation-duration: var(--collapse); animation-timing-function: var(--ease); }
+  .reduced ::view-transition-group(*) { animation: none; }
+  button { font: inherit; font-size: 0.9375rem; padding: 10px 16px; border-radius: 2px; cursor: pointer;
+           border: 1px solid var(--ink); background: var(--ink); color: var(--surface);
+           transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
+  button.quiet { background: transparent; color: var(--ink); border-color: var(--rule); }
+  button:hover { background: #2A2F35; }
+  button.quiet:hover { background: var(--surface); }
+  button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 16px 0; }
+  svg text { font: 11px var(--sans); fill: var(--ink-2); }
+  .thesis { border-left: 2px solid var(--ink); padding-left: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk - thesis preview</h1>
+  <p class="label">This page is the proposal, not the build. Throwaway. UNVALIDATED: nobody was available to approve it.</p>
+
+  <h2>Visual thesis</h2>
+  <div class="thesis">
+    <p>A cool near-white page with near-black ink, set in the system sans with tabular figures and no web font. The one colour on it is the auditor's red, and it goes only on a value that does not match. The action is solid ink, never red. Matched lines get a quiet grey tick.</p>
+    <p>The first screen is a real-looking example invoice compared line by line against its purchase order and delivery note. Its values are labelled as an example, and the table takes the full 72rem width.</p>
+  </div>
+
+  <h2>Interaction thesis</h2>
+  <div class="thesis">
+    <p>Fast and dry: hover changes colour in 120ms with cubic-bezier(0.2, 0, 0, 1) and nothing moves. Scrolling does nothing. Forbidden: scroll reveals, parallax, bounce, scale on hover, loops, count-ups, glows. The one motion: switching to "What you review" lets the matched lines leave in 160ms, so only the exceptions remain. It runs through the native View Transitions API, and with reduced motion the switch is instant.</p>
+  </div>
+  <p class="label">Allowed patterns: hairline table rules; tick marks on matched lines; a status colour used only for mismatched values.</p>
+
+  <h2>Easing - cubic-bezier(0.2, 0, 0, 1), 160ms collapse / 120ms hover</h2>
+  <svg width="220" height="160" viewBox="0 0 220 160" aria-label="Easing curve">
+    <rect x="20" y="10" width="180" height="120" fill="none" stroke="#D9DDE1"/>
+    <path d="M20 130 C 56 130, 20 10, 200 10" fill="none" stroke="#15181C" stroke-width="2"/>
+    <text x="20" y="148">t = 0</text><text x="170" y="148">t = 1</text>
+  </svg>
+
+  <h2>The one motion - replay it</h2>
+  <div class="row">
+    <button id="toggle">Show what you review</button>
+    <label class="label"><input type="checkbox" id="rm"> Reduced motion (instant)</label>
+  </div>
+  <div id="wrap">
+    <table>
+      <thead><tr><th>Line (example)</th><th class="num">Invoice</th><th class="num">Order</th><th class="num">Delivery</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr class="matched" style="view-transition-name:r1"><td>Stretch film 500 mm</td><td class="num">40 × €18.40</td><td class="num">40 × €18.40</td><td class="num">40</td><td class="ok">✓ Matches</td></tr>
+        <tr style="view-transition-name:r2"><td>Carton box 400×300×300</td><td class="num">600 × €1.35</td><td class="num">600 × €1.35</td><td class="num bad">500</td><td class="bad">100 not delivered</td></tr>
+        <tr class="matched" style="view-transition-name:r3"><td>Packing tape 48 mm</td><td class="num">120 × €2.10</td><td class="num">120 × €2.10</td><td class="num">120</td><td class="ok">✓ Matches</td></tr>
+        <tr style="view-transition-name:r4"><td>Pallet label roll</td><td class="num bad">30 × €9.80</td><td class="num">30 × €8.90</td><td class="num">30</td><td class="bad">€0.90 above order</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Swatches (contrast computed in the design-system step)</h2>
+  <div class="grid">
+    <div class="sw"><div style="background:#F7F8F8"></div><p>ground #F7F8F8</p></div>
+    <div class="sw"><div style="background:#FFFFFF"></div><p>surface #FFFFFF</p></div>
+    <div class="sw"><div style="background:#15181C"></div><p>ink / action #15181C</p></div>
+    <div class="sw"><div style="background:#5A6169"></div><p>ink-2 / matched #5A6169</p></div>
+    <div class="sw"><div style="background:#D9DDE1"></div><p>rule #D9DDE1</p></div>
+    <div class="sw"><div style="background:#B3261E"></div><p>signal / mismatch #B3261E</p></div>
+  </div>
+  <div class="row"><button>Start the 14-day trial</button><button class="quiet">Book a demo</button></div>
+</main>
+<script>
+  const wrap = document.getElementById('wrap'), btn = document.getElementById('toggle'), rm = document.getElementById('rm');
+  btn.addEventListener('click', () => {
+    const flip = () => { wrap.classList.toggle('exceptions-only');
+      btn.textContent = wrap.classList.contains('exceptions-only') ? 'Show all lines' : 'Show what you review'; };
+    document.documentElement.classList.toggle('reduced', rm.checked);
+    if (!document.startViewTransition || rm.checked) flip(); else document.startViewTransition(flip);
+  });
+</script>
+</body>
+</html>

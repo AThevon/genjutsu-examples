@@ -1,0 +1,157 @@
+{
+  "run": "nocturne-planetarium-candidate-r3-1",
+  "case": "nocturne-planetarium",
+  "arm": "candidate-r3",
+  "run_of_arm": 1,
+  "plugin_under_test": {
+    "name": "genjutsu",
+    "version": "4.1.4",
+    "commit": "5e3f9c4",
+    "branch": "feat/headless-presence (local, nine commits on d5c614a)"
+  },
+  "prompt": "/genjutsu:paint build the landing page for Nocturne, the late program of a planetarium in Lisbon.\n\nThe brief. The planetarium and its program are fictional, made up for this example: give the planetarium no name and do not name or suggest any real planetarium or venue. This is everything it has given us:\n\n- Nocturne is the planetarium's after-hours program. On Friday and Saturday nights the dome first shows the night sky above Lisbon as it is that evening, with a narrator, then a 40-minute show. Doors 21:30, first show 22:00, last show 23:30. Tickets 12 EUR, 8 EUR for students, booked at /tickets.\n- The hero is the sky over Lisbon as the dome will show it at 22:00 on Friday 9 October 2026. data/stars.json holds the brightest stars of the Yale Bright Star Catalogue (public domain) and the one bright planet above the horizon then, Saturn (from NASA JPL Horizons), with their altitude and azimuth already computed for that place and time, their magnitude and, for stars, their proper name when they have one. It also lists the Moon and the other planets, which are below the horizon or too faint at that time: do not draw them. Use it. Do not invent stars, constellation lines, events or claims that are not in the data or in this brief.\n- The page scrolls from dusk to the first show: the program, what is in tonight's sky, the practical information.\n- It is for adults in their 20s to 40s looking for an evening out, not school groups. There are no reviews and no attendance numbers yet: the program launches with this page.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+  "prompt_note": "The case prompt as written, `/genjutsu:paint` first.",
+  "harness": {
+    "tool": "claude plugin eval",
+    "claude_code": "2.1.323",
+    "headless": true,
+    "ablation": "none",
+    "command": "GENJUTSU=<candidate checkout> ARM_LABEL=candidate-r3 baseline-2026-11/bin/run-arm.sh genjutsu nocturne-planetarium 1"
+  },
+  "model": "claude-opus-5-5",
+  "date": "2026-11-13",
+  "started_at": "2026-11-13T20:28:16.448Z",
+  "cost_usd": 3.08,
+  "cost_usd_exact": 3.0794660000000005,
+  "turns": 45,
+  "duration_seconds": 699,
+  "subagents": 0,
+  "runs_dir": "runs/20261113T202814Z",
+  "skill_tool_calls": [],
+  "tool_calls": {
+    "Bash": 27,
+    "Edit": 8,
+    "Read": 1,
+    "Write": 8
+  },
+  "stack": "React 19 + Vite + TypeScript, vanilla CSS, no animation library (template react)",
+  "files_in_workspace": [
+    "MASTER.md",
+    "data/stars.json",
+    "index.html",
+    "package-lock.json",
+    "package.json",
+    "preview/design-system.html",
+    "preview/thesis.html",
+    "src/App.tsx",
+    "src/index.css",
+    "src/main.tsx",
+    "src/sky/Dome.tsx",
+    "src/sky/sky.ts",
+    "src/sky/tokens.ts",
+    "src/sky/useDimming.ts",
+    "src/tokens.css",
+    "tsconfig.json",
+    "vite.config.ts"
+  ],
+  "set_aside_line": "Set aside: navy hero with stock starfield, nebula gradient and \"explore the cosmos\"; a white editorial text page with no sky; the paper planisphere; the observatory telescope and eyepiece. Kept: the dome seen from the reclining seat.",
+  "build": {
+    "result": "success",
+    "command": "npm ci && npm run build (tsc --noEmit && vite build)",
+    "first_try": true,
+    "note": "the run could not build (npm and node are blocked in its sandbox); it built here unchanged"
+  },
+  "human_edits": 0,
+  "tells_audit": {
+    "command": "python3 skills/_jutsu/design-audit/scripts/audit.py <workspace> --group tells (candidate checkout)",
+    "checked": 18,
+    "tells_to_confront": 0
+  },
+  "graders": [
+    {
+      "name": "page-has-content",
+      "passed": true,
+      "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s"
+    },
+    {
+      "name": "paint-fired",
+      "passed": true,
+      "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|[/]_jutsu\\b"
+    },
+    {
+      "name": "paint-loaded",
+      "passed": true,
+      "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|Modules\\snot\\sloaded:"
+    }
+  ],
+  "score": 1,
+  "media": [
+    {
+      "file": "media/desktop.png",
+      "what": "First screen, desktop",
+      "viewport": "1440x900",
+      "output": "1440x900",
+      "kb": 82,
+      "page_height": 4388,
+      "scroll_width": 1440,
+      "client_width": 1440,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": [
+        "/favicon.ico"
+      ]
+    },
+    {
+      "file": "media/desktop-full.png",
+      "what": "Whole page, desktop",
+      "viewport": "1440x900",
+      "output": "1440x4388",
+      "kb": 333,
+      "page_height": 4388,
+      "scroll_width": 1440,
+      "client_width": 1440,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    },
+    {
+      "file": "media/mobile.png",
+      "what": "First screen, phone",
+      "viewport": "390x844 at 2x",
+      "output": "780x1688",
+      "kb": 122,
+      "page_height": 4326,
+      "scroll_width": 390,
+      "client_width": 390,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    },
+    {
+      "file": "media/mobile-full.png",
+      "what": "Whole page, phone",
+      "viewport": "390x844 at 2x",
+      "output": "780x8652",
+      "kb": 668,
+      "page_height": 4326,
+      "scroll_width": 390,
+      "client_width": 390,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    }
+  ],
+  "on_load": "nothing plays on load: the still taken 300 ms after load is the same file as the one taken 4 s after preparation, so it was not kept; the one motion (the sky dimming and fainter stars coming in) follows scroll through the pinned hero, and the stills show scroll position 0",
+  "capture": {
+    "tool": "genjutsu skills/_jutsu/orchestration/scripts/shoot.mjs via baseline-2026-11/bin/capture.sh",
+    "served": "from disk over the DevTools protocol, no server",
+    "machine": "macOS, headless Chrome",
+    "wait": "4 s after preparation, so on-load motion has ended"
+  },
+  "read_by_eye": null,
+  "read_by_eye_note": "Not written: this run is judged blind, by people who do not know which arm made which page."
+}

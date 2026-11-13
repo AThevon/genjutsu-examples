@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale - thesis preview (throwaway, not the build)</title>
+<style>
+  :root {
+    --ground: #0E1315; --surface: #151C1F; --rule: #2A3438;
+    --ink: #E8ECEA; --ink-muted: #93A0A4; --current: #6F8F96; --slack: #F0B43C;
+    --ease-out: cubic-bezier(0.2, 0, 0, 1);
+    --ease-settle: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink);
+    font: 400 1rem/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif;
+    font-variant-numeric: tabular-nums; padding: 2rem; max-width: 72rem; margin: 0 auto; }
+  h1, h2 { font-weight: 600; letter-spacing: -0.01em; }
+  h2 { font-size: 1.25rem; margin-top: 3rem; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+  p, li { max-width: 40rem; color: var(--ink); }
+  .note { color: var(--ink-muted); font-size: 0.875rem; }
+  .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 1rem; }
+  .sw div { border: 1px solid var(--rule); padding: 0.75rem; font-size: 0.8125rem; }
+  .sw i { display: block; height: 3rem; margin-bottom: 0.5rem; }
+  .demo { border: 1px solid var(--rule); padding: 1.5rem; margin-top: 1rem; }
+  .readout { font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1; }
+  .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+  svg text { font: 12px -apple-system, system-ui, sans-serif; fill: var(--ink-muted); }
+  button { font: inherit; background: var(--ink); color: var(--ground); border: 0; border-radius: 2px;
+    padding: 0.75rem 1.25rem; font-weight: 600; cursor: pointer; transition: background-color 160ms var(--ease-out); }
+  button:hover { background: #FFFFFF; }
+  button:focus-visible { outline: 2px solid var(--slack); outline-offset: 3px; }
+  button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink-muted); }
+  .row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
+  table { border-collapse: collapse; font-size: 0.875rem; }
+  td, th { text-align: left; padding: 0.375rem 1rem 0.375rem 0; border-bottom: 1px solid var(--rule); }
+  th { color: var(--ink-muted); font-weight: 500; }
+  .reduced #marker { transition: none !important; }
+</style>
+</head>
+<body>
+<p class="label">Throwaway preview - the proposal, not the build. Nothing here is ported to src/.</p>
+<h1>Étale - visual and interaction theses</h1>
+<p><strong>Status: UNVALIDATED.</strong> Headless session: nobody validated these theses. The build goes ahead on them as written.</p>
+
+<h2>Visual thesis</h2>
+<p><strong>Visual thesis:</strong> Étale's page is the bay before light, read off an iPhone on the walk down: a near-black, cold green-grey ground (#0E1315) with pale ink. One amber (#F0B43C) does one job, marking slack: the moment the app exists to show. The action, "Join the TestFlight beta", is a solid ink button and never amber, so signal and action never share a mark. Type is the system face, SF Pro on the iPhones this page is for, so the page reads in the same face as the app. It has no web font, because there is no font request anyone agreed to. Its voice comes from scale contrast: a light 7rem tabular time over small text, and tabular figures everywhere. The layout is airy on a 4px base, with one left edge and one 72rem content width that every section answers to. Running text keeps a 40rem measure, and the charts take the full content width because the 24 hours of the day set their width. Components are sharp-edged (2px radius), flat, hairline-bordered and shadowless.</p>
+<p><strong>First screen:</strong> NOAA's 2 October 2026 current predictions at SFB1204 (Alcatraz Island, southwest of), drawn across the day: the flood and ebb maxima above and below a zero line labelled "slack", the three slacks marked in amber with their times, and the readout "05:57 slack" set large, with what runs between it and the next slack (ebb, strongest 0.94 kn at 08:06). Each figure carries its date and station. On a wide frame the chart takes the full 72rem and the readout and CTA stay at reading measure above it, all whole within a 1440×800 frame. At 375px the chart keeps only the slack labels, and every value moves into a list beneath it, each time beside its type and speed. At rest, with no script, the readout and chart already show the 05:57 slack.</p>
+<p><strong>Allowed patterns:</strong> a dark ground (read before dawn); hairline rules (chart axes, table rows); small uppercase source labels naming date and station; tabular figures; the one-shot marker travel on load (below).</p>
+
+<div class="sw">
+  <div><i style="background:#0E1315;border:1px solid #2A3438"></i>ground #0E1315</div>
+  <div><i style="background:#151C1F"></i>surface #151C1F</div>
+  <div><i style="background:#2A3438"></i>rule #2A3438 - 1.5:1, decorative rules only, never a control edge</div>
+  <div><i style="background:#E8ECEA"></i>ink #E8ECEA - 15.7:1 on ground</div>
+  <div><i style="background:#93A0A4"></i>ink-muted #93A0A4 - 6.9:1 on ground</div>
+  <div><i style="background:#6F8F96"></i>current #6F8F96 - line only, 5.4:1</div>
+  <div><i style="background:#F0B43C"></i>slack #F0B43C - signal only, 10.0:1</div>
+</div>
+
+<h2>Interaction thesis</h2>
+<p><strong>Interaction thesis:</strong> Fast and dry: hover and focus are 160ms colour changes on <code>cubic-bezier(0.2, 0, 0, 1)</code> with no scale or lift. Choosing another slack crossfades the readout in 160ms. Nothing reveals on scroll: no parallax, no bounce, no looping wave, no counters. <strong>The one motion:</strong> on load, a marker runs once along the current line from the 03:07 flood maximum down to the 05:57 slack and stops on the zero line, over 1400ms on <code>cubic-bezier(0.05, 0.7, 0.1, 1)</code>, decelerating hard the way the current dies into slack. Before it runs, or if it never runs (no JS, reduced motion), the marker already sits on 05:57 and the readout already says 05:57. With reduced motion it does not travel at all.</p>
+
+<div class="demo">
+  <p class="label">2 Oct 2026 · SFB1204 Alcatraz Island, SW of · demo of the one motion</p>
+  <div class="readout">05:57</div>
+  <svg id="chart" viewBox="0 0 960 240" width="100%" role="img" aria-label="Current at SFB1204, 2 October 2026">
+  </svg>
+  <div class="row">
+    <button id="replay" class="ghost" type="button">Replay</button>
+    <label><input type="checkbox" id="rm"> Reduced motion (degraded path)</label>
+    <button type="button">Join the TestFlight beta</button>
+  </div>
+  <p class="note">Line joins NOAA's predicted maxima and slacks straight; only the marked points are predictions.</p>
+</div>
+
+<h3>Easing curves</h3>
+<div class="row">
+  <figure><svg viewBox="-10 -10 120 120" width="160"><path d="M0 100 L100 0" stroke="#2A3438" fill="none"/><path d="M0 100 C 5 30, 10 0, 100 0" stroke="#F0B43C" stroke-width="2" fill="none"/></svg>
+  <figcaption class="note">settle - cubic-bezier(0.05, 0.7, 0.1, 1) - 1400ms, once</figcaption></figure>
+  <figure><svg viewBox="-10 -10 120 120" width="160"><path d="M0 100 L100 0" stroke="#2A3438" fill="none"/><path d="M0 100 C 20 100, 0 0, 100 0" stroke="#E8ECEA" stroke-width="2" fill="none"/></svg>
+  <figcaption class="note">out - cubic-bezier(0.2, 0, 0, 1) - 160ms, hover/focus/readout</figcaption></figure>
+</div>
+<table>
+  <tr><th>Token</th><th>Value</th></tr>
+  <tr><td>duration-fast</td><td>160ms</td></tr>
+  <tr><td>duration-settle</td><td>1400ms</td></tr>
+  <tr><td>stagger</td><td>none</td></tr>
+  <tr><td>scroll</td><td>nothing</td></tr>
+</table>
+
+<script>
+  const ev = [["03:07",1.17],["05:57",0],["08:06",-0.94],["10:31",0],["13:37",1.44],["16:17",-0.01],["19:50",-2.11]];
+  const W=960,H=240,top=20,bot=200,mid=(top+bot)/2, k=(bot-top)/2/2.2;
+  const x = t => { const [h,m]=t.split(":").map(Number); return (h*60+m)/1440*W; };
+  const y = v => mid - v*k;
+  const svg = document.getElementById("chart");
+  const pts = ev.map(([t,v]) => `${x(t)},${y(v)}`).join(" ");
+  svg.innerHTML = `<line x1="0" x2="${W}" y1="${mid}" y2="${mid}" stroke="#2A3438"/>
+    <text x="4" y="${mid-6}">slack</text>
+    <polyline id="line" points="${pts}" fill="none" stroke="#6F8F96" stroke-width="2"/>
+    ${ev.filter(e=>e[0]!=="").map(([t,v])=> Math.abs(v)<0.05
+      ? `<circle cx="${x(t)}" cy="${y(v)}" r="5" fill="#F0B43C"/><text x="${x(t)}" y="${mid+22}" text-anchor="middle" style="fill:#F0B43C">${t}</text>`
+      : `<text x="${x(t)}" y="${y(v)+(v>0?-8:18)}" text-anchor="middle">${Math.abs(v)} kn ${v>0?"flood":"ebb"}</text>`).join("")}
+    <circle id="marker" r="7" fill="none" stroke="#F0B43C" stroke-width="2" cx="${x("05:57")}" cy="${mid}"
+      style="transition: transform 1400ms cubic-bezier(0.05,0.7,0.1,1)"/>`;
+  const m = document.getElementById("marker");
+  const dx = x("03:07")-x("05:57"), dy = y(1.17)-mid;
+  function play() {
+    if (document.getElementById("rm").checked) { m.style.transform = "none"; return; }
+    m.style.transition = "none"; m.style.transform = `translate(${dx}px,${dy}px)`;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ m.style.transition = "transform 1400ms cubic-bezier(0.05,0.7,0.1,1)"; m.style.transform = "none"; }));
+  }
+  document.getElementById("replay").onclick = play;
+  document.getElementById("rm").onchange = e => document.body.classList.toggle("reduced", e.target.checked);
+  play();
+</script>
+</body>
+</html>

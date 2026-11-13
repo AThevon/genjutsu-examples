@@ -1,0 +1,505 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--c-dusk);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  color: var(--c-ink);
+  font: 400 var(--fs-body) / var(--lh-body) var(--font-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Base components ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-1);
+  background: var(--c-torch);
+  color: var(--c-on-torch);
+  font: 600 var(--fs-body) / var(--lh-tight) var(--font-text);
+  text-decoration: none;
+  transition: background-color var(--dur-hover) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: var(--c-torch-hover);
+  }
+}
+.btn:focus-visible {
+  outline: 2px solid var(--c-ink);
+  outline-offset: 3px;
+}
+.btn:active {
+  background: var(--c-torch-active);
+}
+.btn[aria-disabled="true"] {
+  background: var(--c-disabled);
+  color: var(--c-ink-dim);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.label {
+  margin: 0 0 var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--c-rule);
+  color: var(--c-ink-dim);
+  font: 600 var(--fs-label) / var(--lh-tight) var(--font-text);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+.heading {
+  margin: 0 0 var(--s-7);
+  font: 300 var(--fs-h2) / var(--lh-head) var(--font-display);
+  max-width: var(--measure);
+}
+
+.prose {
+  max-width: var(--measure);
+  margin: 0 0 var(--s-7);
+  font-size: var(--fs-lead);
+}
+
+/* ---------- The dusk-to-night ground (the one motion) ---------- */
+
+.hero {
+  --p: 0;
+}
+
+.hero__night {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--c-night);
+  opacity: var(--p);
+  pointer-events: none;
+}
+
+.hero__stage,
+main,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Hero ---------- */
+
+.hero__stage {
+  display: grid;
+  grid-template-areas:
+    "title"
+    "figure"
+    "lede"
+    "cta";
+  gap: var(--s-5);
+  padding: var(--s-7) var(--edge) var(--s-8);
+}
+
+.hero__text {
+  display: contents;
+}
+
+.hero__title {
+  grid-area: title;
+  margin: 0;
+  font: 300 var(--fs-display) / var(--lh-tight) var(--font-display);
+}
+
+.hero__lede {
+  grid-area: lede;
+  max-width: var(--measure);
+  margin: 0;
+  font-size: var(--fs-lead);
+}
+
+.hero__text .btn {
+  grid-area: cta;
+  justify-self: start;
+}
+
+.hero__figure {
+  grid-area: figure;
+  margin: 0;
+}
+
+.hero__caption {
+  max-width: var(--measure);
+  margin-top: var(--s-2);
+  color: var(--c-ink-dim);
+  font-size: var(--fs-small);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 64rem) {
+  .hero__stage {
+    grid-template-columns: minmax(0, 1fr) var(--dome-size);
+    grid-template-areas: "text figure";
+    align-items: center;
+    column-gap: var(--s-8);
+    min-height: 100svh;
+    padding-block: var(--s-6);
+  }
+  .hero__text {
+    display: block;
+    grid-area: text;
+    max-width: var(--measure);
+  }
+  .hero__lede {
+    margin: var(--s-5) 0 var(--s-6);
+  }
+}
+
+/* Pinned: the dome holds still while the room dims. */
+@media (min-width: 64rem) and (min-height: 40rem) and (prefers-reduced-motion: no-preference) {
+  .hero {
+    height: var(--hero-pin);
+  }
+  .hero__stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+  }
+}
+
+/* ---------- The dome ---------- */
+
+.dome {
+  padding: var(--s-5);
+}
+
+.dome__inner {
+  position: relative;
+  aspect-ratio: 1;
+}
+
+.dome__sky {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.dome__rim {
+  fill: none;
+  stroke: var(--c-rule);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.dome__band {
+  opacity: clamp(0, calc(var(--p) * 8 - var(--k)), 1);
+}
+
+.dome__labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.dome__label,
+.dome__compass {
+  position: absolute;
+  white-space: nowrap;
+  line-height: var(--lh-tight);
+}
+
+.dome__label {
+  color: var(--c-ink);
+  font-size: var(--fs-label);
+}
+.dome__label--start {
+  transform: translate(var(--s-2), -50%);
+}
+.dome__label--end {
+  transform: translate(calc(-100% - var(--s-2)), -50%);
+}
+.dome__label--planet {
+  color: var(--c-saturn);
+}
+.dome__label--planet.dome__label--start {
+  transform: translate(var(--s-4), -50%);
+}
+
+.dome__compass {
+  transform: translate(-50%, -50%);
+  color: var(--c-ink-dim);
+  font: 600 var(--fs-label) / var(--lh-tight) var(--font-text);
+  letter-spacing: var(--ls-label);
+}
+
+@media (min-width: 64rem) {
+  .dome__label {
+    font-size: var(--fs-small);
+  }
+}
+
+/* ---------- Sections ---------- */
+
+main {
+  background: transparent;
+}
+
+.section {
+  padding: 0 var(--edge);
+  margin-bottom: var(--section-gap);
+}
+.section:first-child {
+  padding-top: var(--section-gap);
+}
+
+/* The program: three times, then what each show holds. */
+
+.times {
+  display: grid;
+  gap: var(--s-5);
+  margin: 0 0 var(--s-8);
+  padding: 0;
+  list-style: none;
+}
+
+.times__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+}
+
+.times__clock {
+  font: 300 var(--fs-time) / var(--lh-tight) var(--font-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.times__what {
+  color: var(--c-ink-dim);
+}
+
+@media (min-width: 64rem) {
+  .times {
+    grid-template-columns: repeat(3, max-content);
+    column-gap: var(--s-9);
+  }
+  .times__item {
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+}
+
+.parts {
+  display: grid;
+  gap: var(--s-6);
+  max-width: var(--measure);
+}
+
+.parts__item {
+  margin: 0;
+}
+
+.parts__name,
+.notes__name {
+  display: block;
+  margin-bottom: var(--s-1);
+  color: var(--c-ink);
+  font-weight: 600;
+}
+
+.parts__item,
+.notes__item {
+  color: var(--c-ink-dim);
+}
+
+@media (min-width: 64rem) {
+  .parts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: calc(var(--measure) * 1.4);
+    column-gap: var(--s-8);
+  }
+}
+
+/* In the sky: a table sized by its columns. */
+
+.bodies {
+  width: 100%;
+  max-width: var(--table-max);
+  margin: 0 0 var(--s-7);
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.bodies__caption {
+  margin-bottom: var(--s-4);
+  color: var(--c-ink-dim);
+  font-size: var(--fs-small);
+  text-align: left;
+}
+
+.bodies th,
+.bodies td {
+  padding: var(--s-2) var(--s-4) var(--s-2) 0;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.bodies thead th {
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--c-rule);
+  color: var(--c-ink-dim);
+  font: 600 var(--fs-label) / var(--lh-tight) var(--font-text);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+.bodies tbody th {
+  font-weight: 400;
+}
+
+.bodies td:nth-child(2),
+.bodies td:nth-child(3),
+.bodies thead th:nth-child(2),
+.bodies thead th:nth-child(3) {
+  text-align: right;
+  padding-right: var(--s-6);
+}
+
+.bodies abbr {
+  text-decoration: none;
+}
+
+.bodies__planet th,
+.bodies__planet td {
+  color: var(--c-saturn);
+}
+
+.bodies__kind {
+  color: var(--c-ink-dim);
+  font-size: var(--fs-small);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bodies tbody tr {
+    transition: background-color var(--dur-hover) var(--ease-out);
+  }
+  .bodies tbody tr:hover {
+    background: var(--c-raised);
+  }
+}
+
+/* Narrowest frame: each row becomes a block, every value under its own label. */
+@media (max-width: 36rem) {
+  .bodies thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .bodies tbody tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--s-4);
+    padding: var(--s-3) 0;
+  }
+  .bodies tbody th {
+    grid-column: 1 / -1;
+    padding: 0 0 var(--s-1);
+    font-size: var(--fs-lead);
+  }
+  .bodies td,
+  .bodies td:nth-child(2),
+  .bodies td:nth-child(3) {
+    padding: 0;
+    text-align: left;
+  }
+  .bodies td::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--c-ink-dim);
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+  }
+}
+
+.notes {
+  display: grid;
+  gap: var(--s-5);
+  max-width: var(--measure);
+}
+
+.notes__item {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tickets */
+
+.prices {
+  display: grid;
+  gap: var(--s-5);
+  max-width: var(--ticket-max);
+  margin: 0 0 var(--s-6);
+  padding: var(--s-6);
+  border: 1px solid var(--c-rule);
+  border-radius: var(--r-1);
+  background: var(--c-raised);
+}
+
+.prices__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-5);
+}
+
+.prices dt {
+  color: var(--c-ink-dim);
+}
+
+.prices dd {
+  margin: 0;
+  font: 300 var(--fs-time) / var(--lh-tight) var(--font-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.tickets__book {
+  margin: 0;
+}
+
+/* Footer */
+
+.footer {
+  padding: var(--s-6) var(--edge) var(--s-8);
+  border-top: 1px solid var(--c-rule);
+  margin-inline: var(--edge);
+  padding-inline: 0;
+  color: var(--c-ink-dim);
+  font-size: var(--fs-small);
+}
+.footer p {
+  max-width: var(--measure);
+  margin: 0;
+}
+
+/* ---------- Reduced motion: the full night sky, at once, nothing pinned. ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__night,
+  .dome__band {
+    opacity: 1;
+  }
+  .btn,
+  .bodies tbody tr {
+    transition: none;
+  }
+}

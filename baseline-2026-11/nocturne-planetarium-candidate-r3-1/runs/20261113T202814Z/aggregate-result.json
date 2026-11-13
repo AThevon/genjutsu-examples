@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "claudeVersion": "2.1.323",
+  "startedAt": "2026-11-13T20:28:16.410Z",
+  "durationSeconds": 701,
+  "costUsd": 3.0794660000000005,
+  "partial": false,
+  "suite": {
+    "root": "/private/tmp/gj-baseline/eval-candidate-r3-nocturne-planetarium-1",
+    "ablation": "none",
+    "modelOverride": "claude-opus-5-5",
+    "caseFilter": "nocturne-planetarium",
+    "threshold": 1,
+    "concurrency": 1,
+    "plugins": [
+      {
+        "name": "genjutsu",
+        "version": "4.1.4",
+        "path": "/private/tmp/gj-baseline/eval-candidate-r3-nocturne-planetarium-1"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "nocturne-planetarium",
+      "dir": "examples/nocturne-planetarium",
+      "source": "mixed",
+      "promptMarkdown": "/genjutsu:paint build the landing page for Nocturne, the late program of a planetarium in Lisbon.\n\nThe brief. The planetarium and its program are fictional, made up for this example: give the planetarium no name and do not name or suggest any real planetarium or venue. This is everything it has given us:\n\n- Nocturne is the planetarium's after-hours program. On Friday and Saturday nights the dome first shows the night sky above Lisbon as it is that evening, with a narrator, then a 40-minute show. Doors 21:30, first show 22:00, last show 23:30. Tickets 12 EUR, 8 EUR for students, booked at /tickets.\n- The hero is the sky over Lisbon as the dome will show it at 22:00 on Friday 9 October 2026. data/stars.json holds the brightest stars of the Yale Bright Star Catalogue (public domain) and the one bright planet above the horizon then, Saturn (from NASA JPL Horizons), with their altitude and azimuth already computed for that place and time, their magnitude and, for stars, their proper name when they have one. It also lists the Moon and the other planets, which are below the horizon or too faint at that time: do not draw them. Use it. Do not invent stars, constellation lines, events or claims that are not in the data or in this brief.\n- The page scrolls from dusk to the first show: the program, what is in tonight's sky, the practical information.\n- It is for adults in their 20s to 40s looking for an evening out, not school groups. There are no reviews and no attendance numbers yet: the program launches with this page.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+      "runsPerCase": 1,
+      "timeoutSeconds": 3600,
+      "maxTurns": 200,
+      "graders": [
+        {
+          "name": "page-has-content",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": {
+              "source": "file",
+              "path": "src/App.tsx"
+            },
+            "pattern": "<(main|section)(\\s[^>]*[^/])?>|^import\\s",
+            "flags": "m",
+            "match": "contains"
+          }
+        },
+        {
+          "name": "paint-fired",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "trace",
+            "pattern": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|[/]_jutsu\\b",
+            "flags": "",
+            "match": "contains",
+            "arm": "with-only"
+          }
+        },
+        {
+          "name": "paint-loaded",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "trace",
+            "pattern": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|Modules\\snot\\sloaded:",
+            "flags": "",
+            "match": "contains",
+            "arm": "with-only"
+          }
+        }
+      ],
+      "arms": {
+        "with": [
+          {
+            "score": 1,
+            "passed": true,
+            "turns": 45,
+            "costUsd": 3.0794660000000005,
+            "judgeCostUsd": 0,
+            "durationSeconds": 701,
+            "startedAt": "2026-11-13T20:28:16.448Z",
+            "error": null,
+            "tracePath": "/private/tmp/e-K6ijja/out/trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "page-has-content",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-fired",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|[/]_jutsu\\b",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-loaded",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|Modules\\snot\\sloaded:",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          }
+        ]
+      },
+      "aggregates": {
+        "score": 1,
+        "passRate": 1
+      }
+    }
+  ],
+  "aggregates": {
+    "casesTotal": 1,
+    "casesPassed": 1,
+    "overallScore": 1,
+    "overallPassRate": 1
+  }
+}
