@@ -2,7 +2,7 @@
 
 The recorded runs behind the examples in the [genjutsu](https://github.com/AThevon/genjutsu) README and on [genjutsu.athevon.dev/examples](https://genjutsu.athevon.dev/examples).
 
-Every example here is one real run of the plugin, kept as it came out: the code the run wrote, its receipt (what ran, on which genjutsu commit and model, what it cost, what the build did, which defects are known), the conversation when there was one, and the media filmed from the build. Nothing a run wrote was edited by hand, with one exception, named in its receipt: every receipt counts its human edits, all of them are 0 but chef-ovatio's, one fix made to its live site after the run (its door titles crossed their photos in an ink that could not be read there).
+Every example here is one real run of the plugin (two for `etale-ios`, told in order in one receipt), kept as it came out: the code the run wrote, its receipt (what ran, on which genjutsu commit and model, what it cost, what the build did, which defects are known), the conversation when there was one, and the media filmed from the build. Nothing a run wrote was edited by hand, with one exception, named in its receipt: every receipt counts its human edits, all of them are 0 but chef-ovatio's, one fix made to its live site after the run (its door titles crossed their photos in an ink that could not be read there).
 
 The genjutsu repository keeps none of this. Its README gallery is generated from [`manifest.json`](./manifest.json) here, and every image and link in it points at a tag of this repository, so what it shows cannot move under it.
 
@@ -15,6 +15,7 @@ The genjutsu repository keeps none of this. Its README gallery is generated from
 | [`pottery-firing/`](./pottery-firing) | `cast` | headless, first pass | yes | `/pottery-firing/` |
 | [`etale/`](./etale) | `paint` | conversation, the second of two on the same brief | yes | `/etale/` |
 | [`invoice-mark-paid/`](./invoice-mark-paid) | `cast` | headless, first pass | yes | `/invoice-mark-paid/` |
+| [`etale-ios/`](./etale-ios) | `cast` | headless, SwiftUI: two runs of one prompt, the first on 4.1.3, the second on unreleased module fixes | yes, the second run; the first and its defects are in the same receipt | none: a native app |
 | [`gres-redesign/`](./gres-redesign) | `paint` | conversation, the second of two on the same brief | no: thin execution, see its receipt | `/gres-redesign/` |
 | [`etale-landing/`](./etale-landing) | `paint` | headless, two runs | no: plain, replaced by the `etale` conversation | |
 | [`nocturne-planetarium/`](./nocturne-planetarium) | `paint` | headless, two runs | no: plain, replaced by the `nocturne` conversation | |
@@ -25,7 +26,7 @@ Runs that are not in the gallery stay here, with their receipts, so that what wa
 
 Each demo is the code a run left, built as it stands under its own path: [`bin/build-demos.sh`](./bin/build-demos.sh) copies the run's code, installs its lockfile and builds it with `--base /<id>/`, without touching a line. The index page is [`demos/index.html`](./demos/index.html). The static result is live at https://genjutsu-examples.vercel.app (Vercel project `genjutsu-examples`); rebuilding it from this repository gives the same files byte for byte.
 
-Chef Ovatio is not built here: it is a real client's site, live on the client's own deployment, and its code is the client's private repository.
+Chef Ovatio is not built here: it is a real client's site, live on the client's own deployment, and its code is the client's private repository. `etale-ios` has no demo: it is an iOS app, built with Xcode and filmed in the simulator.
 
 ## How they were made
 
@@ -35,7 +36,7 @@ Chef Ovatio is not built here: it is a real client's site, live on the client's 
 
 **The run `bunshin` was extracted from.** `chef-ovatio` is a site built for a real private chef from his public Instagram profile, in one Claude Code session with genjutsu 4.0.0's `paint` and Impeccable, the night `bunshin` was written from it. There was no `/genjutsu:bunshin` yet, the request and the client's material are private, and the cost is the figure genjutsu publishes for that run (about 10.5M subagent tokens over six to eight hours; the main session was not measured). Its receipt says what the run was given, the two answers a person gave it, and every round of its loop.
 
-**Media.** [`bin/record.mjs`](./bin/record.mjs) films a static build in headless Chrome: requests to a fake origin are answered from the build folder on disk through the DevTools protocol, so no server runs, and time is virtual, so clips are smooth however slow the capture. A take with `live` films a deployed site instead (Chef Ovatio). Previews were shot with genjutsu's `shoot.mjs`. Every file in `takes/` is one shot.
+**Media.** [`bin/record.mjs`](./bin/record.mjs) films a static build in headless Chrome: requests to a fake origin are answered from the build folder on disk through the DevTools protocol, so no server runs, and time is virtual, so clips are smooth however slow the capture. A take with `live` films a deployed site instead (Chef Ovatio). Previews were shot with genjutsu's `shoot.mjs`. Every file in `takes/` is one shot. `etale-ios` is filmed another way, since it is not a web page: screen recordings of the iPhone simulator while a UI test performs the taps, cut and encoded by the scripts in its `takes/` (its receipt says how).
 
 ## Layout
 
@@ -62,13 +63,15 @@ readme-media/            the images of the genjutsu README's hero and gallery (o
   opening.txt            the first message, sent word for word (conversations only)
   source/                the workspace as the run left it, without node_modules and dist
                          (conversations)
-  before/                the starting site (gres-redesign only)
+  before/                the starting site (gres-redesign) or captures of the starting app
+                         (etale-ios)
   runs/                  raw harness output
     <UTC stamp>/         headless: run.log, report.html, aggregate-result.json, and
                          workspace-N/, the workspace each run left
     conversation-N/      conversations: transcript.md and run.json written by converse.mjs
-  takes/                 record.mjs take files and the encode scripts behind media/
-  media/                 the stills and clips
+  takes/                 record.mjs take files and the encode scripts behind media/; for
+                         etale-ios, also the UI test driver that performs the taps
+  media/                 the stills and clips (etale-ios: run 1's, and run 2's in run-2/)
   compare/               captures of the two runs side by side (etale-landing only)
 ```
 
@@ -92,7 +95,7 @@ cp -R runs/20261004T162515Z/workspace-1 build-20261004T162515Z-1
 (cd build-20261004T162515Z-1 && npm ci && npm run build)
 ```
 
-`etale-landing` and `nocturne-planetarium` name theirs `build-1` and `build-2`, from `workspace-1` and `workspace-2`. For `gres-redesign`, also run `npm ci && npm run build` in `before/`. Chef Ovatio's takes and the README hero's need no build: they film the live site.
+`etale-landing` and `nocturne-planetarium` name theirs `build-1` and `build-2`, from `workspace-1` and `workspace-2`. For `gres-redesign`, also run `npm ci && npm run build` in `before/`. Chef Ovatio's takes and the README hero's need no build: they film the live site. `etale-ios` needs Xcode and an iPhone simulator instead of npm; its receipt gives the `xcodebuild` command for each run and how the takes were filmed.
 
 Then film a take:
 
@@ -143,7 +146,7 @@ python3 bin/examples-section.py --ref readme-2026-10-05 --readme /path/to/genjut
 python3 -m unittest discover -s bin -p 'test_*.py'
 ```
 
-It refuses a missing file, a media file over 720 KB, a conversation without its brief and first message, a branch as the ref, and an em dash anywhere. To change what the gallery shows: commit here, tag (`readme-YYYY-MM-DD`), push the tag, then regenerate the block with that tag.
+A clip or cover narrower than 720 px (a phone screen) carries its `width` in the manifest and is shown at that width. It refuses a missing file, a media file over 720 KB, a conversation without its brief and first message, a branch as the ref, and an em dash anywhere. To change what the gallery shows: commit here, tag (`readme-YYYY-MM-DD`), push the tag, then regenerate the block with that tag.
 
 ## License
 

@@ -73,12 +73,17 @@ An entry recorded through genjutsu itself (mode headless or conversation):
       "media": {
         "cover": {"src": "readme-media/<id>/still.png", "alt": "..."},
         "clip":  {"src": "readme-media/<id>/clip.webp", "alt": "..."},   # optional
+                                              # either may carry "width": the width it is
+                                              # shown at, 1 to 720, for media narrower than
+                                              # 720 px (a phone screen); 720 without it
         "stills": [{"src": "...", "alt": "..."}]                        # may be empty
       },
       "receipt": "<id>/receipt.md",
       "source": "<id>/source",                # the code the run left (a folder)
       "case": "cases/<id>",                   # headless only, optional: the eval case
-      "demo": "/<id>/",                       # optional: a path on demo_site, or an https URL
+      "demo": "/<id>/",                       # optional: a path on demo_site, or an https URL;
+                                              # left out for a run with nothing to host (a
+                                              # native app)
       "transcript": "<id>/transcript.md",     # required for a conversation
       "client": "<id>/client.md",             # required for a conversation: the brief the
                                               # agent playing the client was given
@@ -207,6 +212,10 @@ def check_media_item(root: Path, item, where: str) -> None:
         raise Fail(f"{where}: must be an object with src and alt")
     check_path(root, need_str(item, "src", where), where, media=True)
     need_str(item, "alt", where)
+    if "width" in item:
+        w = item["width"]
+        if isinstance(w, bool) or not isinstance(w, int) or not 1 <= w <= IMG_WIDTH:
+            raise Fail(f"{where}: width must be an integer from 1 to {IMG_WIDTH}, got {w!r}")
 
 
 def need_cost(run: dict, key: str, where: str) -> None:
@@ -485,7 +494,13 @@ def intro(entries: list[dict], links: Links) -> list[str]:
         f"at the tag `{links.ref}`: the code each run wrote, its receipt, its conversation and its media."
     ]
     if links.demo_site:
-        lines.append(f"Each one also runs as a [live demo]({links.demo_site}/), built from that code as it stands.")
+        if all(links.demo(e) for e in entries):
+            lines.append(
+                f"Each one also runs as a [live demo]({links.demo_site}/), built from that code as it stands.")
+        else:
+            lines.append(
+                f"Those with a Live demo link also run as a [live demo]({links.demo_site}/), "
+                "built from that code as it stands.")
     if "headless" in modes:
         lines.append(
             "A one-shot headless run is a single `claude plugin eval` session: the prompt answers the "
@@ -531,7 +546,7 @@ def block_for(e: dict, links: Links) -> list[str]:
     receipt = links.blob(e["receipt"])
     img = (
         f'<a href="{html.escape(receipt)}"><img src="{html.escape(links.raw(shown["src"]))}" '
-        f'alt="{html.escape(shown["alt"])}" width="{IMG_WIDTH}" /></a>'
+        f'alt="{html.escape(shown["alt"])}" width="{shown.get("width", IMG_WIDTH)}" /></a>'
     )
     out = [f"[Receipt]({receipt})"]
     if e.get("transcript"):
