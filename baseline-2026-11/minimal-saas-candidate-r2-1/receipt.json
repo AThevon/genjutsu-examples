@@ -148,5 +148,5 @@
     "wait": "4 s after preparation, so on-load motion has ended"
   },
   "read_by_eye": null,
-  "read_by_eye_note": "Not written: this run is judged blind, by people who do not know which arm made which page."
+  "read_by_eye_note": "Not written: this run is judged blind, by a model in three reviewer roles that is not told which arm made which page."
 }
