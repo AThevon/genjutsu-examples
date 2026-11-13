@@ -1,0 +1,507 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--c-night);
+}
+
+body {
+  margin: 0;
+  background: var(--c-night);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+ol,
+figure {
+  margin: 0;
+}
+
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- type roles ---------- */
+
+.label {
+  display: block;
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--c-ink-2);
+  line-height: var(--lh-body);
+}
+
+.display {
+  font-size: var(--fs-display);
+  font-weight: 200;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--lh-tight);
+}
+
+.h2 {
+  font-size: var(--fs-h2);
+  font-weight: 300;
+  letter-spacing: var(--tracking-h2);
+  line-height: 1.1;
+}
+
+.h3 {
+  font-size: var(--fs-lead);
+  font-weight: 400;
+  line-height: var(--lh-lead);
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  max-width: var(--measure);
+}
+
+.term {
+  font-size: var(--fs-small);
+  color: var(--c-ink-2);
+}
+
+.small {
+  font-size: var(--fs-small);
+  color: var(--c-ink-2);
+}
+
+.num,
+.time {
+  font-variant-numeric: tabular-nums;
+}
+
+.time {
+  font-size: var(--fs-time);
+  font-weight: 200;
+  letter-spacing: var(--tracking-time);
+  line-height: var(--lh-tight);
+}
+
+/* ---------- components ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-min);
+  padding: var(--s-4) var(--s-5);
+  background: var(--c-saturn);
+  color: var(--c-night);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-none);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.button:active {
+  background: var(--c-saturn-lo);
+}
+
+.button[aria-disabled="true"] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.link {
+  color: var(--c-ink);
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--rule-w);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-thickness var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.link:active {
+  color: var(--c-ink-2);
+}
+
+.link[aria-disabled="true"] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--c-saturn-hi);
+  }
+  .button:active {
+    background: var(--c-saturn-lo);
+  }
+  .link:hover {
+    text-decoration-thickness: var(--focus-w);
+  }
+}
+
+.button:focus-visible,
+.link:focus-visible {
+  outline: var(--focus-w) solid var(--c-ink);
+  outline-offset: var(--focus-offset);
+}
+
+/* ---------- hero: the dome at lights-down ---------- */
+
+.hero {
+  position: relative;
+}
+
+/* The ground: dusk at the top of the scroll, night once every star is lit. */
+.hero__dusk {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-bottom: -100svh;
+  background: linear-gradient(var(--c-dusk), var(--c-night));
+  opacity: calc(1 - var(--p));
+  pointer-events: none;
+}
+
+/* Same frame as the sections below, so every left edge lands on one line. */
+.hero__layout {
+  position: relative;
+  max-width: var(--page-max);
+  margin: 0 auto;
+}
+
+.hero__copy {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+  align-content: center;
+  max-width: calc(var(--measure) + var(--gutter) * 2);
+  padding: var(--s-8) var(--gutter) var(--s-5);
+}
+
+.hero__copy .display {
+  margin-bottom: var(--s-2);
+}
+
+.hero__when {
+  color: var(--c-ink-2);
+}
+
+.hero__copy .button {
+  margin-top: var(--s-2);
+}
+
+/* The stage is the scroll length; the figure stays pinned inside it. */
+.hero__stage {
+  height: var(--hero-pin);
+}
+
+.hero__sky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  gap: var(--s-4);
+  align-content: center;
+  justify-items: center;
+  padding: var(--s-5) var(--gutter);
+}
+
+.dome {
+  display: block;
+  width: min(100%, calc(100svh - 13rem));
+  min-width: 16rem;
+  height: auto;
+}
+
+.dome__horizon {
+  fill: none;
+  stroke: var(--c-ink-3);
+  stroke-width: 1.5;
+}
+
+.dome__cardinal {
+  fill: var(--c-ink-3);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.dome__name {
+  fill: var(--c-ink-2);
+  font-size: 26px;
+  letter-spacing: 0.04em;
+}
+
+.dome__name--saturn {
+  fill: var(--c-saturn);
+}
+
+.dome__saturn {
+  fill: var(--c-saturn);
+}
+
+.dome__saturn-ring {
+  fill: none;
+  stroke: var(--c-saturn);
+  stroke-width: 1.5;
+}
+
+/* Each body lights once hero progress passes its own threshold. */
+.star {
+  opacity: clamp(0, calc((var(--p) - var(--t)) / var(--fade)), 1);
+}
+
+.hero__caption {
+  display: grid;
+  gap: var(--s-1);
+  max-width: var(--measure);
+  text-align: center;
+}
+
+.hero__count .num {
+  color: var(--c-ink);
+}
+
+.hero__caption .term {
+  font-size: var(--fs-small);
+  color: var(--c-ink-2);
+}
+
+.small {
+  margin-top: var(--s-1);
+}
+
+@media (min-width: 64rem) {
+  .hero__layout {
+    display: grid;
+    grid-template-columns: minmax(0, calc(var(--measure) + var(--gutter))) minmax(0, 1fr);
+  }
+
+  .hero__copy {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100svh;
+    padding: var(--s-6) 0 var(--s-6) var(--gutter);
+  }
+
+  .dome {
+    width: min(100%, calc(100svh - 12rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__sky,
+  .hero__copy {
+    position: relative;
+    height: auto;
+  }
+
+  .hero__sky {
+    padding-block: var(--s-7);
+  }
+}
+
+/* ---------- sections ---------- */
+
+.section {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--section-gap) var(--gutter) 0;
+}
+
+.section__head {
+  display: grid;
+  gap: var(--s-4);
+  max-width: var(--measure);
+  padding-top: var(--s-5);
+  border-top: var(--rule-w) solid var(--c-rule);
+  margin-bottom: var(--s-8);
+}
+
+/* program: the times as the type */
+.timetable {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.timetable__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-2);
+  align-items: baseline;
+}
+
+.timetable__row .h3 {
+  color: var(--c-ink-2);
+}
+
+@media (min-width: 48rem) {
+  .timetable__row {
+    grid-template-columns: 22rem minmax(0, 1fr);
+    gap: var(--s-7);
+  }
+}
+
+/* tonight's sky */
+.tonight__grid {
+  display: grid;
+  gap: var(--s-8);
+}
+
+.saturn {
+  display: grid;
+  gap: var(--s-4);
+  max-width: var(--measure);
+  align-content: start;
+}
+
+.saturn__name {
+  font-size: var(--fs-h2);
+  font-weight: 300;
+  letter-spacing: var(--tracking-h2);
+  line-height: 1.1;
+  color: var(--c-saturn);
+}
+
+.readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-5) var(--s-7);
+  margin-top: var(--s-4);
+}
+
+.readout dd {
+  font-size: var(--fs-lead);
+}
+
+.stars__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.stars__table caption {
+  text-align: left;
+  padding-bottom: var(--s-4);
+}
+
+.stars__table th,
+.stars__table td {
+  padding: var(--s-2) var(--s-4) var(--s-2) 0;
+  text-align: left;
+  font-weight: 400;
+}
+
+.stars__table thead th {
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--c-ink-2);
+  border-bottom: var(--rule-w) solid var(--c-rule);
+}
+
+.stars__table td {
+  color: var(--c-ink-2);
+}
+
+.stars__table .num {
+  text-align: right;
+}
+
+.stars__table th:last-child,
+.stars__table td:last-child {
+  padding-right: 0;
+}
+
+.stars .term {
+  font-size: var(--fs-small);
+  color: var(--c-ink-2);
+}
+
+.small {
+  margin-top: var(--s-4);
+}
+
+.tonight__notes {
+  display: grid;
+  gap: var(--s-6);
+  margin-top: var(--s-8);
+}
+
+.tonight__notes p {
+  max-width: var(--measure);
+}
+
+.note__title {
+  display: block;
+  margin-bottom: var(--s-1);
+}
+
+@media (min-width: 64rem) {
+  .tonight__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: var(--s-9);
+  }
+
+  .tonight__notes {
+    grid-template-columns: repeat(2, minmax(0, var(--measure)));
+    column-gap: var(--s-9);
+  }
+}
+
+/* practical */
+.facts {
+  display: grid;
+  gap: var(--s-5) var(--s-7);
+  margin-bottom: var(--s-7);
+}
+
+.facts__item {
+  display: grid;
+  gap: var(--s-1);
+}
+
+.facts dd {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+
+@media (min-width: 48rem) {
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* footer */
+.footer {
+  max-width: var(--page-max);
+  margin: var(--section-gap) auto 0;
+  padding: var(--s-5) var(--gutter) var(--s-8);
+}
+
+.footer p {
+  max-width: 48rem;
+  padding-top: var(--s-5);
+  border-top: var(--rule-w) solid var(--c-rule);
+}

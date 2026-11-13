@@ -1,0 +1,111 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nocturne design system preview (throwaway)</title>
+<style>/* Nocturne tokens. Source of truth: MASTER.md. */
+:root {
+  color-scheme: dark;
+
+  /* colour */
+  --c-night: #05070a;
+  --c-dusk: #1a2633;
+  --c-ink: #e8ebf0;
+  --c-ink-2: #9aa3b0;
+  --c-ink-3: #5d6672;
+  --c-rule: #2a313b;
+  --c-saturn: #e6c07b;
+  --c-saturn-hi: #f2d39a;
+  --c-saturn-lo: #d4ab5f;
+
+  /* type */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fs-label: 0.75rem;
+  --fs-small: 0.875rem;
+  --fs-body: 1.0625rem;
+  --fs-lead: clamp(1.125rem, 1.6vw, 1.375rem);
+  --fs-h2: clamp(2rem, 4.5vw, 3.25rem);
+  --fs-time: clamp(3.5rem, 9vw, 7.5rem);
+  --fs-display: clamp(3.5rem, 10vw, 8.5rem);
+  --tracking-label: 0.14em;
+  --tracking-h2: -0.02em;
+  --tracking-time: -0.03em;
+  --tracking-display: -0.035em;
+  --lh-body: 1.6;
+  --lh-lead: 1.5;
+  --lh-tight: 1;
+  --measure: 34rem;
+
+  /* spacing, 8px base */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+  --gutter: var(--s-5);
+  --section-gap: var(--s-9);
+  --page-max: 80rem;
+  --tap-min: 3rem;
+
+  /* radii, elevation */
+  --radius-none: 0;
+  --radius-round: 50%;
+  --rule-w: 1px;
+  --focus-w: 2px;
+  --focus-offset: 3px;
+
+  /* motion */
+  --dur-fast: 160ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --hero-pin: 230svh;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gutter: var(--s-7);
+    --section-gap: var(--s-10);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --hero-pin: auto;
+  }
+}
+
+*{box-sizing:border-box}body{margin:0;padding:var(--s-7);background:var(--c-night);color:var(--c-ink);font-family:var(--font-sans);font-size:var(--fs-body);line-height:var(--lh-body)}
+h2{font-size:var(--fs-label);letter-spacing:var(--tracking-label);text-transform:uppercase;color:var(--c-ink-2);font-weight:500;border-top:var(--rule-w) solid var(--c-rule);padding-top:var(--s-4);margin:var(--s-8) 0 var(--s-5)}
+.grid{display:flex;flex-wrap:wrap;gap:var(--s-5)}.sw{width:10rem;font-size:var(--fs-small)}.sw span{display:block;height:4rem;border:var(--rule-w) solid var(--c-rule);margin-bottom:var(--s-2)}
+.sp{display:flex;gap:var(--s-4);align-items:center;font-size:var(--fs-small);color:var(--c-ink-2)}.sp i{display:block;height:var(--s-3);background:var(--c-ink-3)}
+.d{font-size:var(--fs-display);font-weight:200;letter-spacing:var(--tracking-display);line-height:var(--lh-tight);margin:0}
+.t{font-size:var(--fs-time);font-weight:200;letter-spacing:var(--tracking-time);font-variant-numeric:tabular-nums;line-height:var(--lh-tight)}
+.h{font-size:var(--fs-h2);font-weight:300;letter-spacing:var(--tracking-h2);margin:0}.l{font-size:var(--fs-lead);line-height:var(--lh-lead);max-width:var(--measure)}
+.lab{font-size:var(--fs-label);letter-spacing:var(--tracking-label);text-transform:uppercase;color:var(--c-ink-2);font-weight:500}
+.btn{display:inline-flex;align-items:center;min-height:var(--tap-min);padding:var(--s-4) var(--s-5);background:var(--c-saturn);color:var(--c-night);font-weight:600;text-decoration:none;border-radius:var(--radius-none);transition:background-color var(--dur-fast) var(--ease-out)}
+.btn:hover,.btn.h{background:var(--c-saturn-hi)}.btn:active,.btn.a{background:var(--c-saturn-lo)}.btn:focus-visible,.btn.f{outline:var(--focus-w) solid var(--c-ink);outline-offset:var(--focus-offset)}.btn[aria-disabled=true]{opacity:.4;pointer-events:none}
+.lnk{color:var(--c-ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;transition:text-decoration-thickness var(--dur-fast) var(--ease-out)}.lnk:hover,.lnk.h{text-decoration-thickness:2px}.lnk:focus-visible,.lnk.f{outline:var(--focus-w) solid var(--c-ink);outline-offset:var(--focus-offset)}
+.states{display:flex;gap:var(--s-6);flex-wrap:wrap;align-items:center}.states figure{margin:0}figcaption{font-size:var(--fs-small);color:var(--c-ink-2);margin-top:var(--s-2)}
+</style></head><body>
+<p class="lab">Throwaway preview, not the build. Dark only.</p>
+<p class="l">Visual thesis: the inside of the dome at lights-down; near-black ground, star-white system sans, one Saturn-amber accent for Saturn and booking only; huge light tabular times; sharp, flat, hairline-ruled.</p>
+<p class="l">Display face: system sans (ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto). Reason: no font request can be made or was agreed; light weights at display size and tabular figures carry the voice. Dials: variance 6, motion 3, density 3.</p>
+<h2>Colour</h2><div class="grid"><div class="sw"><span style="background:#05070a"></span><b>--c-night</b><br>#05070a<br><small>ground</small></div><div class="sw"><span style="background:#1a2633"></span><b>--c-dusk</b><br>#1a2633<br><small>hero ground at dusk</small></div><div class="sw"><span style="background:#e8ebf0"></span><b>--c-ink</b><br>#e8ebf0<br><small>16.88:1 on night</small></div><div class="sw"><span style="background:#9aa3b0"></span><b>--c-ink-2</b><br>#9aa3b0<br><small>7.91:1 on night</small></div><div class="sw"><span style="background:#5d6672"></span><b>--c-ink-3</b><br>#5d6672<br><small>3.47:1, graphic only</small></div><div class="sw"><span style="background:#2a313b"></span><b>--c-rule</b><br>#2a313b<br><small>1.54:1, decorative rule</small></div><div class="sw"><span style="background:#e6c07b"></span><b>--c-saturn</b><br>#e6c07b<br><small>11.71:1 on night</small></div><div class="sw"><span style="background:#f2d39a"></span><b>--c-saturn-hi</b><br>#f2d39a<br><small>hover, 13.98:1</small></div><div class="sw"><span style="background:#d4ab5f"></span><b>--c-saturn-lo</b><br>#d4ab5f<br><small>active</small></div></div>
+<h2>Type scale</h2><p class="lab">--fs-label, uppercase 0.14em</p><p class="d">Nocturne</p><p class="t">21:30 22:00 23:30</p><p class="h">What the dome shows tonight</p><p class="l">--fs-lead. First the sky above Lisbon as it is that evening, with a narrator. Then a 40-minute show.</p><p>--fs-body 17px / 1.6. Tickets 12 EUR, 8 EUR for students.</p><p style="font-size:var(--fs-small);color:var(--c-ink-2)">--fs-small, captions and credits</p>
+<h2>Spacing (8px base)</h2><div class="sp"><i style="width:var(--s-1)"></i>--s-1</div><div class="sp"><i style="width:var(--s-2)"></i>--s-2</div><div class="sp"><i style="width:var(--s-3)"></i>--s-3</div><div class="sp"><i style="width:var(--s-4)"></i>--s-4</div><div class="sp"><i style="width:var(--s-5)"></i>--s-5</div><div class="sp"><i style="width:var(--s-6)"></i>--s-6</div><div class="sp"><i style="width:var(--s-7)"></i>--s-7</div><div class="sp"><i style="width:var(--s-8)"></i>--s-8</div><div class="sp"><i style="width:var(--s-9)"></i>--s-9</div><div class="sp"><i style="width:var(--s-10)"></i>--s-10</div>
+<h2>Radii and elevation</h2><p>--radius-none (0) everywhere; --radius-round only on star marks. Shadows: none at every level.</p>
+<h2>Button, five states</h2><div class="states">
+<figure><a class="btn" href="#">Book tickets</a><figcaption>default</figcaption></figure>
+<figure><a class="btn h" href="#">Book tickets</a><figcaption>hover --c-saturn-hi</figcaption></figure>
+<figure><a class="btn f" href="#">Book tickets</a><figcaption>focus-visible ring</figcaption></figure>
+<figure><a class="btn a" href="#">Book tickets</a><figcaption>active --c-saturn-lo</figcaption></figure>
+<figure><a class="btn" aria-disabled="true">Book tickets</a><figcaption>disabled</figcaption></figure></div>
+<h2>Text link, five states</h2><div class="states">
+<figure><a class="lnk" href="#">Data credits</a><figcaption>default</figcaption></figure>
+<figure><a class="lnk h" href="#">Data credits</a><figcaption>hover, 2px underline</figcaption></figure>
+<figure><a class="lnk f" href="#">Data credits</a><figcaption>focus-visible</figcaption></figure>
+<figure><a class="lnk" href="#" style="color:var(--c-ink-2)">Data credits</a><figcaption>active</figcaption></figure>
+<figure><a class="lnk" aria-disabled="true" style="opacity:.4">Data credits</a><figcaption>disabled</figcaption></figure></div>
+<h2>Motion</h2><p>--dur-fast 160ms, --ease-out cubic-bezier(0.2, 0, 0, 1). Hero pin 230svh; star fade window 0.06 of progress. No stagger. Reduced motion: 0ms, no pin.</p>
+</body></html>

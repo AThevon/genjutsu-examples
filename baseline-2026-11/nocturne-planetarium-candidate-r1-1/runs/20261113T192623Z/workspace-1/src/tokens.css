@@ -1,0 +1,75 @@
+/* Nocturne tokens. Source of truth: MASTER.md. */
+:root {
+  color-scheme: dark;
+
+  /* colour */
+  --c-night: #05070a;
+  --c-dusk: #1a2633;
+  --c-ink: #e8ebf0;
+  --c-ink-2: #9aa3b0;
+  --c-ink-3: #5d6672;
+  --c-rule: #2a313b;
+  --c-saturn: #e6c07b;
+  --c-saturn-hi: #f2d39a;
+  --c-saturn-lo: #d4ab5f;
+
+  /* type */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fs-label: 0.75rem;
+  --fs-small: 0.875rem;
+  --fs-body: 1.0625rem;
+  --fs-lead: clamp(1.125rem, 1.6vw, 1.375rem);
+  --fs-h2: clamp(2rem, 4.5vw, 3.25rem);
+  --fs-time: clamp(3.5rem, 9vw, 7.5rem);
+  --fs-display: clamp(3.5rem, 10vw, 8.5rem);
+  --tracking-label: 0.14em;
+  --tracking-h2: -0.02em;
+  --tracking-time: -0.03em;
+  --tracking-display: -0.035em;
+  --lh-body: 1.6;
+  --lh-lead: 1.5;
+  --lh-tight: 1;
+  --measure: 34rem;
+
+  /* spacing, 8px base */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+  --gutter: var(--s-5);
+  --section-gap: var(--s-9);
+  --page-max: 80rem;
+  --tap-min: 3rem;
+
+  /* radii, elevation */
+  --radius-none: 0;
+  --radius-round: 50%;
+  --rule-w: 1px;
+  --focus-w: 2px;
+  --focus-offset: 3px;
+
+  /* motion */
+  --dur-fast: 160ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --hero-pin: 230svh;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gutter: var(--s-7);
+    --section-gap: var(--s-10);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --hero-pin: auto;
+  }
+}

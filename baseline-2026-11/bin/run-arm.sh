@@ -31,7 +31,10 @@ N="$3"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BASE="$(dirname "$HERE")"
 REPO="$(dirname "$BASE")"
-WORK=/private/tmp/gj-baseline/eval-$ARM-$ID-$N
+# ARM_LABEL names the output folder when the plugin under test is a candidate checkout of an arm
+# (ARM_LABEL=candidate-r1 with arm genjutsu writes <case>-candidate-r1-<n>); it changes nothing else.
+LABEL="${ARM_LABEL:-$ARM}"
+WORK=/private/tmp/gj-baseline/eval-$LABEL-$ID-$N
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 
 if [ -d "$BASE/cases/$ID" ]; then CASE="$BASE/cases/$ID"; else CASE="$REPO/cases/$ID"; fi
@@ -59,7 +62,7 @@ if ! (cd "$PREFLIGHT" && bash "$CASE/fixture.sh"); then
 fi
 rm -rf "$PREFLIGHT"
 
-OUT="$BASE/$ID-$ARM-$N/runs/$STAMP"
+OUT="$BASE/$ID-$LABEL-$N/runs/$STAMP"
 mkdir -p "$WORK"
 rsync -a --delete \
   --exclude .git \

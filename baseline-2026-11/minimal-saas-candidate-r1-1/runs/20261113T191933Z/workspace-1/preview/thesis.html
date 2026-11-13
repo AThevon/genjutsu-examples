@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk - thesis preview (throwaway)</title>
+<style>
+  :root {
+    --bg: #FCFCFD; --surface: #F3F4F6; --ink: #15171C; --ink-2: #565B66; --ink-3: #6B717D;
+    --rule: #DCDFE4; --flag: #8A4A06; --flag-bg: #FBF2E4;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 400 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 64rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+  h1 { font-weight: 500; font-size: 1.75rem; margin: 0 0 .5rem; }
+  h2 { font-weight: 500; font-size: 1.25rem; margin: 4rem 0 1rem; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+  p { max-width: 40rem; }
+  .note { color: var(--ink-2); font-size: .9375rem; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: 1rem; }
+  .sw { border: 1px solid var(--rule); border-radius: 2px; }
+  .sw div { height: 4rem; }
+  .sw p { margin: 0; padding: .5rem .75rem; font-size: .8125rem; font-variant-numeric: tabular-nums; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: .9375rem; }
+  th, td { text-align: left; padding: .625rem .75rem; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 500; color: var(--ink-2); font-size: .8125rem; }
+  td.num, th.num { text-align: right; }
+  .row.matched td { animation: recede 240ms var(--ease) both; }
+  @keyframes recede { from { color: var(--ink); } to { color: var(--ink-3); } }
+  .row.flag td { color: var(--ink); }
+  .row.flag td.diff { color: var(--flag); background: var(--flag-bg); font-weight: 500; }
+  .status { display: grid; }
+  .status > span { grid-area: 1 / 1; }
+  .status .after { opacity: 0; animation: show 240ms var(--ease) both; animation-delay: inherit; }
+  @keyframes show { to { opacity: 1; } }
+  .reduced .row td, .reduced .status .after { animation: none !important; }
+  .reduced .row.matched td { color: var(--ink-3); }
+  .reduced .status .after { opacity: 1; }
+  .controls { display: flex; gap: 1rem; margin: 1rem 0; align-items: center; }
+  button { font: inherit; font-size: .9375rem; padding: .5rem 1rem; border-radius: 2px; border: 1px solid var(--ink);
+    background: var(--ink); color: var(--bg); cursor: pointer; transition: background-color 150ms var(--ease); }
+  button:hover { background: #2C3039; }
+  button.quiet { background: transparent; color: var(--ink); border-color: var(--rule); }
+  .spec { display: grid; gap: .25rem; }
+  .bars div { height: .75rem; background: var(--ink); margin: .25rem 0; }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: .25rem 1.5rem; font-variant-numeric: tabular-nums; }
+  dt { color: var(--ink-2); }
+  dd { margin: 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk - theses (proposal, not the build)</h1>
+  <p class="note">Throwaway preview. This page shows the two theses so they can be reviewed. The landing page is built from MASTER.md, not from this markup. UNVALIDATED: nobody was available to approve it.</p>
+
+  <h2>Visual thesis</h2>
+  <p>A cool near-white page in near-black ink with a single color on it, a deep amber used only to mark a line that does not match: on this page, color means a mismatch, never brand or decoration. Type is the system sans, weight 400 and 500 only, with moderate size contrast and tabular figures that line up in columns. Spacing is airy between sections and tight inside the match table. Components are flat, with hairline rules instead of boxes, 2px corners and no shadows.</p>
+  <p>First screen: the headline, one sentence and Start trial at reading measure on the left. Below them, across the full container width, an illustrative three-way match of one example invoice. Four lines recede to grey and one line, a quantity difference, stays in ink and amber.</p>
+
+  <div class="swatches">
+    <div class="sw"><div style="background:#FCFCFD"></div><p>bg #FCFCFD<br>ink on it 17.49:1</p></div>
+    <div class="sw"><div style="background:#F3F4F6"></div><p>surface #F3F4F6<br>ink on it 16.29:1</p></div>
+    <div class="sw"><div style="background:#15171C"></div><p>ink #15171C<br>17.49:1 on bg</p></div>
+    <div class="sw"><div style="background:#565B66"></div><p>ink-2 #565B66<br>6.64:1 on bg</p></div>
+    <div class="sw"><div style="background:#6B717D"></div><p>ink-3 #6B717D (matched rows)<br>4.78:1 on bg</p></div>
+    <div class="sw"><div style="background:#DCDFE4"></div><p>rule #DCDFE4<br>hairlines only, never text</p></div>
+    <div class="sw"><div style="background:#8A4A06"></div><p>flag #8A4A06<br>6.69:1 on bg, 6.18:1 on flag-bg</p></div>
+    <div class="sw"><div style="background:#FBF2E4"></div><p>flag-bg #FBF2E4<br>behind a mismatched value only</p></div>
+  </div>
+
+  <h2>Type specimen (system-ui, not a web face)</h2>
+  <div class="spec">
+    <div style="font-size:2.75rem;font-weight:500;line-height:1.1;letter-spacing:-0.01em">Only the lines that don't match.</div>
+    <div style="font-size:1.5rem;font-weight:500">Section heading, 1.5rem / 500</div>
+    <div style="font-size:1.0625rem">Body text, 1.0625rem / 400 / line height 1.55, set at reading measure.</div>
+    <div style="font-size:.875rem;color:#565B66;font-variant-numeric:tabular-nums">Table and caption, .875rem, tabular figures: 120 96 14.50 1,740.00</div>
+  </div>
+
+  <h2>Spacing (4px base)</h2>
+  <div class="bars">
+    <div style="width:4px"></div><div style="width:8px"></div><div style="width:12px"></div><div style="width:16px"></div>
+    <div style="width:24px"></div><div style="width:32px"></div><div style="width:48px"></div><div style="width:64px"></div><div style="width:96px"></div>
+  </div>
+  <div class="controls"><button>Start the 14-day trial</button><button class="quiet">Book a demo</button></div>
+
+  <h2>Interaction thesis</h2>
+  <p>Fast and dry. Hovers change color or underline in 150ms, ease-out. Nothing moves on scroll. The one motion: on first load the matched rows of the hero table recede from ink to grey and are marked Matched, one after another, leaving the mismatched line standing. The page does once what the product does. With reduced motion the table renders already in its final state.</p>
+  <p class="note">Forbidden: scroll reveals, parallax, bounce, scale on hover, looping animation, gradients, counting numbers, entrance fade-ups.</p>
+
+  <svg width="220" height="220" viewBox="-10 -10 220 220" aria-label="Easing curve cubic-bezier(0.2, 0, 0, 1)">
+    <rect x="0" y="0" width="200" height="200" fill="none" stroke="#DCDFE4"/>
+    <path d="M0 200 C 40 200, 0 0, 200 0" fill="none" stroke="#15171C" stroke-width="2"/>
+  </svg>
+  <dl>
+    <dt>easing</dt><dd>cubic-bezier(0.2, 0, 0, 1)</dd>
+    <dt>hover</dt><dd>150ms</dd>
+    <dt>recede, per row</dt><dd>240ms</dd>
+    <dt>first delay</dt><dd>400ms</dd>
+    <dt>stagger</dt><dd>80ms</dd>
+    <dt>properties</dt><dd>color, opacity only</dd>
+  </dl>
+
+  <div class="controls">
+    <button id="replay">Replay</button>
+    <label><input type="checkbox" id="rm"> Reduced motion</label>
+  </div>
+  <p class="note">Illustrative example, not customer data.</p>
+  <div id="stage">
+  <table>
+    <thead><tr><th>Line</th><th>Item</th><th class="num">Invoice</th><th class="num">Purchase order</th><th class="num">Delivery note</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr class="row matched" style="animation-delay:400ms"><td>1</td><td>Item A</td><td class="num">40</td><td class="num">40</td><td class="num">40</td><td class="status" style="animation-delay:400ms"><span class="after">Matched</span></td></tr>
+      <tr class="row matched"><td>2</td><td>Item B</td><td class="num">12</td><td class="num">12</td><td class="num">12</td><td class="status"><span class="after">Matched</span></td></tr>
+      <tr class="row flag"><td>3</td><td>Item C</td><td class="num diff">24</td><td class="num">24</td><td class="num diff">20</td><td class="status"><span class="after">Quantity differs</span></td></tr>
+      <tr class="row matched"><td>4</td><td>Item D</td><td class="num">6</td><td class="num">6</td><td class="num">6</td><td class="status"><span class="after">Matched</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Allowed patterns</h2>
+  <p>Hairline 1px rules. Tabular figures. An illustrative three-way-match table in the hero, built as a real table and labelled as an example. The single recede on load, which runs once and never loops.</p>
+</main>
+<script>
+  const rows = [...document.querySelectorAll('#stage tbody tr')];
+  function arm() {
+    rows.forEach((r, i) => {
+      const d = 400 + i * 80 + 'ms';
+      r.querySelectorAll('td').forEach(td => { td.style.animation = 'none'; void td.offsetWidth; td.style.animation = ''; td.style.animationDelay = d; });
+      const a = r.querySelector('.after'); a.style.animation = 'none'; void a.offsetWidth; a.style.animation = ''; a.style.animationDelay = d;
+    });
+  }
+  arm();
+  document.getElementById('replay').onclick = arm;
+  document.getElementById('rm').onchange = e => document.getElementById('stage').classList.toggle('reduced', e.target.checked);
+</script>
+</body>
+</html>

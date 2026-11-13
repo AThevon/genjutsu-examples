@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ploverdesk: theses and design system preview (throwaway)</title>
+<style>
+  :root {
+    --c-ground: #FBFBFC; --c-surface: #FFFFFF; --c-ink: #16181D; --c-ink-hover: #2C3038;
+    --c-ink-2: #4A4F59; --c-ink-3: #666B75; --c-rule: #D9DCE1;
+    --c-exception: #8A4B00; --c-exception-mark: #A35A00; --c-exception-wash: #FCF5EA;
+    --c-disabled: #8C919A; --c-disabled-bg: #F1F2F4;
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --d-fast: 140ms; --d-recede: 280ms; --d-ring: 280ms; --stagger: 40ms;
+    --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--c-ground); color: var(--c-ink); font: 400 1rem/1.5 var(--font-sans); font-variant-numeric: tabular-nums; }
+  main { max-width: 72rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+  h1 { font-size: 1.5rem; font-weight: 500; margin: 0 0 .5rem; }
+  h2 { font-size: 1.25rem; font-weight: 500; margin: 4rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--c-rule); }
+  p { max-width: 40rem; color: var(--c-ink-2); }
+  .note { font-size: .875rem; }
+  .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1rem; }
+  .sw div { border: 1px solid var(--c-rule); border-radius: 2px; background: var(--c-surface); font-size: .8125rem; }
+  .sw i { display: block; height: 3.5rem; border-bottom: 1px solid var(--c-rule); }
+  .sw span { display: block; padding: .5rem .75rem; }
+  .spec > div { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; align-items: baseline; padding: .5rem 0; }
+  .spec small { color: var(--c-ink-3); font-size: .8125rem; }
+  .bars div { display: flex; align-items: center; gap: 1rem; font-size: .8125rem; color: var(--c-ink-3); margin: .25rem 0; }
+  .bars b { display: block; height: .5rem; background: var(--c-ink); }
+  .states { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+  .states figure { margin: 0; font-size: .8125rem; color: var(--c-ink-3); display: grid; gap: .5rem; justify-items: start; }
+  .btn { font: 500 1rem/1 var(--font-sans); padding: .875rem 1.25rem; border-radius: 2px; border: 1px solid var(--c-ink); background: var(--c-ink); color: #fff; cursor: pointer; transition: background-color var(--d-fast) var(--ease-out); }
+  .btn:hover, .btn.hover { background: var(--c-ink-hover); }
+  .btn:focus-visible, .btn.focus { outline: 2px solid var(--c-ink); outline-offset: 3px; }
+  .btn:active, .btn.active { background: var(--c-ink-2); }
+  .btn:disabled { background: var(--c-disabled-bg); border-color: var(--c-disabled); color: var(--c-ink-3); cursor: not-allowed; }
+  .lnk { color: var(--c-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; transition: text-decoration-thickness var(--d-fast) var(--ease-out); }
+  .lnk:hover, .lnk.hover { text-decoration-thickness: 2px; }
+  table { width: 100%; border-collapse: collapse; background: var(--c-surface); border: 1px solid var(--c-rule); font-size: .9375rem; }
+  th { text-align: left; font-weight: 500; font-size: .8125rem; color: var(--c-ink-2); padding: .75rem 1rem; border-bottom: 1px solid var(--c-ink); }
+  td { padding: .875rem 1rem; border-bottom: 1px solid var(--c-rule); transition: color var(--d-recede) var(--ease-out), background-color var(--d-recede) var(--ease-out); }
+  td.n { text-align: right; }
+  tr { --i: 0; }
+  tr td { transition-delay: calc(var(--i) * var(--stagger)); }
+  .after tr.m td { color: var(--c-ink-3); }
+  .after tr.x td { background: var(--c-exception-wash); }
+  .after tr.x td.r { color: var(--c-exception); }
+  .mark { position: relative; display: inline-block; }
+  .mark svg { position: absolute; inset: -8px -12px; width: calc(100% + 24px); height: calc(100% + 16px); overflow: visible; pointer-events: none; }
+  .mark ellipse { fill: none; stroke: var(--c-exception-mark); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset var(--d-ring) var(--ease-out) 160ms; }
+  .after .mark ellipse { stroke-dashoffset: 0; }
+  .reduced * { transition: none !important; }
+  .row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin: 1rem 0; font-size: .875rem; }
+  .curve { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
+  code { font-size: .875rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk: visual and interaction theses, design system</h1>
+  <p>This page is the proposal, not the build. It is throwaway; the landing page is built from MASTER.md. Theses are UNVALIDATED: nobody was available to approve them in this session.</p>
+
+  <p><strong>Visual thesis:</strong> a cool white ground with graphite ink and no colour except where a line fails to match: one dark amber, only on the discrepancy. System sans (no font request agreed, no network), voiced by tabular figures, column alignment and a two-step size contrast at weight 500. Airy page on a 4px base, dense match table. Sharp 2px corners, 1px hairlines, flat, no shadows. First screen: headline and trial at reading measure; an illustrative three-way match across the full content width.</p>
+  <p><strong>Interaction thesis:</strong> fast and dry, 140ms <code>cubic-bezier(0.2, 0, 0, 1)</code> hovers (ink darkens, underline thickens, no scale); nothing on scroll. Forbidden: scroll reveals, parallax, bounce, loops, counters, scale on hover, layout-property animation. The one motion: once after load, matched rows recede to secondary ink (280ms, 40ms stagger) and an amber ring draws around the mismatched cell; a toggle replays it; reduced motion shows the end state at once.</p>
+  <p><strong>Allowed patterns:</strong> tabular figures; 1px hairline rules, with a rule on every row of the match table only; tickmark glyphs in the example; an example drawn in markup standing in for the product, labelled as illustrative; the one-shot recede-and-ring motion.</p>
+  <p class="note">Amendment at this gate: no monospace. The example carries no document reference numbers, because they would be invented codes, so mono has nothing left to set.</p>
+
+  <h2>The one motion</h2>
+  <div class="curve">
+    <svg width="160" height="160" viewBox="-10 -10 120 120" aria-label="Easing curve cubic-bezier(0.2, 0, 0, 1)">
+      <rect x="0" y="0" width="100" height="100" fill="none" stroke="#D9DCE1" />
+      <path d="M0 100 C20 100 0 0 100 0" fill="none" stroke="#16181D" stroke-width="1.5" />
+      <text x="0" y="114" font-size="8" fill="#666B75">cubic-bezier(0.2, 0, 0, 1)</text>
+    </svg>
+    <div class="note">
+      Hover: 140ms. Recede: 280ms, stagger 40ms per row. Ring: 280ms after a 160ms delay. First run: 600ms after load.<br />
+      Reduced motion: the end state, no transition.
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="replay" type="button">Replay</button>
+    <label><input type="checkbox" id="rm" /> Simulate reduced motion</label>
+  </div>
+  <p class="note">Illustrative example. Not customer data.</p>
+  <table id="ex">
+    <thead><tr><th>Item</th><th>Invoiced</th><th>Ordered</th><th>Delivered</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr class="m" style="--i:0"><td>Hinge, steel, 80 mm</td><td class="n">200 × 1.40</td><td class="n">200 × 1.40</td><td class="n">200</td><td class="r">✓ Matched</td></tr>
+      <tr class="m" style="--i:1"><td>Wood screws 4 × 40, box</td><td class="n">50 × 6.20</td><td class="n">50 × 6.20</td><td class="n">50</td><td class="r">✓ Matched</td></tr>
+      <tr class="x" style="--i:2"><td>Cabinet handle, brushed</td><td class="n">40 × 3.85</td><td class="n">40 × 3.85</td><td class="n"><span class="mark">36<svg viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="50" cy="50" rx="48" ry="46" pathLength="1" vector-effect="non-scaling-stroke" /></svg></span></td><td class="r">40 invoiced, 36 delivered</td></tr>
+      <tr class="m" style="--i:3"><td>Drawer runner, 450 mm</td><td class="n">30 × 9.10</td><td class="n">30 × 9.10</td><td class="n">30</td><td class="r">✓ Matched</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Colour, with contrast</h2>
+  <div class="sw">
+    <div><i style="background:#FBFBFC"></i><span>ground #FBFBFC<br />ink on it 17.2:1</span></div>
+    <div><i style="background:#FFFFFF"></i><span>surface #FFFFFF<br />ink on it 17.8:1</span></div>
+    <div><i style="background:#16181D"></i><span>ink #16181D<br />white on it 17.8:1</span></div>
+    <div><i style="background:#2C3038"></i><span>ink-hover #2C3038<br />white on it 13.2:1</span></div>
+    <div><i style="background:#4A4F59"></i><span>ink-2 #4A4F59<br />on ground 8.0:1</span></div>
+    <div><i style="background:#666B75"></i><span>ink-3 #666B75<br />on surface 5.4:1, on ground 5.2:1</span></div>
+    <div><i style="background:#D9DCE1"></i><span>rule #D9DCE1<br />separator only, 1.3:1</span></div>
+    <div><i style="background:#8A4B00"></i><span>exception #8A4B00<br />on wash 6.3:1, on white 6.8:1</span></div>
+    <div><i style="background:#A35A00"></i><span>exception-mark #A35A00<br />ring on white 5.2:1</span></div>
+    <div><i style="background:#FCF5EA"></i><span>exception-wash #FCF5EA<br />ink on it 16.4:1</span></div>
+  </div>
+
+  <h2>Type, system sans, tabular figures</h2>
+  <div class="spec">
+    <div><small>display 2.5rem / 500</small><span style="font-size:2.5rem;font-weight:500;line-height:1.15;letter-spacing:-0.01em">Look only at the lines that do not match.</span></div>
+    <div><small>heading 1.5rem / 500</small><span style="font-size:1.5rem;font-weight:500">What reaches a person</span></div>
+    <div><small>lead 1.25rem / 400</small><span style="font-size:1.25rem;color:#4A4F59">Matched invoices go straight to payment approval.</span></div>
+    <div><small>body 1rem / 400</small><span>290 EUR per month per company, with no limit on users.</span></div>
+    <div><small>table .9375rem</small><span style="font-size:.9375rem">200 × 1.40 · 50 × 6.20 · 30 × 9.10</span></div>
+    <div><small>small .8125rem</small><span style="font-size:.8125rem;color:#666B75">Illustrative example. Not customer data.</span></div>
+  </div>
+
+  <h2>Spacing, 4px base</h2>
+  <div class="bars">
+    <div><b style="width:.25rem"></b>1 · 4px</div><div><b style="width:.5rem"></b>2 · 8px</div><div><b style="width:.75rem"></b>3 · 12px</div>
+    <div><b style="width:1rem"></b>4 · 16px</div><div><b style="width:1.5rem"></b>6 · 24px</div><div><b style="width:2rem"></b>8 · 32px</div>
+    <div><b style="width:3rem"></b>12 · 48px</div><div><b style="width:4rem"></b>16 · 64px</div><div><b style="width:6rem"></b>24 · 96px</div><div><b style="width:8rem"></b>32 · 128px</div>
+  </div>
+  <p class="note">Radii: 0 and 2px. Shadows: none; elevation is a 1px rule.</p>
+
+  <h2>Components, five states</h2>
+  <div class="states">
+    <figure><button class="btn" type="button">Start the 14-day trial</button>default</figure>
+    <figure><button class="btn hover" type="button">Start the 14-day trial</button>hover</figure>
+    <figure><button class="btn focus" type="button">Start the 14-day trial</button>focus</figure>
+    <figure><button class="btn active" type="button">Start the 14-day trial</button>active</figure>
+    <figure><button class="btn" type="button" disabled>Start the 14-day trial</button>disabled</figure>
+  </div>
+  <div class="states" style="margin-top:1.5rem">
+    <figure><a class="lnk" href="#">Book a demo</a>default</figure>
+    <figure><a class="lnk hover" href="#">Book a demo</a>hover</figure>
+    <figure><a class="lnk" href="#" style="outline:2px solid #16181D;outline-offset:3px">Book a demo</a>focus</figure>
+  </div>
+</main>
+<script>
+  const ex = document.getElementById('ex');
+  const rm = document.getElementById('rm');
+  function run() {
+    ex.classList.remove('after');
+    void ex.offsetWidth;
+    setTimeout(() => ex.classList.add('after'), rm.checked ? 0 : 600);
+  }
+  document.getElementById('replay').addEventListener('click', run);
+  rm.addEventListener('change', () => { document.body.classList.toggle('reduced', rm.checked); run(); });
+  run();
+</script>
+</body>
+</html>
