@@ -5,16 +5,16 @@
   "prompt": "/genjutsu:cast Étale's iOS day list should open into the tide detail as one surface, not a push\n\nÉtale is a fictional slack-water app, made up for this example. Its numbers are real NOAA predictions for 2 October 2026.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the Today list and the tide detail it opens. You may edit and add Swift files under Etale/ and write previews under preview/; create nothing outside the project. Etale/ is a folder the Xcode project keeps in sync with the disk: a Swift file added there is compiled, so do not edit Etale.xcodeproj.\n- The app targets iOS 26 and is built with Xcode 27. Xcode cannot run in this session: do not try to build. There is no network: install nothing.\n\nFinish with the final report the pipeline asks for.",
   "model": "claude-opus-5-5",
   "date": "2026-11-13",
-  "runs_recorded": 2,
-  "selection": "two runs told in order: run 1 on genjutsu 4.1.3, then the same case on the fixed plugin. One run was made each time; neither was picked among several",
-  "what_the_pair_does_not_prove": "run 2 named the zoom transition before reading any module, so the choice came from the model, not from the fixed swiftui-motion; the same model and prompt did not make that choice in run 1. With one run on each side nothing here says how much of the difference is the fix and how much is chance",
+  "runs_recorded": 6,
+  "selection": "six runs of one prompt, told in order; every run made is here, none was dropped and none was run again. Run 1 on genjutsu 4.1.3, run 2 on the module fixes, run 3 on the 4.2.0 release branch (a smoke run), runs 4 to 6 on the release branch plus the step 'thesis against loaded modules'",
+  "what_the_pair_does_not_prove": "run 2 named the zoom transition before reading any module, so the choice came from the model, not from the fixed swiftui-motion; the same model and prompt did not make that choice in run 1, nor in run 3 on the same fixed modules",
   "between_runs": {
     "genjutsu_commits": [
       "fd4e1da",
       "3e0d6d3"
     ],
     "branch": "fix/native-shared-element",
-    "released": false,
+    "released": "not when run 2 was made; part of the 4.2.0 release branch that runs 3 to 6 ran on",
     "fixes": [
       {
         "gap": "no module named the system transition for a row that opens its detail",
@@ -126,7 +126,7 @@
         "preview/thesis.html",
         "preview/variants.html"
       ],
-      "selection": "first pass; the only run made on 4.1.3",
+      "selection": "the only run made on 4.1.3",
       "build": {
         "result": "success",
         "first_try": true,
@@ -488,7 +488,7 @@
         "preview/thesis.html",
         "preview/variants.html"
       ],
-      "selection": "the only run made after the module fixes; not picked among several",
+      "selection": "the only run made on 3e0d6d3; not picked among several. Four later runs of the same prompt are runs 3 to 6",
       "build": {
         "result": "success",
         "first_try": true,
@@ -745,6 +745,596 @@
         "the marker's one-time flag is @State of TideCurve (TideDetailView.swift:70) in a row of the detail's List, started in that row's onAppear (line 116): where the detail scrolls, a curve below the fold would start its delay only when it scrolls in, and could draw again if the list drops the row's state off screen; the detail does not scroll on the iPhone 17 at the default size, so no take shows it"
       ],
       "second_check": "a separate pass replayed the trace's three Write and six Edit calls on the starting app (the three Swift files and the two previews are byte for byte the run's), rebuilt a fresh copy of workspace-1 with new derived data (BUILD SUCCEEDED, no compiler error or warning), dumped the two drag recordings again at 60 fps and tracked the curve with its own script (downward drag 1171 to 1874 px with no reversal, edge swipe 94 to 873 px with one turn at the release; in the committed clips 0 reversals in media/run-2/drag-down.webp against 56 in media/defect-drag.webp), searched the trace (nothing before the thesis page names the zoom API, the edge swipe or a shared element; the plugin copy is identical to 3e0d6d3), and checked cost, turns, duration, tokens, subagents, the audit quotes and the file:line citations; it corrected the pixel counts of the screens at rest and added the white box measurement, the misdated API and the List row item; no new recording was filmed"
+    },
+    {
+      "run": 3,
+      "runs_dir": "runs/20261113T213153Z",
+      "media_dir": "media/run-3",
+      "genjutsu": {
+        "version": "4.2.0",
+        "commit": "5105f53",
+        "commit_full": "5105f535a27135903926fb6a8c96c1c5b15f9185",
+        "branch": "release/v4.2.0",
+        "module_fixes": true,
+        "step_thesis_against_modules": false,
+        "note": "a smoke run of the release branch"
+      },
+      "harness": {
+        "tool": "claude plugin eval",
+        "claude_code": "2.1.325",
+        "headless": true,
+        "note": "a copy of bin/run.sh with its paths changed; one run"
+      },
+      "started_at": "2026-11-13T21:31:54.176Z",
+      "cost_usd": 2.46,
+      "cost_usd_exact": 2.4578198,
+      "turns": 25,
+      "duration_seconds": 605,
+      "duration_note": "605 s in the run's trace (not committed); the harness prints 606 s",
+      "subagents": 0,
+      "tokens": {
+        "input": 44,
+        "output": 58109,
+        "cache_read": 1801719,
+        "cache_creation": 116890
+      },
+      "modules_loaded": [
+        "motion-principles",
+        "mobile-principles",
+        "swiftui-motion"
+      ],
+      "modules_not_loaded": [],
+      "interaction_thesis": "Tapping a slack row grows that row, in place, into the tide detail as one surface on a critically damped spring (`.spring(duration: 0.45, bounce: 0)`, since slack water does not overshoot). The slack time is the still point: it moves from the row to the head of the detail and never fades. The rest of the detail fades in and rises 12 pt over the second half of the travel. Dragging the head down, or swiping in from the leading edge, shrinks the surface back into its row under the finger. With Reduce Motion on, the finished detail crossfades in over 200 ms instead. Leaving the push loses the edge-swipe back, the bar and its back button, the VoiceOver escape gesture and the navigation path. A leading-edge swipe, a close button and `.accessibilityAction(.escape)` replace the first three; nothing replaces the path, which the app does not restore or deep-link today.",
+      "allowed_patterns": "none",
+      "unvalidated": true,
+      "thesis_written_before_modules_loaded": true,
+      "thesis_named_zoom_before_modules_loaded": false,
+      "thesis_order_note": "the preview with the hand-built surface was written before the three loads; after them the run kept the surface and added to the thesis what leaving the push costs. Its reasoning summary: \"Since the brief rules out a push, I'm keeping the custom surface, naming each replacement in the thesis, and adding a leading-edge swipe.\"",
+      "used_system_zoom_transition": false,
+      "kept_navigation_stack_bar_back_button": false,
+      "swift_changed": {
+        "files": 3,
+        "insertions": 434,
+        "deletions": 59
+      },
+      "files_changed": {
+        "Etale/SlackSurface.swift": "new, 280 lines",
+        "Etale/TodayView.swift": "rewritten; NavigationLink and navigationDestination removed",
+        "Etale/TideDetailView.swift": "only the detail's body; header moved into the surface, navigation title gone"
+      },
+      "previews": [
+        "preview/slack-surface.html"
+      ],
+      "audit": {
+        "summary": "10 checked, 5 problems found, 3 handed over",
+        "loaded_modules_against_code": {
+          "printed": true,
+          "problems": [
+            "hand-built surface instead of the system zoom transition (mobile-principles, swipe-back; swiftui-motion, zoom transition), TodayView.swift:21-45",
+            "exit is not quieter than entry (motion-principles), TodayView.swift:125",
+            "leading-edge strip intercepts touches, SlackSurface.swift:208-219"
+          ],
+          "all_true": true,
+          "acted_on": false
+        }
+      },
+      "build": {
+        "result": "success",
+        "first_try": true,
+        "verbatim": "** BUILD SUCCEEDED **",
+        "errors": [],
+        "compiler_warnings": 0,
+        "other_warnings": [
+          "warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+        ],
+        "from": "a fresh copy of runs/20261113T213153Z/workspace-1, new derived data, iPhone 17 simulator on iOS 26.5"
+      },
+      "human_edits": 0,
+      "grader_score": {
+        "score": 1.0,
+        "note": "five of five, the same graders as run 1; they do not judge the motion"
+      },
+      "defects": [
+        {
+          "what": "the time lands on the wrong row: after a return, 10:31 sits in the 05:57 row and the 10:31 row has no time",
+          "media": "media/run-3/defect-wrong-row.png"
+        },
+        {
+          "what": "the large time sits under the Dynamic Island, over its own 'Slack water' label",
+          "media": "media/run-3/detail.png"
+        },
+        {
+          "what": "the Today list shows under the settled detail",
+          "media": "media/run-3/detail.png"
+        },
+        {
+          "what": "both screens restyled: no bar, title or back button, tinted row text, no chevrons",
+          "media": "media/run-3/today.png"
+        },
+        {
+          "what": "after the drag a white card with only the time stays over the first two rows in the last frames of the take",
+          "media": "media/run-3/drag-down.webp"
+        }
+      ],
+      "unverified": [
+        "whether the drag flickers frame by frame",
+        "timings",
+        "Reduce Motion, dark appearance, large type",
+        "no real device",
+        "no second check of the measurements"
+      ],
+      "hygiene_note": "the run's preview/slack-surface.html had a U+2014 dash in its <title>; it is ' - ' here. Nothing else in the workspace was touched",
+      "media": [
+        {
+          "file": "media/run-3/clip.webp",
+          "kb": 470
+        },
+        {
+          "file": "media/run-3/edge-swipe.webp",
+          "kb": 118
+        },
+        {
+          "file": "media/run-3/drag-down.webp",
+          "kb": 258
+        },
+        {
+          "file": "media/run-3/today.png"
+        },
+        {
+          "file": "media/run-3/detail.png"
+        },
+        {
+          "file": "media/run-3/defect-wrong-row.png"
+        }
+      ]
+    },
+    {
+      "run": 4,
+      "runs_dir": "runs/20261113T220815Z",
+      "media_dir": "media/run-4",
+      "genjutsu": {
+        "version": "4.2.0",
+        "commit": "844f375",
+        "commit_full": "844f37558c90215e4f7b93fdf96838f39c1e9967",
+        "branch": "release/v4.2.0",
+        "module_fixes": true,
+        "step_thesis_against_modules": true
+      },
+      "harness": {
+        "tool": "claude plugin eval",
+        "claude_code": "2.1.325",
+        "headless": true,
+        "note": "the same copy of bin/run.sh as run 3 with its paths changed, cost ceiling 6 USD; one run, started side by side with the two others"
+      },
+      "started_at": "2026-11-13T22:08:15.746Z",
+      "cost_usd": 1.36,
+      "cost_usd_exact": 1.3550284,
+      "turns": 19,
+      "duration_seconds": 268,
+      "subagents": 0,
+      "tokens": {
+        "input": 32,
+        "output": 25464,
+        "cache_read": 950222,
+        "cache_creation": 81947
+      },
+      "modules_loaded": [
+        "motion-principles",
+        "mobile-principles",
+        "swiftui-motion"
+      ],
+      "modules_not_loaded": [],
+      "interaction_thesis": "Tapping a slack-water row in Today makes that row grow into its tide detail, using SwiftUI's zoom navigation transition (`.matchedTransitionSource` on the row, `.navigationTransition(.zoom)` on the detail). The system sets the timing. The time you tapped becomes the detail's 56 pt headline. A back-swipe or a pull-down shrinks the detail into the same row, with the bell showing any alert you just set.",
+      "allowed_patterns": "none",
+      "unvalidated": true,
+      "thesis_written_before_modules_loaded": true,
+      "thesis_named_zoom_before_modules_loaded": true,
+      "used_system_zoom_transition": true,
+      "kept_navigation_stack_bar_back_button": true,
+      "kept_edge_swipe_back": "yes, filmed, interactive",
+      "any_drag_flickers": "no",
+      "step_thesis_against_modules": {
+        "printed": "Thesis against modules: no gap. The thesis already uses the approach the SwiftUI module recommends for a row that opens a screen, and it keeps the back-swipe.",
+        "where": "final report only",
+        "thesis_revised": false
+      },
+      "swift_changed": {
+        "files": 1,
+        "insertions": 15,
+        "deletions": 0
+      },
+      "files_changed": {
+        "Etale/TodayView.swift": "@Namespace (line 7), matchedTransitionSource with the cell's background and 12 pt corners (36-42), navigationTransition(.zoom) on the destination (70)"
+      },
+      "previews": [
+        "preview/today-to-detail.html",
+        "preview/variants.html"
+      ],
+      "audit": {
+        "summary": "8 checked, 1 problem found, 1 not checked, 3 not applicable, 2 handed over",
+        "loaded_modules_against_code": "no departure",
+        "problem": "12 pt corner radius typed in (TodayView.swift:81)",
+        "reduced_motion": "not checked: no guard, left to the system"
+      },
+      "build": {
+        "result": "success",
+        "first_try": true,
+        "verbatim": "** BUILD SUCCEEDED **",
+        "errors": [],
+        "compiler_warnings": 0,
+        "other_warnings": [
+          "warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+        ],
+        "from": "a fresh copy of runs/20261113T220815Z/workspace-1, new derived data, iPhone 17 simulator on iOS 26.5"
+      },
+      "human_edits": 0,
+      "grader_score": {
+        "score": 1.0,
+        "note": "five of five, the same graders as run 1; they do not judge the motion"
+      },
+      "defects": [
+        {
+          "what": "on every return the zoom's source comes back as a white box much taller than the row, covering the 05:57 and 16:17 rows for about 130 ms; the time passes over the 05:57 row before it settles",
+          "media": "media/run-4/defect-source-box.png"
+        },
+        {
+          "what": "on opening, for 1 to 2 frames, the 10:31 row floats above the 05:57 row"
+        }
+      ],
+      "unverified": [
+        "Reduce Motion, dark appearance, large type: not filmed",
+        "no real device",
+        "no second check of the measurements"
+      ],
+      "media": [
+        {
+          "file": "media/run-4/clip.webp",
+          "kb": 722
+        },
+        {
+          "file": "media/run-4/edge-swipe.webp",
+          "kb": 436
+        },
+        {
+          "file": "media/run-4/drag-down.webp",
+          "kb": 413
+        },
+        {
+          "file": "media/run-4/today.png"
+        },
+        {
+          "file": "media/run-4/detail.png"
+        },
+        {
+          "file": "media/run-4/defect-source-box.png"
+        }
+      ],
+      "timing": "picture changes for 0.63 s opening, 0.93 s closing",
+      "drag": "0 reversals over 75 samples at 60 fps",
+      "note": "the run says it wrote preview/variants.html after the code, 'the wrong order'"
+    },
+    {
+      "run": 5,
+      "runs_dir": "runs/20261113T220814Z",
+      "media_dir": "media/run-5",
+      "genjutsu": {
+        "version": "4.2.0",
+        "commit": "844f375",
+        "commit_full": "844f37558c90215e4f7b93fdf96838f39c1e9967",
+        "branch": "release/v4.2.0",
+        "module_fixes": true,
+        "step_thesis_against_modules": true
+      },
+      "harness": {
+        "tool": "claude plugin eval",
+        "claude_code": "2.1.325",
+        "headless": true,
+        "note": "the same copy of bin/run.sh as run 3 with its paths changed, cost ceiling 6 USD; one run, started side by side with the two others"
+      },
+      "started_at": "2026-11-13T22:08:14.947Z",
+      "cost_usd": 1.3,
+      "cost_usd_exact": 1.2995434,
+      "turns": 18,
+      "duration_seconds": 262,
+      "subagents": 0,
+      "tokens": {
+        "input": 26,
+        "output": 25493,
+        "cache_read": 748857,
+        "cache_creation": 79976
+      },
+      "modules_loaded": [
+        "motion-principles",
+        "mobile-principles",
+        "swiftui-motion"
+      ],
+      "modules_not_loaded": [],
+      "interaction_thesis": "tapping a slack row in Today zooms that row open into its tide detail with SwiftUI's zoom navigation transition (`matchedTransitionSource` on the row, `.navigationTransition(.zoom(sourceID:in:))` on the detail). The slack you tapped becomes the screen instead of a page sliding over it, and the edge swipe or a drag down shrinks it back into the same row. The timing is the system's: the app sets no duration. With Reduce Motion on, the app keeps the same zoom call and leaves the reduced version to the system, which owns that transition. It never swaps in the default push.",
+      "allowed_patterns": "none",
+      "unvalidated": true,
+      "thesis_written_before_modules_loaded": true,
+      "thesis_named_zoom_before_modules_loaded": true,
+      "used_system_zoom_transition": true,
+      "kept_navigation_stack_bar_back_button": true,
+      "kept_edge_swipe_back": "yes, filmed, interactive",
+      "any_drag_flickers": "no",
+      "step_thesis_against_modules": {
+        "printed": "Revised after LOAD: Reduce Motion no longer falls back to the default push (a full-width slide) - motion-principles / swiftui-motion, reduced motion: large translations are neutralized",
+        "where": "final report only; the gap line in the step's format was never printed",
+        "thesis_revised": true,
+        "before": "With Reduce Motion on, the app drops the zoom and the detail arrives with the system's default transition.",
+        "preview_marked": "preview/thesis.html got the first line 'Shows the thesis before its revision after LOAD' and was not rebuilt",
+        "side_effect": "the code has no Reduce Motion guard at all; what the system zoom does in that mode was not filmed"
+      },
+      "swift_changed": {
+        "files": 1,
+        "insertions": 13,
+        "deletions": 0
+      },
+      "files_changed": {
+        "Etale/TodayView.swift": "@Namespace (line 7), matchedTransitionSource with its configuration (39-43), navigationTransition(.zoom) on the destination root (71)"
+      },
+      "previews": [
+        "preview/thesis.html",
+        "preview/variants.html"
+      ],
+      "audit": {
+        "summary": "10 checked, 1 problem found, 1 not checked",
+        "loaded_modules_against_code": "no departure",
+        "problem": "cornerRadius: 12 (TodayView.swift:42)",
+        "reduced_motion": "not checked, handed to a device"
+      },
+      "build": {
+        "result": "success",
+        "first_try": true,
+        "verbatim": "** BUILD SUCCEEDED **",
+        "errors": [],
+        "compiler_warnings": 0,
+        "other_warnings": [
+          "warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+        ],
+        "from": "a fresh copy of runs/20261113T220814Z/workspace-1, new derived data, iPhone 17 simulator on iOS 26.5"
+      },
+      "human_edits": 0,
+      "grader_score": {
+        "score": 1.0,
+        "note": "five of five, the same graders as run 1; they do not judge the motion"
+      },
+      "defects": [
+        {
+          "what": "the zoom's source shows as a white box on opening and on return: a large rounded white rectangle over the 10:31 and 16:17 rows about 0.3 to 0.4 s after Back, then a narrower one inside the still-grey cell until about 1 s after Back; run 2's defect, more marked",
+          "media": "media/run-5/defect-source-box.png"
+        },
+        {
+          "what": "no Reduce Motion path at all after the run's own revision; not filmed"
+        }
+      ],
+      "unverified": [
+        "Reduce Motion, dark appearance, large type: not filmed",
+        "no real device",
+        "no second check of the measurements"
+      ],
+      "media": [
+        {
+          "file": "media/run-5/clip.webp",
+          "kb": 378
+        },
+        {
+          "file": "media/run-5/edge-swipe.webp",
+          "kb": 440
+        },
+        {
+          "file": "media/run-5/drag-down.webp",
+          "kb": 397
+        },
+        {
+          "file": "media/run-5/today.png"
+        },
+        {
+          "file": "media/run-5/detail.png"
+        },
+        {
+          "file": "media/run-5/defect-source-box.png"
+        }
+      ],
+      "timing": "picture changes for 0.55 s opening, 0.97 s closing",
+      "drag": "0 reversals over 73 frames at 60 fps",
+      "duration_note": "262 s in the trace, 263 s printed by the harness",
+      "media_note": "clips encoded afterwards from the measuring pass's 60 fps frames with takes/encode-clip.py (24 fps, q62, 402 px)"
+    },
+    {
+      "run": 6,
+      "runs_dir": "runs/20261113T220820Z",
+      "media_dir": "media/run-6",
+      "genjutsu": {
+        "version": "4.2.0",
+        "commit": "844f375",
+        "commit_full": "844f37558c90215e4f7b93fdf96838f39c1e9967",
+        "branch": "release/v4.2.0",
+        "module_fixes": true,
+        "step_thesis_against_modules": true
+      },
+      "harness": {
+        "tool": "claude plugin eval",
+        "claude_code": "2.1.325",
+        "headless": true,
+        "note": "the same copy of bin/run.sh as run 3 with its paths changed, cost ceiling 6 USD; one run, started side by side with the two others"
+      },
+      "started_at": "2026-11-13T22:08:21.189Z",
+      "cost_usd": 1.31,
+      "cost_usd_exact": 1.3110324,
+      "turns": 23,
+      "duration_seconds": 269,
+      "subagents": 0,
+      "tokens": {
+        "input": 30,
+        "output": 25523,
+        "cache_read": 847102,
+        "cache_creation": 78879
+      },
+      "modules_loaded": [
+        "motion-principles",
+        "mobile-principles",
+        "swiftui-motion"
+      ],
+      "modules_not_loaded": [],
+      "interaction_thesis": "Tapping a slack row in the Today list grows that row into its tide detail with the system zoom navigation transition (`.matchedTransitionSource` on the row, `.navigationTransition(.zoom)` on the detail, one shared `@Namespace` keyed by `slack.id`). The detail reads as the row opened up, not as a new page sliding in, and swiping down or back collapses it into the same row, interactively. As the detail arrives, the day's tide line draws left to right through the slack marker with `.smooth(duration: 0.45)`, no delay. With Reduce Motion, the system's own handling replaces the zoom and the line is shown already drawn.",
+      "allowed_patterns": "none",
+      "unvalidated": true,
+      "thesis_written_before_modules_loaded": true,
+      "thesis_named_zoom_before_modules_loaded": true,
+      "used_system_zoom_transition": true,
+      "kept_navigation_stack_bar_back_button": true,
+      "kept_edge_swipe_back": "yes, filmed, interactive",
+      "any_drag_flickers": "no",
+      "step_thesis_against_modules": {
+        "printed": "Revised after LOAD: line draw 0.6 s + 0.2 s delay → 0.45 s, no delay - motion-principles, never exceed 500ms on a UI interaction",
+        "where": "final report only",
+        "thesis_revised": true,
+        "outside_the_step_text": "the step says a value the thesis chose is a decision left to the audit, not a gap",
+        "missed": "the Reduce Motion question, which the audit then listed as a problem",
+        "preview_marked": "preview/thesis.html got the first line 'Shows the thesis before its revision after LOAD.'"
+      },
+      "swift_changed": {
+        "files": 2,
+        "insertions": 22,
+        "deletions": 1
+      },
+      "files_changed": {
+        "Etale/TodayView.swift": "+7: @Namespace (7), matchedTransitionSource (36), navigationTransition(.zoom) (65)",
+        "Etale/TideDetailView.swift": "+15 -1: the tide line trimmed in with .smooth(duration: 0.45) on appear, drawn at rest under Reduce Motion"
+      },
+      "previews": [
+        "preview/thesis.html",
+        "preview/variants.html"
+      ],
+      "audit": {
+        "summary": "9 checked, 1 problem found, 1 not checked, 2 not applicable",
+        "loaded_modules_against_code": "1 problem: swiftui-motion, reduced motion: TodayView.swift:65 applies the zoom even with Reduce Motion on; true, left unfixed"
+      },
+      "build": {
+        "result": "success",
+        "first_try": true,
+        "verbatim": "** BUILD SUCCEEDED **",
+        "errors": [],
+        "compiler_warnings": 0,
+        "other_warnings": [
+          "warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+        ],
+        "from": "a fresh copy of runs/20261113T220820Z/workspace-1, new derived data, iPhone 17 simulator on iOS 26.5"
+      },
+      "human_edits": 0,
+      "grader_score": {
+        "score": 1.0,
+        "note": "five of five, the same graders as run 1; they do not judge the motion"
+      },
+      "defects": [
+        {
+          "what": "the line draw the thesis promises cannot be seen: the curve is complete from the first frame where it appears, about 30 ms after the zoom starts",
+          "media": "media/run-6/open-mid.png"
+        },
+        {
+          "what": "the row's text floats over the shrinking detail for a few frames on return; the system zoom's own cross-fade",
+          "media": "media/run-6/close-mid.png"
+        },
+        {
+          "what": "the zoom runs with Reduce Motion on (the audit's open problem); not filmed"
+        }
+      ],
+      "unverified": [
+        "Reduce Motion, dark appearance, large type: not filmed",
+        "no real device",
+        "no second check of the measurements"
+      ],
+      "media": [
+        {
+          "file": "media/run-6/clip.webp",
+          "kb": 721
+        },
+        {
+          "file": "media/run-6/edge-swipe.webp",
+          "kb": 425
+        },
+        {
+          "file": "media/run-6/drag-down.webp",
+          "kb": 435
+        },
+        {
+          "file": "media/run-6/today.png"
+        },
+        {
+          "file": "media/run-6/detail.png"
+        },
+        {
+          "file": "media/run-6/open-mid.png"
+        },
+        {
+          "file": "media/run-6/close-mid.png"
+        }
+      ],
+      "timing": "picture changes for 0.53 s opening, 0.53 s closing",
+      "drag": "0 reversals over 80 frames at 60 fps",
+      "assumption": "I read 'not a push' as how it should look, not as a ban on navigation."
     }
-  ]
+  ],
+  "counts": {
+    "used_system_transition": {
+      "before_module_fixes": {
+        "runs": [
+          1
+        ],
+        "used": 0,
+        "of": 1
+      },
+      "fixed_modules_without_step": {
+        "runs": [
+          2,
+          3
+        ],
+        "used": 1,
+        "of": 2
+      },
+      "fixed_modules_with_step": {
+        "runs": [
+          4,
+          5,
+          6
+        ],
+        "used": 3,
+        "of": 3
+      }
+    },
+    "thesis_named_zoom_before_any_module_load": {
+      "yes": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "no": [
+        1,
+        3
+      ]
+    },
+    "step_revised_a_hand_built_thesis": {
+      "times": 0,
+      "of": 3,
+      "note": "no run with the step wrote a hand-built thesis, so the path the step was written for is untested"
+    },
+    "conclusion": "with the step 3 of 3 runs used the system transition, against 1 of 2 without it on the same fixed modules; in all three the thesis named the zoom before any module load, so the step had nothing of that kind to correct. If the rate without the step is 1 of 2, three in a row happens one time in eight by chance. The step's text is in cast's SKILL.md, read before the thesis is written, and may have steered the theses; nothing here shows it"
+  },
+  "showcased_run": {
+    "run": 2,
+    "why": "one of six runs of this prompt; four used the system transition, two (runs 1 and 3) hand-built an overlay. No later run is clearly better: runs 4 and 5 show a larger white box than run 2's, run 6 has no white box but its one authored motion cannot be seen and its Reduce Motion problem is open, and run 2 is the only zoom run filmed under Reduce Motion, in dark appearance and at a large text size"
+  },
+  "after_run_3": {
+    "genjutsu_commits": [
+      "779f16c",
+      "844f375"
+    ],
+    "branch": "release/v4.2.0",
+    "on_top_of": "5105f53",
+    "cause": "in cast the thesis and its preview are written before the modules load, so what a module teaches arrives after the decision; headless, the thesis is UNVALIDATED and the audit check can only list the departure once the code exists",
+    "step": "skills/cast/SKILL.md and skills/paint/SKILL.md, 'Read the thesis against the modules, before any code': after the last load, walk the loaded modules' rules against the thesis; with someone there ask once, revise or keep; with nobody answering rewrite the thesis on the module's way, print it UNVALIDATED with a line 'Revised after LOAD: <what changed> - <module, rule>'"
+  }
 }

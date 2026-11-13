@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale - slack row opens as one surface (proposal, not the build)</title>
+<style>
+  :root {
+    --ground: #f2f2f7; --cell: #ffffff; --ink: #000; --ink2: #3c3c4399; --tint: #0a6c8f;
+    --line: #c6c6c8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.4 -apple-system, "SF Pro Text", system-ui, sans-serif; color: #1c1c1e; background: #e5e5ea; }
+  main { max-width: 1120px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .note { color: #555; max-width: 70ch; margin: 4px 0; }
+  .thesis { background: #fff; border-radius: 12px; padding: 16px 18px; margin: 20px 0; }
+  .thesis b { display: inline-block; min-width: 9em; }
+  .controls { display: flex; gap: 12px; align-items: center; margin: 16px 0 24px; flex-wrap: wrap; }
+  button.ctl { font: inherit; padding: 8px 14px; border-radius: 10px; border: 1px solid #b0b0b8; background: #fff; cursor: pointer; }
+  button.ctl:focus-visible, .row:focus-visible { outline: 2px solid var(--tint); outline-offset: 2px; }
+  .variants { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 1000px) { .variants { grid-template-columns: 1fr; justify-items: center; } }
+  figure { margin: 0; }
+  figcaption { max-width: 300px; margin-top: 10px; }
+  figcaption .chosen { color: var(--tint); font-weight: 600; }
+
+  .phone { position: relative; width: 300px; height: 620px; border-radius: 40px; overflow: hidden; background: var(--ground); box-shadow: 0 0 0 8px #1c1c1e; touch-action: none; }
+  .list { position: absolute; inset: 0; padding: 52px 16px 0; transform-origin: 50% 40%; }
+  .large { font: 700 30px/1.1 -apple-system, system-ui; margin: 0 4px 14px; }
+  .hero { background: var(--cell); border-radius: 22px; padding: 14px 18px; margin-bottom: 18px; }
+  .hero small { color: var(--ink2); display: block; }
+  .hero .big { font: 600 44px/1.05 ui-rounded, "SF Pro Rounded", system-ui; font-variant-numeric: tabular-nums; }
+  .sec { color: var(--ink2); font-size: 12px; margin: 0 18px 6px; }
+  .group { background: var(--cell); border-radius: 22px; overflow: hidden; }
+  .row { display: flex; gap: 12px; align-items: baseline; padding: 11px 18px; border-bottom: 1px solid #e5e5ea; cursor: pointer; background: var(--cell); }
+  .row:last-child { border-bottom: 0; }
+  .row .t { font: 600 19px/1.2 ui-rounded, "SF Pro Rounded", system-ui; font-variant-numeric: tabular-nums; }
+  .row .sub { color: var(--ink2); font-size: 12px; }
+
+  .surface { position: absolute; inset: 0; pointer-events: none; }
+  .fill { position: absolute; left: 0; top: 0; width: 300px; height: 620px; background: var(--cell); }
+  .fill .ground { position: absolute; inset: 0; background: var(--ground); }
+  .content { position: absolute; inset: 0; padding: 52px 16px 0; }
+  .grab { width: 36px; height: 5px; border-radius: 3px; background: #c7c7cc; margin: -38px auto 26px; }
+  .close { position: absolute; top: 46px; right: 16px; width: 32px; height: 32px; border-radius: 16px; background: #e5e5ea; display: grid; place-items: center; font-size: 14px; color: #3c3c43; pointer-events: auto; cursor: pointer; border: 0; }
+  .head small { color: var(--ink2); display: block; margin-left: 4px; }
+  .slot { height: 59px; }
+  .head p { margin: 2px 4px 16px; }
+  .card { background: var(--cell); border-radius: 22px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; }
+  .card svg { width: 100%; height: 110px; display: block; }
+  .kv { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; }
+  .kv span:last-child { color: var(--ink2); text-align: right; }
+  .movetime { position: absolute; left: 0; top: 0; font: 600 56px/1.05 ui-rounded, "SF Pro Rounded", system-ui; font-variant-numeric: tabular-nums; transform-origin: 0 0; white-space: nowrap; }
+  .replay { margin-top: 8px; }
+
+  .curve-box { background: #fff; border-radius: 12px; padding: 16px; margin-top: 28px; display: grid; grid-template-columns: 320px 1fr; gap: 20px; align-items: center; }
+  @media (max-width: 700px) { .curve-box { grid-template-columns: 1fr; } }
+  table { border-collapse: collapse; }
+  td { padding: 3px 14px 3px 0; vertical-align: top; }
+  td:first-child { color: #555; }
+  code { font: 13px ui-monospace, Menlo, monospace; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Étale: the slack row opens as one surface</h1>
+  <p class="note"><strong>This page is the proposal, not the build.</strong> The HTML only approximates <em>timing and curve</em>. The real thing is SwiftUI, and its rendering, fonts and list metrics are not reproduced here. Values are NOAA predictions for 2 October 2026, Aquatic Park.</p>
+
+  <div class="thesis">
+    <div><b>Interaction thesis:</b> Tapping a slack row grows that row, in place, into the tide detail as one surface on a critically damped spring (<code>.spring(duration: 0.45, bounce: 0)</code>, since slack water does not overshoot). The slack time is the still point: it moves from the row to the head of the detail and never fades. The rest of the detail fades in and rises 12 pt over the second half of the travel. Dragging the head down, or swiping in from the leading edge, shrinks the surface back into its row under the finger. Leaving the push costs the edge-swipe back, the bar and its back button, the VoiceOver escape and the navigation path. A leading-edge swipe, a close button and <code>.accessibilityAction(.escape)</code> stand in for the first three. Nothing replaces the path: the app does not restore it or deep-link today.</div>
+    <div style="margin-top:6px"><b>Allowed patterns:</b> none</div>
+    <div style="margin-top:6px"><b>Status:</b> UNVALIDATED. Nobody was available to answer. Variant B is taken as the thesis.</div>
+  </div>
+
+  <div class="controls">
+    <button class="ctl" id="playAll">Play all three (open 10:31, then close)</button>
+    <label><input type="checkbox" id="reduce"> Reduce Motion (200 ms crossfade, no travel)</label>
+    <span class="note">Tap any row in a phone. In B and C, drag the open detail's head downward.</span>
+  </div>
+
+  <div class="variants" id="variants"></div>
+
+  <div class="curve-box">
+    <svg id="curve" viewBox="0 0 320 200" aria-label="Spring progress over time">
+      <rect x="0" y="0" width="320" height="200" fill="#fafafa"/>
+      <line x1="30" y1="170" x2="310" y2="170" stroke="#999"/>
+      <line x1="30" y1="20" x2="30" y2="170" stroke="#999"/>
+      <line x1="30" y1="30" x2="310" y2="30" stroke="#ddd" stroke-dasharray="3 3"/>
+      <text x="4" y="34" font-size="10" fill="#666">1.0</text>
+      <text x="4" y="174" font-size="10" fill="#666">0</text>
+      <text x="300" y="186" font-size="10" fill="#666" text-anchor="end">0.70 s</text>
+      <line id="mark45" stroke="#0a6c8f" stroke-dasharray="2 3"/>
+      <text id="lab45" font-size="10" fill="#0a6c8f">0.45 s</text>
+      <path id="curvePath" fill="none" stroke="#0a6c8f" stroke-width="2"/>
+      <text x="40" y="16" font-size="11" fill="#333">.spring(duration: 0.45, bounce: 0): x(t) = 1 − (1 + ωt)·e^(−ωt), ω = 2π / 0.45</text>
+    </svg>
+    <table>
+      <tr><td>Open / close</td><td><code>.spring(duration: 0.45, bounce: 0)</code>, critically damped, no overshoot, retargets when interrupted</td></tr>
+      <tr><td>Slack time</td><td>moves from row to head, scale = row height / head height → 1, opacity 1 throughout</td></tr>
+      <tr><td>Surface fill</td><td>opaque by 20% of progress, grouped ground blends in after that</td></tr>
+      <tr><td>Detail content</td><td>fades in and rises 12 pt over progress 0.4 → 1</td></tr>
+      <tr><td>Drag dismiss</td><td>head drag down: follows the finger 1:1 over half the screen height. Leading-edge swipe: the same over half the width. Commits past 120 pt or a predicted 260 pt, otherwise springs back</td></tr>
+      <tr><td>Reduce Motion</td><td>no travel, no growth: the finished detail crossfades in over 200 ms ease-in-out</td></tr>
+    </table>
+  </div>
+</main>
+
+<template id="phoneTpl">
+  <figure>
+    <div class="phone">
+      <div class="list">
+        <div class="large">Aquatic Park</div>
+        <div class="hero"><small>Next slack water</small><div class="big">10:31</div>in 1 h 19 min. Ebb turns to flood.</div>
+        <div class="sec">SLACK WATER TODAY</div>
+        <div class="group">
+          <div class="row" tabindex="0" data-i="0"><span class="t">05:57</span><span>Flood turns to ebb<div class="sub">then ebb to 0.94 kn at 08:06</div></span></div>
+          <div class="row" tabindex="0" data-i="1"><span class="t">10:31</span><span>Ebb turns to flood<div class="sub">then flood to 1.44 kn at 13:37</div></span></div>
+          <div class="row" tabindex="0" data-i="2"><span class="t">16:17</span><span>Flood turns to ebb<div class="sub">then ebb to 2.11 kn at 19:50</div></span></div>
+        </div>
+      </div>
+      <div class="surface">
+        <div class="fill"><div class="ground"></div></div>
+        <div class="content">
+          <div class="grab"></div>
+          <button class="close" aria-label="Close">✕</button>
+          <div class="head"><small>Slack water</small><div class="slot"></div><p class="turn"></p></div>
+          <div class="card"><div style="color:#666;font-size:11px">TIDE HEIGHT, METRES ABOVE MLLW</div><svg class="tide" viewBox="0 0 268 110" preserveAspectRatio="none"></svg></div>
+          <div class="card"><div class="kv"><span>Slack comes</span><span class="after"></span></div><div class="kv"><span>Current</span><span class="peak"></span></div></div>
+        </div>
+        <div class="movetime"></div>
+      </div>
+    </div>
+    <figcaption></figcaption>
+  </figure>
+</template>
+
+<script>
+const slacks = [
+  { t: "05:57", turn: "Flood turns to ebb.", after: "10 min after high water (05:47, 1.32 m)", peak: "then ebb to 0.94 kn at 08:06", min: 357 },
+  { t: "10:31", turn: "Ebb turns to flood.", after: "50 min after low water (09:41, 1.05 m)", peak: "then flood to 1.44 kn at 13:37", min: 631 },
+  { t: "16:17", turn: "Flood turns to ebb.", after: "19 min after high water (15:58, 1.83 m)", peak: "then ebb to 2.11 kn at 19:50", min: 977 },
+];
+// NOAA 6-minute tide predictions, station 9414290, 2 October 2026, metres above MLLW (from Etale/tide.json).
+const curve6 = [0.177,0.199,0.221,0.244,0.268,0.292,0.317,0.342,0.367,0.393,0.419,0.445,0.472,0.498,0.525,0.552,0.578,0.605,0.632,0.658,0.685,0.711,0.737,0.763,0.789,0.814,0.839,0.864,0.889,0.913,0.937,0.961,0.984,1.006,1.029,1.050,1.071,1.092,1.111,1.130,1.149,1.166,1.183,1.199,1.214,1.228,1.241,1.253,1.264,1.274,1.283,1.291,1.298,1.304,1.308,1.312,1.314,1.316,1.316,1.315,1.314,1.311,1.308,1.304,1.299,1.293,1.286,1.279,1.271,1.263,1.254,1.245,1.235,1.225,1.215,1.204,1.194,1.183,1.173,1.162,1.152,1.141,1.132,1.122,1.113,1.104,1.096,1.088,1.081,1.074,1.068,1.063,1.059,1.056,1.053,1.051,1.050,1.049,1.050,1.051,1.054,1.057,1.061,1.066,1.071,1.078,1.085,1.093,1.102,1.111,1.121,1.132,1.144,1.156,1.169,1.182,1.196,1.211,1.226,1.242,1.258,1.275,1.292,1.310,1.328,1.346,1.365,1.384,1.403,1.422,1.442,1.462,1.481,1.501,1.521,1.540,1.559,1.578,1.597,1.615,1.633,1.651,1.668,1.684,1.700,1.715,1.729,1.743,1.756,1.768,1.779,1.789,1.798,1.806,1.814,1.820,1.825,1.829,1.831,1.833,1.833,1.832,1.829,1.825,1.820,1.813,1.805,1.795,1.784,1.771,1.756,1.740,1.723,1.703,1.682,1.660,1.636,1.610,1.583,1.555,1.525,1.493,1.461,1.427,1.392,1.356,1.318,1.280,1.241,1.202,1.161,1.120,1.079,1.037,0.994,0.952,0.910,0.867,0.825,0.782,0.740,0.699,0.658,0.617,0.577,0.538,0.500,0.462,0.426,0.391,0.357,0.324,0.292,0.262,0.233,0.205,0.179,0.155,0.132,0.110,0.090,0.072,0.055,0.040,0.026,0.014,0.004,-0.005,-0.013,-0.019,-0.024,-0.027,-0.029,-0.029,-0.029,-0.027,-0.023,-0.019,-0.013,-0.006];
+function tideAt(m){ const i = Math.min(curve6.length - 1, Math.floor(m / 6)), j = Math.min(curve6.length - 1, i + 1), u = (m - i * 6) / 6; return curve6[i] + (curve6[j] - curve6[i]) * u; }
+
+const variants = [
+  { key: "A", name: "Still", level: "subtle", rise: 0, drag: false, recede: false,
+    text: "The row grows into the detail and the slack time moves to its head. The content only crossfades. Closing is by the button." },
+  { key: "B", name: "Settle", level: "balanced", rise: 12, drag: true, recede: false, chosen: true,
+    text: "A, plus the content rising 12 pt over the second half, and a drag down on the head that shrinks the surface back into its row under the finger." },
+  { key: "C", name: "Undertow", level: "impressive", rise: 12, drag: true, recede: true,
+    text: "B, plus the list behind sinking to 0.96 and dimming as the surface grows." },
+];
+
+const reduceBox = document.getElementById("reduce");
+const omega = 2 * Math.PI / 0.45;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+
+function makePhone(v) {
+  const node = document.getElementById("phoneTpl").content.firstElementChild.cloneNode(true);
+  document.getElementById("variants").appendChild(node);
+  node.querySelector("figcaption").innerHTML =
+    `<strong>Variant ${v.key}: ${v.name}</strong> (${v.level})${v.chosen ? ' <span class="chosen">taken as thesis</span>' : ""}<br>${v.text}<br><button class="ctl replay">Replay ${v.key}</button>`;
+  const phone = node.querySelector(".phone");
+  const st = { v, phone, p: 0, vel: 0, target: 0, from: 0, t0: 0, idx: 1, open: false, raf: 0, fade: false };
+  const q = s => phone.querySelector(s);
+  const rows = [...phone.querySelectorAll(".row")];
+
+  function rect(el) { const a = el.getBoundingClientRect(), b = phone.getBoundingClientRect(); return { x: a.left - b.left, y: a.top - b.top, w: a.width, h: a.height }; }
+
+  function fillContent() {
+    const s = slacks[st.idx];
+    q(".turn").textContent = s.turn; q(".after").textContent = s.after; q(".peak").textContent = s.peak;
+    q(".movetime").textContent = s.t;
+    let d = ""; for (let m = 0; m <= 1440; m += 12) { d += (m ? "L" : "M") + (m / 1440 * 268).toFixed(1) + "," + (100 - (tideAt(m) + 0.1) / 2.0 * 95).toFixed(1); }
+    const mx = s.min / 1440 * 268, my = 100 - (tideAt(s.min) + 0.1) / 2.0 * 95;
+    q(".tide").innerHTML = `<line x1="${mx}" y1="0" x2="${mx}" y2="110" stroke="#8e8e93" stroke-dasharray="3 3"/><path d="${d}" fill="none" stroke="#0a6c8f" stroke-width="2"/><circle cx="${mx}" cy="${my}" r="4" fill="#0a6c8f"/>`;
+  }
+
+  function render() {
+    const reduce = reduceBox.checked;
+    const m = reduce ? 1 : st.p, fade = reduce ? st.p : 1;
+    const row = rect(rows[st.idx]), rowT = rect(rows[st.idx].querySelector(".t"));
+    const slot = rect(q(".slot"));
+    const full = { x: 0, y: 0, w: 300, h: 620 };
+    const r = { x: lerp(row.x, full.x, m), y: lerp(row.y, full.y, m), w: lerp(row.w, full.w, m), h: lerp(row.h, full.h, m) };
+    const fill = q(".fill");
+    fill.style.clipPath = `inset(${r.y}px ${300 - r.x - r.w}px ${620 - r.y - r.h}px ${r.x}px round ${lerp(14, 0, m)}px)`;
+    fill.style.opacity = clamp(m / 0.2) * fade;
+    q(".ground").style.opacity = clamp((m - 0.2) / 0.8);
+    const c = clamp((m - 0.4) / 0.6);
+    const content = q(".content");
+    content.style.opacity = c * fade;
+    content.style.transform = `translateY(${(1 - c) * st.v.rise}px)`;
+    const mt = q(".movetime");
+    const s = lerp(rowT.h / 59, 1, m);
+    const slotY = slot.y - (parseFloat(content.style.transform.slice(11)) || 0);
+    mt.style.transform = `translate(${lerp(rowT.x, slot.x + 4, m)}px, ${lerp(rowT.y, slotY, m)}px) scale(${s})`;
+    mt.style.opacity = (st.open || st.p > 0.0005) ? fade : 0;
+    rows.forEach((el, i) => el.querySelector(".t").style.opacity = (i === st.idx && (st.open || st.p > 0.0005)) ? 0 : 1);
+    const list = q(".list");
+    list.style.transform = st.v.recede && !reduce ? `scale(${lerp(1, 0.96, m)})` : "";
+    list.style.filter = st.v.recede && !reduce ? `brightness(${lerp(1, 0.85, m)})` : "";
+    q(".surface").style.pointerEvents = st.open ? "auto" : "none";
+  }
+
+  function animateTo(target) {
+    cancelAnimationFrame(st.raf);
+    const reduce = reduceBox.checked;
+    const x0 = st.p, v0 = st.vel, start = performance.now();
+    const step = now => {
+      const t = (now - start) / 1000;
+      if (reduce) {
+        const u = clamp(t / 0.2), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+        st.p = lerp(x0, target, e); st.vel = 0;
+        render(); if (u < 1) st.raf = requestAnimationFrame(step); else done();
+        return;
+      }
+      const c1 = x0 - target, c2 = v0 + omega * c1, e = Math.exp(-omega * t);
+      st.p = target + (c1 + c2 * t) * e;
+      st.vel = (c2 - omega * (c1 + c2 * t)) * e;
+      render();
+      if (Math.abs(st.p - target) > 0.0005 || Math.abs(st.vel) > 0.01) st.raf = requestAnimationFrame(step); else { st.p = target; st.vel = 0; done(); }
+    };
+    const done = () => { render(); };
+    st.raf = requestAnimationFrame(step);
+  }
+
+  st.openRow = i => { st.idx = i; st.open = true; fillContent(); render(); animateTo(1); };
+  st.close = () => { st.open = false; animateTo(0); };
+
+  rows.forEach((el, i) => {
+    el.addEventListener("click", () => st.openRow(i));
+    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); st.openRow(i); } });
+  });
+  q(".close").addEventListener("click", st.close);
+  phone.addEventListener("keydown", e => { if (e.key === "Escape" && st.open) st.close(); });
+
+  if (v.drag) {
+    const head = q(".content");
+    let y0 = null, last = [];
+    head.addEventListener("pointerdown", e => { if (!st.open || e.target.closest(".close") || e.clientY - phone.getBoundingClientRect().top > 200) return; y0 = e.clientY; last = [[e.timeStamp, e.clientY]]; cancelAnimationFrame(st.raf); head.setPointerCapture(e.pointerId); });
+    head.addEventListener("pointermove", e => { if (y0 === null) return; const dy = Math.max(0, e.clientY - y0); st.p = 1 - clamp(dy / 310); st.vel = 0; last.push([e.timeStamp, e.clientY]); if (last.length > 5) last.shift(); render(); });
+    head.addEventListener("pointerup", e => {
+      if (y0 === null) return; const dy = e.clientY - y0; y0 = null;
+      const [t0, ya] = last[0], dt = Math.max(1, e.timeStamp - t0), v = (e.clientY - ya) / dt * 1000;
+      const predicted = dy + v * 0.25;
+      if (dy > 120 || predicted > 260) st.close(); else animateTo(1);
+    });
+  }
+
+  node.querySelector(".replay").addEventListener("click", () => { st.close(); setTimeout(() => { st.openRow(1); setTimeout(st.close, 1200); }, st.p > 0 ? 600 : 0); });
+  fillContent(); render();
+  return st;
+}
+
+const phones = variants.map(makePhone);
+document.getElementById("playAll").addEventListener("click", () => {
+  phones.forEach(s => { s.p = 0; s.vel = 0; s.open = false; });
+  phones.forEach(s => s.openRow(1));
+  setTimeout(() => phones.forEach(s => s.close()), 1300);
+});
+reduceBox.addEventListener("change", () => phones.forEach(s => s.close()));
+
+// Curve plot
+(function () {
+  const X = t => 30 + t / 0.7 * 280, Y = x => 170 - x * 140;
+  let d = ""; for (let i = 0; i <= 140; i++) { const t = i / 140 * 0.7, x = 1 - (1 + omega * t) * Math.exp(-omega * t); d += (i ? "L" : "M") + X(t).toFixed(1) + "," + Y(x).toFixed(1); }
+  document.getElementById("curvePath").setAttribute("d", d);
+  const m = document.getElementById("mark45"); m.setAttribute("x1", X(0.45)); m.setAttribute("x2", X(0.45)); m.setAttribute("y1", 20); m.setAttribute("y2", 170);
+  const l = document.getElementById("lab45"); l.setAttribute("x", X(0.45) + 3); l.setAttribute("y", 186);
+})();
+</script>
+</body>
+</html>

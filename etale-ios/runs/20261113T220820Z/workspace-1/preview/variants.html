@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale · detail arrival variants (proposal, not the build)</title>
+<style>
+body{margin:0;font:15px/1.45 -apple-system,system-ui,sans-serif;background:#fafafa;color:#111}
+main{max-width:900px;margin:0 auto;padding:32px 24px}
+.note{color:#6b6b70;font-size:13px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
+.card{background:#fff;border:1px solid #d1d1d6;border-radius:12px;padding:14px}
+.card h2{font-size:15px;margin:0 0 4px}
+svg{width:100%;height:150px;background:#f2f2f7;border-radius:10px}
+button{font:inherit;padding:6px 12px;border-radius:8px;border:1px solid #d1d1d6;background:#fff;cursor:pointer;margin:8px 8px 0 0}
+button:focus-visible{outline:2px solid #0a6ebd;outline-offset:2px}
+</style></head><body><main>
+<p><strong>Interaction thesis (revised after LOAD, UNVALIDATED):</strong> the row zooms into its tide detail (system zoom navigation transition, interactive back), and as the detail arrives the day's tide line draws left to right through the slack marker with .smooth(duration: 0.45), no delay. With Reduce Motion, the line is shown already drawn.<br><strong>Allowed patterns:</strong> none</p>
+<p class="note">This page is the proposal, not the build. It approximates timing and curve only. The SwiftUI zoom itself isn't reproduced here. Both variants run the same draw; they differ in what the slack dot does. The curve is the real NOAA tide for 2 October 2026; the slack shown is 10:31.</p>
+<button id="all">Play both</button><label class="note"><input type="checkbox" id="rm"> Reduce Motion</label>
+<div class="row">
+<div class="card"><h2>Variant A - Still marker (subtle)</h2><p class="note">The dashed rule and the dot sit at 10:31 from the first frame; only the line draws, through them.</p>
+<svg viewBox="0 0 276 140" id="a"></svg><button data-v="a">Replay A</button></div>
+<div class="card"><h2>Variant B - Riding dot (balanced)</h2><p class="note">The dot rides the tip of the drawing line and parks at 10:31 when the line passes it.</p>
+<svg viewBox="0 0 276 140" id="b"></svg><button data-v="b">Replay B</button></div>
+</div></main>
+<script>
+const P="M0.0,121.4L1.1,119.8L2.3,118.3L3.5,116.6L4.6,114.9L5.8,113.2L6.9,111.5L8.1,109.7L9.2,107.9L10.3,106.1L11.5,104.2L12.7,102.4L13.8,100.5L14.9,98.6L16.1,96.7L17.2,94.8L18.4,93.0L19.6,91.1L20.7,89.1L21.9,87.3L23.0,85.4L24.1,83.5L25.3,81.7L26.4,79.9L27.6,78.0L28.8,76.2L29.9,74.5L31.1,72.7L32.2,70.9L33.4,69.2L34.5,67.5L35.6,65.8L36.8,64.2L38.0,62.6L39.1,61.0L40.2,59.5L41.4,58.0L42.5,56.5L43.7,55.2L44.9,53.8L46.0,52.5L47.1,51.3L48.3,50.1L49.5,48.9L50.6,47.9L51.8,46.9L52.9,46.0L54.0,45.1L55.2,44.3L56.4,43.6L57.5,43.0L58.6,42.4L59.8,41.9L61.0,41.5L62.1,41.2L63.2,40.9L64.4,40.8L65.5,40.7L66.7,40.7L67.8,40.7L69.0,40.8L70.2,41.0L71.3,41.2L72.5,41.5L73.6,41.9L74.8,42.3L75.9,42.8L77.0,43.3L78.2,43.8L79.3,44.4L80.5,45.0L81.7,45.7L82.8,46.4L84.0,47.1L85.1,47.8L86.2,48.6L87.4,49.3L88.5,50.1L89.7,50.8L90.8,51.6L92.0,52.3L93.2,53.1L94.3,53.7L95.5,54.4L96.6,55.0L97.8,55.7L98.9,56.2L100.0,56.8L101.2,57.3L102.3,57.8L103.5,58.2L104.7,58.6L105.8,58.9L107.0,59.1L108.1,59.3L109.2,59.4L110.4,59.5L111.5,59.6L112.7,59.5L113.8,59.4L115.0,59.2L116.2,59.0L117.3,58.7L118.5,58.4L119.6,58.0L120.8,57.5L121.9,57.0L123.0,56.5L124.2,55.8L125.3,55.2L126.5,54.5L127.7,53.7L128.8,52.8L129.9,52.0L131.1,51.1L132.2,50.2L133.4,49.2L134.6,48.1L135.7,47.0L136.8,45.9L138.0,44.8L139.2,43.6L140.3,42.4L141.4,41.1L142.6,39.8L143.8,38.5L144.9,37.2L146.1,35.8L147.2,34.5L148.3,33.1L149.5,31.7L150.7,30.3L151.8,29.0L152.9,27.5L154.1,26.1L155.2,24.8L156.4,23.4L157.6,22.1L158.7,20.7L159.8,19.5L161.0,18.2L162.2,16.9L163.3,15.7L164.4,14.6L165.6,13.4L166.8,12.4L167.9,11.4L169.1,10.4L170.2,9.5L171.3,8.6L172.5,7.8L173.7,7.1L174.8,6.5L175.9,5.9L177.1,5.3L178.2,4.9L179.4,4.6L180.6,4.3L181.7,4.1L182.8,4.0L184.0,4.0L185.2,4.1L186.3,4.3L187.4,4.6L188.6,4.9L189.8,5.4L190.9,6.0L192.1,6.7L193.2,7.5L194.3,8.4L195.5,9.5L196.7,10.6L197.8,11.8L198.9,13.2L200.1,14.7L201.2,16.3L202.4,18.0L203.6,19.8L204.7,21.7L205.8,23.7L207.0,25.8L208.2,28.1L209.3,30.4L210.4,32.8L211.6,35.3L212.8,37.8L213.9,40.5L215.1,43.2L216.2,46.0L217.3,48.7L218.5,51.6L219.7,54.5L220.8,57.5L221.9,60.4L223.1,63.5L224.2,66.5L225.4,69.4L226.6,72.5L227.7,75.5L228.8,78.5L230.0,81.5L231.2,84.4L232.3,87.3L233.4,90.2L234.6,93.0L235.8,95.8L236.9,98.5L238.1,101.2L239.2,103.7L240.3,106.2L241.5,108.6L242.7,111.0L243.8,113.2L244.9,115.4L246.1,117.4L247.2,119.4L248.4,121.3L249.6,123.0L250.7,124.6L251.8,126.1L253.0,127.6L254.2,128.8L255.3,130.0L256.4,131.1L257.6,132.1L258.8,133.0L259.9,133.7L261.1,134.3L262.2,134.9L263.4,135.3L264.5,135.6L265.6,135.9L266.8,136.0L267.9,136.0L269.1,136.0L270.2,135.9L271.4,135.6L272.6,135.3L273.7,134.9L274.9,134.4", MK=276*631/1440, W=2*Math.PI/0.45, ease=t=>1-(1+W*t)*Math.exp(-W*t);
+const ns='http://www.w3.org/2000/svg';
+function build(svg){svg.innerHTML=`<line x1="${MK}" x2="${MK}" y1="0" y2="140" stroke="#8e8e93" stroke-dasharray="3 3"/><path d="${P}" fill="none" stroke="#0a6ebd" stroke-width="2" stroke-linecap="round"/><circle r="5" fill="#0a6ebd"/>`;
+ const p=svg.querySelector('path'),L=p.getTotalLength();let s=0,bd=1e9;for(let l=0;l<=L;l++){const q=p.getPointAtLength(l),d=Math.abs(q.x-MK);if(d<bd){bd=d;s=l}}
+ p.style.strokeDasharray=L;return{p,L,s,c:svg.querySelector('circle')}}
+const V={a:build(document.getElementById('a')),b:build(document.getElementById('b'))};
+function place(c,pt){c.setAttribute('cx',pt.x);c.setAttribute('cy',pt.y)}
+function play(k){const v=V[k],rm=document.getElementById('rm').checked,t0=performance.now();
+ const frame=now=>{const t=rm?1:Math.min((now-t0)/1000/0.45,1),e=rm?1:ease(t*0.45);v.p.style.strokeDashoffset=v.L*(1-e);
+  place(v.c,v.p.getPointAtLength(k==='a'?v.s:Math.min(v.L*e,v.s)));if(t<1)requestAnimationFrame(frame);else v.p.style.strokeDashoffset=0};
+ requestAnimationFrame(frame)}
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>play(b.dataset.v));
+document.getElementById('all').onclick=()=>{play('a');play('b')};play('a');play('b');
+</script></body></html>

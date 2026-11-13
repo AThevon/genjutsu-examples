@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale, Today to tide detail: thesis preview</title>
+<style>
+  :root { color-scheme: light; --tint: #0a6c8f; --bg: #f2f2f7; --cell: #ffffff; --ink: #000; --sec: #6c6c70; --sep: #c6c6c8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.45 -apple-system, "SF Pro Text", system-ui, sans-serif; color: #1c1c1e; background: #e9e9ee; }
+  .banner { background: #fff3c4; border-bottom: 1px solid #e5d58a; padding: 10px 20px; font-weight: 600; }
+  main { display: grid; grid-template-columns: 393px minmax(280px, 520px); gap: 40px; padding: 28px 20px 60px; justify-content: center; }
+  h1 { font-size: 20px; margin: 0 0 8px; }
+  .thesis { background: #fff; border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; }
+  .thesis p { margin: 6px 0; }
+  .tag { font-weight: 700; }
+  .note { color: #555; font-size: 13px; }
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 12px 0; }
+  button { font: inherit; padding: 7px 14px; border-radius: 8px; border: 1px solid #b9b9c0; background: #fff; cursor: pointer; }
+  button:focus-visible { outline: 3px solid var(--tint); outline-offset: 2px; }
+  table { border-collapse: collapse; width: 100%; background: #fff; border-radius: 12px; overflow: hidden; font-size: 13px; }
+  td { padding: 7px 12px; border-top: 1px solid #eee; vertical-align: top; }
+  td:first-child { color: #555; width: 42%; }
+
+  /* phone */
+  .phone { width: 393px; height: 760px; border-radius: 48px; background: var(--bg); position: relative; overflow: hidden; box-shadow: 0 0 0 10px #1c1c1e; }
+  .screen { position: absolute; inset: 0; padding: 54px 0 0; overflow: hidden; }
+  .large-title { font: 700 34px/1.2 -apple-system, system-ui, sans-serif; padding: 6px 20px 8px; color: var(--ink); }
+  .section-h { font-size: 13px; color: var(--sec); padding: 14px 36px 6px; }
+  .group { background: var(--cell); margin: 0 16px; border-radius: 22px; overflow: hidden; }
+  .cell { padding: 11px 16px; display: flex; align-items: baseline; gap: 12px; border-top: .5px solid var(--sep); }
+  .group .cell:first-child { border-top: 0; }
+  .hero { padding: 16px; }
+  .hero small, .d-hero small { color: var(--sec); font-size: 15px; display: block; }
+  .big { font: 600 56px/1.05 ui-rounded, "SF Pro Rounded", -apple-system, system-ui, sans-serif; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .row { cursor: pointer; }
+  .row:focus-visible { outline: 3px solid var(--tint); outline-offset: -3px; }
+  .row .t { font-weight: 600; font-size: 20px; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .row .sub { color: var(--sec); font-size: 15px; }
+  .row .chev { margin-left: auto; color: #c4c4c7; }
+  .row.is-source { visibility: hidden; }
+  .lc { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+
+  /* the detail, as the surface the row grows into */
+  .detail { position: absolute; left: 0; top: 0; width: 393px; height: 760px; background: var(--bg); transform-origin: 0 0; border-radius: 48px; overflow: hidden; visibility: hidden; }
+  .detail .nav { height: 98px; padding: 54px 16px 0; display: flex; align-items: center; justify-content: center; position: relative; font-weight: 600; }
+  .detail .nav .back { position: absolute; left: 12px; top: 50px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 0; font-size: 22px; color: var(--ink); }
+  .d-hero { padding: 16px; }
+  .d-content { will-change: opacity; }
+  svg.curve { display: block; width: 100%; height: 180px; }
+  .toggle { width: 51px; height: 31px; border-radius: 16px; background: #e9e9ea; position: relative; border: 0; padding: 0; }
+  .toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,.2); transition: transform .2s; }
+  .toggle[aria-checked="true"] { background: #34c759; }
+  .toggle[aria-checked="true"]::after { transform: translateX(20px); }
+  .bell { color: var(--tint); margin-left: auto; }
+</style>
+</head>
+<body>
+<div class="banner">This page is the proposal, not the build. It is not validated: nobody was there to answer during this run. The real app gets built in SwiftUI from the thesis below; none of this markup ends up in it.</div>
+<main>
+  <div>
+    <div class="phone" id="phone">
+      <div class="screen" id="today">
+        <div class="large-title">Aquatic Park</div>
+        <div class="group"><div class="hero">
+          <small>Next slack water</small>
+          <div class="big">10:31</div>
+          <div>in 1 h 19 min. Ebb turns to flood.</div>
+        </div></div>
+        <div class="section-h">SLACK WATER TODAY</div>
+        <div class="group" id="rows"></div>
+        <div class="section-h">TIDE</div>
+        <div class="group">
+          <div class="cell lc"><span>05:47&nbsp;&nbsp;High water</span><span>1.32 m</span></div>
+          <div class="cell lc"><span>09:41&nbsp;&nbsp;Low water</span><span>1.05 m</span></div>
+          <div class="cell lc"><span>15:58&nbsp;&nbsp;High water</span><span>1.83 m</span></div>
+          <div class="cell lc"><span>23:17&nbsp;&nbsp;Low water</span><span>-0.03 m</span></div>
+        </div>
+      </div>
+      <div class="detail" id="detail" aria-hidden="true">
+        <div class="nav"><button class="back" id="back" aria-label="Back">‹</button><span id="d-title">Slack 10:31</span></div>
+        <div class="d-content" id="d-content">
+          <div class="group"><div class="d-hero">
+            <small>Slack water</small>
+            <div class="big" id="d-time">10:31</div>
+            <div id="d-turn">Ebb turns to flood.</div>
+          </div></div>
+          <div class="section-h">TIDE HEIGHT, METRES ABOVE MLLW</div>
+          <div class="group" style="padding:12px 16px"><svg class="curve" id="curve" viewBox="0 0 361 180" preserveAspectRatio="none" aria-label="Tide curve"></svg></div>
+          <div class="group" style="margin-top:20px">
+            <div class="cell lc"><span>Slack comes</span><span class="sub" id="d-after"></span></div>
+            <div class="cell lc"><span>Current</span><span class="sub" id="d-peak"></span></div>
+          </div>
+          <div class="group" style="margin-top:20px">
+            <div class="cell lc" style="align-items:center"><span>Alert me 15 minutes before</span><button class="toggle" id="toggle" role="switch" aria-checked="false" aria-label="Alert me 15 minutes before"></button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h1>Étale: Today to tide detail</h1>
+    <div class="thesis">
+      <p><span class="tag">Interaction thesis:</span> Tapping a slack-water row in Today makes that row grow into its tide detail, using SwiftUI's zoom navigation transition (<code>.matchedTransitionSource</code> on the row, <code>.navigationTransition(.zoom)</code> on the detail). The system sets the timing. The time you tapped becomes the detail's 56&nbsp;pt headline. A back-swipe or a pull-down shrinks the detail into the same row, with the bell showing the alert you just set.</p>
+      <p><span class="tag">Allowed patterns:</span> none</p>
+      <p class="note">This page approximates the <em>timing and the path</em> only. iOS draws the real thing, its spring included. Rendering, materials and fonts here are stand-ins.</p>
+    </div>
+    <div class="controls">
+      <button id="replay">Replay: open 10:31</button>
+      <button id="replay-back">Close back into the row</button>
+      <label><input type="checkbox" id="rm"> Reduce Motion</label>
+    </div>
+    <svg width="220" height="140" viewBox="0 0 220 140" aria-label="Approximation curve" style="background:#fff;border-radius:12px">
+      <line x1="20" y1="120" x2="200" y2="120" stroke="#ccc"/><line x1="20" y1="120" x2="20" y2="20" stroke="#ccc"/>
+      <path d="M20 120 C 56 30, 65 20, 200 20" fill="none" stroke="#0a6c8f" stroke-width="2"/>
+      <text x="24" y="136" font-size="10" fill="#555">curve shown: approximation only, not a thesis value</text>
+    </svg>
+    <table style="margin-top:14px">
+      <tr><td>Transition</td><td>Zoom navigation transition, source = the row tapped</td></tr>
+      <tr><td>Duration and spring</td><td>Owned by the system, not set by the app. This page plays an approximation.</td></tr>
+      <tr><td>Headline</td><td>56&nbsp;pt semibold rounded, the size the detail already uses</td></tr>
+      <tr><td>Return</td><td>Back button, edge swipe, or a pull-down on the detail; all three go back into the source row and can be scrubbed</td></tr>
+      <tr><td>Reduce Motion</td><td>The page shows a cross-fade with no scaling. It assumes the system degrades the zoom; check on a device.</td></tr>
+      <tr><td>Assumptions (nobody answered)</td><td>Mood: quiet and practical, nothing moves except the surface. The "Next slack water" card stays as it is and cannot be tapped. Nothing else on either screen is animated.</td></tr>
+    </table>
+    <p class="note">The source row starts with the cell's own background and corner radius, so the surface that grows is the row itself, not a card laid on top of it.</p>
+  </div>
+</main>
+<script>
+const CURVE = [[0, 0.177], [6, 0.199], [12, 0.221], [18, 0.244], [24, 0.268], [30, 0.292], [36, 0.317], [42, 0.342], [48, 0.367], [54, 0.393], [60, 0.419], [66, 0.445], [72, 0.472], [78, 0.498], [84, 0.525], [90, 0.552], [96, 0.578], [102, 0.605], [108, 0.632], [114, 0.658], [120, 0.685], [126, 0.711], [132, 0.737], [138, 0.763], [144, 0.789], [150, 0.814], [156, 0.839], [162, 0.864], [168, 0.889], [174, 0.913], [180, 0.937], [186, 0.961], [192, 0.984], [198, 1.006], [204, 1.029], [210, 1.05], [216, 1.071], [222, 1.092], [228, 1.111], [234, 1.13], [240, 1.149], [246, 1.166], [252, 1.183], [258, 1.199], [264, 1.214], [270, 1.228], [276, 1.241], [282, 1.253], [288, 1.264], [294, 1.274], [300, 1.283], [306, 1.291], [312, 1.298], [318, 1.304], [324, 1.308], [330, 1.312], [336, 1.314], [342, 1.316], [348, 1.316], [354, 1.315], [360, 1.314], [366, 1.311], [372, 1.308], [378, 1.304], [384, 1.299], [390, 1.293], [396, 1.286], [402, 1.279], [408, 1.271], [414, 1.263], [420, 1.254], [426, 1.245], [432, 1.235], [438, 1.225], [444, 1.215], [450, 1.204], [456, 1.194], [462, 1.183], [468, 1.173], [474, 1.162], [480, 1.152], [486, 1.141], [492, 1.132], [498, 1.122], [504, 1.113], [510, 1.104], [516, 1.096], [522, 1.088], [528, 1.081], [534, 1.074], [540, 1.068], [546, 1.063], [552, 1.059], [558, 1.056], [564, 1.053], [570, 1.051], [576, 1.05], [582, 1.049], [588, 1.05], [594, 1.051], [600, 1.054], [606, 1.057], [612, 1.061], [618, 1.066], [624, 1.071], [630, 1.078], [636, 1.085], [642, 1.093], [648, 1.102], [654, 1.111], [660, 1.121], [666, 1.132], [672, 1.144], [678, 1.156], [684, 1.169], [690, 1.182], [696, 1.196], [702, 1.211], [708, 1.226], [714, 1.242], [720, 1.258], [726, 1.275], [732, 1.292], [738, 1.31], [744, 1.328], [750, 1.346], [756, 1.365], [762, 1.384], [768, 1.403], [774, 1.422], [780, 1.442], [786, 1.462], [792, 1.481], [798, 1.501], [804, 1.521], [810, 1.54], [816, 1.559], [822, 1.578], [828, 1.597], [834, 1.615], [840, 1.633], [846, 1.651], [852, 1.668], [858, 1.684], [864, 1.7], [870, 1.715], [876, 1.729], [882, 1.743], [888, 1.756], [894, 1.768], [900, 1.779], [906, 1.789], [912, 1.798], [918, 1.806], [924, 1.814], [930, 1.82], [936, 1.825], [942, 1.829], [948, 1.831], [954, 1.833], [960, 1.833], [966, 1.832], [972, 1.829], [978, 1.825], [984, 1.82], [990, 1.813], [996, 1.805], [1002, 1.795], [1008, 1.784], [1014, 1.771], [1020, 1.756], [1026, 1.74], [1032, 1.723], [1038, 1.703], [1044, 1.682], [1050, 1.66], [1056, 1.636], [1062, 1.61], [1068, 1.583], [1074, 1.555], [1080, 1.525], [1086, 1.493], [1092, 1.461], [1098, 1.427], [1104, 1.392], [1110, 1.356], [1116, 1.318], [1122, 1.28], [1128, 1.241], [1134, 1.202], [1140, 1.161], [1146, 1.12], [1152, 1.079], [1158, 1.037], [1164, 0.994], [1170, 0.952], [1176, 0.91], [1182, 0.867], [1188, 0.825], [1194, 0.782], [1200, 0.74], [1206, 0.699], [1212, 0.658], [1218, 0.617], [1224, 0.577], [1230, 0.538], [1236, 0.5], [1242, 0.462], [1248, 0.426], [1254, 0.391], [1260, 0.357], [1266, 0.324], [1272, 0.292], [1278, 0.262], [1284, 0.233], [1290, 0.205], [1296, 0.179], [1302, 0.155], [1308, 0.132], [1314, 0.11], [1320, 0.09], [1326, 0.072], [1332, 0.055], [1338, 0.04], [1344, 0.026], [1350, 0.014], [1356, 0.004], [1362, -0.005], [1368, -0.013], [1374, -0.019], [1380, -0.024], [1386, -0.027], [1392, -0.029], [1398, -0.029], [1404, -0.029], [1410, -0.027], [1416, -0.023], [1422, -0.019], [1428, -0.013], [1434, -0.006]];
+const SLACKS = [
+  { time: "05:57", turn: "Flood turns to ebb", peak: "then ebb to 0.94 kn at 08:06", after: "10 min after high water (05:47, 1.32 m)" },
+  { time: "10:31", turn: "Ebb turns to flood", peak: "then flood to 1.44 kn at 13:37", after: "50 min after low water (09:41, 1.05 m)" },
+  { time: "16:17", turn: "Flood turns to ebb", peak: "then ebb to 2.11 kn at 19:50", after: "19 min after high water (15:58, 1.83 m)" },
+];
+const alerts = new Set();
+const rows = document.getElementById("rows");
+const detail = document.getElementById("detail");
+const content = document.getElementById("d-content");
+const today = document.getElementById("today");
+const phone = document.getElementById("phone");
+const rm = document.getElementById("rm");
+const mm = (t) => +t.slice(0, 2) * 60 + +t.slice(3);
+let current = null, anim = null;
+
+function renderRows() {
+  rows.innerHTML = "";
+  SLACKS.forEach((s, i) => {
+    const el = document.createElement("div");
+    el.className = "cell row"; el.tabIndex = 0; el.setAttribute("role", "button");
+    el.dataset.i = i;
+    el.innerHTML = `<span class="t">${s.time}</span><span><div>${s.turn}</div><div class="sub">${s.peak}</div></span>` +
+      (alerts.has(s.time) ? `<span class="bell" aria-label="Alert set">🔔</span>` : `<span class="chev">›</span>`);
+    el.onclick = () => open(i);
+    el.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); } };
+    rows.appendChild(el);
+  });
+}
+function drawCurve(markerMin) {
+  const W = 361, H = 180, lo = Math.min(...CURVE.map(p => p[1])), hi = Math.max(...CURVE.map(p => p[1]));
+  const x = m => W * m / 1440, y = v => H * (1 - (v - lo) / (hi - lo));
+  const d = CURVE.map((p, i) => (i ? "L" : "M") + x(p[0]).toFixed(1) + " " + y(p[1]).toFixed(1)).join(" ");
+  const near = CURVE.reduce((a, b) => Math.abs(b[0] - markerMin) < Math.abs(a[0] - markerMin) ? b : a);
+  document.getElementById("curve").innerHTML =
+    `<line x1="${x(markerMin)}" x2="${x(markerMin)}" y1="0" y2="${H}" stroke="#8e8e93" stroke-dasharray="3 3"/>` +
+    `<path d="${d}" fill="none" stroke="#0a6c8f" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>` +
+    `<circle cx="${x(markerMin)}" cy="${y(near[1])}" r="5" fill="#0a6c8f"/>`;
+}
+function fill(s) {
+  document.getElementById("d-title").textContent = "Slack " + s.time;
+  document.getElementById("d-time").textContent = s.time;
+  document.getElementById("d-turn").textContent = s.turn + ".";
+  document.getElementById("d-after").textContent = s.after;
+  document.getElementById("d-peak").textContent = s.peak;
+  const t = document.getElementById("toggle");
+  t.setAttribute("aria-checked", alerts.has(s.time));
+  t.onclick = () => { alerts.has(s.time) ? alerts.delete(s.time) : alerts.add(s.time); t.setAttribute("aria-checked", alerts.has(s.time)); };
+  drawCurve(mm(s.time));
+}
+function rowRect(i) {
+  const r = rows.children[i].getBoundingClientRect(), p = phone.getBoundingClientRect();
+  return { x: r.left - p.left, y: r.top - p.top, w: r.width, h: r.height };
+}
+// Approximation of the system zoom; the app sets none of these.
+const EASE = "cubic-bezier(0.2, 0.9, 0.25, 1)", DUR = 500;
+function frames(i) {
+  const r = rowRect(i), sx = r.w / 393, sy = r.h / 760;
+  return [
+    { transform: `translate(${r.x}px, ${r.y}px) scale(${sx}, ${sy})`, borderRadius: `${22 / sx}px / ${22 / sy}px` },
+    { transform: "translate(0,0) scale(1,1)", borderRadius: "48px" },
+  ];
+}
+function open(i) {
+  if (anim) anim.cancel();
+  current = i; fill(SLACKS[i]);
+  detail.style.visibility = "visible"; detail.setAttribute("aria-hidden", "false");
+  rows.children[i].classList.add("is-source");
+  if (rm.checked) {
+    anim = detail.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, easing: "linear" });
+    today.animate([{ opacity: 1 }, { opacity: 1 }], { duration: 250 });
+  } else {
+    anim = detail.animate(frames(i), { duration: DUR, easing: EASE, fill: "both" });
+    content.animate([{ opacity: 0 }, { opacity: 1 }], { duration: DUR * 0.6, easing: "ease-out" });
+    today.animate([{ transform: "scale(1)", filter: "brightness(1)" }, { transform: "scale(.94)", filter: "brightness(.8)" }], { duration: DUR, easing: EASE, fill: "both" });
+  }
+  anim.onfinish = () => { document.getElementById("back").focus(); };
+}
+function close() {
+  if (current === null) return;
+  const i = current;
+  if (anim) anim.cancel();
+  renderRows(); rows.children[i].classList.add("is-source");
+  const done = () => {
+    detail.style.visibility = "hidden"; detail.setAttribute("aria-hidden", "true");
+    rows.children[i].classList.remove("is-source"); rows.children[i].focus(); current = null;
+    today.getAnimations().forEach(a => a.cancel());
+  };
+  if (rm.checked) {
+    anim = detail.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, easing: "linear", fill: "both" });
+  } else {
+    anim = detail.animate(frames(i).reverse(), { duration: DUR, easing: EASE, fill: "both" });
+    content.animate([{ opacity: 1 }, { opacity: 0 }], { duration: DUR * 0.6, easing: "ease-in", fill: "both" }).onfinish = function () { this.cancel(); };
+    today.animate([{ transform: "scale(.94)", filter: "brightness(.8)" }, { transform: "scale(1)", filter: "brightness(1)" }], { duration: DUR, easing: EASE, fill: "both" });
+  }
+  anim.onfinish = done;
+}
+document.getElementById("back").onclick = close;
+document.getElementById("replay").onclick = () => { if (current !== null) { detail.style.visibility = "hidden"; renderRows(); current = null; } open(1); };
+document.getElementById("replay-back").onclick = () => { if (current === null) { open(1); setTimeout(close, DUR + 400); } else close(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+rm.checked = matchMedia("(prefers-reduced-motion: reduce)").matches;
+renderRows();
+</script>
+</body>
+</html>

@@ -1,34 +1,58 @@
 # etale-ios - cast, SwiftUI
 
-**Two runs of the same case, told in order.** The first native example: every other one here is a web page. Run 1 was made on genjutsu 4.1.3; its defects pointed at three gaps in genjutsu's modules; those were fixed; run 2 is the same prompt, the same model, the same fixture and the same harness on the fixed plugin. One run each time, each built unchanged on the first try, 0 human edits. Run 2 was not picked among several: it is the only run made after the fix.
+**Six runs of one prompt, told in order.** The first native example: every other one here is a web page. The same prompt, the same model, the same fixture and the same harness each time; what changes is the genjutsu commit. Every run made is here: none was dropped, none was run again. Each built unchanged on the first try, with 0 human edits.
 
 **What is the runs' work here:** the way a slack row opens into its tide detail. The starting app (`cases/etale-ios/app`: the Today screen, its copy, the NOAA data, the tide curve, the alert switch) was written by hand for this case and held no animation: a row pushed the detail with the system transition of `NavigationStack` (`before/push.webp`).
 
-- **Run 1** replaced that push with a hand-built card that grows out of the row. To do it, it rewrote the list and the detail screen (487 lines), gave up the navigation stack, the bar and the edge-swipe back, and left a drag-to-close that flickers on every frame.
-- **Run 2** used the system zoom transition (`matchedTransitionSource` on the row, `navigationTransition(.zoom)` on the detail): 78 lines added, none removed. The stack, the bar, the back button and the edge-swipe back are all still there, the two screens look at rest exactly as they did, and no drag flickers. Its audit ran the new check of the code against the modules it loaded and reported two problems, both true. It has smaller defects of its own, listed under run 2.
+- **Run 1** (genjutsu 4.1.3) replaced that push with a hand-built card that grows out of the row. It rewrote the list and the detail screen (487 lines), gave up the navigation stack, the bar and the edge-swipe back, and left a drag-to-close that flickers on every frame.
+- Its defects pointed at three gaps in genjutsu's modules. Those were fixed.
+- **Run 2** (the fixed modules) used the system zoom transition (`matchedTransitionSource` on the row, `navigationTransition(.zoom)` on the detail): 78 lines added, none removed. The stack, the bar, the back button and the edge-swipe back are all still there.
+- **Run 3** (the 4.2.0 release branch, the same fixed modules) did not. It hand-built a surface again: 434 lines added, 59 removed, the stack and the bar gone, and on screen the time lands on the wrong row. Its audit printed the new check with "hand-built surface instead of the system zoom transition" as a problem, and changed nothing.
+- That pointed at the order of the pipeline: the thesis is written before the modules load, so what a module teaches arrives after the decision. A step was added to `cast` and `paint`: read the thesis against the loaded modules before any code, and with nobody answering, rewrite it on the module's way.
+- **Runs 4, 5 and 6** (the release branch with that step) all used the system zoom, in 15, 13 and 22 lines. In all three the thesis already named the zoom before any module was loaded, so the step had no hand-built thesis to correct.
 
-**What this pair does not prove.** Run 2 named the zoom transition in its thesis before it had read a single module, as the pipeline orders it (thesis, then load): the choice came from the model, not from the fixed `swiftui-motion`. The same model with the same prompt did not make that choice in run 1. With one run on each side, nothing here says how much of the difference is the fix and how much is chance. What the fixed plugin can be seen doing in run 2 is narrower: the modules it read afterwards agree with the thesis instead of being silent, and the audit prints the new check.
+## What the six runs show
 
-| | Run 1 | Run 2 |
-|---|---|---|
-| genjutsu | 4.1.3 at `5e00595` | 4.1.4 plus the two module-fix commits that shipped in 4.2.0, at `3e0d6d3` (branch `fix/native-shared-element`) |
-| Model, harness | claude-opus-5-5, Claude Code 2.1.323, `claude plugin eval`, headless | the same |
-| Date | 2026-11-13 | 2026-11-13 |
-| Cost | $3.42 | $1.53 |
-| Turns | 22 | 22 |
-| Duration | 898 s | 330 s |
-| Swift changed | 3 files, 487 insertions, 78 deletions | 3 files, 78 insertions, 0 deletions |
-| Build | succeeded on the first try, no compiler warning | succeeded on the first try, no compiler warning |
-| Transition | hand-built overlay above the stack | system zoom, inside the stack |
-| Navigation bar, back button, edge-swipe back | gone | kept (filmed) |
-| Drag to close | flickers on every frame | the system's own, monotonic (0 reversals over 78 frames at 60 fps) |
-| Screens at rest | both restyled | unchanged from the starting app |
-| Audit: loaded modules against the code | no such check in 4.1.3 | printed: 2 problems, 1 note, 2 "no departure" |
-| Human edits | 0 made, 1 needed | 0 made, 0 needed to ship the transition; 1 choice to revisit (below) |
+| | Used the system transition |
+|---|---|
+| Before the module fixes (run 1) | 0 of 1 |
+| On the fixed modules, without the step (runs 2 and 3) | 1 of 2 |
+| On the fixed modules, with the step (runs 4, 5, 6) | 3 of 3 |
+
+- **The step was never seen doing what it was written for.** It was written for run 3's case: a thesis that builds a surface by hand, brought back to the system transition before the code. No run with the step wrote such a thesis. All three named `navigationTransition(.zoom)` in the thesis page they wrote before their first module load (so did run 2, which had no step).
+- **Three of three is not proof.** If the rate without the step is the 1 of 2 seen in runs 2 and 3, three in a row happens one time in eight by chance alone.
+- **One way the step could have helped, not demonstrated.** Its text sits in `skills/cast/SKILL.md`, which a run reads before it writes its thesis, and it names "an overlay drawn by hand where the module starts from the system transition". Whether that sentence steered the three theses, nothing here can say.
+- **What the step did print.** Run 4: "Thesis against modules: no gap". Run 5: one revision, the Reduce Motion fallback (no more default push; the code now has no Reduce Motion guard at all, and what the system zoom does in that mode was not filmed). Run 6: one revision, a duration cut from 0.6 s plus 0.2 s of delay to 0.45 s, although the step's own text says a chosen value is a decision left to the audit, not a gap; and it missed the Reduce Motion question, which its audit then listed as a problem and left unfixed.
+- **Where it printed.** In the final report only. In no run did a gap line appear between the module load and the first line of code, and run 5 never printed the gap line in the format the step asks for.
+- **The module fixes alone are not proven either.** On the fixed modules 4 of 5 runs used the system transition, against 0 of 1 before; in each of the four the thesis named it before a module was read. The modules agree with those theses afterwards; they did not stop run 3.
+
+| | Run 1 | Run 2 | Run 3 | Run 4 | Run 5 | Run 6 |
+|---|---|---|---|---|---|---|
+| genjutsu commit | `5e00595` (4.1.3) | `3e0d6d3` (4.1.4 plus the two module-fix commits) | `5105f53` (`release/v4.2.0`) | `844f375` (`release/v4.2.0` plus the step) | `844f375` | `844f375` |
+| Module fixes | no | yes | yes | yes | yes | yes |
+| Step "thesis against loaded modules" | no | no | no | yes | yes | yes |
+| Claude Code | 2.1.323 | 2.1.323 | 2.1.325 | 2.1.325 | 2.1.325 | 2.1.325 |
+| Cost | $3.42 | $1.53 | $2.46 | $1.36 | $1.30 | $1.31 |
+| Turns | 22 | 22 | 25 | 19 | 18 | 23 |
+| Duration | 898 s | 330 s | 605 s | 268 s | 262 s | 269 s |
+| Swift lines | +487 -78, 3 files | +78 -0, 3 files | +434 -59, 3 files | +15 -0, 1 file | +13 -0, 1 file | +22 -1, 2 files |
+| Transition | hand-built overlay | system zoom | hand-built surface | system zoom | system zoom | system zoom |
+| Thesis named the zoom before any module load | no | yes | no | yes | yes | yes |
+| Navigation stack, bar, back button, edge-swipe back | gone | kept (filmed) | gone; a 20 pt edge strip and a close button instead | kept (filmed) | kept (filmed) | kept (filmed) |
+| Build | first try | first try | first try | first try | first try | first try |
+| Screens at rest | both restyled | unchanged | both restyled | unchanged | unchanged | unchanged |
+| Visible defects | drag flickers on every frame; lines overlap in flight | a white box around the row for about 0.4 s after each return | the time lands on the wrong row; the large time sits under the Dynamic Island; the Today list shows under the detail | a white box much taller than the row covers two rows for about 130 ms on each return | the same white box on opening and return, then a narrower one in the cell until about 1 s after Back | the line draw its thesis promises cannot be seen; the row's text floats over the shrinking detail on return |
+| What the step printed | no step | no step | no step | "Thesis against modules: no gap" | `Revised after LOAD:` the Reduce Motion fallback | `Revised after LOAD:` a duration |
+| Audit, "Loaded modules against code" | no such check | 2 problems, both true | 3 problems, all true, nothing changed | no departure | no departure | 1 problem (Reduce Motion), left unfixed |
+| Grader score | 1.00, 5 of 5 | 1.00, 5 of 5 | 1.00, 5 of 5 | 1.00, 5 of 5 | 1.00, 5 of 5 | 1.00, 5 of 5 |
+
+Runs 4, 5 and 6 were started within six seconds of each other and ran side by side; the numbers follow the order they were measured in, not their start times (run 5 started one second before run 4). The grader score is the same for every run, run 1's flickering drag and run 3's misplaced time included: these graders check that the skill fired, loaded its module and touched the list, not whether the motion is good.
+
+**Which run the README shows, and why.** Run 2, as before. It is one of six runs of this prompt; four used the system transition and two (runs 1 and 3) hand-built an overlay. No later run is clearly better: runs 4 and 5 show a larger white box than run 2's, run 6 has no white box but its one authored motion cannot be seen and its Reduce Motion problem is open, and run 2 is the only zoom run filmed under Reduce Motion, in dark appearance and at a large text size.
 
 ## The prompt
 
-The same for both runs, word for word:
+The same for all six runs, word for word:
 
 ```
 /genjutsu:cast Étale's iOS day list should open into the tide detail as one surface, not a push
@@ -43,7 +67,7 @@ Nobody is available to answer questions during this session. Up-front answers to
 Finish with the final report the pipeline asks for.
 ```
 
-Nobody answered the gates. The skill's "When nobody is answering" rule applied, and each run marked its own thesis **UNVALIDATED**. Neither run could build: each wrote its Swift without a compiler and said so in the first lines of its report.
+Nobody answered the gates. The skill's "When nobody is answering" rule applied, and each run marked its own thesis **UNVALIDATED**. No run could build: each wrote its Swift without a compiler and said so in its report.
 
 ## Run 1: genjutsu 4.1.3, a hand-built overlay
 
@@ -220,9 +244,9 @@ Filmed on the iPhone 17 simulator, iOS 26.5, 1206x2622 px (402x874 pt at 3x), wi
 - The run wrote its thesis page before loading its modules, as the pipeline orders it (thesis, then load), so the thesis was fixed before `swiftui-motion` was read.
 - The previews show a 9:12 status bar (the app's fixed clock) and bold system fonts that differ from the simulator's; they are throwaway mock-ups, not the build.
 
-## What was fixed in genjutsu between the runs
+## What was fixed in genjutsu between runs 1 and 2
 
-Two commits on genjutsu's branch `fix/native-shared-element`, `fd4e1da` and `3e0d6d3`, on top of v4.1.4 (`d5c614a`). They are not released: the plugin still calls itself 4.1.4. Run 2 ran on a copy of that branch at `3e0d6d3`. Each gap named in run 1's notes, and the file that now answers it:
+Two commits on genjutsu's branch `fix/native-shared-element`, `fd4e1da` and `3e0d6d3`, on top of v4.1.4 (`d5c614a`). They were not released when run 2 was made (the plugin still called itself 4.1.4) and are part of the 4.2.0 release branch that runs 3 to 6 ran on. Run 2 ran on a copy of that branch at `3e0d6d3`. Each gap named in run 1's notes, and the file that now answers it:
 
 - **The system transition for "a row opens its detail".** `skills/_jutsu/swiftui-motion/SKILL.md:28` now answers "Row or card opens a pushed or presented screen" with `navigationTransition(.zoom(sourceID:in:))` and `matchedTransitionSource(id:in:)`, and keeps `matchedGeometryEffect` for a shared element inside one hierarchy. A new section at line 112, "Shared element transitions", gives the sample, its availability, and what a hand-built overlay costs (line 144: the edge-swipe back, the bar, the VoiceOver escape, state restoration).
 - **A drag that moves its own view.** `skills/_jutsu/swiftui-motion/SKILL.md:310` says a gesture that sits inside the `.offset` it drives reads in `.global` or a named ancestor, and why; the examples there, in `skills/_jutsu/swiftui-motion/references/gestures-swiftui.md` (the rule is at line 55) and in `skills/_jutsu/mobile-principles/references/gestures-deep.md` now pass `coordinateSpace: .global`.
@@ -402,8 +426,178 @@ Same device, recorder, status bar, driver and encode as run 1 (see run 1's "Medi
 
 ### Notes
 
-- **The harness.** The same copy of `bin/run.sh` as run 1 (cost ceiling 15 USD, plugin copied to `/private/tmp/genjutsu-eval-ex-ios`), pointed at the genjutsu worktree on `fix/native-shared-element`, clean at `3e0d6d3`. One run was made and it is this one.
+- **The harness.** The same copy of `bin/run.sh` as run 1 (cost ceiling 15 USD, plugin copied to `/private/tmp/genjutsu-eval-ex-ios`), pointed at the genjutsu worktree on `fix/native-shared-element`, clean at `3e0d6d3`. One run was made on that commit and it is this one; four more runs of the same prompt followed on later commits (runs 3 to 6).
 - **Grader score 1.00, five of five**, the same five graders as run 1. Run 1 scored 1.00 too, with its flickering drag: these graders check that the skill fired, loaded its module and touched the list, not whether the motion is good.
 - **Where the numbers come from.** Cost, turns, score, model and Claude Code version are in `runs/20261113T201315Z/aggregate-result.json`. The tokens, the 330 s and the subagent count are in the run's trace, which is not committed.
 - **Hygiene.** In `run.log` and `report.html` the path into this repository was made relative and each U+2014 dash became "-", as the README says. The run's final report sets three of its headings with that dash; they are quoted here without it.
 - **Checked a second time.** A separate pass replayed the trace's three `Write` calls and six `Edit` calls on the starting app: the three Swift files and the two previews published here are byte for byte what the run wrote. It rebuilt a fresh copy of `workspace-1` with new derived data (Xcode 27.2, iPhone 17 simulator, iOS 26.5): `** BUILD SUCCEEDED **`, no compiler error or warning. It dumped the recordings of the two drags again at 60 fps and followed the curve with its own script: the downward drag goes 1171 to 1874 px without ever going back, the edge swipe 94 to 873 px and turns once at the release; in the committed clips, the same tracker counts 0 reversals in `media/run-2/drag-down.webp` and 56 in run 1's `media/defect-drag.webp`. It searched the trace: nothing before the thesis page names the zoom API, the edge swipe or a shared element, and the plugin copy the harness ran is identical to `3e0d6d3`. It checked the cost, turns, duration, tokens and subagent count against the trace, the audit quotes against the run's final report, and the `file:line` citations against genjutsu at `3e0d6d3`. It corrected the pixel counts of the screens at rest, which had been read from an ImageMagick figure that is not a pixel count, and added the measurement of the white box, the misdated API and the `List` row item above. Not done again: no new recording was filmed, and the opening and closing timings were not measured a second time beyond the opening of the 10:31 row (zoom about 0.45 s, dot at 0.45 s: the same).
+
+## Run 3: the 4.2.0 release branch, a hand-built surface again
+
+**It compiles and it runs. It is not ready to ship, and it is the same mistake as run 1 on modules that now teach the other way.** Its code is in `runs/20261113T213153Z/workspace-1`, its media in `media/run-3/`. This was a smoke run of the release branch before the release, not a run made for this page; it is here because it is a run of this prompt and it went the other way.
+
+| | |
+|---|---|
+| Skill | `/genjutsu:cast` |
+| genjutsu | `release/v4.2.0` at `5105f53` (the harness prints "4.2.0"); the module fixes of run 2 are in it, the step of runs 4 to 6 is not |
+| Model | claude-opus-5-5 (Claude Code 2.1.325, `claude plugin eval`, headless) |
+| Date | 2026-11-13 |
+| Cost | $2.46 (2.4578198) |
+| Turns | 25 |
+| Duration | 605 s in the run's trace; the harness prints 606 s for the whole case |
+| Subagents | 0 |
+| Build | `xcodebuild` for the iOS 26.5 simulator succeeded on the first try, no compiler error, no compiler warning (only the AppIntents metadata warning the starting app prints too) |
+| Human edits | 0 made |
+
+### What it decided
+
+**Interaction thesis (UNVALIDATED, nobody was available to answer)**, quoted from the final report:
+
+> Tapping a slack row grows that row, in place, into the tide detail as one surface on a critically damped spring (`.spring(duration: 0.45, bounce: 0)`, since slack water does not overshoot). The slack time is the still point: it moves from the row to the head of the detail and never fades. The rest of the detail fades in and rises 12 pt over the second half of the travel. Dragging the head down, or swiping in from the leading edge, shrinks the surface back into its row under the finger. With Reduce Motion on, the finished detail crossfades in over 200 ms instead. Leaving the push loses the edge-swipe back, the bar and its back button, the VoiceOver escape gesture and the navigation path. A leading-edge swipe, a close button and `.accessibilityAction(.escape)` replace the first three; nothing replaces the path, which the app does not restore or deep-link today.
+
+**The order.** The run wrote its preview (`preview/slack-surface.html`, the hand-built surface) before its three module loads. Nothing it wrote before the loads names the zoom transition; the first occurrence of the word in the trace is in what `swiftui-motion` and `mobile-principles` returned. After reading them it kept its surface and edited the preview's thesis to name what leaving the push costs: the two last sentences above. That is what the fixed `mobile-principles` asks of a thesis that replaces the stack ("a cost the thesis states, loss by loss"), and it is all it did: the modules were read, the cost was written down, the decision stood. Its reasoning summary in the trace, right after the loads: "Since the brief rules out a push, I'm keeping the custom surface, naming each replacement in the thesis, and adding a leading-edge swipe."
+
+**Modules loaded:** motion-principles, mobile-principles, swiftui-motion. Not loaded: none.
+
+### What changed
+
+3 Swift files, 434 insertions, 59 deletions against the starting app.
+
+- `Etale/SlackSurface.swift` (new, 280 lines): the surface, its clip, the travelling time, the head drag, a 20 pt leading-edge strip that stands in for the edge swipe, the close button, every motion number.
+- `Etale/TodayView.swift` (rewritten): rows are buttons that open the surface; `NavigationLink` and `navigationDestination` are removed.
+- `Etale/TideDetailView.swift`: now only the detail's body; its header moved into the surface and its navigation title is gone.
+
+### Its own audit
+
+**"10 checked, 5 problems found, 3 handed over".** The check "Loaded modules against code" printed three problems, quoted:
+
+> - **Hand-built surface instead of the system zoom transition** (`mobile-principles`, swipe-back; `swiftui-motion`, zoom transition). Problem, at `TodayView.swift:21-45`. The thesis sentence that covers it: "Leaving the push loses the edge-swipe back, the bar and its back button, the VoiceOver escape gesture and the navigation path…". iOS 18+'s zoom transition would keep all four of those, but the system sets its timing and can't move the time on its own.
+> - **Exit is not quieter than entry** (`motion-principles`). Problem, at `TodayView.swift:125`. Closing reverses the full 0.45 s spring rather than using a short fade.
+> - **Leading-edge strip intercepts touches.** Problem, at `SlackSurface.swift:208-219`. The 20 pt strip catches taps and the start of scrolls along the detail's leading edge.
+
+All three are true, and the first is the whole matter. The check worked as written: the thesis is UNVALIDATED, so its sentence licenses nothing and the departure is a problem. But the check runs on written code, and with nobody answering nothing acts on what it lists. The run shipped the surface with its own audit saying the system transition would have kept everything it gave up.
+
+### Defects the run introduced
+
+Seen on the recordings (`media/run-3/`), three takes: open and close, edge swipe, drag down.
+
+- **The time lands on the wrong row.** After a return, "10:31" sits in the 05:57 row, under "05:57", and the 10:31 row has no time (`media/run-3/defect-wrong-row.png`; it stays that way at rest).
+- **The large time sits under the Dynamic Island.** In the settled detail the 56 pt "10:31" is drawn at the very top of the screen, behind the status bar and the island, over its own "Slack water" label (`media/run-3/detail.png`).
+- **The Today list shows under the detail.** The settled detail does not cover the screen: the last rows of the Tide section are visible below the alert switch (`media/run-3/detail.png`).
+- **Both screens were restyled**, as in run 1: no navigation bar, no title, no back button, a close button top right, the rows' text in the tint colour, no disclosure chevrons (`media/run-3/today.png`).
+- **After the drag, a white card with only the time stays over the first two rows** in the last frames of the take (`media/run-3/drag-down.webp`).
+
+Not measured for this run: whether the drag flickers frame by frame (run 1's defect), the timings, Reduce Motion, dark appearance, large type.
+
+### Notes
+
+- **The harness.** A copy of `bin/run.sh` with its paths changed, pointed at a copy of genjutsu at `5105f53`. One run was made.
+- **Grader score 1.00, five of five.**
+- **Hygiene.** As for the other runs, and one more change: the run's own `preview/slack-surface.html` had a U+2014 dash in its `<title>`; it is " - " here. Nothing else in the workspace was touched.
+- **Media.** Filmed by the pass that measured the run, on the same simulator with the same driver (`takes/driver`, tests `testOpenAndClose`, `testEdgeSwipeBack`, `testDragClose`). Its cut and encode commands were not kept; the recordings are not committed.
+
+| File | Output | What it shows |
+|---|---|---|
+| `media/run-3/clip.webp` | 402x874, 10.4 s, 470 KB | Open and close, twice. The time lands under "05:57" on each return. |
+| `media/run-3/edge-swipe.webp` | 402x874, 2.4 s, 118 KB | A swipe from the leading edge: the surface shrinks back. |
+| `media/run-3/drag-down.webp` | 402x874, 2.7 s, 258 KB | The head dragged down: the surface collapses, a white card with the time stays. |
+| `media/run-3/today.png` | 603x1311 | The Today screen at rest, restyled. |
+| `media/run-3/detail.png` | 603x1311 | The settled detail: the time under the Dynamic Island, the list showing below. |
+| `media/run-3/defect-wrong-row.png` | 603x1311 | After a return: "10:31" in the 05:57 row. |
+
+## What was added to genjutsu after run 3
+
+Two commits on `release/v4.2.0`, `779f16c` and `844f375`, on top of `5105f53`. Runs 4, 5 and 6 ran on a `git archive` of `844f375`.
+
+- **The cause they aim at.** In `cast` the thesis and its preview are written before the modules load (thesis gate, then LOAD). What a module teaches arrives after the decision. Headless, the thesis is UNVALIDATED, so the audit check can only list the departure as a problem once the code exists: run 3.
+- **The step.** `skills/cast/SKILL.md` and `skills/paint/SKILL.md`, the same text in both: "Read the thesis against the modules, before any code." After the last module load, walk the rules of each loaded module that bear on what the thesis promises. A gap is a thesis that builds by hand what a module says the platform provides, or that gives up something a module rule protects. A value chosen where a module gives a range is a decision, not a gap. Print one line per gap, or `Thesis against modules: no gap`.
+- **With someone there:** a thesis a person approved is never changed silently; each gap is asked once, revise or keep.
+- **With nobody answering:** nobody accepted the cost, so the module's way stands: rewrite the thesis on it, changing only what the gap touches, print it whole, marked UNVALIDATED, with one line, `Revised after LOAD: <what changed> - <module, rule>`. A departure is kept only when the request asks, in its own words, for a result the module's way cannot give; "not a push" asks for what is seen, not for an API.
+- The audit check "Loaded modules against code" still runs afterwards, on the code.
+
+## Runs 4, 5 and 6: the release branch with the step
+
+**All three compile, run and use the system zoom. None shows the step correcting a hand-built thesis: none wrote one.** Their code is in `runs/20261113T220815Z/workspace-1` (run 4), `runs/20261113T220814Z/workspace-1` (run 5) and `runs/20261113T220820Z/workspace-1` (run 6); their media in `media/run-4/`, `media/run-5/` and `media/run-6/`.
+
+| | Run 4 | Run 5 | Run 6 |
+|---|---|---|---|
+| genjutsu | `release/v4.2.0` at `844f375` | the same | the same |
+| Model, harness | claude-opus-5-5, Claude Code 2.1.325, `claude plugin eval`, headless | the same | the same |
+| Cost | $1.36 (1.3550284) | $1.30 (1.2995434) | $1.31 (1.3110324) |
+| Turns | 19 | 18 | 23 |
+| Duration | 268 s | 262 s in the trace, 263 s printed | 269 s |
+| Subagents | 0 | 0 | 0 |
+| Swift changed | `TodayView.swift`, 15 insertions | `TodayView.swift`, 13 insertions | `TodayView.swift` +7, `TideDetailView.swift` +15 -1 |
+| Build | first try, no compiler warning | first try, no compiler warning | first try, no compiler warning |
+| Modules loaded | motion-principles, mobile-principles, swiftui-motion | the same | the same |
+| Human edits | 0 | 0 | 0 |
+
+### What each thesis said, and when
+
+In each run the thesis page was written before the first module load and already names `matchedTransitionSource` and `navigationTransition(.zoom)` (`preview/today-to-detail.html` in run 4, `preview/thesis.html` in runs 5 and 6). The trace of each run shows the order: the `Write` of that page, then the three loads.
+
+- **Run 4**, final thesis: "Tapping a slack-water row in Today makes that row grow into its tide detail, using SwiftUI's zoom navigation transition (`.matchedTransitionSource` on the row, `.navigationTransition(.zoom)` on the detail). The system sets the timing. The time you tapped becomes the detail's 56 pt headline. A back-swipe or a pull-down shrinks the detail into the same row, with the bell showing any alert you just set."
+- **Run 5**, final thesis, headed "UNVALIDATED, revised after LOAD": the same zoom, "The timing is the system's: the app sets no duration. With Reduce Motion on, the app keeps the same zoom call and leaves the reduced version to the system, which owns that transition. It never swaps in the default push."
+- **Run 6**, final thesis: the same zoom, and "As the detail arrives, the day's tide line draws left to right through the slack marker with `.smooth(duration: 0.45)`, no delay. With Reduce Motion, the system's own handling replaces the zoom and the line is shown already drawn." It also wrote, among its assumptions: "I read 'not a push' as how it should look, not as a ban on navigation."
+
+### What the step printed
+
+- **Run 4**, in the final report, word for word: "Thesis against modules: no gap. The thesis already uses the approach the SwiftUI module recommends for a row that opens a screen, and it keeps the back-swipe." No revision.
+- **Run 5**, under the thesis, word for word: `Revised after LOAD: Reduce Motion no longer falls back to the default push (a full-width slide) - motion-principles / swiftui-motion, reduced motion: large translations are neutralized`. One sentence of the thesis changed. Before the load (`preview/thesis.html`): "With Reduce Motion on, the app drops the zoom and the detail arrives with the system's default transition." The gap line in the step's format (`<module>, <rule> - <what the thesis does instead>`) was never printed, nor "no gap".
+- **Run 6**, under the thesis, word for word: `Revised after LOAD: line draw 0.6 s + 0.2 s delay → 0.45 s, no delay - motion-principles, never exceed 500ms on a UI interaction`, and in the report: "**Thesis against modules, after loading:** one gap, the line draw ran over 500 ms. I fixed it in the thesis before writing any code, as the revised line above shows." The step's text says a value the thesis chose is a decision left to the audit, not a gap: this revision is outside what the step defines.
+- **In all three** the step's output is in the final report only; nothing was printed between the loads and the first edit. In runs 5 and 6 the preview made before the load got the first line the step asks for, "Shows the thesis before its revision after LOAD", and was not rebuilt. Run 4 says itself that it wrote `preview/variants.html` after the code, "the wrong order".
+
+### Their audits, "Loaded modules against code"
+
+- **Run 4** ("8 checked, 1 problem found, 1 not checked, 3 not applicable, 2 handed over"): "no departure. SwiftUI module: same id and namespace on both sides, and the zoom sits on the detail's root view (`TodayView.swift:70`). Mobile module: the swipe-back is kept." Its one problem is the 12 pt corner radius typed in (`TodayView.swift:81`). Reduce Motion: not checked, no guard, left to the system.
+- **Run 5** ("10 checked, 1 problem found, 1 not checked"): "No departure: The zoom is on the destination root, outside any container. The id and namespace are the same on both sides. The swipe-back is kept [...]. Nothing scales to 0 and no duration is set." Its one problem is `cornerRadius: 12` (`TodayView.swift:42`). Reduce Motion: not checked. The revision above removed the only Reduce Motion path the first thesis had, so the code has no guard, and the audit hands the question to a device.
+- **Run 6** ("9 checked, 1 problem found, 1 not checked, 2 not applicable"): "1 problem. `swiftui-motion`, reduced motion ('large translations, scale … must be neutralized'): `TodayView.swift:65` applies the zoom even with Reduce Motion on. The thesis line 'With Reduce Motion, the system's own handling replaces the zoom' is unvalidated, so it doesn't justify this. Problem. I left it unfixed: switching the zoom off would bring back the sideways push slide [...]." The problem is true in the code. The step, before the code, had not raised it, although reduced motion is one of the things the step's text names.
+
+### What the captures show
+
+Each build was filmed on the same simulator with the same driver, three takes: open and close, edge swipe, drag down. Reduce Motion, dark appearance and large type were not filmed for these runs.
+
+- **Stack, bar, back button, edge-swipe back: kept in all three**, visible on the frames; the swipe from the leading edge is interactive and lands the detail on its row (`media/run-4/edge-swipe.webp`, `media/run-5/edge-swipe.webp`, `media/run-6/edge-swipe.webp`).
+- **No drag flickers.** Over the 300 pt downward drag at 60 fps: run 4, 0 reversals over 75 samples; run 5, 0 reversals over 73 frames (the curve's top from 1171 to 1908 px); run 6, 0 reversals over 80 frames (1171 to 2050 px). On the edge swipe the only reversals come at the release, when the detail turns back towards its row.
+- **None of run 3's defects**: the time lands on the right row, nothing sits under the Dynamic Island, the list does not show under the settled detail. The two screens at rest are the starting app's.
+- **Timing** (the picture changes for): run 4, 0.63 s opening and 0.93 s closing; run 5, 0.55 s and 0.97 s; run 6, 0.53 s and 0.53 s.
+
+### Defects these runs introduced
+
+- **Run 4: a white box much taller than the row on every return.** The run gave the zoom's source the cell's background and 12 pt corners (`TodayView.swift:36-42`), as run 2 did. On the way back the source comes back as a white box far taller than the row, its text at the top; it covers the 05:57 and 16:17 rows for about 4 frames at 30 fps (130 ms), and "10:31" passes over the 05:57 row before it settles (`media/run-4/defect-source-box.png`, four frames of one return). On opening, for 1 to 2 frames, the 10:31 row floats above the 05:57 row.
+- **Run 5: the same white box, on opening and on return.** Same cause (`TodayView.swift:39-43`). About 0.3 to 0.4 s after Back a large rounded white rectangle, nearly empty, covers the 10:31 and 16:17 rows; then a narrower one (it stops before the chevron) stays inside the still-grey cell until about 1 s after Back (`media/run-5/defect-source-box.png`). This is run 2's defect, more marked.
+- **Run 5: no Reduce Motion path at all**, after its own revision. What the system zoom does with Reduce Motion on was not filmed.
+- **Run 6: the line draw cannot be seen.** The thesis promises the tide line drawing left to right over 0.45 s. On the recording the curve is complete from the first frame where it appears, about 30 ms after the zoom starts (`media/run-6/open-mid.png`, about 100 ms in: the whole curve is there). No left-to-right draw is visible at 60 fps, on either opening.
+- **Run 6: the row's text floats over the shrinking detail** for a few frames on return (`media/run-6/close-mid.png`). That is the system zoom's own cross-fade, also present in run 2. Run 6 gave the source no background, so it has no white box.
+- **Run 6: the zoom runs with Reduce Motion on** (its audit's open problem), not filmed.
+
+### Notes
+
+- **The harness.** The same copy of `bin/run.sh` as run 3 with its paths changed, cost ceiling 6 USD, pointed at a `git archive` of genjutsu at `844f375`; the case and the tools came from a `git archive` of this repository at `3a147db`. Three calls of one run each, started side by side. No run was made again.
+- **Claude Code 2.1.325** for runs 3 to 6, against 2.1.323 for runs 1 and 2.
+- **Where the numbers come from.** Cost, turns, score, model and Claude Code version are in each run's `aggregate-result.json`. The durations, the order of the thesis page and the loads, and the quotes of the final reports come from each run's trace and final report, which are not committed.
+- **Hygiene.** In `run.log` and `report.html` the path into this repository was made relative and each U+2014 dash became " - ". No file of these three workspaces was changed.
+- **Media.** Runs 4 and 6: cut and encoded by the pass that measured each run; the commands were not kept. Run 5: the measuring pass left recordings and 60 fps frames only, and the three clips were encoded afterwards from those frames with `takes/encode-clip.py` (24 fps, q62, 402 px wide). The recordings are not committed. Stills are frames of the recordings at 603x1311, except run 4's defect sheet.
+
+| File | Output | What it shows |
+|---|---|---|
+| `media/run-4/clip.webp` | 402x874, 12.1 s, 722 KB | Run 4: open and back on the 10:31 row, then on the 16:17 row. The tall white box shows on each return. |
+| `media/run-4/edge-swipe.webp`, `media/run-4/drag-down.webp` | 402x874, 2.7 s each, 436 and 413 KB | Run 4: the edge-swipe back and the 300 pt drag down. |
+| `media/run-4/today.png`, `media/run-4/detail.png` | 603x1311 | Run 4: the two screens at rest, the starting app's. |
+| `media/run-4/defect-source-box.png` | 2000x1087 | Run 4: four frames of one return, the white box over the rows. |
+| `media/run-5/clip.webp` | 402x874, 5.2 s, 378 KB | Run 5: open and back on the 10:31 row. |
+| `media/run-5/edge-swipe.webp`, `media/run-5/drag-down.webp` | 402x874, 2.5 and 2.4 s, 440 and 397 KB | Run 5: the edge-swipe back and the drag down. |
+| `media/run-5/today.png`, `media/run-5/detail.png` | 603x1311 | Run 5: the two screens at rest. |
+| `media/run-5/defect-source-box.png` | 603x1311 | Run 5: after Back, the narrower white rectangle inside the still-grey 10:31 cell. |
+| `media/run-6/clip.webp` | 402x874, 11.6 s, 721 KB | Run 6: open and back, twice. No white box; no visible line draw. |
+| `media/run-6/edge-swipe.webp`, `media/run-6/drag-down.webp` | 402x874, 2.4 s each, 425 and 435 KB | Run 6: the edge-swipe back and the drag down. |
+| `media/run-6/today.png`, `media/run-6/detail.png` | 603x1311 | Run 6: the two screens at rest. |
+| `media/run-6/open-mid.png` | 603x1311 | Run 6, about 100 ms into the zoom: the tide curve already whole. |
+| `media/run-6/close-mid.png` | 603x1311 | Run 6, about 200 ms after Back: the row's text over the shrinking detail. |
+
+## Not verified, for runs 3 to 6
+
+- No real device: frame pacing, hitches, 120 Hz. Instruments > Animation Hitches was not run.
+- Reduce Motion, dark appearance, large type, VoiceOver, Full Keyboard Access: not filmed and not checked for any of these four runs.
+- The measurements of runs 3 to 6 were each made by one pass and were not checked a second time, unlike runs 1 and 2. For this page, the Swift line counts were counted again against the starting app, the order "thesis page, then module loads" was read again in each trace, and the stills were looked at again.
+- No run has shown the step revising a hand-built thesis. That path is untested.
