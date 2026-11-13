@@ -1,0 +1,16 @@
+Note: --scaffold runs each case's scaffold_script as you. Only use it on case files you (or your org) authored.
+Plugin under test: "genjutsu" version "4.1.4" at "/private/tmp/gj-baseline/eval-candidate-r1-nocturne-planetarium-1"
+  scaffold: /private/tmp/gj-baseline/eval-candidate-r1-nocturne-planetarium-1/examples/nocturne-planetarium/fixture.sh
+  kept temp: /private/tmp/e-GIvH6j
+⚠ kept /private/tmp/e-GIvH6j: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-GIvH6j/sealed (mode 000; the kept directory is read-only) - open them with `chmod 700 /private/tmp/e-GIvH6j /private/tmp/e-GIvH6j/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  nocturne-planetarium run 1/1: score 1.00  $2.90
+    ✓ page-has-content (weight 1): matched <(main|section)(\s[^>]*[^/])?>|^import\s
+    ✓ paint-fired (weight 1): matched "skill"\s*:\s*"(?:[\w-]+:)?paint"|[/]_jutsu\b
+    ✓ paint-loaded (weight 1): matched "skill"\s*:\s*"(?:[\w-]+:)?paint"|Modules\snot\sloaded:
+✓ nocturne-planetarium  score 1.00  (1 run)  $2.90
+
+CASE                  SCORE PASS% RUNS COST    NOTES
+nocturne-planetarium  1.00  100%  1    $2.90   
+
+1 case(s) · 589s · $2.90
+Report: baseline-2026-11/nocturne-planetarium-candidate-r1-1/runs/20261113T192623Z/report.html

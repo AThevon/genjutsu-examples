@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk - design system preview (throwaway, not the build)</title>
+<link rel="stylesheet" href="../src/tokens.css">
+<style>
+  *{box-sizing:border-box} body{margin:0;background:var(--color-bg);color:var(--color-ink);font:var(--text-body)/var(--leading-body) var(--font-sans)}
+  main{max-width:var(--container);margin:0 auto;padding:var(--space-12) var(--gutter)}
+  h1{font-size:var(--text-h2);font-weight:var(--weight-bold);margin:0 0 var(--space-2)}
+  h2{font-size:var(--text-body);font-weight:var(--weight-bold);margin:var(--space-12) 0 var(--space-4);padding-top:var(--space-6);border-top:var(--hairline) solid var(--color-line)}
+  .note{color:var(--color-ink-muted);font-size:var(--text-small);max-width:var(--measure)}
+  .row{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:center}
+  .sw{width:150px;border:var(--hairline) solid var(--color-line);font-size:var(--text-small);font-variant-numeric:tabular-nums}
+  .sw div{height:48px} .sw p{margin:var(--space-2)}
+  .bar{height:var(--space-2);background:var(--color-ink)}
+  .btn{font:inherit;font-weight:var(--weight-medium);border-radius:var(--radius-sm);padding:var(--space-3) var(--space-6);border:0;background:var(--color-ink);color:var(--color-on-ink);cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out)}
+  .btn:hover,.btn.h{background:var(--color-ink-hover)}
+  .btn:focus-visible,.btn.f{outline:var(--focus-width) solid var(--color-ink);outline-offset:2px}
+  .btn:active,.btn.a{background:var(--color-ink);text-decoration:underline;text-underline-offset:3px}
+  .btn:disabled{background:var(--color-line);color:var(--color-ink-muted);cursor:not-allowed}
+  .link{color:var(--color-ink);text-decoration:underline;text-decoration-color:var(--color-line-strong);text-underline-offset:3px;transition:text-decoration-color var(--dur-fast) var(--ease-out)}
+  .link:hover,.link.h{text-decoration-color:var(--color-ink)} .link:focus-visible,.link.f{outline:var(--focus-width) solid var(--color-ink);outline-offset:2px}
+  .link:active,.link.a{color:var(--color-ink-muted)} .link.d{color:var(--color-ink-muted);text-decoration:none;cursor:default}
+  .state{display:grid;gap:var(--space-2);justify-items:start;font-size:var(--text-small);color:var(--color-ink-muted)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk - design system</h1>
+  <p class="note">This page is the proposal, not the build. Tokens are read live from src/tokens.css. Status: UNVALIDATED (headless). Light mode only; no dark mode was asked for.</p>
+  <p class="note">Dials: variance 2 (from "one left edge, flat"), motion 2 (from "fast and dry, scroll does nothing"), density 4 (from "airy text, dense table"; this dial prints a label only, the spacing scale is set by hand). Display face: system sans, reason in the visual thesis (no third-party font request; voice from tabular figures).</p>
+
+  <h2>Colour</h2>
+  <div class="row">
+    <div class="sw"><div style="background:var(--color-bg)"></div><p>bg #FFFFFF</p></div>
+    <div class="sw"><div style="background:var(--color-surface)"></div><p>surface #F5F6F7</p></div>
+    <div class="sw"><div style="background:var(--color-line)"></div><p>line #DADDE1 · rules</p></div>
+    <div class="sw"><div style="background:var(--color-line-strong)"></div><p>line-strong #8A9097 · 3.2:1</p></div>
+    <div class="sw"><div style="background:var(--color-ink)"></div><p>ink #15171A · 18.0:1</p></div>
+    <div class="sw"><div style="background:var(--color-ink-hover)"></div><p>ink-hover #2B2F35</p></div>
+    <div class="sw"><div style="background:var(--color-ink-muted)"></div><p>muted #5C636B · 6.1:1</p></div>
+    <div class="sw"><div style="background:var(--color-signal)"></div><p>signal #B42318 · 6.6:1</p></div>
+  </div>
+
+  <h2>Type</h2>
+  <p style="font-size:var(--text-display);line-height:var(--leading-display);font-weight:var(--weight-bold);letter-spacing:var(--tracking-display);margin:0 0 var(--space-4)">Display 600 - clamp(2rem, 1.5rem + 2vw, 3rem)</p>
+  <p style="font-size:var(--text-h2);line-height:var(--leading-h2);font-weight:var(--weight-bold);margin:0 0 var(--space-4)">H2 600 - 1.5rem</p>
+  <p style="font-size:var(--text-lead);margin:0 0 var(--space-4)">Lead 400 - 1.125rem</p>
+  <p style="margin:0 0 var(--space-4)">Body 400 - 1rem</p>
+  <p style="font-size:var(--text-table);font-variant-numeric:tabular-nums;margin:0 0 var(--space-4)">Table 0.9375rem tabular - 40 × 1.15 / 6 × 54.90 / 50 × 0.92</p>
+  <p style="font-size:var(--text-small);font-weight:var(--weight-medium);color:var(--color-ink-muted);margin:0">Small 500 - 0.8125rem</p>
+
+  <h2>Spacing</h2>
+  <div style="display:grid;gap:var(--space-2)">
+    <div class="bar" style="width:var(--space-1)"></div><div class="bar" style="width:var(--space-2)"></div><div class="bar" style="width:var(--space-3)"></div><div class="bar" style="width:var(--space-4)"></div><div class="bar" style="width:var(--space-6)"></div><div class="bar" style="width:var(--space-8)"></div><div class="bar" style="width:var(--space-12)"></div><div class="bar" style="width:var(--space-16)"></div><div class="bar" style="width:var(--space-24)"></div>
+  </div>
+
+  <h2>Radii and elevation</h2>
+  <p class="note">Radii: 0 / 2px / 4px. Elevation: flat at every level, no shadows; separation by hairline and the surface band.</p>
+
+  <h2>Primary button - five states</h2>
+  <div class="row">
+    <div class="state"><button class="btn">Start the 14-day trial</button>default</div>
+    <div class="state"><button class="btn h">Start the 14-day trial</button>hover</div>
+    <div class="state"><button class="btn f">Start the 14-day trial</button>focus</div>
+    <div class="state"><button class="btn a">Start the 14-day trial</button>active</div>
+    <div class="state"><button class="btn" disabled>Start the 14-day trial</button>disabled</div>
+  </div>
+
+  <h2>Quiet link - five states</h2>
+  <div class="row">
+    <div class="state"><a class="link" href="#">Book a demo</a>default</div>
+    <div class="state"><a class="link h" href="#">Book a demo</a>hover</div>
+    <div class="state"><a class="link f" href="#">Book a demo</a>focus</div>
+    <div class="state"><a class="link a" href="#">Book a demo</a>active</div>
+    <div class="state"><span class="link d">Book a demo</span>disabled</div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,14 @@
+Note: --scaffold runs each case's scaffold_script as you. Only use it on case files you (or your org) authored.
+Plugin under test: "baseline-none" version "0.0.0" at "/private/tmp/gj-baseline/eval-none-invoice-mark-paid-1"
+  scaffold: /private/tmp/gj-baseline/eval-none-invoice-mark-paid-1/examples/invoice-mark-paid/fixture.sh
+  kept temp: /private/tmp/e-UMYlpF
+⚠ kept /private/tmp/e-UMYlpF: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-UMYlpF/sealed (mode 000; the kept directory is read-only) - open them with `chmod 700 /private/tmp/e-UMYlpF /private/tmp/e-UMYlpF/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  invoice-mark-paid run 1/1: score 1.00  $0.91
+    ✓ button-has-interaction (weight 1): matched motion|[Aa]nimat|[Tt]ransition|keyframes|[Ss]pring|requestAnimationFrame|from\s+["']\.\.?/(?!data["'])
+✓ invoice-mark-paid  score 1.00  (1 run)  $0.91
+
+CASE               SCORE PASS% RUNS COST    NOTES
+invoice-mark-paid  1.00  100%  1    $0.91   
+
+1 case(s) · 211s · $0.91
+Report: baseline-2026-11/invoice-mark-paid-none-1/runs/20261113T183007Z/report.html

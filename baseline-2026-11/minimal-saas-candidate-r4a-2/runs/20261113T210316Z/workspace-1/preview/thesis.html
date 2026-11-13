@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk - thesis preview (throwaway)</title>
+<style>
+  :root{--g:#FAFBFC;--s:#FFF;--ink:#0E1621;--ink2:#46505C;--q:#6A737E;--rule:#DDE2E7;--rs:#8C96A1;--a:#0B4F5C;--sig:#B3321A;--tint:#FBEEEA;--e:cubic-bezier(0.2,0,0,1)}
+  body{margin:0;background:var(--g);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;padding:48px 24px}
+  main{max-width:960px;margin:0 auto}
+  h1{font-size:28px;font-weight:500;margin:0 0 8px}
+  h2{font-size:19px;font-weight:600;margin:48px 0 12px}
+  p{max-width:60ch;color:var(--ink2)}
+  .note{font-size:14px;color:var(--ink2);border-left:2px solid var(--rule);padding-left:12px}
+  table{border-collapse:collapse;background:var(--s);font-size:14px;font-variant-numeric:tabular-nums;width:100%;max-width:640px}
+  th,td{padding:8px 12px;border-bottom:1px solid var(--rule);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  th{font-weight:500;color:var(--ink2)}
+  tr.m td{color:var(--q);transition:opacity 160ms var(--e)}
+  tr.m.out td{opacity:0}
+  tr.x{background:var(--tint)} tr.x .bad{color:var(--sig);font-weight:600}
+  .why{color:var(--sig);font-size:14px;text-align:left}
+  .rm tr.m td{transition-duration:0ms}
+  button{font:inherit;font-size:14px;font-weight:500;background:var(--s);border:1px solid var(--rs);border-radius:2px;padding:6px 12px;margin:12px 8px 12px 0;cursor:pointer}
+  dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 16px;font-size:14px}
+  dt{color:var(--ink2)} dd{margin:0;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk: the theses</h1>
+  <p class="note">This page is the proposal, not the build. Headless session: both theses are UNVALIDATED. All quantities and prices below are illustrative example values.</p>
+
+  <h2>Visual thesis</h2>
+  <p>A cool white working paper in near-black ink. A deep petrol blue marks only the action, and a single vermilion marks only a value that does not match. Matched lines recede to grey. Set in the system sans with tabular figures. Airy, one left edge, sharp 2px corners, hairlines, no shadows.</p>
+  <p><strong>First screen:</strong> beside the headline and the trial action, one example invoice reconciled line by line against its PO and delivery note. Matched lines are grey, and the exceptions are vermilion and named in words.</p>
+
+  <h2>Interaction thesis</h2>
+  <p>Fast and dry, 120 to 180ms, cubic-bezier(0.2, 0, 0, 1). Hover shifts colour only. Nothing moves on scroll. Forbidden: scroll reveals, parallax, scale, bounce, loops, counters, gradients, shadows.</p>
+  <p><strong>The one motion:</strong> "Hide matched lines" fades the matched rows out in 160ms, then removes them, leaving only the exceptions.</p>
+  <p><strong>Allowed patterns:</strong> hairline rules on the example's rows, tabular figures, the labelled example invoice, the founding year and team size from the brief.</p>
+  <p><strong>Set aside:</strong> SaaS screenshot hero with logos and tiers; empty one-liner; accounting ledger; paper invoice. <strong>Kept:</strong> the auditor's tick-and-tie working paper.</p>
+
+  <h2>Easing</h2>
+  <svg width="200" height="200" viewBox="-10 -10 220 220" role="img" aria-label="cubic-bezier(0.2, 0, 0, 1)">
+    <rect x="0" y="0" width="200" height="200" fill="#fff" stroke="#DDE2E7"/>
+    <path d="M0 200 C 40 200, 0 0, 200 0" fill="none" stroke="#0B4F5C" stroke-width="2"/>
+  </svg>
+  <dl>
+    <dt>easing</dt><dd>cubic-bezier(0.2, 0, 0, 1)</dd>
+    <dt>hover colour</dt><dd>120ms</dd>
+    <dt>matched-line fade</dt><dd>160ms, then removed</dd>
+    <dt>underline</dt><dd>180ms</dd>
+    <dt>stagger</dt><dd>none</dd>
+  </dl>
+
+  <h2>The one motion, performed</h2>
+  <button id="t" aria-pressed="false">Hide matched lines</button>
+  <button id="rm" aria-pressed="false">Reduced motion: off</button>
+  <div id="wrap">
+  <table>
+    <thead><tr><th>Line</th><th>Ordered</th><th>Delivered</th><th>Invoiced</th><th class="why">Status</th></tr></thead>
+    <tbody>
+      <tr class="m"><td>Example item A</td><td>40</td><td>40</td><td>40</td><td class="why" style="color:#6A737E">Matched</td></tr>
+      <tr class="x"><td>Example item B</td><td>24</td><td>24</td><td class="bad">30</td><td class="why">Quantity differs</td></tr>
+      <tr class="m"><td>Example item C</td><td>12</td><td>12</td><td>12</td><td class="why" style="color:#6A737E">Matched</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Reduced motion: the swap is instant, with no fade.</p>
+</main>
+<script>
+  const t=document.getElementById('t'),rm=document.getElementById('rm'),w=document.getElementById('wrap');
+  const rows=[...document.querySelectorAll('tr.m')];
+  t.onclick=()=>{const on=t.getAttribute('aria-pressed')!=='true';t.setAttribute('aria-pressed',on);t.textContent=on?'Show all lines':'Hide matched lines';
+    const reduce=w.classList.contains('rm');
+    rows.forEach(r=>{if(on){r.classList.add('out');setTimeout(()=>r.hidden=true,reduce?0:160)}else{r.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>r.classList.remove('out')))}})};
+  rm.onclick=()=>{const on=w.classList.toggle('rm');rm.setAttribute('aria-pressed',on);rm.textContent='Reduced motion: '+(on?'on':'off')};
+</script>
+</body>
+</html>

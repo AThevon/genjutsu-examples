@@ -1,0 +1,337 @@
+@import "./tokens.css";
+
+/* Every value below comes from tokens.css, which is generated from MASTER.md. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  font-variant-numeric: tabular-nums;
+}
+
+h1,
+h2,
+p,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Layout: one left-aligned reading column; the match table may run wider. */
+
+.masthead,
+main > section,
+.colophon {
+  width: 100%;
+  max-width: calc(var(--column) + 2 * var(--space-5));
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+main > .section--wide {
+  max-width: calc(var(--column-wide) + 2 * var(--space-5));
+}
+
+.masthead {
+  padding-block: var(--space-5);
+}
+
+.wordmark {
+  display: inline-block;
+  padding-block: var(--space-2);
+  color: var(--color-ink);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wordmark:hover {
+    color: var(--color-ink-2);
+  }
+}
+
+.wordmark:active {
+  color: var(--color-ink-2);
+}
+
+/* Hero */
+
+.hero {
+  padding-block: var(--space-8) var(--space-9);
+}
+
+h1 {
+  max-width: var(--column);
+  font-size: var(--text-h1);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-h1);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: var(--measure);
+  margin-top: var(--space-5);
+  color: var(--color-ink-2);
+  font-size: var(--text-lead);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-6);
+  margin-top: var(--space-6);
+}
+
+.footnote {
+  margin-top: var(--space-4);
+  color: var(--color-ink-3);
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+}
+
+/* Sections */
+
+.section {
+  padding-block: var(--space-9) 0;
+}
+
+.section > p,
+.section__intro > p {
+  max-width: var(--measure);
+  margin-top: var(--space-4);
+}
+
+h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-h2);
+}
+
+.section__intro {
+  max-width: var(--column);
+  margin-bottom: var(--space-6);
+}
+
+/* Match table */
+
+.match {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: var(--hairline) solid var(--color-rule);
+}
+
+.match th,
+.match td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--hairline) solid var(--color-rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.match thead th {
+  background: var(--color-surface);
+  color: var(--color-ink-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-sm);
+}
+
+.match tbody th {
+  font-weight: var(--weight-medium);
+}
+
+.match__flag {
+  background: var(--color-flag-ground);
+  color: var(--color-flag-ink);
+  box-shadow: inset var(--flag-edge) 0 0 var(--color-flag-ink);
+}
+
+@media (max-width: 40rem) {
+  .match thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .match,
+  .match tbody,
+  .match tr,
+  .match th,
+  .match td {
+    display: block;
+  }
+
+  .match tr {
+    padding-block: var(--space-4);
+    border-bottom: var(--hairline) solid var(--color-rule);
+  }
+
+  .match th,
+  .match td {
+    padding: var(--space-1) var(--space-3);
+    border-bottom: 0;
+  }
+
+  .match tbody th {
+    padding-bottom: var(--space-2);
+  }
+
+  .match td::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--color-ink-3);
+    font-size: var(--text-sm);
+    line-height: var(--leading-sm);
+  }
+
+  .match__flag::before {
+    color: var(--color-flag-ink);
+  }
+}
+
+/* Facts */
+
+.facts {
+  margin-top: var(--space-5);
+  border-top: var(--hairline) solid var(--color-rule);
+}
+
+.facts__row {
+  display: grid;
+  gap: var(--space-1);
+  padding-block: var(--space-4);
+}
+
+.facts dt {
+  color: var(--color-ink-3);
+}
+
+@media (min-width: 40rem) {
+  .facts__row {
+    grid-template-columns: var(--facts-term) 1fr;
+    gap: var(--space-5);
+  }
+}
+
+/* Price */
+
+.price {
+  margin-top: var(--space-4);
+  font-size: var(--text-price);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-price);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* Footer */
+
+.colophon {
+  padding-block: var(--space-9) var(--space-7);
+  color: var(--color-ink-3);
+  font-size: var(--text-sm);
+}
+
+/* Primary button: default, hover, focus, active, disabled */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--color-ink-hover);
+  }
+}
+
+.button:active {
+  background: var(--color-ink-active);
+}
+
+.button[aria-disabled="true"] {
+  background: var(--color-surface);
+  color: var(--color-disabled);
+  pointer-events: none;
+}
+
+/* Text link: default, hover, focus, active, disabled */
+
+.link {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-thickness: var(--hairline);
+  text-underline-offset: 0.25em;
+  text-decoration-color: var(--color-rule);
+  border-radius: var(--radius-sm);
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+
+.link--target {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    text-decoration-color: var(--color-ink);
+  }
+}
+
+.link:active {
+  color: var(--color-ink-2);
+}
+
+.link[aria-disabled="true"] {
+  color: var(--color-disabled);
+  text-decoration: none;
+  pointer-events: none;
+}
+
+/* Focus, shared by every interactive element */
+
+.button:focus-visible,
+.link:focus-visible,
+.wordmark:focus-visible {
+  outline: var(--focus-width) solid var(--color-ink);
+  outline-offset: var(--focus-offset);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

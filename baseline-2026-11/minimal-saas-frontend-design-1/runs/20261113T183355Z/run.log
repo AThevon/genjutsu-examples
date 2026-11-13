@@ -1,0 +1,15 @@
+Note: --scaffold runs each case's scaffold_script as you. Only use it on case files you (or your org) authored.
+Plugin under test: "frontend-design" version "1.1.1" at "/private/tmp/gj-baseline/eval-frontend-design-minimal-saas-1"
+  scaffold: /private/tmp/gj-baseline/eval-frontend-design-minimal-saas-1/examples/minimal-saas/fixture.sh
+  kept temp: /private/tmp/e-ZbFkZ6
+⚠ kept /private/tmp/e-ZbFkZ6: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-ZbFkZ6/sealed (mode 000; the kept directory is read-only) - open them with `chmod 700 /private/tmp/e-ZbFkZ6 /private/tmp/e-ZbFkZ6/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  minimal-saas run 1/1: score 1.00  $0.64
+    ✓ page-has-content (weight 1): matched <(main|section)(\s[^>]*[^/])?>|^import\s
+    ✓ skill-fired (weight 1): matched "skill"\s*:\s*"(?:[\w-]+:)?frontend-design"
+✓ minimal-saas  score 1.00  (1 run)  $0.64
+
+CASE          SCORE PASS% RUNS COST    NOTES
+minimal-saas  1.00  100%  1    $0.64   
+
+1 case(s) · 166s · $0.64
+Report: baseline-2026-11/minimal-saas-frontend-design-1/runs/20261113T183355Z/report.html

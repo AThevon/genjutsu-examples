@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk: design system preview (throwaway, not the build)</title>
+<style>
+  :root {
+    --color-ground:#FFFFFF; --color-surface:#F4F5F6; --color-rule:#DADDE1; --color-rule-control:#8C939B;
+    --color-ink:#15191E; --color-ink-hover:#2A3038; --color-ink-2:#4A525C; --color-ink-3:#69717B;
+    --color-exception:#A63A12; --color-exception-tint:#FBF1EC; --color-on-ink:#FFFFFF;
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --dur-fast:120ms; --ease-out:cubic-bezier(0.2,0,0,1);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font:400 16px/1.6 var(--font-sans); color:var(--color-ink); font-variant-numeric: tabular-nums; }
+  main { max-width:72rem; margin:0 auto; padding:48px 24px 96px; }
+  h1 { font-size:20px; font-weight:600; margin:0 0 8px; }
+  h2 { font-size:14px; font-weight:600; margin:48px 0 16px; padding-top:12px; border-top:1px solid var(--color-rule); }
+  p { max-width:60ch; color:var(--color-ink-2); margin:0 0 12px; }
+  .row { display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+  .state { display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--color-ink-3); }
+  .btn { font:inherit; font-size:16px; min-height:44px; padding:12px 24px; border-radius:2px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center;
+    transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+  .p { background:var(--color-ink); color:var(--color-on-ink); border:1px solid var(--color-ink); }
+  .p.h { background:var(--color-ink-hover); border-color:var(--color-ink-hover); }
+  .p.a { background:var(--color-ink-2); border-color:var(--color-ink-2); }
+  .p.d { background:var(--color-ink-3); border-color:var(--color-ink-3); cursor:not-allowed; }
+  .q { background:transparent; color:var(--color-ink); border:1px solid var(--color-rule-control); }
+  .q.h { border-color:var(--color-ink); }
+  .q.a { background:var(--color-surface); border-color:var(--color-ink); }
+  .q.d { color:var(--color-ink-3); border-color:var(--color-rule); cursor:not-allowed; }
+  .f { outline:2px solid var(--color-ink); outline-offset:2px; }
+  .l { color:var(--color-ink); text-decoration:underline; text-decoration-color:var(--color-rule-control); text-decoration-thickness:1px; text-underline-offset:.2em; }
+  .l.h { text-decoration-color:var(--color-ink); text-decoration-thickness:2px; }
+  .l.a { color:var(--color-ink-2); }
+  .l.d { color:var(--color-ink-3); text-decoration:none; }
+  .sw { width:200px; border:1px solid var(--color-rule); font-size:13px; }
+  .sw div { height:48px; } .sw span { display:block; padding:8px; }
+  .bar { height:8px; background:var(--color-ink); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk: design system preview</h1>
+  <p>This page is the proposal, not the build. It is throwaway and the page is built from MASTER.md. Status: <strong>UNVALIDATED</strong>.</p>
+  <p>Display face: the system sans, chosen at the thesis because no third-party font request could be approved in this session. Its voice comes from tabular figures. The lookup's Plus Jakarta Sans was dropped.</p>
+  <p>Dials: variance 3 ("same left edge… sharp, flat"), motion 2 ("fast and dry, nothing on scroll"), density 3 ("airy on an 8px base"). Density does not change this path; the spacing scale was derived by hand.</p>
+  <p>Reflexes this thesis allows by name: hairline rules, tabular figures in columns. Because the thesis is unvalidated, the audit still counts both.</p>
+
+  <h2>Color</h2>
+  <div class="row">
+    <div class="sw"><div style="background:#FFFFFF"></div><span>ground #FFFFFF</span></div>
+    <div class="sw"><div style="background:#F4F5F6"></div><span>surface #F4F5F6</span></div>
+    <div class="sw"><div style="background:#DADDE1"></div><span>rule #DADDE1 · ruling only</span></div>
+    <div class="sw"><div style="background:#8C939B"></div><span>rule-control #8C939B · 3.11:1</span></div>
+    <div class="sw"><div style="background:#15191E"></div><span>ink #15191E · 17.65:1</span></div>
+    <div class="sw"><div style="background:#2A3038"></div><span>ink-hover #2A3038 · 13.31:1</span></div>
+    <div class="sw"><div style="background:#4A525C"></div><span>ink-2 #4A525C · 7.92:1</span></div>
+    <div class="sw"><div style="background:#69717B"></div><span>ink-3 #69717B · 4.94:1</span></div>
+    <div class="sw"><div style="background:#A63A12"></div><span>exception #A63A12 · 6.49:1</span></div>
+    <div class="sw"><div style="background:#FBF1EC"></div><span>exception-tint #FBF1EC · exception on it 5.84:1</span></div>
+  </div>
+
+  <h2>Type scale</h2>
+  <p style="font-size:3rem;font-weight:600;line-height:1.12;letter-spacing:-0.01em;color:var(--color-ink);max-width:none">Display 3rem / 600</p>
+  <p style="font-size:1.75rem;font-weight:600;line-height:1.25;color:var(--color-ink)">H2 1.75rem / 600</p>
+  <p style="font-size:3.5rem;font-weight:600;line-height:1;letter-spacing:-0.01em;color:var(--color-ink)">290 EUR</p>
+  <p style="font-size:1.1875rem;line-height:1.5;color:var(--color-ink)">Lead 1.1875rem / 400</p>
+  <p style="color:var(--color-ink)">Body 1rem / 400 / 1.6</p>
+  <p style="font-size:.875rem">Small 0.875rem / 400</p>
+
+  <h2>Spacing</h2>
+  <div style="display:grid;gap:6px;max-width:260px">
+    <div class="bar" style="width:4px"></div><div class="bar" style="width:8px"></div><div class="bar" style="width:12px"></div><div class="bar" style="width:16px"></div><div class="bar" style="width:24px"></div><div class="bar" style="width:32px"></div><div class="bar" style="width:48px"></div><div class="bar" style="width:64px"></div><div class="bar" style="width:96px"></div><div class="bar" style="width:128px"></div>
+  </div>
+
+  <h2>Radii and elevation</h2>
+  <div class="row">
+    <div style="width:96px;height:64px;border:1px solid var(--color-rule)"></div>
+    <div style="width:96px;height:64px;border:1px solid var(--color-rule);border-radius:2px"></div>
+    <div style="width:18px;height:18px;border:1.5px solid var(--color-exception);border-radius:999px"></div>
+    <span style="font-size:13px;color:var(--color-ink-3)">0 · 2px · full (exception mark only). No shadows.</span>
+  </div>
+
+  <h2>Primary button: default, hover, focus, active, disabled</h2>
+  <div class="row">
+    <div class="state"><span class="btn p">Start the trial</span>default</div>
+    <div class="state"><span class="btn p h">Start the trial</span>hover</div>
+    <div class="state"><span class="btn p f">Start the trial</span>focus</div>
+    <div class="state"><span class="btn p a">Start the trial</span>active</div>
+    <div class="state"><span class="btn p d">Start the trial</span>disabled</div>
+  </div>
+  <h2>Quiet button</h2>
+  <div class="row">
+    <div class="state"><span class="btn q">Show exceptions only</span>default</div>
+    <div class="state"><span class="btn q h">Show exceptions only</span>hover</div>
+    <div class="state"><span class="btn q f">Show exceptions only</span>focus</div>
+    <div class="state"><span class="btn q a">Show exceptions only</span>active / pressed</div>
+    <div class="state"><span class="btn q d">Show exceptions only</span>disabled</div>
+  </div>
+  <h2>Link</h2>
+  <div class="row">
+    <div class="state"><span class="l">Book a demo</span>default</div>
+    <div class="state"><span class="l h">Book a demo</span>hover</div>
+    <div class="state"><span class="l f">Book a demo</span>focus</div>
+    <div class="state"><span class="l a">Book a demo</span>active</div>
+    <div class="state"><span class="l d">Book a demo</span>disabled</div>
+  </div>
+</main>
+</body>
+</html>

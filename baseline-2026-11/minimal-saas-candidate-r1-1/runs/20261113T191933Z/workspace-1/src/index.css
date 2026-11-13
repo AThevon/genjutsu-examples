@@ -1,0 +1,466 @@
+@import "./styles/tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  font-weight: var(--weight-regular);
+}
+
+h1,
+h2,
+h3,
+p,
+ol,
+ul,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Links and buttons: default, hover, focus, active, disabled ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-min);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-small);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--dur-hover) var(--ease);
+}
+
+.button:active {
+  background: var(--color-ink-active);
+}
+
+.button[aria-disabled="true"] {
+  background: var(--color-surface);
+  color: var(--color-ink-2);
+  cursor: default;
+  pointer-events: none;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  color: var(--color-ink-2);
+  font-size: var(--text-small);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rule);
+  text-underline-offset: var(--underline-offset);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--dur-hover) var(--ease),
+    text-decoration-color var(--dur-hover) var(--ease);
+}
+
+.prose .link {
+  display: inline;
+  min-height: 0;
+  font-size: inherit;
+}
+
+.link:active {
+  color: var(--color-ink);
+  text-decoration-color: var(--color-ink);
+}
+
+.link[aria-disabled="true"] {
+  color: var(--color-ink-2);
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--color-ink-hover);
+  }
+
+  .button:active {
+    background: var(--color-ink-active);
+  }
+
+  .link:hover {
+    color: var(--color-ink);
+    text-decoration-color: var(--color-ink);
+  }
+}
+
+.button:focus-visible,
+.link:focus-visible,
+.wordmark:focus-visible,
+.match__scroll:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  padding-block: var(--space-5);
+}
+
+.wordmark {
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding-top: var(--space-8);
+}
+
+.hero__title {
+  max-width: var(--measure);
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: var(--weight-medium);
+  text-wrap: balance;
+}
+
+.hero__lede {
+  max-width: var(--measure);
+  margin-top: var(--space-5);
+  color: var(--color-ink-2);
+  text-wrap: pretty;
+}
+
+.hero .actions {
+  margin-top: var(--space-6);
+}
+
+.hero__note {
+  margin-top: var(--space-2);
+  color: var(--color-ink-2);
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
+}
+
+/* ---------- Match table (the product's own mechanism, illustrative) ---------- */
+
+.match {
+  margin-top: var(--space-8);
+}
+
+.match__scroll {
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+}
+
+.match__table {
+  width: 100%;
+  min-width: var(--table-min);
+  border-collapse: collapse;
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.match__caption {
+  caption-side: bottom;
+  padding-top: var(--space-3);
+  text-align: left;
+  color: var(--color-ink-2);
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
+}
+
+.match__table th,
+.match__table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border-hairline);
+  text-align: left;
+  font-weight: var(--weight-regular);
+}
+
+.match__table thead th {
+  background: var(--color-surface);
+  color: var(--color-ink-2);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+}
+
+.match__table .num {
+  text-align: right;
+}
+
+.match__diff {
+  color: var(--color-flag);
+  background: var(--color-flag-bg);
+}
+
+.match__table .match__diff,
+.match__status--held {
+  font-weight: var(--weight-medium);
+}
+
+.match__status--held {
+  color: var(--color-flag);
+}
+
+/* The one motion. Final state is the resting state: with no animation (reduced motion,
+   or a browser that skips it) the table already reads as the product would show it. */
+.match__row--matched > * {
+  opacity: var(--opacity-receded);
+}
+
+.match__row > *,
+.match__status {
+  animation-duration: var(--dur-recede);
+  animation-timing-function: var(--ease);
+  animation-fill-mode: backwards;
+  animation-delay: calc(var(--delay-recede) + var(--i, 0) * var(--stagger));
+}
+
+.match__row--matched > * {
+  animation-name: recede;
+}
+
+.match__status {
+  display: inline-block;
+  animation-name: appear;
+}
+
+@keyframes recede {
+  from {
+    opacity: 1;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .match__row > *,
+  .match__status {
+    animation: none;
+  }
+
+  .button,
+  .link {
+    transition: none;
+  }
+}
+
+/* ---------- Sections ---------- */
+
+.section {
+  margin-top: var(--section-gap);
+}
+
+.section__title {
+  padding-top: var(--space-5);
+  border-top: var(--border-hairline);
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  font-weight: var(--weight-medium);
+  text-wrap: balance;
+}
+
+.section--split > :not(.section__title) {
+  margin-top: var(--space-5);
+}
+
+@media (min-width: 56rem) {
+  .section--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: var(--space-7);
+    align-items: start;
+  }
+
+  .section--split > :not(.section__title) {
+    margin-top: 0;
+    padding-top: var(--space-5);
+    border-top: var(--border-hairline);
+  }
+}
+
+.prose {
+  max-width: var(--measure-wide);
+}
+
+.prose p + p {
+  margin-top: var(--space-4);
+}
+
+/* How an invoice moves: ordered rows, no step numbers shown (the order carries it). */
+.ruled {
+  list-style: none;
+  padding: 0;
+}
+
+.ruled__row {
+  padding-block: var(--space-4);
+  border-bottom: var(--border-hairline);
+}
+
+.ruled__row:first-child {
+  padding-top: 0;
+}
+
+.ruled__term {
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+  font-weight: var(--weight-medium);
+}
+
+.ruled__text {
+  margin-top: var(--space-1);
+  max-width: var(--measure-wide);
+  color: var(--color-ink-2);
+}
+
+/* What stops an invoice: the three mismatch types, the only text set in the flag color. */
+.stops {
+  margin-top: var(--space-5);
+}
+
+.stops__row {
+  padding-block: var(--space-4);
+  border-bottom: var(--border-hairline);
+}
+
+.stops__term {
+  color: var(--color-flag);
+  font-weight: var(--weight-medium);
+}
+
+.stops__text {
+  margin-top: var(--space-1);
+  max-width: var(--measure-wide);
+  color: var(--color-ink-2);
+}
+
+@media (min-width: 40rem) {
+  .stops__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: var(--space-7);
+  }
+
+  .stops__text {
+    margin-top: 0;
+  }
+}
+
+/* Price */
+.pricing__body {
+  margin-top: var(--space-6);
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 56rem) {
+  .pricing__body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: var(--space-7);
+    align-items: end;
+  }
+}
+
+.pricing__figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pricing__amount {
+  font-size: var(--text-price);
+  line-height: var(--leading-price);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.pricing__unit {
+  color: var(--color-ink-2);
+  font-size: var(--text-small);
+}
+
+.pricing__list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: var(--space-5);
+}
+
+.pricing__list li + li {
+  margin-top: var(--space-1);
+}
+
+/* Footer */
+.site-footer {
+  margin-top: var(--section-gap);
+  padding-block: var(--space-6) var(--space-7);
+  border-top: var(--border-hairline);
+  color: var(--color-ink-2);
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+}
+
+@media (max-width: 30rem) {
+  .site-header__actions .link {
+    display: none;
+  }
+}

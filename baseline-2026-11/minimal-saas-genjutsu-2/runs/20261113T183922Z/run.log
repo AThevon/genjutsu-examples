@@ -1,0 +1,16 @@
+Note: --scaffold runs each case's scaffold_script as you. Only use it on case files you (or your org) authored.
+Plugin under test: "genjutsu" version "4.1.3" at "/private/tmp/gj-baseline/eval-genjutsu-minimal-saas-2"
+  scaffold: /private/tmp/gj-baseline/eval-genjutsu-minimal-saas-2/examples/minimal-saas/fixture.sh
+  kept temp: /private/tmp/e-cohoXt
+⚠ kept /private/tmp/e-cohoXt: home/ and tmp/ in it were written by the plugin under test and are sealed in /private/tmp/e-cohoXt/sealed (mode 000; the kept directory is read-only) - open them with `chmod 700 /private/tmp/e-cohoXt /private/tmp/e-cohoXt/sealed` to inspect, and do not run git (or anything that loads configuration from its working directory) anywhere inside the kept directory
+  minimal-saas run 1/1: score 0.67  $1.64
+    ✓ page-has-content (weight 1): matched <(main|section)(\s[^>]*[^/])?>|^import\s
+    ✓ paint-fired (weight 1): matched "skill"\s*:\s*"(?:[\w-]+:)?paint"|[/]_jutsu\b
+    ✗ paint-loaded (weight 1): pattern not found in trace
+✗ minimal-saas  score 0.67  (1 run)  $1.64
+
+CASE          SCORE PASS% RUNS COST    NOTES
+minimal-saas  0.67  0%    1    $1.64   paint-loaded: pattern not found in trace
+
+1 case(s) · 267s · $1.64
+Report: baseline-2026-11/minimal-saas-genjutsu-2/runs/20261113T183922Z/report.html

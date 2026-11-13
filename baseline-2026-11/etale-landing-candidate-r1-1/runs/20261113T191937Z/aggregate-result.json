@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "claudeVersion": "2.1.323",
+  "startedAt": "2026-11-13T19:19:42.299Z",
+  "durationSeconds": 637,
+  "costUsd": 3.1297155999999995,
+  "partial": false,
+  "suite": {
+    "root": "/private/tmp/gj-baseline/eval-candidate-r1-etale-landing-1",
+    "ablation": "none",
+    "modelOverride": "claude-opus-5-5",
+    "caseFilter": "etale-landing",
+    "threshold": 1,
+    "concurrency": 1,
+    "plugins": [
+      {
+        "name": "genjutsu",
+        "version": "4.1.4",
+        "path": "/private/tmp/gj-baseline/eval-candidate-r1-etale-landing-1"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "etale-landing",
+      "dir": "examples/etale-landing",
+      "source": "mixed",
+      "promptMarkdown": "/genjutsu:paint build the landing page for Étale.\n\nThe brief. Étale is a fictional product made up for this example, and this is everything its founders have given us:\n\n- Étale is an iPhone app for people who swim in the cold water of Aquatic Park, San Francisco, all year round. It answers one question before you walk down to the beach: when is the water slack (étale is the French word for slack water, the still moment between ebb and flood, when the current is weakest), and how strong the current runs between two slacks.\n- Its numbers come from two NOAA CO-OPS stations, and data/tide.json holds one real day of both, 2 October 2026, as fetched from NOAA: the tide predictions of station 9414290 San Francisco, and the slack water and current predictions of station SFB1204 (Alcatraz Island, southwest of, the closest predicted current station, in the bay off the cove). The file names each station, where it is, its datum and its units. Use those numbers and label each one with its date and its station. Slack water is not high or low tide: take the slack times from the current predictions. The app shows no water temperature, so the page must not either. Do not invent any other figure.\n- The swimmers it is for train there before work, mostly without a wetsuit. They already know the cove and read the tide themselves on a printed table or a weather site. They want the next slack window at a glance, and an alert the evening before.\n- What exists: an iOS beta on TestFlight. No Android, no web app, no prices, no user numbers, no testimonials. The page has one job: get a swimmer onto the TestFlight beta, at /beta.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+      "runsPerCase": 1,
+      "timeoutSeconds": 3600,
+      "maxTurns": 200,
+      "graders": [
+        {
+          "name": "page-has-content",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": {
+              "source": "file",
+              "path": "src/App.tsx"
+            },
+            "pattern": "<(main|section)(\\s[^>]*[^/])?>|^import\\s",
+            "flags": "m",
+            "match": "contains"
+          }
+        },
+        {
+          "name": "paint-fired",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "trace",
+            "pattern": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|[/]_jutsu\\b",
+            "flags": "",
+            "match": "contains",
+            "arm": "with-only"
+          }
+        },
+        {
+          "name": "paint-loaded",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "trace",
+            "pattern": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|Modules\\snot\\sloaded:",
+            "flags": "",
+            "match": "contains",
+            "arm": "with-only"
+          }
+        }
+      ],
+      "arms": {
+        "with": [
+          {
+            "score": 1,
+            "passed": true,
+            "turns": 36,
+            "costUsd": 3.1297155999999995,
+            "judgeCostUsd": 0,
+            "durationSeconds": 637,
+            "startedAt": "2026-11-13T19:19:42.642Z",
+            "error": null,
+            "tracePath": "/private/tmp/e-o4T5Tv/out/trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "page-has-content",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-fired",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|[/]_jutsu\\b",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "paint-loaded",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|Modules\\snot\\sloaded:",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          }
+        ]
+      },
+      "aggregates": {
+        "score": 1,
+        "passRate": 1
+      }
+    }
+  ],
+  "aggregates": {
+    "casesTotal": 1,
+    "casesPassed": 1,
+    "overallScore": 1,
+    "overallPassRate": 1
+  }
+}

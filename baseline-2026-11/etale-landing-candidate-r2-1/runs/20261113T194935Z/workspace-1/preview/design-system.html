@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale - design system preview (throwaway)</title>
+<style>
+  :root{--c-ground:#0b1513;--c-ground-raised:#122220;--c-ink:#dde5e1;--c-ink-strong:#f4f7f5;--c-muted:#93a39d;--c-axis:#5a6f68;--c-disabled:#5d6d68;--c-slack:#ff6b2c;--c-slack-band:#1f1a14;--font-sans:system-ui,-apple-system,"SF Pro Text","Segoe UI",Roboto,sans-serif;--dur-hover:160ms;--ease-settle:cubic-bezier(0.2,0,0,1)}
+  body{margin:0;padding:2rem;background:var(--c-ground);color:var(--c-ink);font:1.0625rem/1.55 var(--font-sans)}
+  h1,h2{font-weight:600;margin:0 0 1rem} h2{margin-top:3rem}
+  .note{color:var(--c-muted);font-size:.8125rem;max-width:36rem}
+  .row{display:flex;flex-wrap:wrap;gap:1rem}
+  .sw{width:9rem}.sw div{height:4rem;border-radius:2px}.sw p{margin:.25rem 0;font-size:.8125rem;color:var(--c-muted);font-variant-numeric:tabular-nums}
+  .t{font-variant-numeric:tabular-nums;margin:.25rem 0}
+  .bar{height:.75rem;background:var(--c-ink);margin:.25rem 0}
+  .btn{display:inline-flex;align-items:center;min-height:48px;padding:1rem 1.5rem;border-radius:2px;background:var(--c-ink);color:var(--c-ground);text-decoration:none;font-weight:600;transition:background-color var(--dur-hover) var(--ease-settle)}
+  .btn:hover,.btn.h{background:var(--c-ink-strong)} .btn:focus-visible,.btn.f{outline:2px solid var(--c-ink);outline-offset:3px} .btn:active,.btn.a{background:var(--c-muted)} .btn.d{background:var(--c-disabled);pointer-events:none}
+  .time{all:unset;font-size:3.25rem;font-weight:300;color:var(--c-muted);font-variant-numeric:tabular-nums;min-height:48px;transition:color var(--dur-hover) var(--ease-settle)}
+  .time.h,.time.s{color:var(--c-slack)} .time.f{outline:2px solid var(--c-slack);outline-offset:3px} .time.a{color:var(--c-ink)} .time.d{color:var(--c-disabled)}
+  .card{background:var(--c-ground-raised);border-radius:2px;padding:2rem;max-width:36rem}
+  .lnk{color:var(--c-ink);text-decoration:underline 1px;text-underline-offset:.2em}.lnk.h{text-decoration-thickness:2px}.lnk.f{outline:2px solid var(--c-ink);outline-offset:3px}.lnk.a{color:var(--c-muted)}
+  .lab{font-size:.8125rem;color:var(--c-muted)}
+</style>
+</head>
+<body>
+<h1>Design system preview - the proposal, not the build</h1>
+<p class="note">Dark only, by decision. Typeface: the system UI face (SF on iPhone), by decision, no web font. Shadows: none. Radii: 0 and 2px. Status: UNVALIDATED (headless run).</p>
+
+<h2>Colour, with contrast on #0b1513</h2>
+<div class="row">
+  <div class="sw"><div style="background:#0b1513;outline:1px solid #5a6f68"></div><p>ground #0b1513</p></div>
+  <div class="sw"><div style="background:#122220"></div><p>raised #122220 (1.13:1, surface step)</p></div>
+  <div class="sw"><div style="background:#dde5e1"></div><p>ink #dde5e1 14.47:1</p></div>
+  <div class="sw"><div style="background:#f4f7f5"></div><p>ink-strong #f4f7f5 17.22:1</p></div>
+  <div class="sw"><div style="background:#93a39d"></div><p>muted #93a39d 7.04:1</p></div>
+  <div class="sw"><div style="background:#5a6f68"></div><p>axis #5a6f68 3.46:1</p></div>
+  <div class="sw"><div style="background:#5d6d68"></div><p>disabled #5d6d68 3.41:1</p></div>
+  <div class="sw"><div style="background:#ff6b2c"></div><p>slack #ff6b2c 6.54:1</p></div>
+  <div class="sw"><div style="background:#1f1a14;outline:1px solid #5a6f68"></div><p>slack-band #1f1a14</p></div>
+</div>
+
+<h2>Type scale (system face)</h2>
+<p class="t lab">label 0.8125rem: SFB1204, Alcatraz Island, southwest of. Friday 2 October 2026</p>
+<p class="t">body 1.0625rem: Each slack came 10 to 50 minutes after the high or low.</p>
+<p class="t" style="font-size:1.375rem">lead 1.375rem: Slack 5:57 am, then the ebb builds to 0.94 kn at 8:06 am.</p>
+<p class="t" style="font-size:2.75rem;font-weight:600;line-height:1.05">h2 up to 2.75rem</p>
+<p class="t" style="font-size:3.5rem;font-weight:600;line-height:1.05">h1 up to 3.5rem</p>
+<p class="t" style="font-size:8.5rem;font-weight:300;line-height:1.05;color:var(--c-slack)">5:57</p>
+
+<h2>Spacing (4px base)</h2>
+<div style="max-width:36rem">
+  <div class="bar" style="width:.25rem"></div><div class="bar" style="width:.5rem"></div><div class="bar" style="width:.75rem"></div><div class="bar" style="width:1rem"></div><div class="bar" style="width:1.5rem"></div><div class="bar" style="width:2rem"></div><div class="bar" style="width:3rem"></div><div class="bar" style="width:4rem"></div><div class="bar" style="width:6rem"></div><div class="bar" style="width:8rem"></div>
+</div>
+
+<h2>Primary link-button: default, hover, focus, active, disabled</h2>
+<div class="row">
+  <a class="btn" href="#">Join the TestFlight beta</a><a class="btn h" href="#">Join the TestFlight beta</a><a class="btn f" href="#">Join the TestFlight beta</a><a class="btn a" href="#">Join the TestFlight beta</a><a class="btn d" aria-disabled="true">Join the TestFlight beta</a>
+</div>
+
+<h2>Slack time: default, hover / selected, focus, active, disabled</h2>
+<div class="row"><button class="time">5:57</button><button class="time h">5:57</button><button class="time f">5:57</button><button class="time a">5:57</button><button class="time d" disabled>5:57</button></div>
+
+<h2>Text link: default, hover, focus, active</h2>
+<div class="row"><a class="lnk" href="#">NOAA CO-OPS</a><a class="lnk h" href="#">NOAA CO-OPS</a><a class="lnk f" href="#">NOAA CO-OPS</a><a class="lnk a" href="#">NOAA CO-OPS</a></div>
+
+<h2>Raised block</h2>
+<div class="card"><p class="lab" style="margin-top:0">Tide station 9414290</p><p style="margin-bottom:0">San Francisco, on the Presidio shore near the Golden Gate, about 3.8 km west of Aquatic Park.</p></div>
+
+<h2>Motion</h2>
+<p class="note">hover 160ms, settle 320ms, cubic-bezier(0.2, 0, 0, 1), no stagger. Reduced motion: both 0ms.</p>
+</body>
+</html>

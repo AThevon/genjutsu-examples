@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale - thesis preview (throwaway)</title>
+<style>
+  :root {
+    --ground: #E3E8E5; --surface: #F1F4F2; --ink: #0E1714; --ink-2: #3D4B46; --ink-3: #56645E;
+    --rule: #9AA7A1; --slack: #B4430A; --ink-hover: #26332E;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --ease-settle: cubic-bezier(0.16, 1, 0.3, 1); --dur-settle: 640ms; --dur-ui: 160ms;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 400 1.0625rem/1.5 var(--font); font-variant-numeric: tabular-nums; }
+  main { max-width: 75rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+  h1 { font-size: 2rem; line-height: 1.15; margin: 0 0 .5rem; letter-spacing: -0.01em; }
+  h2 { font-size: 1.375rem; margin: 4rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+  p, li { max-width: 40rem; }
+  .note { color: var(--ink-3); font-size: .8125rem; }
+  .thesis { background: var(--surface); padding: 1.5rem; margin: 1rem 0; max-width: 52rem; }
+  .thesis b { display: block; font-size: .8125rem; color: var(--ink-3); margin-bottom: .25rem; font-weight: 600; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: 1rem; }
+  .sw { border: 1px solid var(--rule); }
+  .sw div { height: 4.5rem; }
+  .sw p { margin: 0; padding: .5rem .75rem; font-size: .8125rem; background: var(--surface); }
+  .spec p { margin: .25rem 0; }
+  .bars div { height: .75rem; background: var(--ink); margin: .5rem 0; }
+  .btn { font: 600 1.0625rem/1 var(--font); background: var(--ink); color: var(--ground); border: 0; border-radius: 2px; padding: 1rem 1.5rem; cursor: pointer; transition: background-color var(--dur-ui) ease-out; }
+  .btn:hover { background: var(--ink-hover); }
+  .btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  /* the one motion */
+  .strip { position: relative; height: 12rem; margin-top: 1.5rem; }
+  .zero { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--ink); }
+  .stem { position: absolute; width: 2px; background: var(--ink); transform: translateX(-1px); }
+  .stem.up { bottom: 50%; } .stem.down { top: 50%; }
+  .slackdot { position: absolute; top: 50%; width: 9px; height: 9px; margin: -4px 0 0 -4px; background: var(--ground); border: 2px solid var(--slack); border-radius: 50%; }
+  .track { position: absolute; inset: 0; pointer-events: none; transform: translateX(0%); }
+  .track.go { transition: transform var(--dur-settle) var(--ease-settle); }
+  .marker { position: absolute; left: 0; top: 50%; width: 15px; height: 15px; margin: -7px 0 0 -7px; background: var(--slack); border-radius: 50%; }
+  .marker::after { content: ""; position: absolute; left: 6px; top: -4.5rem; width: 3px; height: 9rem; background: var(--slack); }
+  .ticks { display: flex; justify-content: space-between; font-size: .8125rem; color: var(--ink-3); margin-top: .5rem; }
+  .row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
+  .readout { font-size: 4rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1; margin-top: 1rem; }
+  label { font-size: .9375rem; }
+</style>
+</head>
+<body>
+<main>
+  <p class="note">Throwaway preview. This page is the proposal, not the build. Status: UNVALIDATED (headless run).</p>
+  <h1>Étale: visual and interaction thesis</h1>
+
+  <div class="thesis"><b>Visual thesis</b>
+    Étale is set as the current at SFB1204 read against one zero line: a cold fog-green ground (#E3E8E5) under green-black ink (#0E1714), and a single buoy orange (#B4430A) that marks slack and nothing else. The type is the iPhone's own system face (SF Pro on Apple devices, matched fallbacks elsewhere), with tabular figures carrying the voice: very large slack times against 13px source labels. Margins are airy around dense tide-table rows, on a 4px base. Components are flat and nearly square (2px radius), with no shadows, and rules separate things instead of boxes.<br><br>
+    <b>First screen</b>
+    Next to the headline and the TestFlight button, the whole of 2 October 2026 at SFB1204 runs across the full width: flood stems above the zero line, ebb stems below, and the three slacks (05:57, 10:31, 16:17 PDT) as orange marks on the line, each labelled with date and station. The headline, the one line of copy and the slack readout stay at a 34rem measure, left-aligned to the strip's 00:00 tick.</div>
+
+  <div class="thesis"><b>Interaction thesis</b>
+    Fast and dry. Hover and press are 160ms color changes, with no scale, no lift and no shadow. Nothing moves on scroll: no reveals, no parallax. Forbidden: waves, ripples, bobbing, looping animation, overshoot or bounce, gradient blobs, glass. <b style="display:inline;color:var(--ink)">The one motion:</b> on load, the slack marker glides along the zero line from 00:00 to the first slack and stops. When a swimmer picks another slack (click, tap, arrow keys), it glides there. The glide is 640ms on cubic-bezier(0.16, 1, 0.3, 1) and decelerates to rest without overshoot: the current going still. With reduced motion, the marker is placed at once and only the readout changes.</div>
+
+  <div class="thesis"><b>Allowed patterns</b>
+    The zero line (a 1px ink rule as the current axis); hairline rules between tide-table rows; tabular figures; station IDs (SFB1204, 9414290) as source labels under every figure; hour ticks on the day axis.</div>
+
+  <div class="thesis"><b>Set aside / kept</b>
+    Set aside: phone mockup over a gradient with three feature cards (routine); a bare text page with one link (opposite); ocean-blue water photography and waves; nautical-chart navy and brass. Kept: the current read against its zero line, flood above, ebb below.</div>
+
+  <h2>Palette, contrast computed (WCAG 2)</h2>
+  <div class="swatches">
+    <div class="sw"><div style="background:#E3E8E5"></div><p>ground #E3E8E5<br>page background</p></div>
+    <div class="sw"><div style="background:#F1F4F2"></div><p>surface #F1F4F2<br>readout panel</p></div>
+    <div class="sw"><div style="background:#0E1714"></div><p>ink #0E1714<br>14.71:1 on ground</p></div>
+    <div class="sw"><div style="background:#3D4B46"></div><p>ink-2 #3D4B46<br>7.39:1 on ground</p></div>
+    <div class="sw"><div style="background:#56645E"></div><p>ink-3 #56645E<br>5.01:1 on ground</p></div>
+    <div class="sw"><div style="background:#9AA7A1"></div><p>rule #9AA7A1<br>2.01:1, decorative only</p></div>
+    <div class="sw"><div style="background:#B4430A"></div><p>slack #B4430A<br>4.52:1 on ground, slack only</p></div>
+  </div>
+
+  <h2>Type: system face, tabular figures</h2>
+  <div class="spec">
+    <p style="font-size:7rem;font-weight:600;letter-spacing:-0.03em;line-height:1">5:57<span style="font-size:1.375rem;letter-spacing:0;font-weight:500"> AM</span></p>
+    <p style="font-size:3rem;font-weight:600;letter-spacing:-0.02em;line-height:1.05">Slack water, before you walk down.</p>
+    <p style="font-size:1.375rem;font-weight:500">Ebb 0.94 kn at 8:06 AM</p>
+    <p style="font-size:1.0625rem">Body 17px, the iOS body size. Étale reads the current off Alcatraz, not the tide.</p>
+    <p style="font-size:.8125rem;color:var(--ink-3)">SFB1204 · Alcatraz Island, southwest of · 2 Oct 2026 · NOAA prediction</p>
+  </div>
+
+  <h2>Spacing: 4px base</h2>
+  <div class="bars">
+    <div style="width:4px"></div><div style="width:8px"></div><div style="width:12px"></div><div style="width:16px"></div><div style="width:24px"></div><div style="width:32px"></div><div style="width:48px"></div><div style="width:64px"></div><div style="width:96px"></div><div style="width:128px"></div>
+  </div>
+  <p class="note">4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 128</p>
+
+  <h2>The one motion: the marker settles on slack</h2>
+  <div class="row">
+    <svg width="160" height="160" viewBox="-10 -10 120 120" aria-label="Easing curve cubic-bezier(0.16, 1, 0.3, 1)">
+      <rect x="0" y="0" width="100" height="100" fill="none" stroke="#9AA7A1" stroke-width=".5"/>
+      <path d="M0 100 C16 0 30 0 100 0" fill="none" stroke="#0E1714" stroke-width="2"/>
+      <circle cx="16" cy="0" r="2" fill="#B4430A"/><circle cx="30" cy="0" r="2" fill="#B4430A"/>
+    </svg>
+    <div><p style="margin:0"><b>cubic-bezier(0.16, 1, 0.3, 1)</b></p>
+      <p class="note" style="margin:0">glide 640ms · delay 0 · no stagger · no overshoot (curve never passes 1)<br>UI color changes: 160ms ease-out</p></div>
+  </div>
+  <div class="row">
+    <button class="btn" data-x="24.79">5:57 AM</button>
+    <button class="btn" data-x="43.82">10:31 AM</button>
+    <button class="btn" data-x="67.85">4:17 PM</button>
+    <button class="btn" id="replay">Replay load</button>
+    <label><input type="checkbox" id="rm"> Reduced motion</label>
+  </div>
+  <div class="readout" id="ro">5:57 AM</div>
+  <p class="note" id="ros">Slack · SFB1204 · 2 Oct 2026</p>
+  <div class="strip" aria-hidden="true">
+    <div class="zero"></div>
+    <!-- stems at real times, height proportional to |knots|, max 2.11 kn = 45% of strip -->
+    <div class="stem up" style="left:13.0%;height:24.9%"></div>
+    <div class="stem down" style="left:33.75%;height:20.0%"></div>
+    <div class="stem up" style="left:56.74%;height:30.7%"></div>
+    <div class="stem down" style="left:82.64%;height:45%"></div>
+    <div class="slackdot" style="left:24.79%"></div>
+    <div class="slackdot" style="left:43.82%"></div>
+    <div class="slackdot" style="left:67.85%"></div>
+    <div class="track" id="track"><div class="marker"></div></div>
+  </div>
+  <div class="ticks"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+  <p class="note">Stems are NOAA's published maxima at SFB1204 on 2 Oct 2026 (flood 1.17 kn 03:07, ebb 0.94 kn 08:06, flood 1.44 kn 13:37, ebb 2.11 kn 19:50). Nothing is drawn between them.</p>
+  <p class="note">The HTML here approximates timing and curve only; the build is written from MASTER.md, not from this file.</p>
+</main>
+<script>
+  const track = document.getElementById('track'), rm = document.getElementById('rm');
+  const ro = document.getElementById('ro');
+  function go(x, label) {
+    track.classList.toggle('go', !rm.checked);
+    track.style.transform = 'translateX(' + x + '%)';
+    if (label) ro.textContent = label;
+  }
+  document.querySelectorAll('[data-x]').forEach(b => b.onclick = () => go(b.dataset.x, b.textContent));
+  document.getElementById('replay').onclick = () => {
+    track.classList.remove('go'); track.style.transform = 'translateX(0%)';
+    requestAnimationFrame(() => requestAnimationFrame(() => go(24.79, '5:57 AM')));
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => go(24.79)));
+</script>
+</body>
+</html>

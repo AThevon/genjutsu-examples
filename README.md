@@ -51,6 +51,7 @@ bin/
   build-demos.sh         builds the live demos
 cases/                   the headless eval cases, and _templates/ (sources and lockfiles)
 demos/                   the demos index page and its vercel.json
+baseline-2026-11/        headless paint against no plugin and frontend-design on one minimal brief, see its COMPARE.md
 readme-media/            the images of the genjutsu README's hero and gallery (one cover and
                          one clip per featured example)
   takes/                 the take and the encode script behind hero-site.webp

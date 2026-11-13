@@ -1,0 +1,336 @@
+{
+  "root": "baseline-2026-11/minimal-saas-none-1/runs/20261113T183353Z/workspace-1",
+  "roots_note": "detected: src",
+  "files_examined": 3,
+  "results": [
+    {
+      "check": "tell-invented-status",
+      "title": "Invented build or release status",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No version stamp, sync time or build number in the displayed text.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-locale-strip",
+      "title": "Weather, clock or timezone strip",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No clock, temperature or timezone strip in the displayed text.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-numbered-eyebrow",
+      "title": "Numbered eyebrow or tile pagination",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No zero-padded section number and no `01 / 4` counter in the displayed text.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-fake-code",
+      "title": "Part number or section code that points to nothing",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No code like SEC-01, REF-204 or MK.I in the displayed text.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-generic-step",
+      "title": "Generic step label",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No text starts with Stage, Step, Phase or Pass followed by a number.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-scroll-cue",
+      "title": "Scroll cue",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No short text telling the visitor to scroll.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-placeholder-identity",
+      "title": "Placeholder name or brand",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No John Doe, Jane Doe, Acme or lorem ipsum in the displayed text.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-round-number",
+      "title": "Round or unsourced figure",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No 99.9%, 100%, 10,000+ or 10x style figure in the displayed text.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-filler-verb",
+      "title": "Filler verb",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "None of the listed filler verbs appears in the displayed text.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-em-dash",
+      "title": "U+2014 (em dash) in displayed text",
+      "severity": "nice-to-have",
+      "status": "findings",
+      "scanned": 2,
+      "meaning": "1 occurrence(s) across 2 file(s) scanned.",
+      "findings": [
+        {
+          "check": "tell-em-dash",
+          "severity": "nice-to-have",
+          "file": "src/App.tsx",
+          "line": 29,
+          "text": "Illustration of an invoice in Ploverdesk: five lines, three flagged &#8212; a quantity that differs from the delivery note, a unit price that differs from the purchase order, and a line with no delive"
+        }
+      ],
+      "group": "tells"
+    },
+    {
+      "check": "tell-dot-run",
+      "title": "Middle-dot run",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No displayed line strings two or more middle dots together.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-gradient-text",
+      "title": "Gradient-filled text",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 3,
+      "meaning": "No text is clipped to a background, in classes or in CSS.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-glass",
+      "title": "Glassmorphism panel",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 3,
+      "meaning": "No panel blurs what sits behind it, in classes or in CSS.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-glow",
+      "title": "Glow or neon shadow",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 3,
+      "meaning": "No shadow with zero offset and a blur of 20px or more.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-blob",
+      "title": "Blurred background blob",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 3,
+      "meaning": "No element blurred by 40px or more (blur-2xl, blur-3xl, filter: blur), and no positioned element painted with a radial gradient that fades from a colour to transparent.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-perpetual-motion",
+      "title": "Animation that never stops",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 3,
+      "meaning": "No infinite animation: no infinite iteration, no animate-pulse/ping/bounce/spin, no repeat: Infinity.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-equal-cards",
+      "title": "Three equal cards",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "No three-column container holds three children with the same class list.",
+      "findings": [],
+      "group": "tells"
+    },
+    {
+      "check": "tell-duplicate-cta",
+      "title": "One intent under several button labels",
+      "severity": "nice-to-have",
+      "status": "clean",
+      "scanned": 2,
+      "meaning": "Every call to action intent found uses a single label.",
+      "findings": [],
+      "group": "tells"
+    }
+  ],
+  "inventory": {
+    "durations": {
+      "note": "Durations in use. A designed system has three to five. Fifteen is an accident.",
+      "scanned": 3,
+      "distinct": 0,
+      "values": [],
+      "where": {}
+    },
+    "easings": {
+      "note": "Easings in use. Same rule: a handful, named, or it is not a system.",
+      "scanned": 3,
+      "distinct": 0,
+      "values": [],
+      "where": {}
+    },
+    "colors": {
+      "note": "Colours written as literal values or palette utilities. No verdict: each one should trace back to a token the design system or the thesis names.",
+      "scanned": 3,
+      "distinct": 9,
+      "values": [
+        [
+          "#f7f6f2",
+          1
+        ],
+        [
+          "#ffffff",
+          1
+        ],
+        [
+          "#16181b",
+          1
+        ],
+        [
+          "#55595f",
+          1
+        ],
+        [
+          "#dcdad3",
+          1
+        ],
+        [
+          "#9a3412",
+          1
+        ],
+        [
+          "#fbf3ee",
+          1
+        ],
+        [
+          "#000",
+          1
+        ],
+        [
+          "#ecebe6",
+          1
+        ]
+      ],
+      "where": {
+        "#f7f6f2": [
+          "src/index.css:2"
+        ],
+        "#ffffff": [
+          "src/index.css:3"
+        ],
+        "#16181b": [
+          "src/index.css:4"
+        ],
+        "#55595f": [
+          "src/index.css:5"
+        ],
+        "#dcdad3": [
+          "src/index.css:6"
+        ],
+        "#9a3412": [
+          "src/index.css:7"
+        ],
+        "#fbf3ee": [
+          "src/index.css:8"
+        ],
+        "#000": [
+          "src/index.css:147"
+        ],
+        "#ecebe6": [
+          "src/index.css:240"
+        ]
+      }
+    },
+    "radii": {
+      "note": "Corner radii in use. No verdict: compare the spread with the radius scale the design system declares.",
+      "scanned": 3,
+      "distinct": 3,
+      "values": [
+        [
+          "2px",
+          1
+        ],
+        [
+          "4px",
+          1
+        ],
+        [
+          "6px",
+          1
+        ]
+      ],
+      "where": {
+        "2px": [
+          "src/index.css:62"
+        ],
+        "4px": [
+          "src/index.css:144"
+        ],
+        "6px": [
+          "src/index.css:204"
+        ]
+      }
+    },
+    "fonts": {
+      "note": "Font families named in the code. No verdict: each one should be a family the thesis names, for the reason it gives.",
+      "scanned": 3,
+      "distinct": 2,
+      "values": [
+        [
+          "var(--sans)",
+          1
+        ],
+        [
+          "var(--mono)",
+          1
+        ]
+      ],
+      "where": {
+        "var(--sans)": [
+          "src/index.css:29"
+        ],
+        "var(--mono)": [
+          "src/index.css:72"
+        ]
+      }
+    }
+  }
+}

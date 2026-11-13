@@ -1,0 +1,83 @@
+/* Ploverdesk tokens. Mirrors MASTER.md one to one: change MASTER.md first. */
+:root {
+  /* Color */
+  --color-ground: #ffffff;
+  --color-surface: #f4f5f6;
+  --color-ink: #16191c;
+  --color-ink-hover: #2e3338;
+  --color-ink-active: #000000;
+  --color-on-ink: #ffffff;
+  --color-muted: #596067;
+  --color-rule: #d9dcdf;
+  --color-border: #80868c;
+  --color-signal: #b03a0e; /* mismatch only */
+  --color-disabled: #a3a8ad;
+
+  /* Type */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-h3: 1.125rem;
+  --text-h2: 1.5rem;
+  --text-price: 2rem;
+  --text-display: clamp(2.25rem, 1.55rem + 2.4vw, 3.25rem);
+
+  --leading-tight: 1.1;
+  --leading-heading: 1.25;
+  --leading-title: 1.35;
+  --leading-small: 1.45;
+  --leading-body: 1.55;
+  --tracking-display: -0.01em;
+
+  --measure: 36rem;
+  --measure-wide: 44rem;
+  --container: 68rem;
+  --label-col: 8rem;
+
+  /* Spacing, 8px base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  --gutter: var(--space-5);
+  --section-gap: var(--space-9);
+
+  /* Radii, shadows, borders */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --shadow-0: none;
+  --hairline: 1px;
+  --ring-width: 2px;
+  --ring-offset: 2px;
+  --underline-offset: 0.2em;
+
+  /* Motion */
+  --dur-fast: 140ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --gutter: var(--space-7);
+    --section-gap: var(--space-10);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+  }
+}

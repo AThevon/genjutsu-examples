@@ -1,0 +1,72 @@
+/* Generated from MASTER.md. Change values there first. */
+:root {
+  /* Color */
+  --color-bg: #fcfcfd;
+  --color-surface: #f3f4f6;
+  --color-ink: #15171c;
+  --color-ink-2: #565b66;
+  --color-rule: #dcdfe4;
+  --color-flag: #8a4a06;
+  --color-flag-bg: #fbf2e4;
+  --color-ink-hover: #2c3039;
+  --color-ink-active: #3a3f4a;
+  --opacity-receded: 0.64;
+
+  /* Type */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --text-display: clamp(2rem, 1.4rem + 2.6vw, 2.75rem);
+  --text-h2: 1.5rem;
+  --text-h3: 1.0625rem;
+  --text-body: 1.0625rem;
+  --text-small: 0.9375rem;
+  --text-caption: 0.8125rem;
+  --text-price: clamp(2.25rem, 1.8rem + 2vw, 3rem);
+  --leading-display: 1.12;
+  --leading-h2: 1.25;
+  --leading-h3: 1.4;
+  --leading-body: 1.55;
+  --leading-small: 1.5;
+  --leading-caption: 1.45;
+  --leading-price: 1;
+  --tracking-display: -0.01em;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --measure: 34rem;
+  --measure-wide: 40rem;
+
+  /* Space, 4px base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --section-gap: var(--space-9);
+  --container: 68rem;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --tap-min: 44px;
+  --table-min: 36rem;
+
+  /* Shape */
+  --radius-sm: 2px;
+  --border-hairline: 1px solid var(--color-rule);
+  --focus-ring: 2px solid var(--color-ink);
+  --focus-offset: 3px;
+  --underline-offset: 0.2em;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-hover: 150ms;
+  --dur-recede: 240ms;
+  --delay-recede: 400ms;
+  --stagger: 80ms;
+}
+
+@media (max-width: 48rem) {
+  :root {
+    --section-gap: var(--space-8);
+  }
+}

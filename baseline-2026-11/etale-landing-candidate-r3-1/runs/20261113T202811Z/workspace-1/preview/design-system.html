@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale - design system preview (throwaway)</title>
+<style>
+  :root {
+    --ground:#0E1315; --surface:#151C1F; --rule:#2A3438; --ink:#E8ECEA; --ink-muted:#93A0A4;
+    --line:#6F8F96; --slack:#F0B43C; --action-hover:#FFFFFF;
+    --dur-fast:160ms; --ease-out:cubic-bezier(0.2,0,0,1);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0 auto; max-width:72rem; padding:2rem; background:var(--ground); color:var(--ink);
+    font:400 1rem/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif;
+    font-variant-numeric: tabular-nums; }
+  h2 { font-size:1.75rem; font-weight:600; border-top:1px solid var(--rule); padding-top:1.5rem; margin-top:3rem; }
+  .label { font-size:0.75rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-muted); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(11rem,1fr)); gap:1rem; }
+  .sw { border:1px solid var(--rule); padding:0.75rem; font-size:0.875rem; }
+  .sw i { display:block; height:3rem; margin-bottom:0.5rem; border:1px solid var(--rule); }
+  .row { display:flex; gap:1rem; flex-wrap:wrap; align-items:center; margin:1rem 0; }
+  .state { font-size:0.75rem; color:var(--ink-muted); display:block; margin-top:0.5rem; }
+  .btn { display:inline-flex; align-items:center; min-height:44px; padding:0.75rem 1.5rem; background:var(--ink);
+    color:var(--ground); font:inherit; font-weight:600; border:0; border-radius:2px; text-decoration:none; cursor:pointer;
+    transition:background-color var(--dur-fast) var(--ease-out); }
+  .btn.hover { background:var(--action-hover); }
+  .btn.focus { outline:2px solid var(--ink); outline-offset:3px; }
+  .btn.active { background:var(--ink-muted); }
+  .btn.disabled { background:var(--surface); color:var(--ink-muted); cursor:default; }
+  .chip { min-width:44px; min-height:44px; padding:0 0.75rem; background:transparent; color:var(--ink); font:inherit;
+    border:1px solid var(--ink-muted); border-radius:2px; }
+  .chip.hover { border-color:var(--ink); }
+  .chip.focus { outline:2px solid var(--ink); outline-offset:3px; }
+  .chip.pressed { border-color:var(--slack); color:var(--slack); }
+  .chip.active { background:var(--surface); }
+  .chip.disabled { border-color:var(--rule); color:var(--ink-muted); }
+  a.link { color:var(--ink); text-decoration:underline; text-decoration-color:var(--ink-muted); text-underline-offset:0.2em; }
+  a.link.hover { text-decoration-color:var(--ink); }
+  a.link.focus { outline:2px solid var(--ink); outline-offset:3px; }
+  .bar { height:0.75rem; background:var(--line); margin:0.25rem 0; }
+  table { border-collapse:collapse; font-size:0.875rem; }
+  th, td { text-align:left; padding:0.5rem 1.5rem 0.5rem 0; border-bottom:1px solid var(--rule); }
+  th { color:var(--ink-muted); font-weight:500; }
+</style>
+</head>
+<body>
+<p class="label">Throwaway preview - the proposal, not the build. Status: UNVALIDATED (headless run).</p>
+<h1 style="font-size:3rem;font-weight:600;line-height:1.1">Étale design system</h1>
+<p>Dark only. Amber is slack and nothing else. Ink is the action. The type is the system face (SF Pro on iPhone), so there is no web font and no font request. Dials: variance 3, motion 2, density 4 (clauses in MASTER.md).</p>
+
+<h2>Colour</h2>
+<div class="grid">
+  <div class="sw"><i style="background:#0E1315"></i>--ground #0E1315</div>
+  <div class="sw"><i style="background:#151C1F"></i>--surface #151C1F</div>
+  <div class="sw"><i style="background:#2A3438"></i>--rule #2A3438<br>1.47:1, decorative only</div>
+  <div class="sw"><i style="background:#E8ECEA"></i>--ink #E8ECEA<br>15.69:1 on ground</div>
+  <div class="sw"><i style="background:#93A0A4"></i>--ink-muted #93A0A4<br>6.95:1</div>
+  <div class="sw"><i style="background:#6F8F96"></i>--line #6F8F96<br>5.38:1, data lines</div>
+  <div class="sw"><i style="background:#F0B43C"></i>--slack #F0B43C<br>10.06:1, slack only</div>
+  <div class="sw"><i style="background:#FFFFFF"></i>--action-hover #FFFFFF<br>ground on it 18.71:1</div>
+</div>
+
+<h2>Type (system face)</h2>
+<p style="font-size:clamp(4rem,14vw,7rem);font-weight:300;letter-spacing:-0.03em;line-height:1;margin:0">05:57</p>
+<p style="font-size:clamp(2rem,4.5vw,3rem);font-weight:600;line-height:1.1;margin:0.5rem 0">h1 - 3rem / 600</p>
+<p style="font-size:1.75rem;font-weight:600;margin:0.5rem 0">Section heading - 1.75rem / 600</p>
+<p style="font-size:1.25rem;margin:0.5rem 0">Lead - 1.25rem / 400</p>
+<p style="margin:0.5rem 0">Body - 1rem / 400, tabular figures 0123456789</p>
+<p style="font-size:0.875rem;margin:0.5rem 0">Table and note - 0.875rem</p>
+<p class="label">Source label - 0.75rem uppercase</p>
+
+<h2>Spacing (4px base)</h2>
+<div style="max-width:24rem">
+  <div class="bar" style="width:0.25rem"></div><div class="bar" style="width:0.5rem"></div>
+  <div class="bar" style="width:0.75rem"></div><div class="bar" style="width:1rem"></div>
+  <div class="bar" style="width:1.5rem"></div><div class="bar" style="width:2rem"></div>
+  <div class="bar" style="width:3rem"></div><div class="bar" style="width:4rem"></div>
+  <div class="bar" style="width:6rem"></div>
+</div>
+<p class="state">1, 2, 3, 4, 6, 8, 12, 16, 24 × 0.25rem. Content 72rem, measure 40rem. Radius 0 or 2px. Elevation level 0 only, no shadows.</p>
+
+<h2>Action button - five states</h2>
+<div class="row">
+  <span><a class="btn" href="#">Join the TestFlight beta</a><span class="state">default</span></span>
+  <span><a class="btn hover" href="#">Join the TestFlight beta</a><span class="state">hover</span></span>
+  <span><a class="btn focus" href="#">Join the TestFlight beta</a><span class="state">focus-visible</span></span>
+  <span><a class="btn active" href="#">Join the TestFlight beta</a><span class="state">active</span></span>
+  <span><span class="btn disabled" aria-disabled="true">Join the TestFlight beta</span><span class="state">disabled</span></span>
+</div>
+
+<h2>Slack chip - five states (+ pressed)</h2>
+<div class="row">
+  <span><button class="chip">10:31</button><span class="state">default</span></span>
+  <span><button class="chip hover">10:31</button><span class="state">hover</span></span>
+  <span><button class="chip focus">10:31</button><span class="state">focus</span></span>
+  <span><button class="chip active">10:31</button><span class="state">active</span></span>
+  <span><button class="chip disabled" disabled>10:31</button><span class="state">disabled</span></span>
+  <span><button class="chip pressed" aria-pressed="true">05:57</button><span class="state">pressed (selected)</span></span>
+</div>
+
+<h2>Link</h2>
+<div class="row">
+  <a class="link" href="#">NOAA CO-OPS</a><span class="state">default</span>
+  <a class="link hover" href="#">NOAA CO-OPS</a><span class="state">hover</span>
+  <a class="link focus" href="#">NOAA CO-OPS</a><span class="state">focus</span>
+</div>
+
+<h2>Table</h2>
+<table>
+  <thead><tr><th>Time</th><th>Event</th><th>Speed</th></tr></thead>
+  <tbody>
+    <tr><td>03:07</td><td>Flood maximum</td><td>1.17 kn</td></tr>
+    <tr><td style="color:var(--slack)">05:57</td><td style="color:var(--slack)">Slack</td><td>0 kn</td></tr>
+  </tbody>
+</table>
+<p class="label">2 Oct 2026, NOAA SFB1204, Alcatraz Island, southwest of</p>
+
+<h2>Motion tokens</h2>
+<table>
+  <tr><th>--dur-fast</th><td>160ms</td><td>cubic-bezier(0.2, 0, 0, 1)</td></tr>
+  <tr><th>--dur-settle</th><td>1400ms</td><td>cubic-bezier(0.05, 0.7, 0.1, 1), once on load</td></tr>
+  <tr><th>stagger</th><td>none</td><td></td></tr>
+</table>
+</body>
+</html>

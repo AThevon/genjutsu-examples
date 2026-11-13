@@ -1,0 +1,407 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+p,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+/* Layout: one left edge for every section */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Header */
+.site-header {
+  border-bottom: var(--hairline) solid var(--color-line);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: var(--space-16);
+}
+
+.wordmark {
+  color: var(--color-ink);
+  font-weight: var(--weight-bold);
+  text-decoration: none;
+  padding-block: var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+/* The demo link sits in the hero right below on narrow frames */
+.header-demo {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .header-demo {
+    display: inline-block;
+  }
+}
+
+/* Primary button: the action, in ink */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-sm);
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.btn-compact {
+  padding-inline: var(--space-4);
+  font-size: var(--text-table);
+}
+
+.btn-primary:active {
+  background: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: var(--underline-offset);
+}
+
+.btn-primary[aria-disabled="true"] {
+  background: var(--color-line);
+  color: var(--color-ink-muted);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Quiet link */
+.link {
+  display: inline-block;
+  padding-block: var(--space-3);
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-thickness: var(--hairline);
+  text-decoration-color: var(--color-line-strong);
+  text-underline-offset: var(--underline-offset);
+  border-radius: var(--radius-sm);
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+
+.link:active {
+  color: var(--color-ink-muted);
+}
+
+.link[aria-disabled="true"] {
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover:not(:active) {
+    background: var(--color-ink-hover);
+  }
+
+  .link:hover {
+    text-decoration-color: var(--color-ink);
+  }
+}
+
+.btn-primary:focus-visible,
+.link:focus-visible,
+.wordmark:focus-visible {
+  outline: var(--focus-width) solid var(--color-ink);
+  outline-offset: var(--focus-offset);
+}
+
+/* Hero */
+.hero {
+  padding-block: var(--space-8) var(--section-gap);
+}
+
+.hero h1 {
+  max-width: var(--measure-display);
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-display);
+}
+
+.lead {
+  max-width: var(--measure);
+  margin-top: var(--space-4);
+  font-size: var(--text-lead);
+  line-height: var(--leading-body);
+  color: var(--color-ink);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-6);
+  row-gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+.actions-note {
+  color: var(--color-ink-muted);
+}
+
+.actions-note .link {
+  padding-block: var(--space-3);
+}
+
+/* The match table: the hero object */
+.match {
+  margin-top: var(--space-8);
+}
+
+.match-caption {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--color-ink-muted);
+}
+
+.match table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-table);
+  line-height: var(--leading-tight);
+}
+
+.match th {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--hairline) solid var(--color-ink);
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-muted);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.match td {
+  padding: var(--space-3);
+  border-bottom: var(--hairline) solid var(--color-line);
+  vertical-align: baseline;
+}
+
+.match th:first-child,
+.match td:first-child {
+  padding-left: 0;
+}
+
+.match th:last-child,
+.match td:last-child {
+  padding-right: 0;
+}
+
+.match .num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.cell-label {
+  display: none;
+}
+
+/* Resting state is the end state: matched lines receded, exceptions in ink and red */
+.is-matched td {
+  color: var(--color-ink-muted);
+}
+
+.is-exception td {
+  color: var(--color-ink);
+}
+
+.is-exception .cell-item {
+  font-weight: var(--weight-medium);
+}
+
+.is-exception .cell-result {
+  color: var(--color-signal);
+  font-weight: var(--weight-medium);
+}
+
+.diff {
+  color: var(--color-signal);
+  text-decoration: underline;
+  text-decoration-thickness: var(--hairline);
+  text-underline-offset: var(--underline-offset);
+}
+
+/* The one motion: matched lines settle from ink to grey, once, on first paint */
+@keyframes settle {
+  from {
+    color: var(--color-ink);
+  }
+}
+
+.is-matched td {
+  animation: settle var(--dur-settle) var(--ease-out) backwards;
+  animation-delay: calc(var(--delay-settle) + var(--i, 0) * var(--stagger));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-matched td {
+    animation: none;
+  }
+
+  .btn-primary,
+  .link {
+    transition: none;
+  }
+}
+
+/* Narrowest frame: each line becomes a block, every value beside its own label */
+@media (max-width: 719px) {
+  .match table,
+  .match tbody,
+  .match tr,
+  .match td {
+    display: block;
+  }
+
+  .match thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .match table {
+    border-top: var(--hairline) solid var(--color-ink);
+  }
+
+  .match tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--space-3);
+    row-gap: var(--space-2);
+    padding-block: var(--space-3);
+    border-bottom: var(--hairline) solid var(--color-line);
+  }
+
+  .match td,
+  .match td:first-child,
+  .match td:last-child {
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .match .cell-item,
+  .match .cell-result {
+    grid-column: 1 / -1;
+  }
+
+  .match .num {
+    text-align: left;
+    white-space: normal;
+  }
+
+  .cell-label {
+    display: block;
+    font-size: var(--text-small);
+    font-weight: var(--weight-medium);
+    color: var(--color-ink-muted);
+  }
+}
+
+/* Terms */
+.terms {
+  padding-block: var(--section-gap);
+  background: var(--color-surface);
+}
+
+.terms h2,
+.about h2 {
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  font-weight: var(--weight-bold);
+}
+
+.terms-list {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+  max-width: calc(var(--measure) + var(--term-label));
+}
+
+.terms-list > div {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.terms-list dt {
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-muted);
+}
+
+@media (min-width: 720px) {
+  .terms-list > div {
+    grid-template-columns: var(--term-label) minmax(0, var(--measure));
+    gap: var(--space-6);
+  }
+}
+
+/* About + closing action */
+.about {
+  padding-block: var(--section-gap);
+}
+
+.about p {
+  max-width: var(--measure);
+  margin-top: var(--space-4);
+}
+
+/* Footer */
+.site-footer {
+  border-top: var(--hairline) solid var(--color-line);
+  color: var(--color-ink-muted);
+  font-size: var(--text-table);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: var(--space-6);
+}

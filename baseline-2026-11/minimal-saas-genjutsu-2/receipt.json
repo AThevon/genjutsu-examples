@@ -1,0 +1,199 @@
+{
+  "run": "minimal-saas-genjutsu-2",
+  "case": "minimal-saas",
+  "arm": "genjutsu",
+  "run_of_arm": 2,
+  "plugin_under_test": {
+    "name": "genjutsu",
+    "version": "4.1.3",
+    "commit": "5e00595"
+  },
+  "prompt": "/genjutsu:paint build the landing page for Ploverdesk.\n\nThe brief. Ploverdesk is a fictional product made up for this example, and this is everything its founders have given us:\n\n- Ploverdesk is software for the finance teams of mid-size wholesalers, sold to companies, not to individuals. It reads the supplier invoices that arrive by email as PDF, matches every line against the purchase order and the delivery note (a three-way match), and shows a person only the lines that do not match: a wrong quantity, a wrong unit price, a delivery that never arrived. Invoices that match go straight to payment approval.\n- Matched invoices are exported to the accounting system as a CSV file or through an API. Data is hosted in Frankfurt, in the EU.\n- Price: 290 EUR per month per company, with no limit on users. A 14-day trial needs no credit card.\n- The company was founded in 2025 and is six people in Rotterdam. It has no customer logos, no testimonials and no usage numbers to show yet: invent none, and invent no other figure.\n- The page has one job: get a finance lead to start the trial, at /trial. A second, quieter link books a demo, at /demo.\n- Style: they want it minimal and restrained. Quiet, precise, nothing decorative.\n\nNobody is available to answer questions during this session: where your process would ask something or wait for an approval, decide yourself and carry on.\n- If your process shows previews before it builds, write each one as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with a short report of what you built and what you left unverified.",
+  "prompt_note": "The case prompt as written, `/genjutsu:paint` first.",
+  "harness": {
+    "tool": "claude plugin eval",
+    "claude_code": "2.1.323",
+    "headless": true,
+    "ablation": "none",
+    "command": "baseline-2026-11/bin/run-arm.sh genjutsu minimal-saas 2"
+  },
+  "model": "claude-opus-5-5",
+  "date": "2026-11-13",
+  "started_at": "2026-11-13T18:39:24.764Z",
+  "cost_usd": 1.64,
+  "cost_usd_exact": 1.6442029999999999,
+  "turns": 24,
+  "duration_seconds": 267,
+  "subagents": 0,
+  "runs_dir": "runs/20261113T183922Z",
+  "session_start": {
+    "skills_added_by_the_plugin": [
+      "genjutsu:bunshin",
+      "genjutsu:cast",
+      "genjutsu:paint"
+    ],
+    "built_in_skills": [
+      "deep-research",
+      "dataviz",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring"
+    ],
+    "plugins": [
+      "genjutsu",
+      "cc-plugin-agents-md",
+      "cc-plugin-privacy",
+      "cc-plugin-plugin-authoring"
+    ],
+    "mcp_servers": [],
+    "tools": [
+      "Task",
+      "Bash",
+      "Edit",
+      "Glob",
+      "Grep",
+      "NotebookEdit",
+      "Read",
+      "Skill",
+      "TaskStop",
+      "ToolSearch",
+      "Write"
+    ]
+  },
+  "skill_tool_calls": [],
+  "tool_calls": {
+    "Bash": 14,
+    "Edit": 1,
+    "Grep": 1,
+    "Write": 7
+  },
+  "stack": "React 19 + Vite + TypeScript, vanilla CSS, no animation library (template react)",
+  "files_in_workspace": [
+    "MASTER.md",
+    "index.html",
+    "package-lock.json",
+    "package.json",
+    "preview/design-system.html",
+    "preview/thesis.html",
+    "src/App.tsx",
+    "src/index.css",
+    "src/main.tsx",
+    "src/tokens.css",
+    "tsconfig.json",
+    "vite.config.ts"
+  ],
+  "what_it_built": "A header with the name only (no link, no button), the headline \"Pay the supplier invoices that match. Look only at the lines that don't.\", a paragraph, the trial button and a demo link, a four-row table of cases (everything agrees, wrong quantity, wrong unit price, delivery never arrived) with the disagreeing document tinted amber, definition rows, the price with the two links again, a company paragraph, a footer line. Cool white ground, the system sans, graphite ink, one amber accent. A centred column 704 px wide; the table section alone is 960 px wide. No animation beyond 120 to 160 ms hovers. Wrote `MASTER.md`, `src/tokens.css`, `preview/thesis.html` and `preview/design-system.html`.",
+  "build": {
+    "result": "success",
+    "command": "npm ci && npm run build (tsc --noEmit && vite build)",
+    "first_try": true,
+    "note": "the run could not build (npm and node are blocked in its sandbox); it built here unchanged"
+  },
+  "human_edits": 0,
+  "u2014_written_by_the_run": {},
+  "u2014_note": null,
+  "tells_audit": {
+    "command": "python3 skills/_jutsu/design-audit/scripts/audit.py <workspace> --group tells (genjutsu 4.1.3)",
+    "checked": 18,
+    "tells_to_confront": 0,
+    "fired": []
+  },
+  "graders": [
+    {
+      "name": "page-has-content",
+      "passed": true,
+      "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s"
+    },
+    {
+      "name": "paint-fired",
+      "passed": true,
+      "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|[/]_jutsu\\b"
+    },
+    {
+      "name": "paint-loaded",
+      "passed": false,
+      "explanation": "pattern not found in trace"
+    }
+  ],
+  "score": 0.6666666666666666,
+  "media": [
+    {
+      "file": "media/desktop.png",
+      "what": "First screen, desktop",
+      "viewport": "1440x900",
+      "output": "1440x900",
+      "kb": 90,
+      "page_height": 2328,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": [
+        "/favicon.ico"
+      ]
+    },
+    {
+      "file": "media/desktop-full.png",
+      "what": "Whole page, desktop",
+      "viewport": "1440x900",
+      "output": "1440x2328",
+      "kb": 233,
+      "page_height": 2328,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    },
+    {
+      "file": "media/mobile.png",
+      "what": "First screen, phone",
+      "viewport": "390x844 at 2x",
+      "output": "780x1688",
+      "kb": 134,
+      "page_height": 3521,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    },
+    {
+      "file": "media/mobile-full.png",
+      "what": "Whole page, phone",
+      "viewport": "390x844 at 2x",
+      "output": "780x7042",
+      "kb": 538,
+      "page_height": 3521,
+      "overflow": false,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    }
+  ],
+  "capture": {
+    "tool": "genjutsu skills/_jutsu/orchestration/scripts/shoot.mjs via baseline-2026-11/bin/capture.sh",
+    "served": "from disk over the DevTools protocol, no server",
+    "machine": "macOS, headless Chrome",
+    "wait": "4 s after preparation, so on-load motion has ended"
+  },
+  "read_by_eye": {
+    "what_a_designer_would_say": "Better than this arm's first run, still the barest page of its round. It has a table this time, and the amber cell that marks which document disagrees is a real idea in miniature. But the table describes cases in words (\"Quantity ordered\", \"Quantity received\") instead of showing an invoice, so it reads as documentation; it starts 887 px down the page, under about 190 px of empty band; and its section is wider than the text column and starts 128 px to its left, so the page has two left edges for no visible reason. The header holds the name and nothing else. System sans again. A designer would say the content is honest and the page has not been designed yet.",
+    "one_visual_idea": "A small one, late: amber marks the document that disagrees. It is below the first screen.",
+    "distinguishable_from_a_default_template": "Distinguishable from a SaaS template by omission, as in run 1. It reads as a plain document."
+  },
+  "defects_and_notes": [
+    "At 1440 px the case table and its intro start at x = 240 and the table is 960 px wide; the hero and every later block start at x = 368 in a 704 px column (`media/desktop-full.png`).",
+    "No trial link in the header; the first screen at 390 px ends in about 200 px of empty space before the next section (`media/mobile-full.png`).",
+    "The run's report does not end with the two \"Modules loaded\" lines the pipeline asks for, which is why the `paint-loaded` grader fails; the trace shows it resolving and reading the modules through genjutsu's loader."
+  ]
+}

@@ -1,0 +1,70 @@
+/* Étale design tokens. Mirrors MASTER.md; change both together. */
+:root {
+  color-scheme: dark;
+
+  /* Colour: ink is the action, amber is slack and nothing else. */
+  --ground: #0e1315;
+  --surface: #151c1f;
+  --rule: #2a3438;
+  --ink: #e8ecea;
+  --ink-muted: #93a0a4;
+  --line: #6f8f96;
+  --slack: #f0b43c;
+  --action-hover: #ffffff;
+
+  /* Type: the system face, SF Pro on iPhone. */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, system-ui, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: clamp(2rem, 4.5vw, 3rem);
+  --text-readout: clamp(4rem, 14vw, 7rem);
+  --tracking-label: 0.08em;
+  --tracking-readout: -0.03em;
+
+  /* Spacing: 4px base. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  --content: 72rem;
+  --measure: 40rem;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  --target: 44px;
+
+  /* Radii and lines. Elevation: level 0 only, no shadows. */
+  --radius-0: 0;
+  --radius-sm: 2px;
+  --radius-full: 50%; /* chart marks only: slack dot, ring, high/low dot */
+  --mark-slack: 10px;
+  --mark-ring: 22px;
+  --mark-hl: 6px;
+  --hairline: 1px;
+  --focus-width: 2px;
+  --focus-offset: 3px;
+
+  /* Chart plot heights. */
+  --plot-current: clamp(10rem, 28vh, 16rem);
+  --plot-tide: clamp(9rem, 24vh, 13rem);
+
+  /* Motion. */
+  --dur-fast: 160ms;
+  --dur-settle: 1400ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-settle: cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --text-md: 1.0625rem;
+  }
+}

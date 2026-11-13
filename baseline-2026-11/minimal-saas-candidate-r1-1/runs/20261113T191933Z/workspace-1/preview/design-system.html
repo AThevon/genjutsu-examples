@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk - design system preview (throwaway)</title>
+<style>
+  :root {
+    --color-bg:#FCFCFD; --color-surface:#F3F4F6; --color-ink:#15171C; --color-ink-2:#565B66; --color-rule:#DCDFE4;
+    --color-flag:#8A4A06; --color-flag-bg:#FBF2E4; --color-ink-hover:#2C3039; --color-ink-active:#3A3F4A;
+    --ease:cubic-bezier(0.2,0,0,1); --dur-hover:150ms; --radius-sm:2px;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--color-bg); color:var(--color-ink); font:400 1.0625rem/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:68rem; margin:0 auto; padding:3rem clamp(1.25rem,4vw,2.5rem) 6rem; }
+  h1 { font-weight:500; font-size:1.5rem; margin:0 0 .5rem; }
+  h2 { font-weight:500; font-size:1.0625rem; margin:3rem 0 1rem; padding-top:1rem; border-top:1px solid var(--color-rule); }
+  .note { color:var(--color-ink-2); font-size:.9375rem; max-width:40rem; }
+  .grid { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:1rem; align-items:start; }
+  .grid p { margin:.5rem 0 0; font-size:.8125rem; color:var(--color-ink-2); }
+  .btn { display:inline-flex; align-items:center; min-height:44px; padding:.75rem 1.5rem; border-radius:var(--radius-sm);
+    background:var(--color-ink); color:var(--color-bg); text-decoration:none; font-weight:500; font-size:.9375rem;
+    transition:background-color var(--dur-hover) var(--ease); }
+  .btn:hover, .btn.is-hover { background:var(--color-ink-hover); }
+  .btn:active, .btn.is-active { background:var(--color-ink-active); }
+  .btn:focus-visible, .btn.is-focus { outline:2px solid var(--color-ink); outline-offset:3px; }
+  .btn[aria-disabled="true"] { background:var(--color-surface); color:var(--color-ink-2); pointer-events:none; }
+  .link { color:var(--color-ink-2); text-decoration:underline; text-decoration-color:var(--color-rule); text-underline-offset:.2em; font-size:.9375rem;
+    transition:color var(--dur-hover) var(--ease), text-decoration-color var(--dur-hover) var(--ease); border-radius:var(--radius-sm); }
+  .link:hover, .link.is-hover, .link:active, .link.is-active { color:var(--color-ink); text-decoration-color:var(--color-ink); }
+  .link:focus-visible, .link.is-focus { outline:2px solid var(--color-ink); outline-offset:3px; }
+  .link[aria-disabled="true"] { color:var(--color-ink-2); text-decoration:none; pointer-events:none; }
+  table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; font-size:.9375rem; }
+  th, td { padding:.75rem 1rem; border-bottom:1px solid var(--color-rule); text-align:left; }
+  thead th { background:var(--color-surface); font-weight:500; font-size:.8125rem; color:var(--color-ink-2); }
+  .num { text-align:right; }
+  .recede td { opacity:.64; }
+  .diff { color:var(--color-flag); background:var(--color-flag-bg); font-weight:500; }
+  .flag-text { color:var(--color-flag); font-weight:500; }
+  .scale div { margin:.5rem 0; }
+  .bars span { display:block; height:.5rem; background:var(--color-ink); margin:.375rem 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk - design system (proposal, not the build)</h1>
+  <p class="note">Throwaway preview of MASTER.md. UNVALIDATED (headless run). Type is the system face on purpose, so what you see here is what ships.</p>
+
+  <h2>Primary button: default, hover, focus, active, disabled</h2>
+  <div class="grid">
+    <div><a class="btn" href="#">Start the 14-day trial</a><p>default, ink #15171C</p></div>
+    <div><a class="btn is-hover" href="#">Start the 14-day trial</a><p>hover #2C3039, 150ms</p></div>
+    <div><a class="btn is-focus" href="#">Start the 14-day trial</a><p>focus, 2px ink ring, 3px offset</p></div>
+    <div><a class="btn is-active" href="#">Start the 14-day trial</a><p>active #3A3F4A</p></div>
+    <div><a class="btn" aria-disabled="true">Start the 14-day trial</a><p>disabled, surface + ink-2</p></div>
+  </div>
+
+  <h2>Quiet link: default, hover, focus, active, disabled</h2>
+  <div class="grid">
+    <div><a class="link" href="#">Book a demo</a><p>default, ink-2</p></div>
+    <div><a class="link is-hover" href="#">Book a demo</a><p>hover, ink + ink underline</p></div>
+    <div><a class="link is-focus" href="#">Book a demo</a><p>focus</p></div>
+    <div><a class="link is-active" href="#">Book a demo</a><p>active</p></div>
+    <div><a class="link" aria-disabled="true">Book a demo</a><p>disabled</p></div>
+  </div>
+
+  <h2>Match table: matched (receded) vs mismatched</h2>
+  <table>
+    <thead><tr><th>Item</th><th class="num">Invoiced</th><th class="num">Ordered</th><th class="num">Delivered</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr class="recede"><td>Example item</td><td class="num">40</td><td class="num">40</td><td class="num">40</td><td>Matched</td></tr>
+      <tr><td>Example item</td><td class="num diff">24</td><td class="num">24</td><td class="num diff">20</td><td class="flag-text">Held: 4 not delivered</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Receded row: ink at opacity .64 = #68696D, 5.35:1. Flag #8A4A06 on #FBF2E4 = 6.18:1.</p>
+
+  <h2>Type scale</h2>
+  <div class="scale">
+    <div style="font-size:2.75rem;font-weight:500;line-height:1.12;letter-spacing:-.01em">display 2.75rem / 500</div>
+    <div style="font-size:3rem;font-weight:500;line-height:1;font-variant-numeric:tabular-nums">290 EUR <span style="font-size:1.0625rem;font-weight:400;color:#565B66">price 3rem / 500</span></div>
+    <div style="font-size:1.5rem;font-weight:500">h2 1.5rem / 500</div>
+    <div style="font-size:1.0625rem;font-weight:500">h3 1.0625rem / 500</div>
+    <div>body 1.0625rem / 400 / 1.55</div>
+    <div style="font-size:.9375rem;color:#565B66">small .9375rem, ink-2</div>
+    <div style="font-size:.8125rem;color:#565B66">caption .8125rem, ink-2</div>
+  </div>
+
+  <h2>Spacing, 4px base</h2>
+  <div class="bars">
+    <span style="width:.25rem"></span><span style="width:.5rem"></span><span style="width:.75rem"></span><span style="width:1rem"></span>
+    <span style="width:1.5rem"></span><span style="width:2rem"></span><span style="width:3rem"></span><span style="width:4rem"></span><span style="width:6rem"></span>
+  </div>
+  <p class="note">Radius: 2px only. Shadows: none. Dials: variance 3, motion 2, density 4 (clauses in MASTER.md).</p>
+</main>
+</body>
+</html>

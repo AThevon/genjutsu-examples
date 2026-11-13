@@ -1,0 +1,549 @@
+{
+ "what": "Scores out of 10 given by one Claude model in three reviewer roles to unlabelled stills (first screen at 1440x900, whole page at 1440 px, whole page at 390 px) and the brief. Labels were shuffled in every round. Round 4 differs from rounds 1 to 3 (see its note) and its scores are not comparable with theirs. The label maps were rebuilt after judging by hashing the stills of each blind set against the media folders. The judges' written notes are not published.",
+ "roles": [
+  "designer",
+  "founder",
+  "slop-hunter"
+ ],
+ "rounds": [
+  {
+   "round": 1,
+   "sets": [
+    {
+     "set": "M1",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/minimal-saas-frontend-design-1",
+       "scores": {
+        "designer": 7.5,
+        "founder": 8,
+        "slop-hunter": 8
+       },
+       "mean": 7.83
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/minimal-saas-candidate-r1-1",
+       "scores": {
+        "designer": 6,
+        "founder": 6,
+        "slop-hunter": 6
+       },
+       "mean": 6.0
+      },
+      {
+       "label": "C",
+       "page": "baseline-2026-11/minimal-saas-none-1",
+       "scores": {
+        "designer": 6.5,
+        "founder": 7,
+        "slop-hunter": 6.5
+       },
+       "mean": 6.67
+      },
+      {
+       "label": "D",
+       "page": "baseline-2026-11/minimal-saas-genjutsu-2",
+       "scores": {
+        "designer": 4.5,
+        "founder": 4.5,
+        "slop-hunter": 5.5
+       },
+       "mean": 4.83
+      }
+     ]
+    },
+    {
+     "set": "M2",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/minimal-saas-genjutsu-1",
+       "scores": {
+        "designer": 4,
+        "founder": 4,
+        "slop-hunter": 4.5
+       },
+       "mean": 4.17
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/minimal-saas-none-2",
+       "scores": {
+        "designer": 6.5,
+        "founder": 6,
+        "slop-hunter": 6.5
+       },
+       "mean": 6.33
+      },
+      {
+       "label": "C",
+       "page": "baseline-2026-11/minimal-saas-candidate-r1-2",
+       "scores": {
+        "designer": 5.5,
+        "founder": 6.5,
+        "slop-hunter": 6
+       },
+       "mean": 6.0
+      },
+      {
+       "label": "D",
+       "page": "baseline-2026-11/minimal-saas-frontend-design-2",
+       "scores": {
+        "designer": 7,
+        "founder": 8,
+        "slop-hunter": 8
+       },
+       "mean": 7.67
+      }
+     ]
+    },
+    {
+     "set": "E",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/etale-landing-candidate-r1-1",
+       "scores": {
+        "designer": 7,
+        "founder": 7.5,
+        "slop-hunter": 7
+       },
+       "mean": 7.17
+      },
+      {
+       "label": "B",
+       "page": "etale-landing (runs/20261004T162451Z/workspace-1, genjutsu 4.1.0, reshot)",
+       "scores": {
+        "designer": 6.5,
+        "founder": 8,
+        "slop-hunter": 7.5
+       },
+       "mean": 7.33
+      }
+     ]
+    },
+    {
+     "set": "N",
+     "pages": [
+      {
+       "label": "A",
+       "page": "nocturne-planetarium (runs/20261004T162505Z/workspace-1, genjutsu 4.1.0, reshot)",
+       "scores": {
+        "designer": 5.5,
+        "founder": 6.5,
+        "slop-hunter": 5
+       },
+       "mean": 5.67
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/nocturne-planetarium-candidate-r1-1",
+       "scores": {
+        "designer": 6,
+        "founder": 4.5,
+        "slop-hunter": 4
+       },
+       "mean": 4.83
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "sets": [
+    {
+     "set": "M1",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/minimal-saas-none-1",
+       "scores": {
+        "designer": 6.5,
+        "founder": 6.5,
+        "slop-hunter": 6
+       },
+       "mean": 6.33
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/minimal-saas-genjutsu-2",
+       "scores": {
+        "designer": 4.5,
+        "founder": 5,
+        "slop-hunter": 5
+       },
+       "mean": 4.83
+      },
+      {
+       "label": "C",
+       "page": "baseline-2026-11/minimal-saas-candidate-r2-1",
+       "scores": {
+        "designer": 7.5,
+        "founder": 7.5,
+        "slop-hunter": 7
+       },
+       "mean": 7.33
+      },
+      {
+       "label": "D",
+       "page": "baseline-2026-11/minimal-saas-frontend-design-1",
+       "scores": {
+        "designer": 7,
+        "founder": 8,
+        "slop-hunter": 8
+       },
+       "mean": 7.67
+      }
+     ]
+    },
+    {
+     "set": "M2",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/minimal-saas-candidate-r2-2",
+       "scores": {
+        "designer": 6,
+        "founder": 6.5,
+        "slop-hunter": 6
+       },
+       "mean": 6.17
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/minimal-saas-frontend-design-2",
+       "scores": {
+        "designer": 8,
+        "founder": 8,
+        "slop-hunter": 7.5
+       },
+       "mean": 7.83
+      },
+      {
+       "label": "C",
+       "page": "baseline-2026-11/minimal-saas-genjutsu-1",
+       "scores": {
+        "designer": 4.5,
+        "founder": 4.5,
+        "slop-hunter": 4
+       },
+       "mean": 4.33
+      },
+      {
+       "label": "D",
+       "page": "baseline-2026-11/minimal-saas-none-2",
+       "scores": {
+        "designer": 6.5,
+        "founder": 6,
+        "slop-hunter": 5.5
+       },
+       "mean": 6.0
+      }
+     ]
+    },
+    {
+     "set": "E",
+     "pages": [
+      {
+       "label": "A",
+       "page": "etale-landing (runs/20261004T162451Z/workspace-1, genjutsu 4.1.0, reshot)",
+       "scores": {
+        "designer": 7,
+        "founder": 7.5,
+        "slop-hunter": 7
+       },
+       "mean": 7.17
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/etale-landing-candidate-r2-1",
+       "scores": {
+        "designer": 7.5,
+        "founder": 7,
+        "slop-hunter": 7.5
+       },
+       "mean": 7.33
+      }
+     ]
+    },
+    {
+     "set": "N",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/nocturne-planetarium-candidate-r2-1",
+       "scores": {
+        "designer": 8,
+        "founder": 8.5,
+        "slop-hunter": 8.5
+       },
+       "mean": 8.33
+      },
+      {
+       "label": "B",
+       "page": "nocturne-planetarium (runs/20261004T162505Z/workspace-1, genjutsu 4.1.0, reshot)",
+       "scores": {
+        "designer": 4,
+        "founder": 4,
+        "slop-hunter": 4.5
+       },
+       "mean": 4.17
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "sets": [
+    {
+     "set": "M1",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/minimal-saas-genjutsu-2",
+       "scores": {
+        "designer": 5,
+        "founder": 5,
+        "slop-hunter": 5.5
+       },
+       "mean": 5.17
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/minimal-saas-candidate-r3-1",
+       "scores": {
+        "designer": 7,
+        "founder": 8,
+        "slop-hunter": 7.5
+       },
+       "mean": 7.5
+      },
+      {
+       "label": "C",
+       "page": "baseline-2026-11/minimal-saas-frontend-design-1",
+       "scores": {
+        "designer": 7.5,
+        "founder": 7.5,
+        "slop-hunter": 7
+       },
+       "mean": 7.33
+      },
+      {
+       "label": "D",
+       "page": "baseline-2026-11/minimal-saas-none-1",
+       "scores": {
+        "designer": 6.5,
+        "founder": 6,
+        "slop-hunter": 5
+       },
+       "mean": 5.83
+      }
+     ]
+    },
+    {
+     "set": "M2",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/minimal-saas-frontend-design-2",
+       "scores": {
+        "designer": 7,
+        "founder": 7.5,
+        "slop-hunter": 7
+       },
+       "mean": 7.17
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/minimal-saas-genjutsu-1",
+       "scores": {
+        "designer": 4.5,
+        "founder": 4,
+        "slop-hunter": 4.5
+       },
+       "mean": 4.33
+      },
+      {
+       "label": "C",
+       "page": "baseline-2026-11/minimal-saas-none-2",
+       "scores": {
+        "designer": 6,
+        "founder": 5.5,
+        "slop-hunter": 5.5
+       },
+       "mean": 5.67
+      },
+      {
+       "label": "D",
+       "page": "baseline-2026-11/minimal-saas-candidate-r3-2",
+       "scores": {
+        "designer": 7.5,
+        "founder": 8,
+        "slop-hunter": 7.5
+       },
+       "mean": 7.67
+      }
+     ]
+    },
+    {
+     "set": "E",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/etale-landing-candidate-r3-1",
+       "scores": {
+        "designer": 7.5,
+        "founder": 8,
+        "slop-hunter": 7
+       },
+       "mean": 7.5
+      },
+      {
+       "label": "B",
+       "page": "etale-landing (runs/20261004T162451Z/workspace-1, genjutsu 4.1.0, reshot)",
+       "scores": {
+        "designer": 7,
+        "founder": 7,
+        "slop-hunter": 7.5
+       },
+       "mean": 7.17
+      }
+     ]
+    },
+    {
+     "set": "N",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/nocturne-planetarium-candidate-r3-1",
+       "scores": {
+        "designer": 7,
+        "founder": 7,
+        "slop-hunter": 6.5
+       },
+       "mean": 6.83
+      },
+      {
+       "label": "B",
+       "page": "nocturne-planetarium (runs/20261004T162505Z/workspace-1, genjutsu 4.1.0, reshot)",
+       "scores": {
+        "designer": 5.5,
+        "founder": 5.5,
+        "slop-hunter": 5
+       },
+       "mean": 5.33
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "round": 4,
+   "note": "Two arms on minimal-saas only: candidate-r4a is the branch at 164cd3e, candidate-r4b is the same text plus the bound on example values (1548e63). The judges saw two stills per page (whole page at 1440 px, whole page at 390 px), were asked to list every figure on the page that the brief does not give, and were told: \"The brief says to invent no figure: weigh that as the brief's author would.\" Rounds 1 to 3 did not say this. Set M1 holds no genjutsu 4.1.3 page and set M2 no no-plugin page. roles_listing_a_figure_outside_the_brief counts the roles, out of three, whose list was not \"none\"; for minimal-saas-none-1 the three lists hold only the line counts of its illustration, no quantity and no price. The map was checked by hashing the 16 stills of the blind sets against the media folders.",
+   "sets": [
+    {
+     "set": "M1",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/minimal-saas-frontend-design-1",
+       "scores": {
+        "designer": 7,
+        "founder": 7,
+        "slop-hunter": 6
+       },
+       "mean": 6.67,
+       "roles_listing_a_figure_outside_the_brief": 3
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/minimal-saas-candidate-r4a-1",
+       "scores": {
+        "designer": 6.5,
+        "founder": 6.5,
+        "slop-hunter": 6.5
+       },
+       "mean": 6.5,
+       "roles_listing_a_figure_outside_the_brief": 3
+      },
+      {
+       "label": "C",
+       "page": "baseline-2026-11/minimal-saas-candidate-r4b-1",
+       "scores": {
+        "designer": 8,
+        "founder": 8,
+        "slop-hunter": 8
+       },
+       "mean": 8.0,
+       "roles_listing_a_figure_outside_the_brief": 0
+      },
+      {
+       "label": "D",
+       "page": "baseline-2026-11/minimal-saas-none-1",
+       "scores": {
+        "designer": 7.5,
+        "founder": 7.5,
+        "slop-hunter": 7
+       },
+       "mean": 7.33,
+       "roles_listing_a_figure_outside_the_brief": 3
+      }
+     ]
+    },
+    {
+     "set": "M2",
+     "pages": [
+      {
+       "label": "A",
+       "page": "baseline-2026-11/minimal-saas-candidate-r4a-2",
+       "scores": {
+        "designer": 7,
+        "founder": 7,
+        "slop-hunter": 6.5
+       },
+       "mean": 6.83,
+       "roles_listing_a_figure_outside_the_brief": 3
+      },
+      {
+       "label": "B",
+       "page": "baseline-2026-11/minimal-saas-genjutsu-1",
+       "scores": {
+        "designer": 7,
+        "founder": 7,
+        "slop-hunter": 7
+       },
+       "mean": 7.0,
+       "roles_listing_a_figure_outside_the_brief": 0
+      },
+      {
+       "label": "C",
+       "page": "baseline-2026-11/minimal-saas-candidate-r4b-2",
+       "scores": {
+        "designer": 8,
+        "founder": 7.5,
+        "slop-hunter": 8
+       },
+       "mean": 7.83,
+       "roles_listing_a_figure_outside_the_brief": 0
+      },
+      {
+       "label": "D",
+       "page": "baseline-2026-11/minimal-saas-frontend-design-2",
+       "scores": {
+        "designer": 6.5,
+        "founder": 6.5,
+        "slop-hunter": 6
+       },
+       "mean": 6.33,
+       "roles_listing_a_figure_outside_the_brief": 3
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

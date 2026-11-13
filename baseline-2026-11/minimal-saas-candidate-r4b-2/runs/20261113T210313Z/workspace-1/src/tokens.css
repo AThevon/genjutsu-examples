@@ -1,0 +1,70 @@
+/* Generated from MASTER.md. Change values there first. */
+:root {
+  /* Colour */
+  --c-ground: #ffffff;
+  --c-surface: #f5f6f7;
+  --c-ink: #16191d;
+  --c-ink-hover: #2c3138;
+  --c-ink-2: #4a5058;
+  --c-ink-3: #646a72;
+  --c-rule: #dcdfe3;
+  --c-signal: #b23a1c; /* mismatch only */
+  --c-signal-tint: #fbefec;
+  --c-on-ink: #ffffff;
+  --c-disabled: #8a9097;
+
+  /* Type */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  --w-regular: 400;
+  --w-strong: 600;
+  --t-display: clamp(2.25rem, 1.6rem + 2.2vw, 3.25rem);
+  --t-h2: 1.75rem;
+  --t-lead: 1.1875rem;
+  --t-body: 1rem;
+  --t-small: 0.875rem;
+  --t-label: 0.8125rem;
+  --t-price: 2.5rem;
+  --lh-display: 1.08;
+  --lh-h2: 1.2;
+  --lh-lead: 1.5;
+  --lh-body: 1.55;
+  --lh-small: 1.45;
+  --lh-label: 1.3;
+  --lh-tight: 1;
+  --track-display: -0.02em;
+  --track-h2: -0.01em;
+  --measure: 36rem;
+
+  /* Spacing, base 4px */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+  --target-min: 44px;
+
+  /* Layout */
+  --container: 72rem;
+  --gutter: clamp(20px, 4vw, 40px);
+  --rule-w: 1px;
+  --signal-bar: 2px;
+  --label-col: 8.5rem;
+
+  /* Radii */
+  --r-0: 0;
+  --r-1: 2px;
+
+  /* Focus */
+  --focus-w: 2px;
+  --focus-offset: 3px;
+
+  /* Motion */
+  --m-fast: 140ms;
+  --m-ease: cubic-bezier(0.2, 0, 0, 1);
+}

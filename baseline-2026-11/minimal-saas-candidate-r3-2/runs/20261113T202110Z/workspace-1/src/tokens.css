@@ -1,0 +1,68 @@
+/* Generated from MASTER.md - edit there first. */
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #f5f6f7;
+  --color-line: #dadde1;
+  --color-line-strong: #8a9097;
+  --color-ink: #15171a;
+  --color-ink-hover: #2b2f35;
+  --color-ink-muted: #5c636b;
+  --color-signal: #b42318;
+  --color-on-ink: #ffffff;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --text-display: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --text-h2: 1.5rem;
+  --text-lead: 1.125rem;
+  --text-body: 1rem;
+  --text-table: 0.9375rem;
+  --text-small: 0.8125rem;
+  --leading-display: 1.12;
+  --leading-h2: 1.25;
+  --leading-body: 1.5;
+  --leading-tight: 1.4;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 600;
+  --tracking-display: -0.01em;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  --container: 1120px;
+  --measure: 62ch;
+  --measure-display: 28ch;
+  --term-label: 10rem;
+  --target-min: 44px;
+  --gutter: var(--space-4);
+  --section-gap: var(--space-16);
+
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  --hairline: 1px;
+  --focus-width: 2px;
+  --focus-offset: 2px;
+  --underline-offset: 3px;
+
+  --dur-fast: 120ms;
+  --dur-settle: 240ms;
+  --stagger: 60ms;
+  --delay-settle: 400ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: var(--space-12);
+    --section-gap: var(--space-24);
+  }
+}

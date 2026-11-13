@@ -1,0 +1,87 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nocturne - design system preview (throwaway)</title>
+<style>/* Tokens from MASTER.md - the only source of values. */
+:root {
+  --c-night: #05070d;
+  --c-dusk: #1a2242;
+  --c-raised: #0b0f1c;
+  --c-ink: #ece9e1;
+  --c-ink-dim: #a3a8b8;
+  --c-rule: #3a4266;
+  --c-torch: #ff6b57;
+  --c-torch-hover: #ff8573;
+  --c-torch-active: #e5523f;
+  --c-on-torch: #05070d;
+  --c-disabled: #2a2f45;
+  --c-saturn: #e8c873;
+
+  --font-display: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-text: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+
+  --fs-label: 0.75rem;
+  --ls-label: 0.16em;
+  --fs-small: 0.875rem;
+  --fs-body: 1.0625rem;
+  --fs-lead: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  --fs-h2: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+  --fs-time: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  --fs-display: clamp(3.5rem, 2rem + 7vw, 8.5rem);
+  --lh-tight: 1;
+  --lh-head: 1.15;
+  --lh-body: 1.6;
+
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+
+  --edge: clamp(1.25rem, 6vw, 6rem);
+  --measure: 60ch;
+  --table-max: 44rem;
+  --section-gap: clamp(5rem, 10vw, 9rem);
+  --hero-pin: 190svh;
+
+  --r-0: 0;
+  --r-1: 2px;
+
+  --dur-hover: 160ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+body{margin:0;background:var(--c-night);color:var(--c-ink);font:400 var(--fs-body)/var(--lh-body) var(--font-text);padding:var(--edge)}
+h2{font:600 var(--fs-label)/1 var(--font-text);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--c-ink-dim);border-top:1px solid var(--c-rule);padding-top:var(--s-4);margin:var(--s-8) 0 var(--s-5)}
+.g{display:flex;flex-wrap:wrap;gap:var(--s-4)}.sw{width:12rem;border:1px solid var(--c-rule);padding:var(--s-3);font-size:var(--fs-small);font-variant-numeric:tabular-nums}.sw b{display:block;height:3rem;margin-bottom:var(--s-2)}
+.btn{font:600 var(--fs-body)/1 var(--font-text);background:var(--c-torch);color:var(--c-on-torch);border:0;border-radius:var(--r-1);padding:var(--s-3) var(--s-5);text-decoration:none;display:inline-block;transition:background-color var(--dur-hover) var(--ease-out)}
+.btn.h{background:var(--c-torch-hover)}.btn.f{outline:2px solid var(--c-ink);outline-offset:3px}.btn.a{background:var(--c-torch-active)}.btn.d{background:var(--c-disabled);color:var(--c-ink-dim);cursor:not-allowed}
+a.l{color:var(--c-torch);text-underline-offset:.2em}a.l.h{text-decoration-thickness:2px}a.l.f{outline:2px solid var(--c-ink);outline-offset:3px}a.l.a{color:var(--c-torch-active)}
+.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:var(--s-5);align-items:center}.st small{display:block;color:var(--c-ink-dim);font-size:var(--fs-label);margin-top:var(--s-2)}
+.tk{background:var(--c-raised);border:1px solid var(--c-rule);border-radius:var(--r-1);padding:var(--s-6);max-width:24rem}
+.bar{height:var(--s-3);background:var(--c-ink-dim);margin:var(--s-1) 0}
+</style>
+<p style="max-width:var(--measure)"><strong>Visual thesis:</strong> the page is the dome seen from the reclining seat (dusk to dome black, stars in their own colour, gold for Saturn only, torch red for the action only, system serif display set roman, tabular sans figures, airy, flat, hairline, 2px).<br><strong>Allowed patterns:</strong> dark ground; scroll-linked dimming; pinned sticky hero; hairline rules; uppercase spaced labels; tabular figures; B-V star colour; display serif.<br>The proposal, not the build. UNVALIDATED (headless run). Fonts: system faces only, no web font requested; rendered here with whatever this machine's ui-serif / system-ui resolve to.</p>
+<h2>Colour (contrast on night / dusk)</h2><div class="g">
+<div class="sw"><b style="background:#05070d;border:1px solid #3a4266"></b>night #05070d<br>ground</div><div class="sw"><b style="background:#1a2242;border:1px solid #3a4266"></b>dusk #1a2242<br>hero ground at rest</div><div class="sw"><b style="background:#0b0f1c;border:1px solid #3a4266"></b>raised #0b0f1c<br>row hover, ticket block</div><div class="sw"><b style="background:#ece9e1;border:1px solid #3a4266"></b>ink #ece9e1<br>16.6 / 12.8</div><div class="sw"><b style="background:#a3a8b8;border:1px solid #3a4266"></b>ink-dim #a3a8b8<br>8.5 / 6.6</div><div class="sw"><b style="background:#3a4266;border:1px solid #3a4266"></b>rule #3a4266<br>decorative</div><div class="sw"><b style="background:#ff6b57;border:1px solid #3a4266"></b>torch #ff6b57<br>action only, 7.2 / 5.5</div><div class="sw"><b style="background:#ff8573;border:1px solid #3a4266"></b>torch-hover #ff8573<br>hover</div><div class="sw"><b style="background:#e5523f;border:1px solid #3a4266"></b>torch-active #e5523f<br>active</div><div class="sw"><b style="background:#2a2f45;border:1px solid #3a4266"></b>disabled #2a2f45<br>ink-dim on it 5.6</div><div class="sw"><b style="background:#e8c873;border:1px solid #3a4266"></b>saturn #e8c873<br>signal only, 12.4 / 9.6</div><div class="sw"><b style="background:#cfdcff;border:1px solid #3a4266"></b>star tints #cfdcff<br>#fffaf0, #ffcda0 by B-V</div></div>
+<h2>Type scale</h2>
+<p style="font:300 var(--fs-display)/var(--lh-tight) var(--font-display);margin:0">Nocturne</p>
+<p style="font:400 var(--fs-h2)/var(--lh-head) var(--font-display);margin:var(--s-4) 0">The evening, in two parts</p>
+<p style="font-size:var(--fs-lead);max-width:var(--measure)">The planetarium's after-hours program, on Friday and Saturday nights.</p>
+<p style="font:300 var(--fs-time)/1 var(--font-text);font-variant-numeric:tabular-nums;margin:0">21:30 22:00 23:30</p>
+<p style="max-width:var(--measure)">Body 1.0625rem / 1.6. On Friday and Saturday nights the dome first shows the night sky above Lisbon as it is that evening, with a narrator, then a 40-minute show.</p>
+<p style="font-size:var(--fs-small);color:var(--c-ink-dim)">Small .875rem. Altitude is geometric, with no atmospheric refraction.</p>
+<p style="font:600 var(--fs-label)/1 var(--font-text);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--c-ink-dim)">Label N E S W</p>
+<h2>Spacing (s-1 to s-10)</h2>
+<div class="bar" style="width:var(--s-1)"></div><div class="bar" style="width:var(--s-2)"></div><div class="bar" style="width:var(--s-3)"></div><div class="bar" style="width:var(--s-4)"></div><div class="bar" style="width:var(--s-5)"></div><div class="bar" style="width:var(--s-6)"></div><div class="bar" style="width:var(--s-7)"></div><div class="bar" style="width:var(--s-8)"></div><div class="bar" style="width:var(--s-9)"></div><div class="bar" style="width:var(--s-10)"></div>
+<h2>Button, five states (static)</h2><div class="st">
+<div><span class="btn">Book tickets</span><small>default</small></div><div><span class="btn h">Book tickets</span><small>hover</small></div><div><span class="btn f">Book tickets</span><small>focus</small></div><div><span class="btn a">Book tickets</span><small>active</small></div><div><span class="btn d">Book tickets</span><small>disabled</small></div></div>
+<h2>Link, five states</h2><div class="st">
+<div><a class="l" href="#">/tickets</a><small>default</small></div><div><a class="l h" href="#">/tickets</a><small>hover</small></div><div><a class="l f" href="#">/tickets</a><small>focus</small></div><div><a class="l a" href="#">/tickets</a><small>active</small></div><div><span style="color:var(--c-ink-dim)">/tickets</span><small>disabled (not a link)</small></div></div>
+<h2>Ticket block (radius 2px, no shadow)</h2>
+<div class="tk"><p style="font:300 var(--fs-time)/1 var(--font-text);margin:0;font-variant-numeric:tabular-nums">12 EUR</p><p style="color:var(--c-ink-dim);margin:var(--s-2) 0 0">8 EUR for students</p></div>
+<h2>Motion tokens</h2><p class="num">hover 160ms cubic-bezier(0.2, 0, 0, 1). Dimming: linear to scroll, 8 bands, mag 2.5 to 4.5, pin 190svh. Shadows: none.</p>
+</html>

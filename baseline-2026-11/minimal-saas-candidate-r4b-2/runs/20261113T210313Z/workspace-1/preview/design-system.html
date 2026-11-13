@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk design system preview (throwaway)</title>
+<style>
+  :root{--c-ground:#FFFFFF;--c-surface:#F5F6F7;--c-ink:#16191D;--c-ink-hover:#2C3138;--c-ink-2:#4A5058;--c-ink-3:#646A72;--c-rule:#DCDFE3;--c-signal:#B23A1C;--c-signal-tint:#FBEFEC;--c-on-ink:#FFFFFF;--c-disabled:#8A9097;--m-fast:140ms;--m-ease:cubic-bezier(0.2,0,0,1)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--c-ground);color:var(--c-ink);font:400 16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-variant-numeric:tabular-nums}
+  main{max-width:72rem;margin:0 auto;padding:48px 24px 96px}
+  h1{font-size:14px;font-weight:600;color:var(--c-ink-2);margin:0 0 8px}
+  h2{font-size:20px;font-weight:600;margin:56px 0 16px;padding-top:16px;border-top:1px solid var(--c-rule)}
+  .note{color:var(--c-ink-3);font-size:14px;max-width:40rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(9rem,1fr));gap:16px;font-size:13px}
+  .grid i{display:block;height:44px;border:1px solid var(--c-rule);margin-bottom:6px}
+  .bar{height:12px;background:var(--c-ink);margin:4px 0 10px}
+  .states{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .states figure{margin:0;font-size:12px;color:var(--c-ink-3);display:grid;gap:8px;justify-items:start}
+  .btn{font:600 16px/1.2 inherit;font-family:inherit;border:0;background:var(--c-ink);color:var(--c-on-ink);padding:12px 24px;border-radius:2px;transition:background-color var(--m-fast) var(--m-ease)}
+  .btn.h{background:var(--c-ink-hover)} .btn.f{outline:2px solid var(--c-ink);outline-offset:3px} .btn.a{background:var(--c-ink-2)} .btn.d{background:var(--c-surface);color:var(--c-disabled)}
+  .lnk{color:var(--c-ink);text-decoration:underline;text-decoration-color:var(--c-rule);text-underline-offset:3px}
+  .lnk.h{text-decoration-color:var(--c-ink)} .lnk.f{outline:2px solid var(--c-ink);outline-offset:3px;border-radius:2px} .lnk.a{color:var(--c-ink-2)} .lnk.d{color:var(--c-disabled);text-decoration:none}
+  td,th{text-align:left;padding:12px 16px 12px 12px;border-bottom:1px solid var(--c-rule)} table{border-collapse:collapse}
+  th{font-size:13px;font-weight:600;color:var(--c-ink-2)} .ok{color:var(--c-ink-3)} .no{color:var(--c-signal);background:var(--c-signal-tint);font-weight:600}
+  tr.x td:first-child{box-shadow:inset 2px 0 0 var(--c-signal)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Ploverdesk design system preview. This page is the proposal, not the build. UNVALIDATED (headless run).</h1>
+  <p class="note">Light only, no dark theme: the brief asks for nothing more, and one theme keeps the single signal colour exact. System face, no font request, nothing to load.</p>
+
+  <h2>Colour</h2>
+  <div class="grid">
+    <div><i style="background:#FFFFFF"></i>ground #FFFFFF</div>
+    <div><i style="background:#F5F6F7"></i>surface #F5F6F7</div>
+    <div><i style="background:#16191D"></i>ink #16191D · 17.63:1</div>
+    <div><i style="background:#2C3138"></i>ink-hover #2C3138</div>
+    <div><i style="background:#4A5058"></i>ink-2 #4A5058 · 8.14:1</div>
+    <div><i style="background:#646A72"></i>ink-3 #646A72 · 5.46:1</div>
+    <div><i style="background:#DCDFE3"></i>rule #DCDFE3 · hairline</div>
+    <div><i style="background:#B23A1C"></i>signal #B23A1C · 5.97:1</div>
+    <div><i style="background:#FBEFEC"></i>signal-tint #FBEFEC</div>
+    <div><i style="background:#8A9097"></i>disabled #8A9097 · 3.22:1</div>
+  </div>
+
+  <h2>Type scale</h2>
+  <p style="font-size:52px;font-weight:600;line-height:1.08;letter-spacing:-.02em;margin:0 0 12px">display 52 / 600</p>
+  <p style="font-size:28px;font-weight:600;letter-spacing:-.01em;margin:0 0 8px">h2 28 / 600</p>
+  <p style="font-size:19px;color:var(--c-ink-2);margin:0 0 8px">lead 19 / 400</p>
+  <p style="margin:0 0 8px">body 16 / 400</p>
+  <p style="font-size:14px;margin:0 0 8px">small 14 / 400</p>
+  <p style="font-size:13px;font-weight:600;color:var(--c-ink-2);margin:0 0 8px">label 13 / 600</p>
+  <p style="font-size:40px;font-weight:600;line-height:1;margin:0">price 40 / 600</p>
+
+  <h2>Spacing (base 4)</h2>
+  <div style="max-width:30rem;font-size:12px;color:var(--c-ink-3)">
+    s-1 4<div class="bar" style="width:4px"></div>s-2 8<div class="bar" style="width:8px"></div>s-3 12<div class="bar" style="width:12px"></div>s-4 16<div class="bar" style="width:16px"></div>s-5 24<div class="bar" style="width:24px"></div>s-6 32<div class="bar" style="width:32px"></div>s-7 48<div class="bar" style="width:48px"></div>s-8 64<div class="bar" style="width:64px"></div>s-9 96<div class="bar" style="width:96px"></div>s-10 128<div class="bar" style="width:128px"></div>
+  </div>
+
+  <h2>Radii and shadows</h2>
+  <p class="note">r-0 = 0, r-1 = 2px (button, focus ring). Shadows: none at every level.</p>
+
+  <h2>Button, five states</h2>
+  <div class="states">
+    <figure><button class="btn">Start the 14-day trial</button>default</figure>
+    <figure><button class="btn h">Start the 14-day trial</button>hover</figure>
+    <figure><button class="btn f">Start the 14-day trial</button>focus</figure>
+    <figure><button class="btn a">Start the 14-day trial</button>active</figure>
+    <figure><button class="btn d" disabled>Start the 14-day trial</button>disabled</figure>
+  </div>
+
+  <h2>Quiet link, five states</h2>
+  <div class="states">
+    <figure><a class="lnk" href="#">Book a demo</a>default</figure>
+    <figure><a class="lnk h" href="#">Book a demo</a>hover</figure>
+    <figure><a class="lnk f" href="#">Book a demo</a>focus</figure>
+    <figure><a class="lnk a" href="#">Book a demo</a>active</figure>
+    <figure><span class="lnk d">Book a demo</span>disabled</figure>
+  </div>
+
+  <h2>Tie-out row</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Purchase order</th><th>Delivery note</th><th>Invoice</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr class="x"><td>Quantity</td><td class="ok">ordered</td><td class="no">fewer received</td><td class="ok">billed as ordered</td><td>To a person</td></tr>
+      <tr><td class="ok">Every other line</td><td class="ok">agrees</td><td class="ok">agrees</td><td class="ok">agrees</td><td class="ok">Payment approval</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Motion</h2>
+  <p class="note">m-fast 140ms, m-ease cubic-bezier(0.2, 0, 0, 1). Properties: color, background-color, text-decoration-color, outline-color. Reduced motion: duration 0.</p>
+</main>
+</body>
+</html>

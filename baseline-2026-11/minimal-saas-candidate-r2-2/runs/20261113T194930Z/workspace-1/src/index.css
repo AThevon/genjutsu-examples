@@ -1,0 +1,633 @@
+/* Every value comes from src/tokens.css (mirror of MASTER.md). */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  font-variant-numeric: tabular-nums;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+ol,
+figure {
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--tracking-tight);
+  max-width: var(--measure-display);
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  font-weight: var(--weight-strong);
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  font-weight: var(--weight-strong);
+}
+
+p {
+  max-width: var(--measure);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--color-ink);
+  outline-offset: var(--focus-offset);
+}
+
+/* Layout ------------------------------------------------------------ */
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  row-gap: var(--space-6);
+}
+
+.col-head {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+
+.col-head p {
+  color: var(--color-ink-2);
+}
+
+.col-body {
+  grid-column: 5 / -1;
+}
+
+.section {
+  padding-block: var(--space-9);
+  border-top: var(--rule-width) solid var(--color-rule);
+}
+
+/* Skip link --------------------------------------------------------- */
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* Header ------------------------------------------------------------ */
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}
+
+.wordmark {
+  color: var(--color-ink);
+  font-weight: var(--weight-strong);
+  text-decoration: none;
+  min-height: var(--target-min);
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* Buttons and links (five states) ----------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--target-min);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  border: var(--rule-width) solid transparent;
+  font: inherit;
+  font-weight: var(--weight-strong);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.btn-compact {
+  padding-inline: var(--space-4);
+}
+
+.btn-primary {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-on-ink);
+}
+
+.btn-primary:active {
+  background: var(--color-ink-2);
+  border-color: var(--color-ink-2);
+}
+
+.btn-primary:disabled,
+.btn-primary[aria-disabled="true"] {
+  background: var(--color-ink-3);
+  border-color: var(--color-ink-3);
+  cursor: not-allowed;
+}
+
+.btn-quiet {
+  background: transparent;
+  border-color: var(--color-rule-control);
+  color: var(--color-ink);
+  font-weight: var(--weight-regular);
+}
+
+.btn-quiet:active,
+.btn-quiet[aria-pressed="true"] {
+  background: var(--color-surface);
+  border-color: var(--color-ink);
+}
+
+.btn-quiet:disabled {
+  color: var(--color-ink-3);
+  border-color: var(--color-rule);
+  cursor: not-allowed;
+}
+
+.link {
+  color: var(--color-ink);
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-rule-control);
+  text-decoration-thickness: var(--rule-width);
+  text-underline-offset: var(--underline-offset);
+  min-height: var(--target-min);
+  display: inline-flex;
+  align-items: center;
+  transition:
+    text-decoration-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.link:active {
+  color: var(--color-ink-2);
+}
+
+.link[aria-disabled="true"] {
+  color: var(--color-ink-3);
+  text-decoration-line: none;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background: var(--color-ink-hover);
+    border-color: var(--color-ink-hover);
+  }
+  .btn-quiet:hover {
+    border-color: var(--color-ink);
+  }
+  .link:hover {
+    text-decoration-color: var(--color-ink);
+    text-decoration-thickness: var(--focus-width);
+  }
+}
+
+/* Hero -------------------------------------------------------------- */
+
+.hero {
+  padding-block: var(--space-8) var(--space-9);
+}
+
+.hero-copy {
+  display: grid;
+  gap: var(--space-5);
+  max-width: var(--measure);
+}
+
+.lead {
+  font-size: var(--text-lead);
+  line-height: var(--leading-lead);
+  color: var(--color-ink-2);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.fine {
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-ink-3);
+}
+
+/* Worksheet --------------------------------------------------------- */
+
+.ws {
+  margin-top: var(--space-8);
+  border: var(--rule-width) solid var(--color-rule);
+  border-radius: var(--radius-sm);
+}
+
+.ws-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border-bottom: var(--rule-width) solid var(--color-rule);
+}
+
+.ws-title {
+  font-weight: var(--weight-strong);
+}
+
+.ws-note {
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  color: var(--color-ink-3);
+}
+
+.ws-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+}
+
+.ws-table th,
+.ws-table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: var(--rule-width) solid var(--color-rule);
+}
+
+.ws-table th {
+  font-weight: var(--weight-strong);
+  color: var(--color-ink-2);
+}
+
+.ws-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.ws-item {
+  font-weight: var(--weight-strong);
+}
+
+.ws-table th:first-child,
+.ws-table td:first-child {
+  padding-left: var(--space-5);
+}
+
+.ws-check-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ws-row--matched td {
+  color: var(--color-ink-3);
+}
+
+.ws-row--matched .ws-item {
+  font-weight: var(--weight-regular);
+}
+
+.ws-row--matched {
+  transition: opacity var(--dur-normal) var(--ease-out);
+}
+
+.ws[data-phase="fading"] .ws-row--matched {
+  opacity: 0;
+}
+
+/* Back from display: none, the matched rows fade in. Scoped to "returning"
+   so nothing fades on first load: at rest every line is already there. */
+@starting-style {
+  .ws[data-phase="returning"] .ws-row--matched {
+    opacity: 0;
+  }
+}
+
+.ws-row--exception td {
+  background: var(--color-exception-tint);
+  color: var(--color-ink);
+}
+
+.ws-row--exception .is-off,
+.ws-row--exception .ws-result {
+  color: var(--color-exception);
+  font-weight: var(--weight-strong);
+}
+
+.ws-summary td {
+  color: var(--color-ink-2);
+  transition: opacity var(--dur-normal) var(--ease-out);
+}
+
+@starting-style {
+  .ws-summary td {
+    opacity: 0;
+  }
+}
+
+.ws[data-phase="returning"] .ws-summary td {
+  opacity: 0;
+}
+
+.mark {
+  display: block;
+  flex: none;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mark--tick {
+  width: var(--mark-tick-size);
+  height: var(--mark-tick-size);
+  stroke: var(--color-ink-3);
+  stroke-width: var(--mark-stroke);
+}
+
+.mark--exception {
+  width: var(--mark-exception-size);
+  height: var(--mark-exception-size);
+  stroke: var(--color-exception);
+  stroke-width: var(--mark-stroke);
+}
+
+.mark--exception .mark-dot {
+  fill: var(--color-exception);
+  stroke: none;
+}
+
+/* Narrow worksheet (below 960px, where five columns of headed checks stop
+   fitting): matched lines shrink to one row (item and result), the exception
+   keeps its three checks whole, each with its label. */
+@media (max-width: 960px) {
+  .ws-table,
+  .ws-table tbody {
+    display: block;
+  }
+
+  .ws-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .ws-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-3);
+    row-gap: var(--space-3);
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: var(--rule-width) solid var(--color-rule);
+  }
+
+  .ws-table .ws-row td {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .ws-row--matched .ws-check {
+    display: none;
+  }
+
+  .ws-row--exception {
+    background: var(--color-exception-tint);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ws-row--exception .ws-item,
+  .ws-row--exception .ws-result {
+    grid-column: 1 / -1;
+  }
+
+  .ws-row--exception .ws-check::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: var(--space-1);
+    color: var(--color-ink-2);
+    font-weight: var(--weight-regular);
+  }
+
+  .ws-summary {
+    display: block;
+  }
+
+  .ws-table .ws-summary td {
+    display: block;
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+/* Ruled lists ------------------------------------------------------- */
+
+.ruled {
+  border-top: var(--rule-width) solid var(--color-rule);
+}
+
+.ruled-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: var(--space-5);
+  padding-block: var(--space-4);
+  border-bottom: var(--rule-width) solid var(--color-rule);
+}
+
+.ruled-row dt {
+  font-weight: var(--weight-strong);
+}
+
+.ruled-row dd {
+  color: var(--color-ink-2);
+  max-width: var(--measure);
+}
+
+.ruled-row--quiet dt {
+  font-weight: var(--weight-regular);
+  color: var(--color-ink-2);
+}
+
+/* Flow: a sequence read left to right, the way an invoice moves ------- */
+
+.flow {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-7);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--space-5);
+}
+
+.flow li {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+  padding-top: var(--space-4);
+  border-top: var(--rule-width) solid var(--color-ink);
+}
+
+.flow p {
+  color: var(--color-ink-2);
+}
+
+/* Pricing ----------------------------------------------------------- */
+
+.figure {
+  font-size: var(--text-figure);
+  line-height: var(--leading-figure);
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  margin-top: var(--space-3);
+}
+
+.pricing .actions {
+  margin-top: var(--space-6);
+}
+
+/* Footer ------------------------------------------------------------ */
+
+.site-footer {
+  border-top: var(--rule-width) solid var(--color-rule);
+  padding-block: var(--space-6) var(--space-7);
+  font-size: var(--text-small);
+  color: var(--color-ink-3);
+}
+
+/* Mid and narrow frames --------------------------------------------- */
+
+@media (max-width: 960px) {
+  .col-head,
+  .col-body {
+    grid-column: 1 / -1;
+  }
+
+  .flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: var(--space-4);
+  }
+
+  .section {
+    padding-block: var(--space-8);
+  }
+
+  .hero {
+    padding-block: var(--space-6) var(--space-8);
+  }
+
+  .ws {
+    margin-top: var(--space-7);
+  }
+
+  .site-nav {
+    gap: var(--space-4);
+  }
+
+  .site-nav .link {
+    display: none;
+  }
+
+  .flow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ruled-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+}
+
+/* Reduced motion: no fade, no FLIP (the JS switches instantly too). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

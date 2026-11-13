@@ -1,0 +1,439 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--c-ground);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  font-weight: var(--w-regular);
+  line-height: var(--lh-body);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+/* ---------- Layout ---------- */
+
+.wrap {
+  max-width: calc(var(--content) + 2 * var(--s-6));
+  margin-inline: auto;
+  padding-inline: var(--s-6);
+}
+
+.site-header {
+  padding-block: var(--s-6);
+}
+
+.wordmark {
+  font-weight: var(--w-medium);
+  letter-spacing: var(--tracking-display);
+}
+
+.section {
+  padding-block: var(--s-16);
+  border-top: var(--hairline) solid var(--c-rule);
+}
+
+@media (min-width: 48rem) {
+  .section {
+    padding-block: var(--s-24);
+  }
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+/* ---------- Type ---------- */
+
+.display {
+  font-size: var(--t-display);
+  font-weight: var(--w-medium);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  max-width: var(--display-measure);
+}
+
+.heading {
+  font-size: var(--t-heading);
+  font-weight: var(--w-medium);
+  line-height: var(--lh-heading);
+}
+
+.lead {
+  font-size: var(--t-lead);
+  color: var(--c-ink-2);
+}
+
+.small {
+  font-size: var(--t-small);
+  line-height: var(--lh-tight);
+  color: var(--c-ink-3);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding-block: var(--s-12) var(--s-16);
+}
+
+@media (min-width: 48rem) {
+  .hero {
+    padding-block: var(--s-16) var(--s-24);
+  }
+}
+
+.hero .lead {
+  margin-top: var(--s-6);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-6);
+  margin-top: var(--s-8);
+}
+
+.actions + .small {
+  margin-top: var(--s-3);
+}
+
+.hero .example {
+  margin-top: var(--s-16);
+}
+
+/* ---------- Buttons and links ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--target);
+  padding: var(--s-3) var(--s-6);
+  border: var(--hairline) solid var(--c-ink);
+  border-radius: var(--r-1);
+  background: var(--c-ink);
+  color: var(--c-on-ink);
+  font: inherit;
+  font-weight: var(--w-medium);
+  line-height: var(--lh-heading);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--d-fast) var(--ease-out),
+    border-color var(--d-fast) var(--ease-out);
+}
+
+.button:active {
+  background: var(--c-ink-2);
+  border-color: var(--c-ink-2);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  background: var(--c-disabled-bg);
+  border-color: var(--c-disabled);
+  color: var(--c-ink-3);
+  cursor: not-allowed;
+}
+
+.button--quiet {
+  background: transparent;
+  border-color: var(--c-rule);
+  color: var(--c-ink);
+  min-height: var(--target);
+  padding: var(--s-2) var(--s-4);
+  font-size: var(--t-small);
+}
+
+.button--quiet:active {
+  background: var(--c-disabled-bg);
+  border-color: var(--c-ink-2);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  color: var(--c-ink);
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--underline);
+  text-underline-offset: var(--underline-offset);
+  transition: text-decoration-thickness var(--d-fast) var(--ease-out);
+}
+
+.link:active {
+  color: var(--c-ink-2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--c-ink-hover);
+    border-color: var(--c-ink-hover);
+  }
+
+  .button--quiet:hover {
+    background: transparent;
+    border-color: var(--c-ink);
+  }
+
+  .button:disabled:hover {
+    background: var(--c-disabled-bg);
+    border-color: var(--c-disabled);
+  }
+
+  .link:hover {
+    text-decoration-thickness: var(--underline-hover);
+  }
+}
+
+.button:focus-visible,
+.link:focus-visible,
+.scroller:focus-visible {
+  outline: var(--focus-width) solid var(--c-ink);
+  outline-offset: var(--focus-offset);
+}
+
+/* ---------- The match example ---------- */
+
+.example-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--s-3) var(--s-6);
+  margin-bottom: var(--s-4);
+}
+
+.scroller {
+  overflow-x: auto;
+  border: var(--hairline) solid var(--c-rule);
+  border-radius: var(--r-1);
+  background: var(--c-surface);
+}
+
+.match {
+  width: 100%;
+  min-width: var(--table-min);
+  border-collapse: collapse;
+  font-size: var(--t-table);
+  line-height: var(--lh-tight);
+}
+
+.match thead th {
+  padding: var(--s-3) var(--s-4);
+  border-bottom: var(--hairline) solid var(--c-ink);
+  color: var(--c-ink-2);
+  font-size: var(--t-small);
+  font-weight: var(--w-medium);
+  text-align: left;
+  vertical-align: bottom;
+}
+
+.match tbody th,
+.match td {
+  padding: var(--s-4);
+  font-weight: var(--w-regular);
+  text-align: left;
+  border-bottom: var(--hairline) solid var(--c-rule);
+  /* Leaving the "after" state: faster, no stagger (exit is subtler than enter). */
+  transition:
+    color var(--d-fast) var(--ease-out),
+    background-color var(--d-fast) var(--ease-out);
+}
+
+.match tbody tr:last-child th,
+.match tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.match .num,
+.match thead th.num {
+  text-align: right;
+}
+
+.match .result {
+  white-space: nowrap;
+}
+
+.tick {
+  display: inline-block;
+  width: 0.875em;
+  height: 0.875em;
+  margin-right: var(--s-2);
+  vertical-align: -0.0625em;
+}
+
+.tick path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.mark {
+  position: relative;
+  display: inline-block;
+}
+
+.ring {
+  position: absolute;
+  top: -0.5em;
+  left: -0.75em;
+  width: calc(100% + 1.5em);
+  height: calc(100% + 1em);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ring ellipse {
+  fill: none;
+  stroke: var(--c-exception-mark);
+  stroke-width: 1.5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--d-fast) var(--ease-out);
+}
+
+/* After matching: the one motion. */
+.is-after .match tbody th,
+.is-after .match td {
+  transition:
+    color var(--d-recede) var(--ease-out) calc(var(--row) * var(--stagger)),
+    background-color var(--d-recede) var(--ease-out) calc(var(--row) * var(--stagger));
+}
+
+.is-after .row--matched th,
+.is-after .row--matched td {
+  color: var(--c-ink-3);
+}
+
+.is-after .row--exception th,
+.is-after .row--exception td {
+  background-color: var(--c-exception-wash);
+}
+
+.is-after .row--exception .result {
+  color: var(--c-exception);
+}
+
+.is-after .ring ellipse {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--d-ring) var(--ease-out)
+    calc(var(--row) * var(--stagger) + var(--d-ring-delay));
+}
+
+.example-status {
+  margin-top: var(--s-3);
+}
+
+/* ---------- What reaches a person ---------- */
+
+.split {
+  display: grid;
+  gap: var(--s-8);
+}
+
+@media (min-width: 48rem) {
+  .split {
+    grid-template-columns: 1fr 2fr;
+    gap: var(--s-12);
+  }
+}
+
+.cases > div {
+  padding-block: var(--s-4);
+  border-top: var(--hairline) solid var(--c-rule);
+}
+
+.cases > div:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.cases dt {
+  font-weight: var(--w-medium);
+}
+
+.cases dd {
+  margin-top: var(--s-1);
+  color: var(--c-ink-2);
+}
+
+.split .after-cases {
+  margin-top: var(--s-6);
+}
+
+/* ---------- After the match ---------- */
+
+.prose > * + * {
+  margin-top: var(--s-4);
+}
+
+.prose p {
+  color: var(--c-ink-2);
+}
+
+/* ---------- Price ---------- */
+
+.price {
+  display: grid;
+  gap: var(--s-8);
+  align-items: end;
+}
+
+@media (min-width: 48rem) {
+  .price {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+.price .heading + p {
+  margin-top: var(--s-3);
+}
+
+.price .actions {
+  margin-top: 0;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  padding-block: var(--s-8) var(--s-12);
+  border-top: var(--hairline) solid var(--c-rule);
+}
+
+/* ---------- Reduced motion: the end state, no transition ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .link,
+  .match tbody th,
+  .match td,
+  .is-after .match tbody th,
+  .is-after .match td,
+  .ring ellipse,
+  .is-after .ring ellipse {
+    transition: none;
+  }
+}

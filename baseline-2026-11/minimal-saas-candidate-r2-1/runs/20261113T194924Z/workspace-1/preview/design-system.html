@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ploverdesk - design system preview (throwaway)</title>
+<style>
+  :root { --bg:#FFFFFF; --surface:#F5F6F8; --ink:#15171A; --sec:#4A505B; --muted:#6B717C; --rule:#E2E5E9; --ctl:#8A909A; --accent:#2839C8; --accent-strong:#1F2DA3; --wash:#EEF0FB; --disabled:#C9CDD3; --ease:cubic-bezier(0.2,0,0,1); }
+  body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; color:var(--ink); background:var(--bg); font-variant-numeric:tabular-nums; }
+  main { max-width:1120px; margin:0 auto; padding:48px 24px; }
+  section { border-top:1px solid var(--rule); padding:32px 0; }
+  .label { font-size:13px; color:var(--muted); margin-bottom:16px; }
+  .sw { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:16px; }
+  .sw div { font-size:13px; } .sw i { display:block; height:48px; border:1px solid var(--rule); border-radius:2px; margin-bottom:8px; }
+  .t13{font-size:13px}.t14{font-size:14px}.t16{font-size:16px}.t18{font-size:18px}.t24{font-size:24px;line-height:1.3}.td{font-size:clamp(2rem,1.2rem + 3.2vw,3.25rem);line-height:1.1;letter-spacing:-0.02em;font-weight:600}
+  .sp div { height:12px; background:var(--accent); margin:6px 0; } .sp span{font-size:13px;color:var(--muted)}
+  .states { display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+  .b { font:inherit; font-size:14px; font-weight:500; padding:12px 20px; border-radius:2px; border:1px solid transparent; cursor:pointer; transition:background-color 120ms var(--ease),border-color 120ms var(--ease),color 120ms var(--ease); }
+  .p { background:var(--accent); color:#fff; } .p:hover,.p.h,.p:active,.p.a { background:var(--accent-strong); }
+  .s { background:var(--bg); color:var(--ink); border-color:var(--ctl); } .s:hover,.s.h { border-color:var(--ink); } .s:active,.s.a { background:var(--surface); }
+  .b:focus-visible,.b.f { outline:2px solid var(--accent); outline-offset:2px; }
+  .b:disabled { background:var(--disabled); color:var(--muted); border-color:transparent; cursor:not-allowed; }
+  .lk { color:var(--ink); text-decoration:underline; text-decoration-color:var(--ctl); text-underline-offset:3px; font-size:14px; } .lk:hover,.lk.h{ text-decoration-color:var(--ink); }
+  p { max-width:60ch; color:var(--sec); line-height:1.55; }
+</style>
+</head>
+<body>
+<main>
+  <h1 class="t24">Ploverdesk - design system preview</h1>
+  <p>Throwaway preview. The build reads MASTER.md and src/tokens.css, never this page. Theses UNVALIDATED (headless run). Type: system sans, no web face requested.</p>
+
+  <section><div class="label">Colour, contrast on #FFFFFF</div>
+    <div class="sw">
+      <div><i style="background:#15171A"></i>ink #15171A, 17.96:1</div>
+      <div><i style="background:#4A505B"></i>text-secondary #4A505B, 8.11:1</div>
+      <div><i style="background:#6B717C"></i>text-muted #6B717C, 4.91:1</div>
+      <div><i style="background:#2839C8"></i>accent #2839C8, 8.37:1</div>
+      <div><i style="background:#1F2DA3"></i>accent-strong #1F2DA3, white 10.7:1</div>
+      <div><i style="background:#EEF0FB"></i>accent-wash #EEF0FB, accent 7.37:1</div>
+      <div><i style="background:#F5F6F8"></i>surface #F5F6F8, ink 16.61:1</div>
+      <div><i style="background:#8A909A"></i>border-control #8A909A, 3.21:1</div>
+      <div><i style="background:#E2E5E9"></i>rule #E2E5E9, 1.26:1 (separator only)</div>
+      <div><i style="background:#C9CDD3"></i>disabled #C9CDD3</div>
+    </div>
+  </section>
+
+  <section><div class="label">Type scale (system sans, tabular figures)</div>
+    <div class="td">Only the lines that do not match.</div>
+    <div class="t24">24 / heading 1.3</div><div class="t18">18 / lead</div><div class="t16">16 / body 1.55</div><div class="t14">14 / sheet and buttons: 1,240.00 &nbsp; 318.50 &nbsp; 7.25</div><div class="t13">13 / labels</div>
+  </section>
+
+  <section><div class="label">Spacing (8px base)</div>
+    <div class="sp"><span>4</span><div style="width:4px"></div><span>8</span><div style="width:8px"></div><span>12</span><div style="width:12px"></div><span>16</span><div style="width:16px"></div><span>24</span><div style="width:24px"></div><span>32</span><div style="width:32px"></div><span>48</span><div style="width:48px"></div><span>64</span><div style="width:64px"></div><span>96</span><div style="width:96px"></div></div>
+    <div class="label" style="margin-top:16px">Radius: 0 and 2px only. Shadows: none.</div>
+  </section>
+
+  <section><div class="label">Primary button: default, hover, focus, active, disabled</div>
+    <div class="states"><button class="b p">Start the 14-day trial</button><button class="b p h">Hover</button><button class="b p f">Focus</button><button class="b p a">Active</button><button class="b p" disabled>Disabled</button></div>
+  </section>
+  <section><div class="label">Secondary button: default, hover, focus, active, disabled</div>
+    <div class="states"><button class="b s">Run the match again</button><button class="b s h">Hover</button><button class="b s f">Focus</button><button class="b s a">Active</button><button class="b s" disabled>Disabled</button></div>
+  </section>
+  <section><div class="label">Quiet link: default, hover</div>
+    <div class="states"><a class="lk" href="#">Book a demo</a><a class="lk h" href="#">Book a demo</a></div>
+  </section>
+</main>
+</body>
+</html>

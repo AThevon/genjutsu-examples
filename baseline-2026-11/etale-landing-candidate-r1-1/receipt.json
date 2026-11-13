@@ -1,0 +1,169 @@
+{
+  "run": "etale-landing-candidate-r1-1",
+  "case": "etale-landing",
+  "arm": "candidate-r1",
+  "run_of_arm": 1,
+  "plugin_under_test": {
+    "name": "genjutsu",
+    "version": "4.1.4",
+    "commit": "8d57853",
+    "branch": "feat/headless-presence (local, three commits on d5c614a)"
+  },
+  "prompt": "/genjutsu:paint build the landing page for Étale.\n\nThe brief. Étale is a fictional product made up for this example, and this is everything its founders have given us:\n\n- Étale is an iPhone app for people who swim in the cold water of Aquatic Park, San Francisco, all year round. It answers one question before you walk down to the beach: when is the water slack (étale is the French word for slack water, the still moment between ebb and flood, when the current is weakest), and how strong the current runs between two slacks.\n- Its numbers come from two NOAA CO-OPS stations, and data/tide.json holds one real day of both, 2 October 2026, as fetched from NOAA: the tide predictions of station 9414290 San Francisco, and the slack water and current predictions of station SFB1204 (Alcatraz Island, southwest of, the closest predicted current station, in the bay off the cove). The file names each station, where it is, its datum and its units. Use those numbers and label each one with its date and its station. Slack water is not high or low tide: take the slack times from the current predictions. The app shows no water temperature, so the page must not either. Do not invent any other figure.\n- The swimmers it is for train there before work, mostly without a wetsuit. They already know the cove and read the tide themselves on a printed table or a weather site. They want the next slack window at a glance, and an alert the evening before.\n- What exists: an iOS beta on TestFlight. No Android, no web app, no prices, no user numbers, no testimonials. The page has one job: get a swimmer onto the TestFlight beta, at /beta.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the landing page. You may write src/, index.html, public/, preview/ and MASTER.md; create nothing outside the project.\n- Dependencies are installed (node_modules is present) and `npm run build` works. There is no network: install nothing. Do not start a dev server.\n\nFinish with the final report the pipeline asks for.",
+  "prompt_note": "The case prompt as written, `/genjutsu:paint` first.",
+  "harness": {
+    "tool": "claude plugin eval",
+    "claude_code": "2.1.323",
+    "headless": true,
+    "ablation": "none",
+    "command": "GENJUTSU=<candidate checkout> ARM_LABEL=candidate-r1 baseline-2026-11/bin/run-arm.sh genjutsu etale-landing 1"
+  },
+  "model": "claude-opus-5-5",
+  "date": "2026-11-13",
+  "started_at": "2026-11-13T19:19:42.642Z",
+  "cost_usd": 3.13,
+  "cost_usd_exact": 3.1297155999999995,
+  "turns": 36,
+  "duration_seconds": 624,
+  "subagents": 0,
+  "runs_dir": "runs/20261113T191937Z",
+  "skill_tool_calls": [],
+  "tool_calls": {
+    "Bash": 19,
+    "Edit": 7,
+    "Write": 9
+  },
+  "stack": "React 19 + Vite + TypeScript, vanilla CSS, no animation library (template react)",
+  "files_in_workspace": [
+    "MASTER.md",
+    "data/tide.json",
+    "index.html",
+    "package-lock.json",
+    "package.json",
+    "preview/design-system.html",
+    "preview/thesis.html",
+    "src/App.tsx",
+    "src/DayStrip.tsx",
+    "src/TideCurve.tsx",
+    "src/data.ts",
+    "src/index.css",
+    "src/main.tsx",
+    "src/tokens.css",
+    "tsconfig.json",
+    "vite.config.ts"
+  ],
+  "set_aside_line": "Set aside: phone mockup over a gradient with feature cards (routine); a bare one-link text page (opposite); ocean-blue water photography; nautical-chart navy and brass. Kept: the current read against its zero line.",
+  "build": {
+    "result": "success",
+    "command": "npm ci && npm run build (tsc --noEmit && vite build)",
+    "first_try": true,
+    "note": "the run could not build (npm and node are blocked in its sandbox); it built here unchanged"
+  },
+  "human_edits": 0,
+  "tells_audit": {
+    "command": "python3 skills/_jutsu/design-audit/scripts/audit.py <workspace> --group tells (candidate checkout)",
+    "checked": 18,
+    "tells_to_confront": 0
+  },
+  "graders": [
+    {
+      "name": "page-has-content",
+      "passed": true,
+      "explanation": "matched <(main|section)(\\s[^>]*[^/])?>|^import\\s"
+    },
+    {
+      "name": "paint-fired",
+      "passed": true,
+      "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|[/]_jutsu\\b"
+    },
+    {
+      "name": "paint-loaded",
+      "passed": true,
+      "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?paint\"|Modules\\snot\\sloaded:"
+    }
+  ],
+  "score": 1,
+  "media": [
+    {
+      "file": "media/desktop.png",
+      "what": "First screen, desktop",
+      "viewport": "1440x900",
+      "output": "1440x900",
+      "kb": 122,
+      "page_height": 3128,
+      "scroll_width": 1546,
+      "client_width": 1440,
+      "overflow": true,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": [
+        "/favicon.ico"
+      ]
+    },
+    {
+      "file": "media/desktop-full.png",
+      "what": "Whole page, desktop",
+      "viewport": "1440x900",
+      "output": "1440x3128",
+      "kb": 373,
+      "page_height": 3128,
+      "scroll_width": 1546,
+      "client_width": 1440,
+      "overflow": true,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    },
+    {
+      "file": "media/mobile.png",
+      "what": "First screen, phone",
+      "viewport": "390x844 at 2x",
+      "output": "780x1688",
+      "kb": 142,
+      "page_height": 4119,
+      "scroll_width": 457,
+      "client_width": 390,
+      "overflow": true,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    },
+    {
+      "file": "media/mobile-full.png",
+      "what": "Whole page, phone",
+      "viewport": "390x844 at 2x",
+      "output": "780x8238",
+      "kb": 717,
+      "page_height": 4119,
+      "scroll_width": 457,
+      "client_width": 390,
+      "overflow": true,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    },
+    {
+      "file": "media/desktop-full-at-load.png",
+      "what": "Whole page 300 ms after load, unprepared",
+      "viewport": "1440x900",
+      "output": "1440x3128",
+      "kb": 373,
+      "page_height": 3128,
+      "scroll_width": 1528,
+      "client_width": 1440,
+      "overflow": true,
+      "console_errors": 0,
+      "exceptions": 0,
+      "missing": []
+    }
+  ],
+  "on_load": "plays one motion on load (the slack marker glides to the first slack); stills taken 4 s after preparation, the state at 300 ms is media/desktop-full-at-load.png",
+  "capture": {
+    "tool": "genjutsu skills/_jutsu/orchestration/scripts/shoot.mjs via baseline-2026-11/bin/capture.sh",
+    "served": "from disk over the DevTools protocol, no server",
+    "machine": "macOS, headless Chrome",
+    "wait": "4 s after preparation, so on-load motion has ended"
+  },
+  "read_by_eye": null,
+  "read_by_eye_note": "Not written: this run is judged blind, by a model in three reviewer roles that is not told which arm made which page."
+}
