@@ -21,6 +21,7 @@
   "cost_usd_exact": 3.423506,
   "turns": 22,
   "duration_seconds": 898,
+  "duration_note": "898 s is the run's own duration in its trace (not committed); the harness prints 900 s for the whole case",
   "subagents": 0,
   "tokens": {
     "input": 40,
@@ -137,7 +138,11 @@
   ],
   "suspected": [
     "the list cannot be tapped for about a second after Close (TodayView.swift:94 with the completion at line 151); the driver waits for idle, so the takes cannot show it",
-    "Close tapped mid-opening, and a second row tapped while the first collapses: guarded in the code, not filmed"
+    "Close tapped mid-opening, and a second row tapped while the first collapses: guarded in the code, not filmed",
+    "the release of the drag compares the same local-space translation with 120 pt (TideDetailView.swift:184), so a release between about 120 and 240 pt may close or spring back depending on the last frame; only the 300 pt drag was filmed",
+    "under Reduce Motion, a row reopened within 0.2 s of Close has isExpanded reset to false by the pending completion (TodayView.swift:141-147), and the header drag then does nothing; the close button still works",
+    "the row's frames are read once at the tap (TodayView.swift:117): a text size change while the detail is open collapses the card onto the row's old place",
+    "the spring redraws a clip path every frame over a full-screen layer holding a ScrollView and the stroked curve; hitches not measured"
   ],
   "unverified": [
     "no real device: frame pacing, hitches and 120 Hz (Instruments > Animation Hitches not run)",
@@ -326,5 +331,6 @@
       "kb": 120,
       "what": "the starting app: the detail"
     }
-  ]
+  ],
+  "second_check": "a separate pass replayed the trace's Write calls (the three Swift files are byte for byte the run's), rebuilt a fresh copy of workspace-1 (BUILD SUCCEEDED, no compiler error or warning) and read frames of the committed clips; the timings and the one-pixel pop were not measured again"
 }
