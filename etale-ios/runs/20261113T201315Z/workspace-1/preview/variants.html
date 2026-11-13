@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale - variants (preview, throwaway)</title>
+<style>
+  :root { --bg:#F2F2F7; --cell:#FFFFFF; --ink2:#3C3C4399; --sep:#3C3C4349; --tint:#007AFF; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.45 -apple-system, system-ui, sans-serif; color:#1d1d1f; background:#fafafa; padding:24px; }
+  h1 { font-size:20px; margin:0 0 6px; }
+  .note { color:#555; font-size:13px; max-width:900px; }
+  .bar { margin:14px 0 18px; display:flex; gap:12px; align-items:center; }
+  button { font:inherit; padding:6px 12px; border-radius:8px; border:1px solid #bbb; background:#fff; cursor:pointer; }
+  button:focus-visible, input:focus-visible { outline:2px solid var(--tint); outline-offset:2px; }
+  .grid { display:grid; grid-template-columns:repeat(3, 280px); gap:28px; }
+  .cap { min-height:96px; } .cap b { display:block; margin-bottom:2px; }
+  .chosen { color:#0a7d32; font-weight:600; }
+  .phone { width:280px; height:540px; border-radius:38px; border:8px solid #111; background:var(--bg); position:relative; overflow:hidden; }
+  .screen { position:absolute; inset:0; padding:44px 12px 12px; }
+  .lt { font:700 26px/1.1 -apple-system, system-ui; margin:2px 4px 10px; }
+  .hdr { font-size:11px; text-transform:uppercase; color:var(--ink2); margin:12px 14px 5px; }
+  .group { background:var(--cell); border-radius:12px; overflow:hidden; }
+  .row { padding:9px 14px; border-bottom:1px solid var(--sep); position:relative; }
+  .row:last-child { border-bottom:0; }
+  .row .content { display:inline-flex; gap:10px; align-items:baseline; }
+  .row b { font-size:18px; font-variant-numeric:tabular-nums; }
+  .row small { display:block; color:var(--ink2); font-size:12px; }
+  .row::after { content:"›"; position:absolute; right:12px; top:50%; transform:translateY(-50%); color:#C4C4C7; font-size:20px; }
+  .hero { padding:10px 14px; } .hero .k { color:var(--ink2); font-size:13px; }
+  .hero .t { font:600 40px/1.05 ui-rounded, -apple-system, system-ui; font-variant-numeric:tabular-nums; }
+  .detail { position:absolute; inset:0; background:var(--bg); padding:44px 12px 12px; transform-origin:0 0; visibility:hidden; }
+  .nav { color:var(--tint); margin-bottom:8px; font-size:14px; }
+  svg { width:100%; height:120px; display:block; }
+  .disclaim { font-size:12px; color:#8a5a00; background:#fff7e6; border:1px solid #f0d9a8; border-radius:8px; padding:8px 10px; margin-top:18px; max-width:900px; }
+</style>
+</head>
+<body>
+<h1>Étale - three variants of the validated thesis</h1>
+<p class="note"><strong>Interaction thesis (UNVALIDATED):</strong> zoom navigation transition from the slack row to the tide detail; the marker settles with <code>.spring(duration: 0.45, bounce: 0)</code> after <code>0.35 s</code>; Reduce Motion falls back to the automatic transition and a marker drawn at rest. The variants differ only in <em>which surface the zoom grows from</em>. Same spring, same delay in all three.</p>
+<div class="bar"><button id="all">Play all three</button><button id="back">Dismiss all</button><label><input type="checkbox" id="rm"> Reduce Motion</label></div>
+<div class="grid" id="grid"></div>
+<div class="disclaim">SwiftUI renders natively. This page approximates <strong>timing and curve</strong> only, and the zoom drawn here is a stand-in: its duration and easing belong to UIKit. Watch the start and end frames of the zoom, where the variants differ.</div>
+
+<script>
+const M=[0.177,0.199,0.221,0.244,0.268,0.292,0.317,0.342,0.367,0.393,0.419,0.445,0.472,0.498,0.525,0.552,0.578,0.605,0.632,0.658,0.685,0.711,0.737,0.763,0.789,0.814,0.839,0.864,0.889,0.913,0.937,0.961,0.984,1.006,1.029,1.05,1.071,1.092,1.111,1.13,1.149,1.166,1.183,1.199,1.214,1.228,1.241,1.253,1.264,1.274,1.283,1.291,1.298,1.304,1.308,1.312,1.314,1.316,1.316,1.315,1.314,1.311,1.308,1.304,1.299,1.293,1.286,1.279,1.271,1.263,1.254,1.245,1.235,1.225,1.215,1.204,1.194,1.183,1.173,1.162,1.152,1.141,1.132,1.122,1.113,1.104,1.096,1.088,1.081,1.074,1.068,1.063,1.059,1.056,1.053,1.051,1.05,1.049,1.05,1.051,1.054,1.057,1.061,1.066,1.071,1.078,1.085,1.093,1.102,1.111,1.121,1.132,1.144,1.156,1.169,1.182,1.196,1.211,1.226,1.242,1.258,1.275,1.292,1.31,1.328,1.346,1.365,1.384,1.403,1.422,1.442,1.462,1.481,1.501,1.521,1.54,1.559,1.578,1.597,1.615,1.633,1.651,1.668,1.684,1.7,1.715,1.729,1.743,1.756,1.768,1.779,1.789,1.798,1.806,1.814,1.82,1.825,1.829,1.831,1.833,1.833,1.832,1.829,1.825,1.82,1.813,1.805,1.795,1.784,1.771,1.756,1.74,1.723,1.703,1.682,1.66,1.636,1.61,1.583,1.555,1.525,1.493,1.461,1.427,1.392,1.356,1.318,1.28,1.241,1.202,1.161,1.12,1.079,1.037,0.994,0.952,0.91,0.867,0.825,0.782,0.74,0.699,0.658,0.617,0.577,0.538,0.5,0.462,0.426,0.391,0.357,0.324,0.292,0.262,0.233,0.205,0.179,0.155,0.132,0.11,0.09,0.072,0.055,0.04,0.026,0.014,0.004,-0.005,-0.013,-0.019,-0.024,-0.027,-0.029,-0.029,-0.029,-0.027,-0.023,-0.019,-0.013,-0.006];
+const DURATION=0.45, DELAY=0.35, W0=2*Math.PI/DURATION;
+const spring=t=>t<=0?0:1-(1+W0*t)*Math.exp(-W0*t);
+const lo=Math.min(...M),hi=Math.max(...M),Y=m=>170-160*(m-lo)/(hi-lo)+5;
+const STANDIN={duration:500,easing:"cubic-bezier(.32,.72,0,1)"}; // stand-in for the system zoom
+const V=[
+ {name:"Variant A - Text block",tone:"subtle",cap:"The source is the row's text only (<code>.matchedTransitionSource</code> with no configuration). The zoom starts from a transparent rectangle, so the grey detail grows out of white text and lands back on it with a flash of the wrong colour.",src:"content",bg:false},
+ {name:"Variant B - The cell itself",tone:"balanced",cap:"Same source, configured with the cell's own colour (<code>secondarySystemGroupedBackground</code>) and 12 pt corners. The zoom starts from what reads as the cell, and the dismiss lands on a cell of the same colour.",src:"content",bg:true,chosen:true},
+ {name:"Variant C - Cell + hero",tone:"impressive",cap:"B, plus the “Next slack water” hero becomes a second source with its own id, so the 56 pt numeral opens straight into the detail's 56 pt numeral. Needs a route value that remembers which source was tapped.",src:"content",bg:true,hero:true}];
+const grid=document.getElementById("grid"), phones=[];
+V.forEach((v,k)=>{
+  const col=document.createElement("div");
+  col.innerHTML=`<div class="cap"><b>${v.name} <span style="font-weight:400;color:#777">(${v.tone})</span></b>${v.cap}${v.chosen?'<div class="chosen">Picked in this headless run.</div>':""}</div>
+  <div class="phone"><div class="screen"><div class="lt">Aquatic Park</div>
+   <div class="group hero"><div class="k">Next slack water</div><div class="t">10:31</div><div style="font-size:13px">in 1 h 19 min. Ebb turns to flood.</div></div>
+   <div class="hdr">Slack water today</div><div class="group">
+    <div class="row"><span class="content"><b>05:57</b><span>Flood turns to ebb<small>then ebb to 0.94 kn at 08:06</small></span></span></div>
+    <div class="row src"><span class="content"><b>10:31</b><span>Ebb turns to flood<small>then flood to 1.44 kn at 13:37</small></span></span></div>
+    <div class="row"><span class="content"><b>16:17</b><span>Flood turns to ebb<small>then ebb to 2.11 kn at 19:50</small></span></span></div></div></div>
+   <div class="detail"><div class="nav">‹ Aquatic Park</div>
+    <div class="group hero"><div class="k">Slack water</div><div class="t">10:31</div><div style="font-size:13px">Ebb turns to flood.</div></div>
+    <div class="hdr">Tide height, metres above MLLW</div><div class="group" style="padding:10px"><svg viewBox="0 0 1440 180" preserveAspectRatio="none"></svg></div></div></div>
+  <div style="margin-top:8px"><button class="one">Replay ${v.name.split(" ")[1]}</button></div>`;
+  grid.appendChild(col);
+  const phone=col.querySelector(".phone"), detail=col.querySelector(".detail"), svg=col.querySelector("svg");
+  const source=()=> v.hero ? col.querySelector(".hero") : col.querySelector(".src .content");
+  phones.push({v,phone,detail,svg,source,raf:0,open:false});
+  col.querySelector(".one").onclick=()=>play(phones[k]);
+});
+const rm=()=>document.getElementById("rm").checked;
+function draw(p,P){const mk=631,my=Y(M[Math.round(mk/6)]);
+  P.svg.innerHTML=`<line x1="${mk}" y1="0" x2="${mk}" y2="${180*P_(p)}" stroke="#8E8E93" stroke-width="2" stroke-dasharray="6 6" vector-effect="non-scaling-stroke"/>
+  <path d="${M.map((m,i)=>(i?"L":"M")+i*6+","+Y(m)).join("")}" fill="none" stroke="#007AFF" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+  <ellipse cx="${mk}" cy="${my}" rx="${24*(0.5+0.5*p)}" ry="${5*(0.5+0.5*p)}" fill="#007AFF" opacity="${p}"/>`;}
+const P_=p=>Math.max(0,p);
+function rect(P){const a=P.source().getBoundingClientRect(),b=P.phone.getBoundingClientRect();return{x:a.left-b.left-8,y:a.top-b.top-8,w:a.width,h:a.height}}
+function frames(P){const r=rect(P),sx=r.w/264,sy=r.h/524;
+  const start={transform:`translate(${r.x}px,${r.y}px) scale(${sx},${sy})`,borderRadius:P.v.bg?"12px":"0px",background:P.v.bg?"#FFFFFF":"rgba(242,242,247,0)"};
+  return [start,{transform:"none",borderRadius:"30px",background:"#F2F2F7"}]}
+function play(P){
+  cancelAnimationFrame(P.raf);P.detail.style.visibility="visible";P.open=true;
+  if(rm()){P.detail.animate([{transform:"translateX(100%)"},{transform:"none"}],STANDIN);draw(1,P);return}
+  P.detail.animate(frames(P),STANDIN);draw(0,P);
+  const t0=performance.now()+DELAY*1000;const tick=n=>{const p=spring((n-t0)/1000);draw(P_(p),P);if(p<0.999)P.raf=requestAnimationFrame(tick);else draw(1,P)};P.raf=requestAnimationFrame(tick);
+}
+function dismiss(P){if(!P.open)return;P.open=false;
+  const a=rm()?P.detail.animate([{transform:"none"},{transform:"translateX(100%)"}],STANDIN):P.detail.animate(frames(P).reverse(),STANDIN);
+  a.onfinish=()=>P.detail.style.visibility="hidden";}
+document.getElementById("all").onclick=()=>phones.forEach(play);
+document.getElementById("back").onclick=()=>phones.forEach(dismiss);
+</script>
+</body>
+</html>

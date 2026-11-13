@@ -58,7 +58,10 @@ final class EtaleDriver: XCTestCase {
         row("10:31").tap()
         hold(2.0)
         mark("tap-alert")
-        app.switches.firstMatch.tap()
+        // A Toggle in a List row (the starting app, and the second run, which kept it) is one switch
+        // element as wide as the row: a tap at its centre lands on the label and changes nothing.
+        // Tap the control itself, at the trailing end. The first run's hand-built detail took either.
+        app.switches.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
         hold(1.2)
         mark("tap-back")
         back()
@@ -77,6 +80,23 @@ final class EtaleDriver: XCTestCase {
         let to = from.withOffset(CGVector(dx: 0, dy: 300))
         from.press(forDuration: 0.1, thenDragTo: to, withVelocity: 300, thenHoldForDuration: 0.3)
         mark("drag-end")
+        hold(2.0)
+        mark("end")
+    }
+
+    /// Open the 10:31 slack, then drag from the leading edge of the screen to the right by 300 pt over
+    /// one second and let go: the system's edge-swipe back. Added for the second run, whose detail is
+    /// still a navigation destination; the first run's overlay has no such gesture.
+    func testEdgeSwipeBack() {
+        hold(1.0)
+        mark("tap-open-1031")
+        row("10:31").tap()
+        hold(2.0)
+        mark("swipe-start")
+        let from = app.coordinate(withNormalizedOffset: CGVector(dx: 0.0, dy: 0.5)).withOffset(CGVector(dx: 2, dy: 0))
+        let to = from.withOffset(CGVector(dx: 300, dy: 0))
+        from.press(forDuration: 0.1, thenDragTo: to, withVelocity: 300, thenHoldForDuration: 0.3)
+        mark("swipe-end")
         hold(2.0)
         mark("end")
     }

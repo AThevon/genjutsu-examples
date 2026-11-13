@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale - interaction thesis (preview, throwaway)</title>
+<style>
+  :root { --bg:#F2F2F7; --cell:#FFFFFF; --ink:#000; --ink2:#3C3C4399; --sep:#3C3C4349; --tint:#007AFF; }
+  * { box-sizing: border-box; }
+  body { margin:0; font: 15px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color:#1d1d1f; background:#fafafa; }
+  main { display:grid; grid-template-columns: minmax(320px, 560px) 340px; gap:40px; padding:32px; max-width:1000px; margin:auto; }
+  h1 { font-size:20px; margin:0 0 12px; }
+  .thesis { background:#fff; border:1px solid #ddd; border-radius:10px; padding:16px; }
+  .note { color:#555; font-size:13px; }
+  table { border-collapse:collapse; font-size:13px; width:100%; margin-top:12px; }
+  td { border-top:1px solid #e5e5e5; padding:6px 4px; vertical-align:top; }
+  td:first-child { color:#555; width:44%; }
+  code { font: 12px ui-monospace, Menlo, monospace; }
+  .controls { display:flex; gap:12px; align-items:center; margin:14px 0; flex-wrap:wrap; }
+  button { font:inherit; padding:6px 12px; border-radius:8px; border:1px solid #bbb; background:#fff; cursor:pointer; }
+  button:focus-visible, input:focus-visible { outline:2px solid var(--tint); outline-offset:2px; }
+  /* phone */
+  .phone { width:340px; height:680px; border-radius:44px; border:10px solid #111; background:var(--bg); position:relative; overflow:hidden; }
+  .screen { position:absolute; inset:0; padding:54px 16px 16px; }
+  .large-title { font: 700 32px/1.1 -apple-system, system-ui; margin:4px 4px 14px; color:var(--ink); }
+  .hdr { font-size:12px; text-transform:uppercase; color:var(--ink2); margin:14px 16px 6px; }
+  .group { background:var(--cell); border-radius:12px; overflow:hidden; }
+  .row { display:flex; gap:12px; align-items:baseline; padding:11px 16px; border-bottom:1px solid var(--sep); cursor:pointer; position:relative; background:var(--cell); }
+  .row:last-child { border-bottom:0; }
+  .row b { font-size:20px; font-variant-numeric:tabular-nums; }
+  .row small { display:block; color:var(--ink2); font-size:13px; }
+  .row::after { content:"›"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:#C4C4C7; font-size:22px; }
+  .hero { padding:12px 16px; }
+  .hero .k { color:var(--ink2); font-size:14px; }
+  .hero .t { font: 600 48px/1.05 ui-rounded, "SF Pro Rounded", -apple-system, system-ui; font-variant-numeric:tabular-nums; }
+  .detail { position:absolute; inset:0; background:var(--bg); padding:54px 16px 16px; transform-origin:0 0; visibility:hidden; }
+  .navbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .navbar button { border:0; background:none; color:var(--tint); padding:4px 0; }
+  .navbar span { font-weight:600; }
+  svg.curve { width:100%; height:150px; display:block; }
+  .lc { display:flex; justify-content:space-between; gap:10px; padding:10px 16px; border-bottom:1px solid var(--sep); font-size:14px; }
+  .lc:last-child { border-bottom:0; } .lc span:last-child { color:var(--ink2); text-align:right; }
+  .disclaim { font-size:12px; color:#8a5a00; background:#fff7e6; border:1px solid #f0d9a8; border-radius:8px; padding:8px 10px; margin-top:12px; }
+</style>
+</head>
+<body>
+<main>
+<section>
+  <h1>Étale - interaction thesis</h1>
+  <div class="thesis">
+    <p><strong>Interaction thesis:</strong> Opening a slack from the Today list will use iOS 26's zoom navigation transition (<code>.matchedTransitionSource</code> on the row, <code>.navigationTransition(.zoom)</code> on the detail), so the row grows into the tide detail as one surface and shrinks back into its own place on dismiss, interactive drag included; once it lands, the curve's slack marker settles in, the dashed rule drawn top to bottom and the dot growing from 0.5 to 1, on a critically damped <code>.spring(duration: 0.45, bounce: 0)</code> after a <code>0.35 s</code> delay, because at slack the water stops and nothing in this app overshoots. With Reduce Motion on, the detail uses the system's automatic transition and the marker is already in place.</p>
+    <p><strong>Allowed patterns:</strong> the dashed marker rule and dot on the tide curve (already in the app, now drawn once on arrival).</p>
+    <p class="note">This page is the proposal, not the build. Status: <strong>UNVALIDATED</strong> (headless session, nobody here to approve it).</p>
+  </div>
+
+  <table>
+    <tr><td>Transition</td><td><code>.navigationTransition(.zoom(sourceID: slack.id, in: ns))</code>. Duration and curve belong to the system.</td></tr>
+    <tr><td>Source</td><td>The slack row, <code>.matchedTransitionSource(id: slack.id, in: ns)</code></td></tr>
+    <tr><td>Dismiss</td><td>Back button, edge swipe, or drag down. All system, all interactive.</td></tr>
+    <tr><td>Marker spring</td><td><code>.spring(duration: 0.45, bounce: 0)</code> (critically damped)</td></tr>
+    <tr><td>Marker delay</td><td><code>0.35 s</code> after the detail appears</td></tr>
+    <tr><td>Marker from / to</td><td>rule trimmed 0 → 1 from the top; dot scale 0.5 → 1, opacity 0 → 1</td></tr>
+    <tr><td>Reduce Motion</td><td>automatic transition; marker drawn at rest, no animation</td></tr>
+  </table>
+
+  <h1 style="margin-top:20px;font-size:15px">Marker easing: <code>spring(duration: 0.45, bounce: 0)</code></h1>
+  <svg id="plot" viewBox="0 0 520 220" width="100%" aria-label="Critically damped spring curve, rises to 1 without overshoot">
+    <line x1="40" y1="20" x2="40" y2="190" stroke="#bbb"/>
+    <line x1="40" y1="190" x2="510" y2="190" stroke="#bbb"/>
+    <line x1="40" y1="40" x2="510" y2="40" stroke="#ddd" stroke-dasharray="4 4"/>
+    <text x="8" y="44" font-size="11" fill="#777">1.0</text>
+    <text x="14" y="194" font-size="11" fill="#777">0</text>
+    <path id="plotPath" fill="none" stroke="#007AFF" stroke-width="2"/>
+    <line id="plotDur" stroke="#999" stroke-dasharray="2 3"/>
+    <text id="plotDurLabel" font-size="11" fill="#777"></text>
+    <text x="300" y="34" font-size="11" fill="#777">never crosses 1.0: bounce 0</text>
+  </svg>
+
+  <div class="disclaim">SwiftUI renders natively; this page only approximates <strong>timing and curve</strong>. The zoom here is a stand-in for the system zoom so you can see the shape of the move: its duration and easing belong to UIKit, and Étale does not set them.</div>
+</section>
+
+<section>
+  <div class="controls">
+    <button id="replay">Replay</button>
+    <label><input type="checkbox" id="rm"> Reduce Motion</label>
+  </div>
+  <div class="phone" id="phone">
+    <div class="screen" id="list">
+      <div class="large-title">Aquatic Park</div>
+      <div class="group hero"><div class="k">Next slack water</div><div class="t">10:31</div><div>in 1 h 19 min. Ebb turns to flood.</div></div>
+      <div class="hdr">Slack water today</div>
+      <div class="group" id="rows"></div>
+    </div>
+    <div class="detail" id="detail" aria-hidden="true">
+      <div class="navbar"><button id="back">‹ Aquatic Park</button><span id="dtitle"></span><span style="width:60px"></span></div>
+      <div class="group hero"><div class="k">Slack water</div><div class="t" id="dtime"></div><div id="dturn"></div></div>
+      <div class="hdr">Tide height, metres above MLLW</div>
+      <div class="group" style="padding:12px 12px">
+        <svg class="curve" id="curve" viewBox="0 0 1440 180" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="group" style="margin-top:14px" id="facts"></div>
+    </div>
+  </div>
+  <p class="note">Tap a row. Tap “‹ Aquatic Park” to dismiss (on device, an edge swipe or a drag down does it too).</p>
+</section>
+</main>
+
+<script>
+// NOAA 6-minute tide predictions, San Francisco 9414290, 2 October 2026, metres above MLLW.
+const M=[0.177,0.199,0.221,0.244,0.268,0.292,0.317,0.342,0.367,0.393,0.419,0.445,0.472,0.498,0.525,0.552,0.578,0.605,0.632,0.658,0.685,0.711,0.737,0.763,0.789,0.814,0.839,0.864,0.889,0.913,0.937,0.961,0.984,1.006,1.029,1.05,1.071,1.092,1.111,1.13,1.149,1.166,1.183,1.199,1.214,1.228,1.241,1.253,1.264,1.274,1.283,1.291,1.298,1.304,1.308,1.312,1.314,1.316,1.316,1.315,1.314,1.311,1.308,1.304,1.299,1.293,1.286,1.279,1.271,1.263,1.254,1.245,1.235,1.225,1.215,1.204,1.194,1.183,1.173,1.162,1.152,1.141,1.132,1.122,1.113,1.104,1.096,1.088,1.081,1.074,1.068,1.063,1.059,1.056,1.053,1.051,1.05,1.049,1.05,1.051,1.054,1.057,1.061,1.066,1.071,1.078,1.085,1.093,1.102,1.111,1.121,1.132,1.144,1.156,1.169,1.182,1.196,1.211,1.226,1.242,1.258,1.275,1.292,1.31,1.328,1.346,1.365,1.384,1.403,1.422,1.442,1.462,1.481,1.501,1.521,1.54,1.559,1.578,1.597,1.615,1.633,1.651,1.668,1.684,1.7,1.715,1.729,1.743,1.756,1.768,1.779,1.789,1.798,1.806,1.814,1.82,1.825,1.829,1.831,1.833,1.833,1.832,1.829,1.825,1.82,1.813,1.805,1.795,1.784,1.771,1.756,1.74,1.723,1.703,1.682,1.66,1.636,1.61,1.583,1.555,1.525,1.493,1.461,1.427,1.392,1.356,1.318,1.28,1.241,1.202,1.161,1.12,1.079,1.037,0.994,0.952,0.91,0.867,0.825,0.782,0.74,0.699,0.658,0.617,0.577,0.538,0.5,0.462,0.426,0.391,0.357,0.324,0.292,0.262,0.233,0.205,0.179,0.155,0.132,0.11,0.09,0.072,0.055,0.04,0.026,0.014,0.004,-0.005,-0.013,-0.019,-0.024,-0.027,-0.029,-0.029,-0.029,-0.027,-0.023,-0.019,-0.013,-0.006];
+const SLACKS=[
+  {t:"05:57",turn:"Flood turns to ebb",peak:"then ebb to 0.94 kn at 08:06",after:"10 min after high water (05:47, 1.32 m)"},
+  {t:"10:31",turn:"Ebb turns to flood",peak:"then flood to 1.44 kn at 13:37",after:"50 min after low water (09:41, 1.05 m)"},
+  {t:"16:17",turn:"Flood turns to ebb",peak:"then ebb to 2.11 kn at 19:50",after:"19 min after high water (15:58, 1.83 m)"}];
+const DURATION=0.45, DELAY=0.35;           // the thesis numbers, nothing else
+const W0=2*Math.PI/DURATION;               // SwiftUI: stiffness=(2π/duration)², bounce 0 => critical damping
+const spring=t=>t<=0?0:1-(1+W0*t)*Math.exp(-W0*t);
+const lo=Math.min(...M), hi=Math.max(...M);
+const Y=m=>170-160*(m-lo)/(hi-lo)+5, X=i=>i*6;
+const mins=s=>{const [h,m]=s.split(":").map(Number);return h*60+m};
+
+// easing plot
+(()=>{const T=1.0;let d="";for(let i=0;i<=200;i++){const t=T*i/200;d+=(i?"L":"M")+(40+470*t/T)+","+(190-150*spring(t))}
+document.getElementById("plotPath").setAttribute("d",d);
+const xd=40+470*DURATION/T,l=document.getElementById("plotDur");l.setAttribute("x1",xd);l.setAttribute("x2",xd);l.setAttribute("y1",30);l.setAttribute("y2",190);
+const lb=document.getElementById("plotDurLabel");lb.setAttribute("x",xd+4);lb.setAttribute("y",205);lb.textContent="duration 0.45 s";})();
+
+const rows=document.getElementById("rows"), detail=document.getElementById("detail"), phone=document.getElementById("phone");
+SLACKS.forEach((s,i)=>{const r=document.createElement("div");r.className="row";r.tabIndex=0;r.setAttribute("role","button");
+  r.innerHTML=`<b>${s.t}</b><div>${s.turn}<small>${s.peak}</small></div>`;r.onclick=()=>open(i,r);r.onkeydown=e=>{if(e.key==="Enter")open(i,r)};rows.appendChild(r)});
+
+let cur=null, srcRow=null, raf=0;
+const rm=()=>document.getElementById("rm").checked;
+function drawCurve(s,p){
+  const mk=mins(s.t), idx=Math.round(mk/6), my=Y(M[Math.min(idx,M.length-1)]);
+  const path=M.map((m,i)=>(i?"L":"M")+X(i)+","+Y(m)).join("");
+  document.getElementById("curve").innerHTML=
+   `<line x1="${mk}" y1="0" x2="${mk}" y2="${180*p}" stroke="#8E8E93" stroke-width="2" stroke-dasharray="6 6" vector-effect="non-scaling-stroke"/>
+    <path d="${path}" fill="none" stroke="#007AFF" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+    <ellipse cx="${mk}" cy="${my}" rx="${22*(0.5+0.5*p)}" ry="${5*(0.5+0.5*p)}" fill="#007AFF" opacity="${p}"/>`;
+}
+function settleMarker(s){
+  cancelAnimationFrame(raf);
+  if(rm()){drawCurve(s,1);return}
+  drawCurve(s,0);const t0=performance.now()+DELAY*1000;
+  const tick=now=>{const t=(now-t0)/1000;const p=spring(t);drawCurve(s,Math.max(0,p));if(p<0.999)raf=requestAnimationFrame(tick);else drawCurve(s,1)};
+  raf=requestAnimationFrame(tick);
+}
+function fill(s){
+  document.getElementById("dtitle").textContent="Slack "+s.t;document.getElementById("dtime").textContent=s.t;document.getElementById("dturn").textContent=s.turn+".";
+  document.getElementById("facts").innerHTML=`<div class="lc"><span>Slack comes</span><span>${s.after}</span></div><div class="lc"><span>Current</span><span>${s.peak}</span></div>`;
+}
+function rectIn(el){const a=el.getBoundingClientRect(),b=phone.getBoundingClientRect();return{x:a.left-b.left-10,y:a.top-b.top-10,w:a.width,h:a.height}}
+function zoomFrames(r){const sx=r.w/320, sy=r.h/660;
+  return [{transform:`translate(${r.x}px,${r.y}px) scale(${sx},${sy})`,borderRadius:"12px",opacity:0.6},{transform:"none",borderRadius:"34px",opacity:1}]}
+const STANDIN={duration:500,easing:"cubic-bezier(.32,.72,0,1)"}; // stand-in for the system zoom; not an Étale value
+function open(i,row){
+  cur=SLACKS[i];srcRow=row;fill(cur);detail.style.visibility="visible";detail.setAttribute("aria-hidden","false");
+  if(rm()) detail.animate([{transform:"translateX(100%)"},{transform:"none"}],STANDIN);
+  else detail.animate(zoomFrames(rectIn(row)),STANDIN);
+  settleMarker(cur);
+}
+function close(){
+  if(!cur)return;let a;
+  if(rm()) a=detail.animate([{transform:"none"},{transform:"translateX(100%)"}],STANDIN);
+  else a=detail.animate([...zoomFrames(rectIn(srcRow))].reverse(),STANDIN);
+  a.onfinish=()=>{detail.style.visibility="hidden";detail.setAttribute("aria-hidden","true")};cur=null;
+}
+document.getElementById("back").onclick=close;
+document.getElementById("replay").onclick=()=>{const r=rows.children[1];if(cur){detail.style.visibility="hidden";cur=null}open(1,r)};
+</script>
+</body>
+</html>
