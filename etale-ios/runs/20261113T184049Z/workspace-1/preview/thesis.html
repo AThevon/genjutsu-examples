@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale · thesis preview · row opens into the tide detail</title>
+<!-- ENGINE-STYLE:START -->
+<style>
+:root{--ground:#F2F2F7;--card:#FFFFFF;--label:#000;--sec:rgba(60,60,67,.6);--sep:rgba(60,60,67,.29);--tint:#007AFF;--fill:rgba(120,120,128,.16);--press:#E5E5EA;--green:#34C759}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;background:#E4E4E9;color:#1c1c1e}
+.phone{width:380px;height:760px;border-radius:52px;background:#1c1c1e;padding:10px;flex:none}
+.screen{position:relative;width:360px;height:740px;border-radius:42px;overflow:hidden;background:var(--ground);color:var(--label)}
+.list{position:absolute;inset:0;overflow-y:auto;padding:0 16px 28px;scrollbar-width:none}
+.list::-webkit-scrollbar{display:none}
+.status{height:50px;display:flex;align-items:center;padding-left:24px;font-weight:600;font-size:15px}
+.screen h1{font-size:32px;line-height:1.15;font-weight:700;margin:6px 4px 14px}
+.card{background:var(--card);border-radius:16px}
+.nextc{padding:14px 16px}
+.sec2{font-size:15px;color:var(--sec)}
+.big,.s-time{font:600 56px/1.2 ui-rounded,"SF Pro Rounded",-apple-system,sans-serif;font-variant-numeric:tabular-nums}
+.sh{font-size:15px;font-weight:600;color:var(--sec);margin:22px 4px 8px}
+.row{display:flex;align-items:baseline;gap:12px;width:100%;text-align:left;border:0;padding:12px 16px;margin:0 0 8px;font:inherit;color:inherit;cursor:pointer}
+.row:active{background:var(--press)}
+.row:focus-visible,.close:focus-visible,.btn:focus-visible{outline:2px solid var(--tint);outline-offset:2px}
+.r-time{font:600 20px/1.2 ui-rounded,"SF Pro Rounded",-apple-system,sans-serif;font-variant-numeric:tabular-nums}
+.r-text{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.r-turn,.s-turn{font-size:17px;line-height:1.3}
+.r-peak,.s-peak{font-size:15px;line-height:1.3;color:var(--sec)}
+.r-bell{align-self:center;color:var(--tint);display:flex}
+.r-bell[hidden]{display:none}
+.tide .t{display:flex;justify-content:space-between;padding:11px 16px;font-size:17px;font-variant-numeric:tabular-nums;box-shadow:inset 0 -.5px 0 var(--sep)}
+.tide .t:last-child{box-shadow:none}
+.foot{font-size:13px;color:var(--sec);margin:14px 4px 0}
+.surface{position:absolute;inset:0;background:var(--card);transform-origin:50% 50%}
+.surface[hidden]{display:none}
+.s-inner{position:absolute;inset:0;padding:50px 20px 28px;overflow-y:auto;scrollbar-width:none}
+.s-head{position:relative;padding-top:48px;touch-action:none;cursor:grab;user-select:none}
+.close{position:absolute;top:0;right:0;width:44px;height:44px;border-radius:22px;border:0;background:var(--fill);color:var(--label);font-size:17px;cursor:pointer}
+.s-label{font-size:15px;color:var(--sec)}
+.s-time,.s-turn,.s-peak{display:block;transform-origin:0 50%}
+.s-sep{height:.5px;background:var(--sep);margin:18px 0}
+.s-cap{font-size:13px;color:var(--sec);margin-bottom:6px}
+.s-fact{margin-bottom:14px}
+.s-fact .v{font-size:17px;line-height:1.3}
+.curve{display:block;width:100%;height:180px}
+.tog{display:flex;align-items:center;justify-content:space-between;font-size:17px;cursor:pointer}
+.tog input{appearance:none;width:51px;height:31px;border-radius:16px;background:#E9E9EB;position:relative;margin:0;cursor:pointer;transition:background .2s}
+.tog input::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.15);transition:transform .2s}
+.tog input:checked{background:var(--green)}
+.tog input:checked::after{transform:translateX(20px)}
+.tog input:focus-visible{outline:2px solid var(--tint);outline-offset:2px}
+.s-bell{position:absolute;color:var(--tint);display:flex;pointer-events:none}
+.ghost{position:absolute;margin:0;pointer-events:none;background:transparent}
+</style>
+<!-- ENGINE-STYLE:END -->
+<style>
+main{display:flex;gap:40px;padding:32px;align-items:flex-start;flex-wrap:wrap}
+.panel{max-width:560px}
+.panel h2{font-size:13px;letter-spacing:.02em;color:#636366;margin:26px 0 8px;font-weight:600}
+.thesis{font-size:17px;line-height:1.5;margin:0}
+.note{font-size:13px;color:#48484a;background:#fff;border-radius:10px;padding:10px 12px}
+table{border-collapse:collapse;width:100%;font-size:14px;background:#fff;border-radius:10px;overflow:hidden}
+td{padding:7px 10px;border-bottom:.5px solid #d1d1d6;vertical-align:top}
+td:first-child{color:#48484a;width:46%}
+code{font:13px ui-monospace,Menlo,monospace}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font:inherit;border:0;border-radius:10px;padding:8px 14px;background:#fff;cursor:pointer}
+.btn:active{background:#d1d1d6}
+.plot{background:#fff;border-radius:10px;display:block}
+</style>
+</head>
+<body>
+<main>
+  <div class="phone" id="phone"></div>
+  <section class="panel">
+    <p class="note">This page is the proposal, not the build. It approximates the timing and the curve only. SwiftUI renders the real thing, and SF Pro / SF Pro Rounded show here only on an Apple device (other systems: the fallback stack, <em>not rendered in this session</em>).</p>
+    <h2>Interaction thesis</h2>
+    <p class="thesis">Tapping a slack row grows that row's own card into the tide detail, in place. The card's clip opens from the row's frame to the full screen while the row's three lines (time, turn, next current) travel to their places in the detail header, and the time scales up into the 56&nbsp;pt hero. All of it runs on one critically damped <code>spring(duration: 0.45, bounce: 0)</code>: slack water is the moment the current stops, so nothing overshoots. The rest of the detail fades in once the surface has mostly arrived and leaves first. Dragging the header down collapses the surface back into its row.</p>
+    <h2>Allowed patterns</h2>
+    <p class="thesis" style="font-size:15px">none</p>
+    <h2>Try it</h2>
+    <div class="controls">
+      <button class="btn" id="open">Open 10:31</button>
+      <button class="btn" id="close">Close</button>
+      <label class="controls" style="gap:6px"><input type="checkbox" id="rm"> Reduce Motion</label>
+    </div>
+    <p style="font-size:13px;color:#48484a">Tap any row in the phone. In the detail, drag the header (label, time, turn) down: past 120&nbsp;pt, or flicked past 240&nbsp;pt, it collapses; otherwise it springs back. Esc or ✕ closes.</p>
+    <h2>Surface spring: x(t) = 1 − (1 + ωt)·e<sup>−ωt</sup>, ω = 2π / 0.45 = 13.96 rad/s</h2>
+    <svg class="plot" id="plot" width="560" height="200" viewBox="0 0 560 200" role="img" aria-label="Critically damped spring curve, 0 to 0.8 seconds"></svg>
+    <h2>Numbers</h2>
+    <table>
+      <tr><td>Surface clip + text travel + time scale</td><td><code>.spring(duration: 0.45, bounce: 0)</code> (ζ = 1, no overshoot)</td></tr>
+      <tr><td>Time scale</td><td>row title3 (20 pt at default size) → 56 pt hero, anchored leading</td></tr>
+      <tr><td>Row card radius</td><td>16 pt continuous → 0 when full screen</td></tr>
+      <tr><td>Detail content in (opening)</td><td><code>.easeOut(duration: 0.2).delay(0.15)</code></td></tr>
+      <tr><td>Detail content out (closing)</td><td><code>.easeIn(duration: 0.12)</code>, no delay; the spring starts at the same time</td></tr>
+      <tr><td>Drag on header</td><td>follows the finger 1:1, scales to 0.9 at 400 pt, corners round to 16 pt by 120 pt</td></tr>
+      <tr><td>Drag release</td><td>collapse if translation &gt; 120 pt or predicted end &gt; 240 pt, else spring back</td></tr>
+      <tr><td>Reduce Motion</td><td>no travel, no clip growth: the full detail cross-fades in and out, <code>.easeInOut(duration: 0.2)</code></td></tr>
+    </table>
+    <h2>Assumptions (nobody answered discovery)</h2>
+    <table>
+      <tr><td>Feel</td><td>Still and exact, no bounce: taken from what slack water is.</td></tr>
+      <tr><td>What leaves the stack</td><td>The detail is an overlay, not a navigation destination, so the edge-swipe back goes. It is replaced by header drag-down, a ✕ button bound to Esc, and the VoiceOver escape gesture.</td></tr>
+      <tr><td>List rendering</td><td>Each slack row becomes its own card (16 pt), because the row's surface is the thing that grows. The list moves from <code>List</code> to a <code>ScrollView</code> that keeps the grouped look.</td></tr>
+    </table>
+  </section>
+</main>
+<!-- ENGINE-SCRIPT:START -->
+<script>
+const SLACKS=[
+ {time:"05:57",min:357,turn:"Flood turns to ebb",peak:"then ebb to 0.94 kn at 08:06",after:"10 min after high water (05:47, 1.32 m)",alert:false},
+ {time:"10:31",min:631,turn:"Ebb turns to flood",peak:"then flood to 1.44 kn at 13:37",after:"50 min after low water (09:41, 1.05 m)",alert:false},
+ {time:"16:17",min:977,turn:"Flood turns to ebb",peak:"then ebb to 2.11 kn at 19:50",after:"19 min after high water (15:58, 1.83 m)",alert:false}];
+const TIDES=[["05:47","High water","1.32"],["09:41","Low water","1.05"],["15:58","High water","1.83"],["23:17","Low water","-0.03"]];
+const CURVE=[0.177,0.199,0.221,0.244,0.268,0.292,0.317,0.342,0.367,0.393,0.419,0.445,0.472,0.498,0.525,0.552,0.578,0.605,0.632,0.658,0.685,0.711,0.737,0.763,0.789,0.814,0.839,0.864,0.889,0.913,0.937,0.961,0.984,1.006,1.029,1.05,1.071,1.092,1.111,1.13,1.149,1.166,1.183,1.199,1.214,1.228,1.241,1.253,1.264,1.274,1.283,1.291,1.298,1.304,1.308,1.312,1.314,1.316,1.316,1.315,1.314,1.311,1.308,1.304,1.299,1.293,1.286,1.279,1.271,1.263,1.254,1.245,1.235,1.225,1.215,1.204,1.194,1.183,1.173,1.162,1.152,1.141,1.132,1.122,1.113,1.104,1.096,1.088,1.081,1.074,1.068,1.063,1.059,1.056,1.053,1.051,1.05,1.049,1.05,1.051,1.054,1.057,1.061,1.066,1.071,1.078,1.085,1.093,1.102,1.111,1.121,1.132,1.144,1.156,1.169,1.182,1.196,1.211,1.226,1.242,1.258,1.275,1.292,1.31,1.328,1.346,1.365,1.384,1.403,1.422,1.442,1.462,1.481,1.501,1.521,1.54,1.559,1.578,1.597,1.615,1.633,1.651,1.668,1.684,1.7,1.715,1.729,1.743,1.756,1.768,1.779,1.789,1.798,1.806,1.814,1.82,1.825,1.829,1.831,1.833,1.833,1.832,1.829,1.825,1.82,1.813,1.805,1.795,1.784,1.771,1.756,1.74,1.723,1.703,1.682,1.66,1.636,1.61,1.583,1.555,1.525,1.493,1.461,1.427,1.392,1.356,1.318,1.28,1.241,1.202,1.161,1.12,1.079,1.037,0.994,0.952,0.91,0.867,0.825,0.782,0.74,0.699,0.658,0.617,0.577,0.538,0.5,0.462,0.426,0.391,0.357,0.324,0.292,0.262,0.233,0.205,0.179,0.155,0.132,0.11,0.09,0.072,0.055,0.04,0.026,0.014,0.004,-0.005,-0.013,-0.019,-0.024,-0.027,-0.029,-0.029,-0.029,-0.027,-0.023,-0.019,-0.013,-0.006];
+// Numbers from the thesis, nothing else.
+const SPRING_D=0.45, OMEGA=2*Math.PI/SPRING_D;
+const IN_DELAY=0.15, IN_DUR=0.2, OUT_DUR=0.12, RM_DUR=0.2;
+const CARD_R=16, DRAG_COMMIT=120, DRAG_PREDICT=240, DRAG_SCALE_AT=400, DRAG_MIN_SCALE=0.9;
+const springAt=t=>t<=0?0:1-(1+OMEGA*t)*Math.exp(-OMEGA*t);
+function bezier(x1,y1,x2,y2){return x=>{if(x<=0)return 0;if(x>=1)return 1;let t=x;for(let i=0;i<10;i++){const bx=3*x1*t*(1-t)**2+3*x2*t*t*(1-t)+t**3-x;const d=3*x1*(1-t)**2+6*(x2-x1)*t*(1-t)+3*(1-x2)*t*t;if(Math.abs(d)<1e-6)break;t=Math.min(1,Math.max(0,t-bx/d));}return 3*y1*t*(1-t)**2+3*y2*t*t*(1-t)+t**3;};}
+const EASE_OUT=bezier(0,0,.58,1), EASE_IN=bezier(.42,0,1,1), EASE_IN_OUT=bezier(.42,0,.58,1);
+const clamp=v=>Math.min(1,Math.max(0,v)), lerp=(a,b,p)=>a+(b-a)*p;
+const BELL='<svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-5-1.6-1.9V10a5.4 5.4 0 0 0-4.4-5.3V4a1 1 0 0 0-2 0v.7A5.4 5.4 0 0 0 6.6 10v5.1L5 17v1h14Z"/></svg>';
+const ENV={reduce:false};
+
+function curveSVG(marker,trace){
+  const W=320,H=180,lo=Math.min(...CURVE),hi=Math.max(...CURVE);
+  const x=m=>W*m/1440,y=v=>H*(1-(v-lo)/(hi-lo))*0.92+H*0.04;
+  const d=CURVE.map((v,i)=>(i?"L":"M")+x(i*6).toFixed(1)+" "+y(v).toFixed(1)).join("");
+  const near=CURVE[Math.round(marker/6)]??CURVE[0];
+  return `<svg class="curve" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Tide curve, slack marked">
+   <line x1="${x(marker)}" x2="${x(marker)}" y1="0" y2="${H}" stroke="rgba(60,60,67,.6)" stroke-dasharray="3 3"/>
+   <path class="cpath" d="${d}" fill="none" stroke="var(--tint)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" ${trace?'pathLength="1" stroke-dasharray="1 1"':''}/>
+   <circle cx="${x(marker)}" cy="${y(near)}" r="5" fill="var(--tint)"/></svg>`;
+}
+
+function makePhone(host,opts){
+  opts=Object.assign({travel:true,trace:false,onFrame:null},opts);
+  host.innerHTML=`<div class="screen"><div class="list">
+   <div class="status">9:12</div><h1>Aquatic Park</h1>
+   <div class="card nextc"><div class="sec2">Next slack water</div><div class="big">10:31</div><div style="font-size:17px">in 1 h 19 min. Ebb turns to flood.</div></div>
+   <div class="sh">Slack water today</div>
+   ${SLACKS.map((s,i)=>`<button class="row card" data-i="${i}"><span class="r-time">${s.time}</span><span class="r-text"><span class="r-turn">${s.turn}</span><span class="r-peak">${s.peak}</span></span><span class="r-bell" hidden>${BELL}</span></button>`).join("")}
+   <div class="sh">Tide</div>
+   <div class="card tide">${TIDES.map(t=>`<div class="t"><span>${t[0]}&nbsp;&nbsp;${t[1]}</span><span>${t[2]} m</span></div>`).join("")}</div>
+   <p class="foot">NOAA predictions for 2 October 2026. Currents off Alcatraz Island (SFB1204), tide at San Francisco (9414290). The water in the cove itself is not measured.</p>
+  </div><div class="surface" hidden></div></div>`;
+  const screen=host.querySelector(".screen"),list=host.querySelector(".list"),surface=host.querySelector(".surface");
+  const rows=[...host.querySelectorAll(".row")];
+  const st={sel:null,p:0,c:0,so:1,drag:0,anim:null,src:null,nat:null,els:null,raf:0};
+
+  function rel(el){const a=el.getBoundingClientRect(),b=screen.getBoundingClientRect();return{left:a.left-b.left,top:a.top-b.top,right:a.right-b.left,bottom:a.bottom-b.top,width:a.width,height:a.height};}
+  function fill(i){
+    const s=SLACKS[i],t=opts.travel?"":" fade";
+    surface.innerHTML=`<div class="s-inner"><div class="s-head">
+      <button class="close fade" aria-label="Close">✕</button>
+      <div class="s-label fade">Slack water</div>
+      <span class="s-time${t}">${s.time}</span><span class="s-turn${t}">${s.turn}</span><span class="s-peak${t}">${s.peak}</span></div>
+      <div class="s-sep fade"></div>
+      <div class="s-cap fade">Tide height, metres above MLLW</div>
+      <div class="fade">${curveSVG(s.min,opts.trace)}</div>
+      <div class="s-sep fade"></div>
+      <div class="s-fact"><div class="s-cap fade">Slack comes</div><div class="v fade">${s.after}</div></div>
+      <div class="s-sep fade"></div>
+      <label class="tog fade">Alert me 15 minutes before<input type="checkbox" ${s.alert?"checked":""}></label></div>
+      <div class="s-bell">${BELL}</div>`;
+    const q=c=>surface.querySelector(c);
+    st.els={time:q(".s-time"),turn:q(".s-turn"),peak:q(".s-peak"),fades:[...surface.querySelectorAll(".fade")],bell:q(".s-bell"),cpath:q(".cpath"),ghost:null};
+    q(".close").onclick=()=>close();
+    q(".tog input").onchange=e=>{s.alert=e.target.checked;rows[i].querySelector(".r-bell").hidden=!s.alert;};
+    const head=q(".s-head");let y0=null,last=[];
+    head.onpointerdown=e=>{if(e.target.closest(".close")||st.anim)return;y0=e.clientY;last=[[e.timeStamp,0]];head.setPointerCapture(e.pointerId);};
+    head.onpointermove=e=>{if(y0==null)return;st.drag=Math.max(0,e.clientY-y0);last.push([e.timeStamp,st.drag]);if(last.length>5)last.shift();apply();};
+    head.onpointerup=head.onpointercancel=()=>{if(y0==null)return;y0=null;const a=last[0],b=last[last.length-1];const v=b[0]>a[0]?(b[1]-a[1])/((b[0]-a[0])/1000):0;
+      if(st.drag>DRAG_COMMIT||st.drag+v*0.25>DRAG_PREDICT)close();else run(1);};
+  }
+  function apply(){
+    const {p,c,so,drag,src,nat,els}=st,W=screen.clientWidth,H=screen.clientHeight;
+    const geo=ENV.reduce?1:p, r=src.card;
+    const er=CARD_R*clamp(drag/DRAG_COMMIT), rad=lerp(CARD_R,er,geo);
+    surface.style.clipPath=`inset(${r.top*(1-geo)}px ${(W-r.right)*(1-geo)}px ${(H-r.bottom)*(1-geo)}px ${r.left*(1-geo)}px round ${rad}px)`;
+    surface.style.transform=`translateY(${drag}px) scale(${1-(1-DRAG_MIN_SCALE)*clamp(drag/DRAG_SCALE_AT)})`;
+    surface.style.opacity=so;
+    if(opts.travel)for(const k of["time","turn","peak"]){const n=nat[k],s=src[k];
+      const dx=(s.left-n.left)*(1-geo),dy=(s.top+s.height/2-(n.top+n.height/2))*(1-geo);
+      const sc=k==="time"?lerp(s.height/n.height,1,geo):1;
+      els[k].style.transform=`translate(${dx}px,${dy}px) scale(${sc})`;}
+    for(const f of els.fades)f.style.opacity=c;
+    els.bell.style.opacity=SLACKS[st.sel].alert?1-c:0;
+    if(els.ghost)els.ghost.style.opacity=1-c;
+  }
+  function measure(i){
+    surface.hidden=false;surface.style.clipPath="none";surface.style.transform="none";
+    surface.querySelector(".s-inner").scrollTop=0;
+    const row=rows[i];
+    st.src={card:rel(row),time:rel(row.querySelector(".r-time")),turn:rel(row.querySelector(".r-turn")),peak:rel(row.querySelector(".r-peak")),bell:rel(row.querySelector(".r-bell")||row)};
+    st.nat={time:rel(st.els.time),turn:rel(st.els.turn),peak:rel(st.els.peak)};
+    const b=row.querySelector(".r-bell");b.hidden=false;const br=rel(b);b.hidden=!SLACKS[i].alert;
+    Object.assign(st.els.bell.style,{left:br.left+"px",top:br.top+"px"});
+    if(!opts.travel){const g=row.cloneNode(true);g.className="row card ghost";g.removeAttribute("data-i");
+      Object.assign(g.style,{left:st.src.card.left+"px",top:st.src.card.top+"px",width:st.src.card.width+"px",height:st.src.card.height+"px"});
+      surface.appendChild(g);st.els.ghost=g;}
+  }
+  function run(target){
+    cancelAnimationFrame(st.raf);
+    const a={t0:performance.now(),target,p0:st.p,c0:st.c,so0:st.so,d0:st.drag};st.anim=a;
+    const tick=now=>{
+      const t=(now-a.t0)/1000;
+      if(ENV.reduce){
+        const e=EASE_IN_OUT(clamp(t/RM_DUR));st.p=target;st.c=1;st.drag=a.d0*(1-e);
+        st.so=target?lerp(a.so0,1,e):lerp(a.so0,0,e);
+      }else{
+        const s=springAt(t);st.p=lerp(a.p0,target,s);st.drag=a.d0*(1-s);st.so=1;
+        st.c=target?lerp(a.c0,1,t<IN_DELAY?0:EASE_OUT(clamp((t-IN_DELAY)/IN_DUR))):a.c0*(1-EASE_IN(clamp(t/OUT_DUR)));
+      }
+      if(opts.trace&&st.els.cpath){const tr=target?EASE_IN_OUT(clamp((t-IN_DELAY)/0.6)):1;st.els.cpath.style.strokeDashoffset=ENV.reduce?0:1-tr;}
+      apply();opts.onFrame&&opts.onFrame(t,st.p);
+      const done=ENV.reduce?t>=RM_DUR:t>1.1;
+      if(done){st.anim=null;if(!target){surface.hidden=true;surface.innerHTML="";st.sel=null;st.so=1;rows.forEach(r=>r.style.visibility="");}return;}
+      st.raf=requestAnimationFrame(tick);
+    };
+    st.raf=requestAnimationFrame(tick);
+  }
+  function open(i){
+    if(st.sel!==null)return;
+    st.sel=i;fill(i);measure(i);
+    st.p=0;st.c=0;st.drag=0;st.so=ENV.reduce?0:1;if(ENV.reduce)st.p=1;
+    apply();run(1);
+  }
+  function close(){if(st.sel===null)return;run(0);}
+  function reset(){cancelAnimationFrame(st.raf);st.anim=null;surface.hidden=true;surface.innerHTML="";st.sel=null;st.p=0;st.c=0;st.so=1;st.drag=0;}
+  rows.forEach((r,i)=>r.onclick=()=>open(i));
+  host.addEventListener("keydown",e=>{if(e.key==="Escape")close();});
+  return{open,close,replay(i){reset();list.scrollTop=0;requestAnimationFrame(()=>open(i));},get isOpen(){return st.sel!==null}};
+}
+</script>
+<!-- ENGINE-SCRIPT:END -->
+<script>
+const plot=document.getElementById("plot");
+(function(){
+  const X=t=>40+t/0.8*500, Y=v=>170-v*140;
+  let d="";for(let i=0;i<=200;i++){const t=0.8*i/200;d+=(i?"L":"M")+X(t).toFixed(1)+" "+Y(springAt(t)).toFixed(1);}
+  plot.innerHTML=`
+   <rect x="${X(IN_DELAY)}" y="20" width="${X(IN_DELAY+IN_DUR)-X(IN_DELAY)}" height="150" fill="rgba(0,122,255,.08)"/>
+   <text x="${X(IN_DELAY)+4}" y="34" font-size="11" fill="#48484a">content fades in 0.15 to 0.35 s</text>
+   <line x1="40" x2="540" y1="${Y(1)}" y2="${Y(1)}" stroke="#d1d1d6"/><line x1="40" x2="540" y1="170" y2="170" stroke="#8e8e93"/>
+   <line x1="${X(0.45)}" x2="${X(0.45)}" y1="20" y2="170" stroke="#8e8e93" stroke-dasharray="3 3"/>
+   <text x="${X(0.45)+4}" y="185" font-size="11" fill="#48484a">0.45 s (98.6 %)</text>
+   <text x="40" y="196" font-size="11" fill="#48484a">0</text><text x="520" y="196" font-size="11" fill="#48484a">0.8 s</text>
+   <text x="6" y="${Y(1)+4}" font-size="11" fill="#48484a">1.0</text>
+   <path d="${d}" fill="none" stroke="#007AFF" stroke-width="2.5"/>
+   <circle id="head" r="5" fill="#007AFF" cx="${X(0)}" cy="${Y(0)}"/>`;
+})();
+const head=()=>document.getElementById("head");
+const phone=makePhone(document.getElementById("phone"),{travel:true,onFrame:(t,p)=>{if(t<=0.8){head().setAttribute("cx",40+t/0.8*500);head().setAttribute("cy",170-springAt(Math.min(t,0.8))*140);}}});
+document.getElementById("open").onclick=()=>phone.replay(1);
+document.getElementById("close").onclick=()=>phone.close();
+document.getElementById("rm").onchange=e=>{ENV.reduce=e.target.checked;};
+</script>
+</body>
+</html>

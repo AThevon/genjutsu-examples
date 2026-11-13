@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "claudeVersion": "2.1.323",
+  "startedAt": "2026-11-13T18:40:50.587Z",
+  "durationSeconds": 900,
+  "costUsd": 3.4235059999999997,
+  "partial": false,
+  "suite": {
+    "root": "/private/tmp/genjutsu-eval-ex-ios",
+    "ablation": "none",
+    "modelOverride": "claude-opus-5-5",
+    "caseFilter": "etale-ios",
+    "threshold": 1,
+    "concurrency": 1,
+    "plugins": [
+      {
+        "name": "genjutsu",
+        "version": "4.1.3",
+        "path": "/private/tmp/genjutsu-eval-ex-ios"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "etale-ios",
+      "dir": "examples/etale-ios",
+      "source": "mixed",
+      "promptMarkdown": "/genjutsu:cast Étale's iOS day list should open into the tide detail as one surface, not a push\n\nÉtale is a fictional slack-water app, made up for this example. Its numbers are real NOAA predictions for 2 October 2026.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the Today list and the tide detail it opens. You may edit and add Swift files under Etale/ and write previews under preview/; create nothing outside the project. Etale/ is a folder the Xcode project keeps in sync with the disk: a Swift file added there is compiled, so do not edit Etale.xcodeproj.\n- The app targets iOS 26 and is built with Xcode 27. Xcode cannot run in this session: do not try to build. There is no network: install nothing.\n\nFinish with the final report the pipeline asks for.",
+      "runsPerCase": 1,
+      "timeoutSeconds": 2400,
+      "maxTurns": 150,
+      "graders": [
+        {
+          "name": "cast-fired",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "trace",
+            "pattern": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?cast\"|[/]_jutsu\\b",
+            "flags": "",
+            "match": "contains",
+            "arm": "with-only"
+          }
+        },
+        {
+          "name": "cast-loaded",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "trace",
+            "pattern": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?cast\"|Modules\\snot\\sloaded:",
+            "flags": "",
+            "match": "contains",
+            "arm": "with-only"
+          }
+        },
+        {
+          "name": "list-opens-detail",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": {
+              "source": "file",
+              "path": "Etale/TodayView.swift"
+            },
+            "pattern": "matchedGeometryEffect|matchedTransitionSource|navigationTransition|@Namespace|[Aa]nimat|[Tt]ransition|[Ss]pring",
+            "flags": "",
+            "match": "contains"
+          }
+        },
+        {
+          "name": "swiftui-motion-loaded",
+          "type": "tool_used",
+          "weight": 1,
+          "config": {
+            "tool": "Bash",
+            "input_match": "load_skill\\s+swiftui-motion\\b|/swiftui-motion/(SKILL|GUIDE)\\.md",
+            "min": 1,
+            "arm": "with-only"
+          }
+        },
+        {
+          "name": "tells-never-requested",
+          "type": "tool_used",
+          "weight": 1,
+          "config": {
+            "tool": "Bash",
+            "input_match": "load_skill\\s+tells\\b|load_ref\\s+tells\\b|/tells/(SKILL|GUIDE)\\.md|/tells/references/",
+            "min": 0,
+            "max": 0,
+            "arm": "both"
+          }
+        }
+      ],
+      "arms": {
+        "with": [
+          {
+            "score": 1,
+            "passed": true,
+            "turns": 22,
+            "costUsd": 3.4235059999999997,
+            "judgeCostUsd": 0,
+            "durationSeconds": 900,
+            "startedAt": "2026-11-13T18:40:50.649Z",
+            "error": null,
+            "tracePath": "/private/tmp/e-gGanon/out/trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "cast-fired",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?cast\"|[/]_jutsu\\b",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "cast-loaded",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \"skill\"\\s*:\\s*\"(?:[\\w-]+:)?cast\"|Modules\\snot\\sloaded:",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "list-opens-detail",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched matchedGeometryEffect|matchedTransitionSource|navigationTransition|@Namespace|[Aa]nimat|[Tt]ransition|[Ss]pring",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "swiftui-motion-loaded",
+                "passed": true,
+                "weight": 1,
+                "explanation": "Bash called 1x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "tells-never-requested",
+                "passed": true,
+                "weight": 1,
+                "explanation": "Bash called 0x (expected 0..0)",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          }
+        ]
+      },
+      "aggregates": {
+        "score": 1,
+        "passRate": 1
+      }
+    }
+  ],
+  "aggregates": {
+    "casesTotal": 1,
+    "casesPassed": 1,
+    "overallScore": 1,
+    "overallPassRate": 1
+  }
+}

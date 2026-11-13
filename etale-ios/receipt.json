@@ -1,0 +1,330 @@
+{
+  "example": "etale-ios",
+  "skill": "cast",
+  "stack": "SwiftUI, iOS 26.0 deployment target, Swift 5 language mode with MainActor default isolation, no dependency",
+  "prompt": "/genjutsu:cast Étale's iOS day list should open into the tide detail as one surface, not a push\n\nÉtale is a fictional slack-water app, made up for this example. Its numbers are real NOAA predictions for 2 October 2026.\n\nNobody is available to answer questions during this session. Up-front answers to the gates:\n- Preview mode: A. Write each preview as a standalone HTML file under preview/ in the project.\n- Scope: the Today list and the tide detail it opens. You may edit and add Swift files under Etale/ and write previews under preview/; create nothing outside the project. Etale/ is a folder the Xcode project keeps in sync with the disk: a Swift file added there is compiled, so do not edit Etale.xcodeproj.\n- The app targets iOS 26 and is built with Xcode 27. Xcode cannot run in this session: do not try to build. There is no network: install nothing.\n\nFinish with the final report the pipeline asks for.",
+  "genjutsu": {
+    "version": "4.1.3",
+    "commit": "5e00595",
+    "note": "the v4.1.3 tag (ac9ca74) plus two README-only commits"
+  },
+  "harness": {
+    "tool": "claude plugin eval",
+    "claude_code": "2.1.323",
+    "headless": true,
+    "note": "nobody answered the gates; the skill's 'When nobody is answering' rule applied. bin/run.sh run from a copy with the cost ceiling at 15 USD and the plugin copied to /private/tmp/genjutsu-eval-ex-ios"
+  },
+  "model": "claude-opus-5-5",
+  "date": "2026-11-13",
+  "started_at": "2026-11-13T18:40:50.649Z",
+  "cost_usd": 3.42,
+  "cost_usd_exact": 3.423506,
+  "turns": 22,
+  "duration_seconds": 898,
+  "subagents": 0,
+  "tokens": {
+    "input": 40,
+    "output": 94563,
+    "cache_read": 1792950,
+    "cache_creation": 146687
+  },
+  "modules_loaded": [
+    "motion-principles",
+    "mobile-principles",
+    "swiftui-motion"
+  ],
+  "modules_not_loaded": [],
+  "interaction_thesis": "Tapping a slack row grows that row's own card into the full tide detail.\n- The card's clip opens from the row's frame to the whole screen.\n- The row's three lines (time, turn, next current) move to their places in the detail header, and the time scales up to the 56 pt hero.\n- All of it runs on one `spring(duration: 0.45, bounce: 0)`, which never overshoots: slack water is the moment the current stands still.\n- The rest of the detail fades in after the card has mostly grown (0.2 s ease-out, 0.15 s delay) and fades out first when closing (0.12 s ease-in).\n- Dragging the header down collapses the card back into its row.",
+  "allowed_patterns": "none",
+  "unvalidated": true,
+  "assumptions": "the feel is still and exact, no bounce; the edge-swipe back is gone because the detail is an overlay, replaced by a header drag, a close button and the VoiceOver escape; the List became a ScrollView of cards; the next-current line moved into the detail's header",
+  "variant_picked": "B, \"the lines move\", from three (A only the card grows, C also draws the tide curve)",
+  "audit": {
+    "summary": "10 checks, 2 problems, 5 for you to run",
+    "problems": [
+      "rows have no disabled look while the detail is open",
+      "layout spacing is literal numbers; the project has no spacing tokens"
+    ],
+    "listed_not_counted": "secondaryLabel on white is 3.4:1, under 4.5:1 for 15 pt text; system colour, already in the starting app",
+    "tells": "not applicable on SwiftUI; never requested",
+    "unverified": [
+      "the build (Xcode could not run in the session)",
+      "Instruments > Animation Hitches",
+      "Reduce Motion on, Dynamic Type at 200%",
+      "VoiceOver focus on open and close",
+      "Full Keyboard Access and Esc"
+    ],
+    "compile_risks_named_by_the_run": [
+      "nonisolated struct",
+      "the onGeometryChange closure signatures",
+      "whether visualEffect interpolates under the spring"
+    ],
+    "compile_risks_that_materialized": 0
+  },
+  "files_changed": {
+    "Etale/SlackSurface.swift": "new, 126 lines (motion constants, row frame store, RevealShape clip, travels visualEffect, content fade)",
+    "Etale/TodayView.swift": "rewritten (List to ScrollView of cards, rows as buttons that report their frames, overlay above the NavigationStack, open/expand/close)",
+    "Etale/TideDetailView.swift": "rewritten (full-screen layer clipped by RevealShape, header with close button, fading content, header drag, Reduce Motion path; TideCurve unchanged)",
+    "stat": "3 files, 487 insertions, 78 deletions against the starting app"
+  },
+  "previews": [
+    "preview/thesis.html",
+    "preview/variants.html"
+  ],
+  "selection": "first pass",
+  "runs_recorded": 1,
+  "build": {
+    "result": "success",
+    "first_try": true,
+    "errors": [],
+    "compiler_warnings": 0,
+    "command": "xcodebuild -project Etale.xcodeproj -scheme Etale -configuration Debug -destination 'platform=iOS Simulator,id=<iPhone 17, iOS 26.5>' -derivedDataPath /private/tmp/etale-ios-run-dd CODE_SIGNING_ALLOWED=NO build",
+    "toolchain": "Xcode 27.2 (27B52), iOS 27.2 simulator SDK, iPhone 17 simulator on iOS 26.5",
+    "note": "the run could not build (no Xcode in its session) and wrote 487 lines of Swift without a compiler; it built here unchanged on the first try"
+  },
+  "human_edits": 0,
+  "human_edits_needed": 1,
+  "human_edits_needed_detail": "Etale/TideDetailView.swift:177, DragGesture(minimumDistance: 10) to DragGesture(minimumDistance: 10, coordinateSpace: .global), for the drag defect; tried in a copy outside the repository (builds, the drag no longer alternates); not applied here",
+  "edits_diff": null,
+  "grader_score": {
+    "score": 1.0,
+    "note": "five of five: cast-fired, cast-loaded, list-opens-detail, swiftui-motion-loaded, tells-never-requested"
+  },
+  "thesis_against_capture": {
+    "card_grows_from_row_to_screen": true,
+    "lines_travel_and_time_scales": "yes, with overlaps",
+    "no_overshoot": true,
+    "content_fades_in_after_and_leaves_first": true,
+    "drag_collapses": "it collapses on release, but the drag flickers every frame",
+    "visible_change_seconds": {
+      "open": 0.8,
+      "close": 0.9,
+      "system_push_before": 0.43,
+      "system_back_before": 0.63
+    }
+  },
+  "defects": [
+    {
+      "what": "the drag that closes the detail flickers: the surface alternates between two positions on successive frames",
+      "where": "Etale/TideDetailView.swift:177 (a local-space DragGesture on a header that the same drag offsets and scales, lines 64-65)",
+      "evidence": "media/defect-drag.webp, media/defect-drag-a.png, media/defect-drag-b.png",
+      "fix": "coordinateSpace: .global, one line, verified in a copy, not applied"
+    },
+    {
+      "what": "the time and the turn line are drawn over each other at the start of the opening and the end of the closing",
+      "evidence": "media/open-early.png, media/close-mid.png"
+    },
+    {
+      "what": "the travelling lines cross the label and divider that are fading in",
+      "evidence": "media/open-mid.png"
+    },
+    {
+      "what": "the edge-swipe back, the navigation bar, its title and back button are gone: the detail is an overlay, not a navigation destination; the system zoom transition (matchedTransitionSource + navigationTransition(.zoom), iOS 18) was not considered",
+      "evidence": "media/detail.png against before/detail.png"
+    },
+    {
+      "what": "both screens were restyled to make the effect possible: List to hand-drawn cards without chevrons, detail without grouped sections or its Current row, lower half empty",
+      "evidence": "media/today.png, media/detail.png against before/"
+    },
+    {
+      "what": "at the accessibility-large text size the travelling text re-breaks on the first frame and crosses the divider",
+      "evidence": "media/large-type-mid.png"
+    },
+    {
+      "what": "the row's time changes by about a pixel when the collapsed surface is swapped for the row, 1.1 to 1.2 s after Close",
+      "evidence": "frames of the testOpenAndClose take"
+    }
+  ],
+  "suspected": [
+    "the list cannot be tapped for about a second after Close (TodayView.swift:94 with the completion at line 151); the driver waits for idle, so the takes cannot show it",
+    "Close tapped mid-opening, and a second row tapped while the first collapses: guarded in the code, not filmed"
+  ],
+  "unverified": [
+    "no real device: frame pacing, hitches and 120 Hz (Instruments > Animation Hitches not run)",
+    "VoiceOver: focus on open and close, modal trait, escape gesture",
+    "Full Keyboard Access and the Esc shortcut",
+    "the flick that closes (predicted end past 240 pt) and a drag released before 120 pt",
+    "opening a row after the list has scrolled",
+    "Dynamic Type beyond accessibility-large, right-to-left, Increase Contrast",
+    "haptics: none in the code, none claimed",
+    "dark appearance contrast (filmed once, not computed)"
+  ],
+  "genjutsu_gaps": [
+    "skills/_jutsu/swiftui-motion/SKILL.md:28 answers 'Shared element transitions' with matchedGeometryEffect only; no module names navigationTransition(.zoom) and matchedTransitionSource",
+    "skills/_jutsu/swiftui-motion/SKILL.md:267 teaches DragGesture().onChanged { offset = value.translation } without the coordinate space a gesture needs when it is attached to the view it moves; references/gestures-swiftui.md:53 presents coordinateSpace as 'useful for cross-view drags'",
+    "skills/_jutsu/mobile-principles/SKILL.md:194 says of the edge-swipe back 'Never override'; the run loaded it, set it aside in one sentence, and its audit did not count it"
+  ],
+  "capture": {
+    "device": "iPhone 17 simulator, iOS 26.5, 1206x2622 px (402x874 pt at 3x)",
+    "recorder": "xcrun simctl io <udid> recordVideo --codec=h264",
+    "taps": "XCUITest, takes/driver: a UI test bundle in its own Xcode project with no target application, driving the installed app by bundle identifier; not part of the app build",
+    "frames": "takes/frames.swift (AVFoundation; no ffmpeg on the machine)",
+    "encode": "takes/encode-clip.py (magick, as bin/record.mjs)",
+    "commands": "takes/make-media.sh",
+    "time": "real",
+    "recordings_committed": false,
+    "build": "build-20261113T184049Z-1 (a copy of runs/20261113T184049Z/workspace-1)"
+  },
+  "media": [
+    {
+      "file": "media/clip.webp",
+      "output": "402x874",
+      "kb": 658,
+      "what": "the run's build: tap the 10:31 row at about 0.6 s, its card grows to the screen, the three lines travel, the curve and the switch fade in; Close at about 3.2 s, the card shrinks back into its row; the same on the 16:17 row at about 5.7 s and 8.4 s. The time-over-turn overlap shows at each start and end",
+      "duration_s": 10,
+      "fps": 24,
+      "quality": 66,
+      "annotation": "no pointer is drawn: XCUITest performs the taps"
+    },
+    {
+      "file": "media/today.png",
+      "output": "603x1311",
+      "kb": 178,
+      "what": "the Today screen at rest, as the run rewrote it"
+    },
+    {
+      "file": "media/open-early.png",
+      "output": "603x1311",
+      "kb": 135,
+      "what": "about 70 ms after the tap: the card has left the row; \"10:31\" overlaps \"Ebb turns to flood\""
+    },
+    {
+      "file": "media/open-mid.png",
+      "output": "603x1311",
+      "kb": 118,
+      "what": "about 170 ms after the tap: the card near full size, the lines over the half-faded label and divider"
+    },
+    {
+      "file": "media/detail.png",
+      "output": "603x1311",
+      "kb": 92,
+      "what": "the detail, settled"
+    },
+    {
+      "file": "media/close-mid.png",
+      "output": "603x1311",
+      "kb": 146,
+      "what": "about 320 ms after Close: the card almost back on its row, content gone, the time over the turn line"
+    },
+    {
+      "file": "media/alert.webp",
+      "output": "402x874",
+      "kb": 208,
+      "what": "the alert switch turned on in the detail, then Close: the bell is on the 10:31 row when the card lands",
+      "duration_s": 5,
+      "fps": 24,
+      "quality": 66
+    },
+    {
+      "file": "media/alert-row.png",
+      "output": "603x1311",
+      "kb": 179,
+      "what": "the row with its bell"
+    },
+    {
+      "file": "media/defect-drag.webp",
+      "output": "320x696",
+      "kb": 542,
+      "what": "the defect: the header dragged down 300 pt in one second, the surface alternates between two positions on successive frames",
+      "duration_s": 1.5,
+      "fps": 60,
+      "quality": 62
+    },
+    {
+      "file": "media/defect-drag-a.png",
+      "output": "603x1311",
+      "kb": 99,
+      "what": "one frame of that drag: the surface about 35 pt down"
+    },
+    {
+      "file": "media/defect-drag-b.png",
+      "output": "603x1311",
+      "kb": 104,
+      "what": "the next frame, 17 ms later: the surface about 74 pt down"
+    },
+    {
+      "file": "media/reduced.webp",
+      "output": "402x874",
+      "kb": 189,
+      "what": "Reduce Motion on: the detail cross-fades over the list in about 0.2 s, nothing grows or travels; the same back",
+      "duration_s": 4.2,
+      "fps": 24,
+      "quality": 66
+    },
+    {
+      "file": "media/reduced-mid.png",
+      "output": "603x1311",
+      "kb": 204,
+      "what": "the middle of that cross-fade"
+    },
+    {
+      "file": "media/dark-mid.png",
+      "output": "603x1311",
+      "kb": 120,
+      "what": "dark appearance, mid-opening"
+    },
+    {
+      "file": "media/dark-detail.png",
+      "output": "603x1311",
+      "kb": 106,
+      "what": "dark appearance, settled"
+    },
+    {
+      "file": "media/large-type-today.png",
+      "output": "603x1311",
+      "kb": 152,
+      "what": "text size accessibility-large: the list"
+    },
+    {
+      "file": "media/large-type-mid.png",
+      "output": "603x1311",
+      "kb": 160,
+      "what": "text size accessibility-large, mid-opening: the lines re-break and cross the divider"
+    },
+    {
+      "file": "media/large-type-detail.png",
+      "output": "603x1311",
+      "kb": 147,
+      "what": "text size accessibility-large: the settled detail"
+    },
+    {
+      "file": "media/preview.png",
+      "output": "1280x900",
+      "kb": 186,
+      "what": "preview/thesis.html, first screen"
+    },
+    {
+      "file": "media/preview-variants.png",
+      "output": "1280x900",
+      "kb": 128,
+      "what": "preview/variants.html, first screen"
+    },
+    {
+      "file": "before/push.webp",
+      "output": "402x874",
+      "kb": 704,
+      "what": "the starting app, same driver test: the system push to the detail and back, twice",
+      "duration_s": 12.4,
+      "fps": 24,
+      "quality": 66
+    },
+    {
+      "file": "before/today.png",
+      "output": "603x1311",
+      "kb": 143,
+      "what": "the starting app: the list"
+    },
+    {
+      "file": "before/push-mid.png",
+      "output": "603x1311",
+      "kb": 139,
+      "what": "the starting app: mid-push"
+    },
+    {
+      "file": "before/detail.png",
+      "output": "603x1311",
+      "kb": 120,
+      "what": "the starting app: the detail"
+    }
+  ]
+}

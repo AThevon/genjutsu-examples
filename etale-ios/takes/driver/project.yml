@@ -1,0 +1,26 @@
+# The tap driver: a UI test bundle in a project of its own, with no target application. It drives the installed
+# app by bundle identifier (com.example.etale), so the app's project and code are never touched and the driver
+# is not part of the app build. Generate with `xcodegen generate` (XcodeGen 2.44 or later).
+name: EtaleDriver
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "26.0"
+targets:
+  EtaleDriver:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [EtaleDriver]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.etale.driver
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "5.0"
+        CODE_SIGNING_ALLOWED: NO
+schemes:
+  EtaleDriver:
+    build:
+      targets:
+        EtaleDriver: [test]
+    test:
+      targets: [EtaleDriver]
