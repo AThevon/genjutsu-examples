@@ -197,6 +197,28 @@ class ExamplesSectionTest(unittest.TestCase):
         out = self.run_gen().stdout
         self.assertIn(f'src="{RAW}/readme-media/pottery-firing/still.png"', out)
 
+    def test_a_narrow_clip_is_shown_at_its_own_width(self):
+        entry = copy.deepcopy(ENTRY)
+        entry["media"]["clip"]["width"] = 402
+        self.write_manifest([entry])
+        out = self.run_gen().stdout
+        self.assertIn('width="402"', out)
+        self.assertNotIn('width="720"', out)
+        for bad in (0, 721, "402", True, 402.0):
+            with self.subTest(width=bad):
+                entry["media"]["clip"]["width"] = bad
+                self.refused(entry, "width")
+
+    def test_an_example_without_a_demo_is_not_said_to_have_one(self):
+        native = copy.deepcopy(ENTRY)
+        native["id"] = "native-app"
+        del native["demo"]
+        self.write_manifest([copy.deepcopy(ENTRY), native], demo_site="https://demos.example.app")
+        out = self.run_gen().stdout
+        self.assertNotIn("Each one also runs", out)
+        self.assertIn("Those with a Live demo link also run as a [live demo](https://demos.example.app/)", out)
+        self.assertEqual(out.count("[Live demo]("), 1)
+
     def conversation(self, entry):
         """Turn an entry into a conversation, with its transcript, brief and opening on disk."""
         ex = self.tmp / entry["id"]
@@ -489,7 +511,7 @@ class ExamplesSectionTest(unittest.TestCase):
                            capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr)
         ids = [e["id"] for e in json.loads(REAL_MANIFEST.read_text())["examples"] if e.get("featured", True)]
-        self.assertEqual(ids, ["nocturne", "chef-ovatio", "pottery-firing", "etale", "invoice-mark-paid"])
+        self.assertEqual(ids, ["nocturne", "chef-ovatio", "pottery-firing", "etale", "invoice-mark-paid", "etale-ios"])
 
 
 if __name__ == "__main__":

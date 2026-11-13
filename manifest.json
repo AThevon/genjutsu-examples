@@ -223,6 +223,49 @@
       "demo": "/invoice-mark-paid/"
     },
     {
+      "id": "etale-ios",
+      "title": "Étale for iOS: a slack row opens into its tide detail (SwiftUI)",
+      "skill": "cast",
+      "modules": [
+        "motion-principles",
+        "mobile-principles",
+        "swiftui-motion"
+      ],
+      "kind": "cast",
+      "run": {
+        "mode": "headless",
+        "harness": "claude plugin eval, Claude Code 2.1.323",
+        "plugin_version": "4.1.4",
+        "plugin_commit": "3e0d6d3",
+        "plugin_source": "fix/native-shared-element on 3e0d6d3 (4.1.4 plus two unreleased commits)",
+        "model": "claude-opus-5-5",
+        "date": "2026-11-13",
+        "cost_usd": 1.529563,
+        "turns": 22,
+        "selected_from": 1,
+        "human_edits": 0
+      },
+      "prompt": "/genjutsu:cast Étale's iOS day list should open into the tide detail as one surface, not a push",
+      "caption": "The first native example, and the second of two runs of this prompt; the clip is run 2. The starting app, its screens and its NOAA data were written by hand and held no animation: a row pushed the detail like any navigation stack. The run used the system zoom transition, 78 lines added and none removed: the tapped row opens into its tide detail and shrinks back, the navigation bar, the back button and the swipe back stay, and the slack marker settles on the curve. Filmed on the iPhone 17 simulator, iOS 26.5, 402x874; XCUITest performs the taps and draws no pointer.",
+      "media": {
+        "cover": {
+          "src": "readme-media/etale-ios/open-mid.png",
+          "alt": "The Étale app on an iPhone about 100 ms into the zoom: the tide detail for the 10:31 slack, with its navigation title, its large time, the tide curve and the next current, is almost full size with rounded corners, and the dimmed Today list shows behind its lower edge.",
+          "width": 402
+        },
+        "clip": {
+          "src": "readme-media/etale-ios/clip.webp",
+          "alt": "Étale on an iPhone: a tap on the 10:31 row of the Today list zooms the tide detail out of that row, a dashed marker and its dot settle on the tide curve, and the back button shrinks the detail into its row; then the same on the 16:17 row. A white box shows on the row for a moment after each return.",
+          "width": 402
+        },
+        "stills": []
+      },
+      "receipt": "etale-ios/receipt.md",
+      "notes": "Headless, so each run marked its own thesis UNVALIDATED, and neither could build in its session; each built here unchanged on the first try. Run 1, on genjutsu 4.1.3 ($3.42), hand-built an overlay instead: it rewrote both screens, gave up the navigation bar and the swipe back, and its drag-to-close flickers on every frame. Three gaps in genjutsu's modules were fixed after it, and run 2 is the same prompt on those unreleased fixes. The pair does not prove the fix caused the difference: run 2 named the zoom transition before it read any module, and there is one run on each side. Run 2's own defect: a white box shows around the row for about 0.4 s after each return. Simulator only: no real device, no VoiceOver check.",
+      "source": "etale-ios/runs/20261113T201315Z/workspace-1",
+      "case": "cases/etale-ios"
+    },
+    {
       "id": "gres-redesign",
       "featured": false,
       "title": "Atelier Grès: the whole site redesigned",

@@ -1,0 +1,2 @@
+{ "root": "../build-20261113T201315Z-1/preview", "path": "/variants.html", "w": 1280, "h": 900, "fps": 10,
+  "steps": [ { "wait": 300 }, { "still": "preview-variants" } ] }
