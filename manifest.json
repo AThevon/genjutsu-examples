@@ -237,7 +237,7 @@
         "harness": "claude plugin eval, Claude Code 2.1.323",
         "plugin_version": "4.1.4",
         "plugin_commit": "3e0d6d3",
-        "plugin_source": "fix/native-shared-element on 3e0d6d3 (4.1.4 plus two unreleased commits)",
+        "plugin_source": "fix/native-shared-element on 3e0d6d3 (4.1.4 plus the two module-fix commits that shipped in 4.2.0)",
         "model": "claude-opus-5-5",
         "date": "2026-11-13",
         "cost_usd": 1.529563,
@@ -261,7 +261,7 @@
         "stills": []
       },
       "receipt": "etale-ios/receipt.md",
-      "notes": "Headless, so each run marked its own thesis UNVALIDATED, and neither could build in its session; each built here unchanged on the first try. Run 1, on genjutsu 4.1.3 ($3.42), hand-built an overlay instead: it rewrote both screens, gave up the navigation bar and the swipe back, and its drag-to-close flickers on every frame. Three gaps in genjutsu's modules were fixed after it, and run 2 is the same prompt on those unreleased fixes. The pair does not prove the fix caused the difference: run 2 named the zoom transition before it read any module, and there is one run on each side. Run 2's own defect: a white box shows around the row for about 0.4 s after each return. Simulator only: no real device, no VoiceOver check.",
+      "notes": "Headless, so each run marked its own thesis UNVALIDATED, and neither could build in its session; each built here unchanged on the first try. Run 1, on genjutsu 4.1.3 ($3.42), hand-built an overlay instead: it rewrote both screens, gave up the navigation bar and the swipe back, and its drag-to-close flickers on every frame. Three gaps in genjutsu's modules were fixed after it, and run 2 is the same prompt on those fixes, which shipped in 4.2.0. The pair does not prove the fix caused the difference: run 2 named the zoom transition before it read any module, and there is one run on each side. Run 2's own defect: a white box shows around the row for about 0.4 s after each return. Simulator only: no real device, no VoiceOver check.",
       "source": "etale-ios/runs/20261113T201315Z/workspace-1",
       "case": "cases/etale-ios"
     },

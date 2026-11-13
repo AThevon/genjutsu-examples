@@ -11,7 +11,7 @@
 
 | | Run 1 | Run 2 |
 |---|---|---|
-| genjutsu | 4.1.3 at `5e00595` | 4.1.4 plus two unreleased commits, at `3e0d6d3` (branch `fix/native-shared-element`) |
+| genjutsu | 4.1.3 at `5e00595` | 4.1.4 plus the two module-fix commits that shipped in 4.2.0, at `3e0d6d3` (branch `fix/native-shared-element`) |
 | Model, harness | claude-opus-5-5, Claude Code 2.1.323, `claude plugin eval`, headless | the same |
 | Date | 2026-11-13 | 2026-11-13 |
 | Cost | $3.42 | $1.53 |
@@ -237,7 +237,7 @@ Two commits on genjutsu's branch `fix/native-shared-element`, `fd4e1da` and `3e0
 | | |
 |---|---|
 | Skill | `/genjutsu:cast` |
-| genjutsu | 4.1.4 plus two unreleased commits, at `3e0d6d3` (branch `fix/native-shared-element`; the harness prints "4.1.4") |
+| genjutsu | 4.1.4 plus the two module-fix commits that shipped in 4.2.0, at `3e0d6d3` (branch `fix/native-shared-element`; the harness prints "4.1.4") |
 | Model | claude-opus-5-5 (Claude Code 2.1.323, `claude plugin eval`, headless) |
 | Date | 2026-11-13 |
 | Cost | $1.53 (1.529563) |

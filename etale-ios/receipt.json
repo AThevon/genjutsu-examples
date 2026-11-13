@@ -397,7 +397,7 @@
         "commit_full": "3e0d6d3e31f1ad38e5e59817fa80cb9adb60bcb1",
         "branch": "fix/native-shared-element",
         "released": false,
-        "note": "v4.1.4 (d5c614a) plus two unreleased commits, fd4e1da and 3e0d6d3; the harness prints 4.1.4"
+        "note": "v4.1.4 (d5c614a) plus the two module-fix commits that shipped in 4.2.0, fd4e1da and 3e0d6d3; the harness prints 4.1.4"
       },
       "harness": {
         "tool": "claude plugin eval",

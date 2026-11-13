@@ -15,7 +15,7 @@ The genjutsu repository keeps none of this. Its README gallery is generated from
 | [`pottery-firing/`](./pottery-firing) | `cast` | headless, first pass | yes | `/pottery-firing/` |
 | [`etale/`](./etale) | `paint` | conversation, the second of two on the same brief | yes | `/etale/` |
 | [`invoice-mark-paid/`](./invoice-mark-paid) | `cast` | headless, first pass | yes | `/invoice-mark-paid/` |
-| [`etale-ios/`](./etale-ios) | `cast` | headless, SwiftUI: two runs of one prompt, the first on 4.1.3, the second on unreleased module fixes | yes, the second run; the first and its defects are in the same receipt | none: a native app |
+| [`etale-ios/`](./etale-ios) | `cast` | headless, SwiftUI: two runs of one prompt, the first on 4.1.3, the second on the module fixes that shipped in 4.2.0 | yes, the second run; the first and its defects are in the same receipt | none: a native app |
 | [`gres-redesign/`](./gres-redesign) | `paint` | conversation, the second of two on the same brief | no: thin execution, see its receipt | `/gres-redesign/` |
 | [`etale-landing/`](./etale-landing) | `paint` | headless, two runs | no: plain, replaced by the `etale` conversation | |
 | [`nocturne-planetarium/`](./nocturne-planetarium) | `paint` | headless, two runs | no: plain, replaced by the `nocturne` conversation | |
