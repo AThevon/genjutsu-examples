@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale, zoom source variants</title>
+<style>
+  body { margin: 0; font: 14px/1.45 -apple-system, system-ui, sans-serif; background: #e9e9ee; color: #1c1c1e; }
+  .banner { background: #fff3c4; border-bottom: 1px solid #e5d58a; padding: 10px 20px; font-weight: 600; }
+  header { padding: 16px 20px 0; max-width: 1100px; margin: 0 auto; }
+  header p { margin: 6px 0; }
+  .grid { display: grid; grid-template-columns: repeat(3, 300px); gap: 28px; justify-content: center; padding: 20px; }
+  .cap { margin-top: 10px; }
+  .cap b { display: block; }
+  button { font: inherit; padding: 7px 14px; border-radius: 8px; border: 1px solid #b9b9c0; background: #fff; cursor: pointer; }
+  button:focus-visible { outline: 3px solid #0a6c8f; outline-offset: 2px; }
+  .phone { width: 300px; height: 580px; border-radius: 40px; box-shadow: 0 0 0 8px #1c1c1e; background: #f2f2f7; position: relative; overflow: hidden; }
+  .today { position: absolute; inset: 0; padding: 44px 0 0; }
+  .lt { font: 700 26px/1.2 -apple-system, system-ui, sans-serif; padding: 4px 16px 8px; }
+  .sh { font-size: 11px; color: #6c6c70; padding: 10px 28px 4px; }
+  .grp { background: #fff; margin: 0 12px; border-radius: 18px; overflow: hidden; }
+  .hero { padding: 12px; } .hero small { color: #6c6c70; display: block; }
+  .big { font: 600 44px/1.05 ui-rounded, -apple-system, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+  .cell { padding: 9px 12px; border-top: .5px solid #c6c6c8; display: flex; gap: 10px; align-items: baseline; }
+  .grp .cell:first-child { border-top: 0; }
+  .cell .t { font-weight: 600; font-size: 17px; font-variant-numeric: tabular-nums; }
+  .sub { color: #6c6c70; font-size: 12px; }
+  .src { visibility: hidden; }
+  .detail { position: absolute; left: 0; top: 0; width: 300px; height: 580px; transform-origin: 0 0; overflow: hidden; visibility: hidden; border-radius: 40px; }
+  .detail.ground { background: #f2f2f7; }
+  .detail .in { padding: 88px 0 0; }
+  .detail .nav { position: absolute; top: 48px; width: 100%; text-align: center; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="banner">This page is the proposal, not the build. It is not validated: nobody was there to answer during this run. The variants are approximations of the system zoom; the app sets no duration or curve.</div>
+<header>
+  <p><b>Interaction thesis:</b> Tapping a slack-water row in Today makes that row grow into its tide detail, using SwiftUI's zoom navigation transition (<code>.matchedTransitionSource</code> on the row, <code>.navigationTransition(.zoom)</code> on the detail). The system sets the timing. The time you tapped becomes the detail's 56&nbsp;pt headline. A back-swipe or a pull-down shrinks the detail into the same row, with the bell showing the alert you just set.</p>
+  <p><b>Allowed patterns:</b> none</p>
+  <p><button id="all">Play all three</button> <label><input type="checkbox" id="rm"> Reduce Motion</label></p>
+</header>
+<div class="grid" id="grid"></div>
+<script>
+const V = [
+  { name: "Variant A - Bare source (subtle)", text: "Zoom from the row's content alone. The snapshot has no ground, so the text seems to float off the list before the detail fills in.", ground: false, hero: false },
+  { name: "Variant B - Row as surface (balanced)", text: "Zoom from the row with the cell's own ground and rounded corners, so you see the row itself widen into the screen. Default chosen with nobody answering.", ground: true, hero: false },
+  { name: "Variant C - Hero too (impressive)", text: "B, and the 'Next slack water' card becomes a second source that opens the same detail. It goes past the brief: that card cannot be tapped today.", ground: true, hero: true },
+];
+const EASE = "cubic-bezier(0.2, 0.9, 0.25, 1)", DUR = 500; // approximation only
+const grid = document.getElementById("grid"), rm = document.getElementById("rm");
+const players = V.map((v, k) => {
+  const wrap = document.createElement("div");
+  wrap.innerHTML = `<div class="phone"><div class="today"><div class="lt">Aquatic Park</div>
+    <div class="grp"><div class="hero" ${v.hero ? 'data-src="hero"' : ""}><small>Next slack water</small><div class="big">10:31</div><div>in 1 h 19 min. Ebb turns to flood.</div></div></div>
+    <div class="sh">SLACK WATER TODAY</div><div class="grp">
+      <div class="cell"><span class="t">05:57</span><span>Flood turns to ebb<div class="sub">then ebb to 0.94 kn at 08:06</div></span></div>
+      <div class="cell" data-src="row"><span class="t">10:31</span><span>Ebb turns to flood<div class="sub">then flood to 1.44 kn at 13:37</div></span></div>
+      <div class="cell"><span class="t">16:17</span><span>Flood turns to ebb<div class="sub">then ebb to 2.11 kn at 19:50</div></span></div>
+    </div></div>
+    <div class="detail ${v.ground ? "ground" : ""}"><div class="nav">Slack 10:31</div><div class="in"><div class="grp"><div class="hero"><small>Slack water</small><div class="big">10:31</div><div>Ebb turns to flood.</div></div></div>
+    <div class="sh">TIDE HEIGHT, METRES ABOVE MLLW</div><div class="grp" style="height:120px"></div></div></div></div>
+    <div class="cap"><b>${v.name}</b>${v.text}</div><button>Replay</button>`;
+  grid.appendChild(wrap);
+  const phone = wrap.querySelector(".phone"), det = wrap.querySelector(".detail"), inner = wrap.querySelector(".in");
+  let flip = false;
+  function play() {
+    const which = v.hero && flip ? "hero" : "row"; flip = !flip;
+    const src = wrap.querySelector(`[data-src="${which}"]`);
+    wrap.querySelectorAll(".src").forEach(e => e.classList.remove("src"));
+    det.getAnimations().forEach(a => a.cancel()); inner.getAnimations().forEach(a => a.cancel());
+    const r = src.getBoundingClientRect(), p = phone.getBoundingClientRect();
+    const sx = r.width / 300, sy = r.height / 580;
+    det.style.visibility = "visible"; src.classList.add("src");
+    if (rm.checked) {
+      det.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, fill: "both" });
+    } else {
+      det.animate([{ transform: `translate(${r.left - p.left}px, ${r.top - p.top}px) scale(${sx}, ${sy})`, borderRadius: `${12 / sx}px / ${12 / sy}px` },
+                   { transform: "none", borderRadius: "40px" }], { duration: DUR, easing: EASE, fill: "both" });
+      inner.animate([{ opacity: v.ground ? 0 : 0.0 }, { opacity: 1 }], { duration: v.ground ? DUR * 0.6 : DUR, easing: "ease-out", fill: "both" });
+    }
+    setTimeout(() => { det.style.visibility = "hidden"; src.classList.remove("src"); }, DUR + 900);
+  }
+  wrap.querySelector("button").onclick = play;
+  return play;
+});
+document.getElementById("all").onclick = () => players.forEach(p => p());
+rm.checked = matchMedia("(prefers-reduced-motion: reduce)").matches;
+</script>
+</body>
+</html>

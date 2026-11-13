@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale - zoom source variants (throwaway)</title>
+<style>
+  :root { --ink:#1c1c1e; --muted:#6c6c70; --line:#d1d1d6; --ground:#f2f2f7; --card:#fff; --tint:#0a6e8a; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.45 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; color:var(--ink); background:#e9e9ee; }
+  header { max-width:1100px; margin:0 auto; padding:24px 20px 0; }
+  h1 { font-size:19px; margin:0 0 6px; }
+  .note { color:var(--muted); font-size:13px; }
+  .box { background:var(--card); border-radius:12px; padding:12px 16px; margin:10px 0; }
+  .box b { display:block; font-size:12px; color:var(--muted); }
+  .grid { max-width:1100px; margin:0 auto; padding:16px 20px 60px; display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
+  figure { margin:0; }
+  figcaption { font-size:13px; margin:10px 2px 0; }
+  figcaption strong { display:block; }
+  button { font:inherit; padding:6px 12px; border-radius:8px; border:1px solid var(--line); background:var(--card); cursor:pointer; margin-top:6px; }
+  button:focus-visible, input:focus-visible { outline:2px solid var(--tint); outline-offset:2px; }
+  .phone { width:100%; max-width:300px; aspect-ratio: 300/600; border-radius:38px; background:#000; padding:10px; }
+  .screen { position:relative; width:100%; height:100%; border-radius:30px; overflow:hidden; background:var(--ground); }
+  .list { position:absolute; inset:0; padding:46px 12px 12px; transition:transform 500ms cubic-bezier(0.2,0.9,0.25,1), filter 500ms cubic-bezier(0.2,0.9,0.25,1); }
+  .screen.open .list { transform:scale(.94); filter:brightness(.82); }
+  .title { font-size:24px; font-weight:700; margin:0 4px 10px; }
+  .hero { background:var(--card); border-radius:12px; padding:10px 14px; }
+  .hero .big { font:600 38px/1 ui-rounded, -apple-system, system-ui; font-variant-numeric:tabular-nums; }
+  .hdr { font-size:11px; color:var(--muted); text-transform:uppercase; margin:12px 14px 5px; }
+  .group { background:var(--card); border-radius:12px; }
+  .row { display:flex; gap:10px; align-items:baseline; padding:9px 14px; border-bottom:1px solid var(--line); }
+  .row:last-child { border-bottom:0; }
+  .row .src { display:flex; gap:10px; align-items:baseline; flex:1; padding:3px 0; border-radius:12px; }
+  .row .t { font-size:17px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .row .s { font-size:12px; color:var(--muted); }
+  .detail { position:absolute; inset:0; background:var(--ground); padding:46px 12px 12px; transform-origin:0 0; border-radius:30px; visibility:hidden; overflow:hidden; }
+  .detail .nav { font-size:14px; color:var(--tint); margin-bottom:10px; }
+  .detail .card { background:var(--card); border-radius:12px; padding:10px 14px; margin-bottom:12px; }
+  .detail .big { font:600 38px/1 ui-rounded, -apple-system, system-ui; font-variant-numeric:tabular-nums; }
+  .v-a .detail { background:transparent; }
+  .v-a .detail > * { opacity:var(--fade,1); }
+  @media (max-width: 900px) { .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Étale: three zoom sources, one transition</h1>
+  <p class="note">This page is the proposal, not the build. It approximates timing and curve only: the system owns both. 500 ms and <code>cubic-bezier(0.2, 0.9, 0.25, 1)</code> stand in for the system spring, as on the thesis page.</p>
+  <div class="box"><b>Interaction thesis (UNVALIDATED, revised after LOAD)</b>Tapping a slack row in Today zooms that row open into its tide detail with SwiftUI's zoom navigation transition (<code>matchedTransitionSource</code> on the row, <code>.navigationTransition(.zoom(sourceID:in:))</code> on the detail). The slack you tapped becomes the screen instead of a page sliding over it, and the edge swipe or a drag down shrinks it back into the same row. The timing is the system's: the app sets no duration. With Reduce Motion on, the app keeps the same zoom call and leaves the reduced version to the system, which owns that transition. It never swaps in the default push.</div>
+  <div class="box"><b>Allowed patterns</b>none</div>
+  <button id="all">Fire all three</button>
+</header>
+<div class="grid">
+  <figure class="v v-a"><div class="phone"><div class="screen"></div></div>
+    <figcaption><strong>Variant A: bare row</strong> (subtle) The source is the row's text alone, with no source configuration. The detail grows out of the text and has no card edge to grow from.<br><button class="one">Replay A</button></figcaption></figure>
+  <figure class="v v-b"><div class="phone"><div class="screen"></div></div>
+    <figcaption><strong>Variant B: row card</strong> (balanced) The source is configured with the list cell's own grouped background and a 12 pt rounded clip, so what grows is the row's card, opaque, into the screen.<br><button class="one">Replay B</button></figcaption></figure>
+  <figure class="v v-c"><div class="phone"><div class="screen"></div></div>
+    <figcaption><strong>Variant C: row card + hero</strong> (impressive) Same as B, and the "Next slack water" block becomes a second source that opens the same 10:31 detail. That adds a link that doesn't exist today.<br><button class="one">Replay C</button></figcaption></figure>
+</div>
+<template id="tpl">
+  <div class="list">
+    <div class="title">Aquatic Park</div>
+    <div class="hero"><div class="note">Next slack water</div><div class="big">10:31</div><div>in 1 h 19 min. Ebb turns to flood.</div></div>
+    <div class="hdr">Slack water today</div>
+    <div class="group">
+      <div class="row"><div class="src"><span class="t">05:57</span><span><div>Flood turns to ebb</div><div class="s">then ebb to 0.94 kn at 08:06</div></span></div></div>
+      <div class="row"><div class="src target"><span class="t">10:31</span><span><div>Ebb turns to flood</div><div class="s">then flood to 1.44 kn at 13:37</div></span></div></div>
+      <div class="row"><div class="src"><span class="t">16:17</span><span><div>Flood turns to ebb</div><div class="s">then ebb to 2.11 kn at 19:50</div></span></div></div>
+    </div>
+  </div>
+  <div class="detail">
+    <div class="nav">‹ Today</div>
+    <div class="card"><div class="note">Slack water</div><div class="big">10:31</div><div>Ebb turns to flood.</div></div>
+    <div class="card note">Tide curve, 2 October 2026</div>
+    <div class="card"><div>Slack comes</div><div class="note">50 min after low water (09:41, 1.05 m)</div><div>Current</div><div class="note">then flood to 1.44 kn at 13:37</div></div>
+  </div>
+</template>
+<script>
+const E='cubic-bezier(0.2, 0.9, 0.25, 1)', D=500;
+document.querySelectorAll('.v').forEach(v=>v.querySelector('.screen').appendChild(document.getElementById('tpl').content.cloneNode(true)));
+function run(v, fromHero){
+  const screen=v.querySelector('.screen'), detail=v.querySelector('.detail');
+  const src = fromHero ? v.querySelector('.hero') : v.querySelector('.target');
+  detail.getAnimations().forEach(a=>a.cancel()); screen.classList.remove('open');
+  const s=screen.getBoundingClientRect(), r=src.getBoundingClientRect();
+  const from=`translate(${r.left-s.left}px,${r.top-s.top}px) scale(${r.width/s.width},${r.height/s.height})`;
+  const bare=v.classList.contains('v-a');
+  requestAnimationFrame(()=>{
+    screen.classList.add('open');
+    detail.animate([
+      {transform:from, borderRadius:bare?'0px':'120px', background:bare?'rgba(242,242,247,0)':'#fff', visibility:'visible'},
+      {transform:'none', borderRadius:'30px', background:'#f2f2f7', visibility:'visible'}
+    ], {duration:D, easing:E, fill:'forwards'});
+    if (bare) detail.querySelectorAll(':scope > *').forEach(c=>c.animate([{opacity:0},{opacity:1}],{duration:D,easing:E,fill:'forwards'}));
+    setTimeout(()=>{ detail.animate([{transform:'none',visibility:'visible'},{transform:from,opacity:0,visibility:'visible'}],{duration:D,easing:E,fill:'forwards'}); screen.classList.remove('open'); }, D+1400);
+  });
+}
+let heroTurn=false;
+document.querySelectorAll('.v').forEach(v=>v.querySelector('.one').onclick=()=>{ const h=v.classList.contains('v-c') && (heroTurn=!heroTurn); run(v,h); });
+document.getElementById('all').onclick=()=>document.querySelectorAll('.v').forEach(v=>run(v,false));
+</script>
+</body>
+</html>

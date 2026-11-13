@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étale · interaction thesis (proposal, not the build)</title>
+<style>
+  :root { --tint:#0a6ebd; --ink:#111; --muted:#6b6b70; --bg:#f2f2f7; --card:#fff; --rule:#d1d1d6; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.45 -apple-system, "SF Pro Text", system-ui, sans-serif; color:var(--ink); background:#fafafa; }
+  main { max-width:980px; margin:0 auto; padding:32px 24px 64px; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .note { color:var(--muted); font-size:13px; }
+  .thesis { background:#fff; border:1px solid var(--rule); border-radius:10px; padding:16px 18px; margin:16px 0 24px; }
+  .grid { display:grid; grid-template-columns: 340px 1fr; gap:32px; align-items:start; }
+  /* phone */
+  .phone { width:320px; height:640px; border-radius:44px; background:var(--bg); border:10px solid #1c1c1e; position:relative; overflow:hidden; }
+  .nav { padding:44px 18px 8px; font-weight:700; font-size:30px; }
+  .sec { margin:10px 16px 0; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.02em; }
+  .group { margin:6px 16px; background:var(--card); border-radius:12px; overflow:hidden; }
+  .row { display:flex; gap:12px; align-items:baseline; padding:11px 14px; border-bottom:1px solid #ececf0; cursor:pointer; }
+  .row:last-child { border-bottom:0; }
+  .row b { font-size:20px; font-variant-numeric:tabular-nums; }
+  .row small { display:block; color:var(--muted); font-size:13px; }
+  .row:focus-visible { outline:2px solid var(--tint); outline-offset:-2px; }
+  /* zoomed surface */
+  .surface { position:absolute; inset:0; background:var(--bg); transform-origin:0 0; visibility:hidden; }
+  .surface .hdr { padding:52px 18px 8px; }
+  .surface .hdr .k { color:var(--muted); font-size:14px; }
+  .surface .hdr .big { font: 600 52px/1.05 ui-rounded, "SF Pro Rounded", system-ui; font-variant-numeric:tabular-nums; }
+  .curvebox { margin:6px 16px; background:var(--card); border-radius:12px; padding:12px; }
+  .back { position:absolute; top:14px; left:14px; font-size:15px; color:var(--tint); cursor:pointer; background:none; border:0; }
+  /* panel */
+  .panel h2 { font-size:15px; margin:0 0 8px; }
+  table { border-collapse:collapse; font-size:13px; margin-bottom:18px; }
+  td { padding:3px 14px 3px 0; vertical-align:top; }
+  td:first-child { color:var(--muted); }
+  code { font: 12px ui-monospace, Menlo, monospace; }
+  button.ctl { font:inherit; padding:6px 12px; border-radius:8px; border:1px solid var(--rule); background:#fff; cursor:pointer; margin-right:8px; }
+  button.ctl:focus-visible { outline:2px solid var(--tint); outline-offset:2px; }
+  label { font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+  <p style="background:#fff4d6;border:1px solid #e0c060;padding:8px 12px;border-radius:8px;margin:0 0 12px"><strong>Shows the thesis before its revision after LOAD.</strong> The build draws the tide line with .smooth(duration: 0.45) and no delay, not 0.6 s after 0.2 s.</p>
+  <h1>Étale: Today list → tide detail</h1>
+  <p class="note">This page is the proposal, not the build. It approximates <strong>timing and curve only</strong>. The real rendering is SwiftUI's own zoom transition, which this HTML doesn't reproduce. The zoom's spring is set by the system, not by the app, so it has no number here.</p>
+
+  <div class="thesis">
+    <p><strong>Interaction thesis (UNVALIDATED, nobody is answering this session):</strong> Tapping a slack row in the Today list grows that row into its tide detail with the system zoom navigation transition (<code>.matchedTransitionSource</code> on the row, <code>.navigationTransition(.zoom)</code> on the detail, one shared <code>@Namespace</code> keyed by <code>slack.id</code>). The detail reads as the row opened up, not as a new page sliding in, and swiping down or back collapses it into the same row, interactively. Once the detail is on screen, the day's tide line draws left to right through the slack marker with <code>.smooth(duration: 0.6)</code> after a 0.2 s delay. With Reduce Motion, the system's own handling replaces the zoom and the line is shown already drawn.</p>
+    <p><strong>Allowed patterns:</strong> none</p>
+  </div>
+
+  <div class="grid">
+    <div class="phone" id="phone">
+      <div class="nav">Aquatic Park</div>
+      <div class="sec">Slack water today</div>
+      <div class="group">
+        <div class="row" tabindex="0" data-t="05:57" data-m="357"><b>05:57</b><span>Flood turns to ebb<small>then ebb to 0.94 kn at 08:06</small></span></div>
+        <div class="row" tabindex="0" data-t="10:31" data-m="631"><b>10:31</b><span>Ebb turns to flood<small>then flood to 1.44 kn at 13:37</small></span></div>
+        <div class="row" tabindex="0" data-t="16:17" data-m="977"><b>16:17</b><span>Flood turns to ebb<small>then ebb to 2.11 kn at 19:50</small></span></div>
+      </div>
+      <div class="surface" id="surface" aria-hidden="true">
+        <button class="back" id="back">‹ Aquatic Park</button>
+        <div class="hdr"><div class="k">Slack water</div><div class="big" id="big">10:31</div><div id="turn">Ebb turns to flood.</div></div>
+        <div class="sec">Tide height, metres above MLLW</div>
+        <div class="curvebox">
+          <svg viewBox="0 0 276 140" width="100%" height="140" aria-label="Tide curve for 2 October 2026 from tide.json">
+            <line id="mk" x1="0" x2="0" y1="0" y2="140" stroke="#8e8e93" stroke-dasharray="3 3"/>
+            <path id="tide" fill="none" stroke="var(--tint)" stroke-width="2" stroke-linecap="round"
+              d="M0.0,121.4L1.1,119.8L2.3,118.3L3.5,116.6L4.6,114.9L5.8,113.2L6.9,111.5L8.1,109.7L9.2,107.9L10.3,106.1L11.5,104.2L12.7,102.4L13.8,100.5L14.9,98.6L16.1,96.7L17.2,94.8L18.4,93.0L19.6,91.1L20.7,89.1L21.9,87.3L23.0,85.4L24.1,83.5L25.3,81.7L26.4,79.9L27.6,78.0L28.8,76.2L29.9,74.5L31.1,72.7L32.2,70.9L33.4,69.2L34.5,67.5L35.6,65.8L36.8,64.2L38.0,62.6L39.1,61.0L40.2,59.5L41.4,58.0L42.5,56.5L43.7,55.2L44.9,53.8L46.0,52.5L47.1,51.3L48.3,50.1L49.5,48.9L50.6,47.9L51.8,46.9L52.9,46.0L54.0,45.1L55.2,44.3L56.4,43.6L57.5,43.0L58.6,42.4L59.8,41.9L61.0,41.5L62.1,41.2L63.2,40.9L64.4,40.8L65.5,40.7L66.7,40.7L67.8,40.7L69.0,40.8L70.2,41.0L71.3,41.2L72.5,41.5L73.6,41.9L74.8,42.3L75.9,42.8L77.0,43.3L78.2,43.8L79.3,44.4L80.5,45.0L81.7,45.7L82.8,46.4L84.0,47.1L85.1,47.8L86.2,48.6L87.4,49.3L88.5,50.1L89.7,50.8L90.8,51.6L92.0,52.3L93.2,53.1L94.3,53.7L95.5,54.4L96.6,55.0L97.8,55.7L98.9,56.2L100.0,56.8L101.2,57.3L102.3,57.8L103.5,58.2L104.7,58.6L105.8,58.9L107.0,59.1L108.1,59.3L109.2,59.4L110.4,59.5L111.5,59.6L112.7,59.5L113.8,59.4L115.0,59.2L116.2,59.0L117.3,58.7L118.5,58.4L119.6,58.0L120.8,57.5L121.9,57.0L123.0,56.5L124.2,55.8L125.3,55.2L126.5,54.5L127.7,53.7L128.8,52.8L129.9,52.0L131.1,51.1L132.2,50.2L133.4,49.2L134.6,48.1L135.7,47.0L136.8,45.9L138.0,44.8L139.2,43.6L140.3,42.4L141.4,41.1L142.6,39.8L143.8,38.5L144.9,37.2L146.1,35.8L147.2,34.5L148.3,33.1L149.5,31.7L150.7,30.3L151.8,29.0L152.9,27.5L154.1,26.1L155.2,24.8L156.4,23.4L157.6,22.1L158.7,20.7L159.8,19.5L161.0,18.2L162.2,16.9L163.3,15.7L164.4,14.6L165.6,13.4L166.8,12.4L167.9,11.4L169.1,10.4L170.2,9.5L171.3,8.6L172.5,7.8L173.7,7.1L174.8,6.5L175.9,5.9L177.1,5.3L178.2,4.9L179.4,4.6L180.6,4.3L181.7,4.1L182.8,4.0L184.0,4.0L185.2,4.1L186.3,4.3L187.4,4.6L188.6,4.9L189.8,5.4L190.9,6.0L192.1,6.7L193.2,7.5L194.3,8.4L195.5,9.5L196.7,10.6L197.8,11.8L198.9,13.2L200.1,14.7L201.2,16.3L202.4,18.0L203.6,19.8L204.7,21.7L205.8,23.7L207.0,25.8L208.2,28.1L209.3,30.4L210.4,32.8L211.6,35.3L212.8,37.8L213.9,40.5L215.1,43.2L216.2,46.0L217.3,48.7L218.5,51.6L219.7,54.5L220.8,57.5L221.9,60.4L223.1,63.5L224.2,66.5L225.4,69.4L226.6,72.5L227.7,75.5L228.8,78.5L230.0,81.5L231.2,84.4L232.3,87.3L233.4,90.2L234.6,93.0L235.8,95.8L236.9,98.5L238.1,101.2L239.2,103.7L240.3,106.2L241.5,108.6L242.7,111.0L243.8,113.2L244.9,115.4L246.1,117.4L247.2,119.4L248.4,121.3L249.6,123.0L250.7,124.6L251.8,126.1L253.0,127.6L254.2,128.8L255.3,130.0L256.4,131.1L257.6,132.1L258.8,133.0L259.9,133.7L261.1,134.3L262.2,134.9L263.4,135.3L264.5,135.6L265.6,135.9L266.8,136.0L267.9,136.0L269.1,136.0L270.2,135.9L271.4,135.6L272.6,135.3L273.7,134.9L274.9,134.4"/>
+            <circle id="dot" r="5" fill="var(--tint)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Numbers</h2>
+      <table>
+        <tr><td>Open / close</td><td>system zoom navigation transition, interactive both ways (spring set by the system)</td></tr>
+        <tr><td>Zoom source</td><td>the tapped row, matched by <code>slack.id</code></td></tr>
+        <tr><td>Tide line draw</td><td><code>.smooth(duration: 0.6)</code>, 0.2 s delay, trim 0 → 1</td></tr>
+        <tr><td>Reduce Motion</td><td>system handling for the zoom, line already drawn (no draw)</td></tr>
+      </table>
+
+      <h2>.smooth(duration: 0.6): critically damped spring, no bounce</h2>
+      <svg id="ease" viewBox="0 0 300 160" width="300" height="160" role="img" aria-label="Easing curve of smooth spring, duration 0.6 seconds">
+        <rect x="0" y="0" width="300" height="160" fill="#fff" stroke="#d1d1d6"/>
+        <path id="easePath" fill="none" stroke="var(--tint)" stroke-width="2"/>
+        <text x="6" y="152" font-size="10" fill="#6b6b70">0 s</text>
+        <text x="262" y="152" font-size="10" fill="#6b6b70">0.6 s</text>
+      </svg>
+      <p class="note">x(t) = 1 − (1 + ωt)·e<sup>−ωt</sup>, ω = 2π / 0.6</p>
+
+      <p>
+        <button class="ctl" id="replay">Replay (opens 10:31)</button>
+        <label><input type="checkbox" id="rm"> Reduce Motion</label>
+      </p>
+      <p class="note">Tap any row to open it. Tap “‹ Aquatic Park” to collapse it back into its row.</p>
+    </div>
+  </div>
+</main>
+<script>
+  const W = 2*Math.PI/0.6, ease = t => 1 - (1 + W*t)*Math.exp(-W*t);
+  // plot
+  let d = ''; for (let i=0;i<=100;i++){ const t=i/100*0.6, x=10+i*2.8, y=140-ease(t)*120; d += (i?'L':'M')+x.toFixed(1)+','+y.toFixed(1); }
+  document.getElementById('easePath').setAttribute('d', d);
+
+  const phone = document.getElementById('phone'), surface = document.getElementById('surface');
+  const tide = document.getElementById('tide'), dot = document.getElementById('dot'), mk = document.getElementById('mk');
+  const L = tide.getTotalLength(); tide.style.strokeDasharray = L;
+  const rm = document.getElementById('rm');
+  let src = null, raf = 0;
+
+  function placeMarker(min){
+    const x = 276*min/1440; mk.setAttribute('x1',x); mk.setAttribute('x2',x);
+    // nearest point on path at that x
+    let best=0, bd=1e9; for(let s=0;s<=L;s+=1){ const p=tide.getPointAtLength(s); const dd=Math.abs(p.x-x); if(dd<bd){bd=dd;best=p;} }
+    dot.setAttribute('cx',best.x); dot.setAttribute('cy',best.y);
+  }
+  function drawLine(){
+    cancelAnimationFrame(raf);
+    if (rm.checked){ tide.style.strokeDashoffset = 0; return; }
+    tide.style.strokeDashoffset = L;
+    const t0 = performance.now() + 200;
+    const step = now => { const t = Math.max(0,(now-t0)/1000); tide.style.strokeDashoffset = L*(1-ease(Math.min(t,0.6))); if (t<0.6) raf = requestAnimationFrame(step); else tide.style.strokeDashoffset = 0; };
+    raf = requestAnimationFrame(step);
+  }
+  function rectOf(row){ const p=phone.getBoundingClientRect(), r=row.getBoundingClientRect(); return {x:r.left-p.left-10, y:r.top-p.top-10, w:r.width, h:r.height}; }
+  function open(row){
+    src = row;
+    document.getElementById('big').textContent = row.dataset.t;
+    document.getElementById('turn').textContent = row.querySelector('span').firstChild.textContent + '.';
+    placeMarker(+row.dataset.m);
+    surface.style.visibility='visible'; surface.setAttribute('aria-hidden','false');
+    if (rm.checked){
+      surface.animate([{opacity:0},{opacity:1}],{duration:200,fill:'both'});
+    } else {
+      const r = rectOf(row), sx=r.w/300, sy=r.h/620;
+      // approximation of the system zoom, spring stood in by the same smooth curve
+      surface.animate([
+        {transform:`translate(${r.x}px,${r.y}px) scale(${sx},${sy})`, borderRadius:'12px', opacity:.6},
+        {transform:'none', borderRadius:'34px', opacity:1}
+      ],{duration:500, easing:'cubic-bezier(.2,.8,.2,1)', fill:'both'});
+    }
+    drawLine();
+  }
+  function close(){
+    if(!src) return;
+    const a = rm.checked
+      ? surface.animate([{opacity:1},{opacity:0}],{duration:200,fill:'both'})
+      : (()=>{ const r=rectOf(src), sx=r.w/300, sy=r.h/620; return surface.animate([
+          {transform:'none', opacity:1},{transform:`translate(${r.x}px,${r.y}px) scale(${sx},${sy})`, opacity:0}
+        ],{duration:450, easing:'cubic-bezier(.2,.8,.2,1)', fill:'both'}); })();
+    a.onfinish = ()=>{ surface.style.visibility='hidden'; surface.setAttribute('aria-hidden','true'); src.focus(); src=null; };
+  }
+  document.querySelectorAll('.row').forEach(r=>{
+    r.addEventListener('click',()=>open(r));
+    r.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();open(r);} });
+  });
+  document.getElementById('back').onclick = close;
+  document.getElementById('replay').onclick = ()=>{ surface.style.visibility='hidden'; open(document.querySelectorAll('.row')[1]); };
+</script>
+</body>
+</html>

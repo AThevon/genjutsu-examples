@@ -1,0 +1,109 @@
+import SwiftUI
+
+struct TodayView: View {
+    private let day = TideDay.sample
+    @State private var alerts: Set<String> = []
+    /// Ties each slack row to the detail it opens, so the detail grows out of the row and shrinks back into it.
+    @Namespace private var slackZoom
+
+    private var nextSlack: Slack? {
+        day.slacks.first { $0.minutes > Clock.minutes(Clock.now) }
+    }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                if let nextSlack {
+                    Section {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Next slack water")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                            Text(nextSlack.time)
+                                .font(.system(size: 56, weight: .semibold, design: .rounded))
+                                .monospacedDigit()
+                            Text("in \(Clock.duration(nextSlack.minutes - Clock.minutes(Clock.now))). \(nextSlack.turn).")
+                                .font(.body)
+                        }
+                        .padding(.vertical, 8)
+                    }
+                }
+
+                Section("Slack water today") {
+                    ForEach(day.slacks) { slack in
+                        NavigationLink(value: slack) {
+                            SlackRow(slack: slack, hasAlert: alerts.contains(slack.id))
+                                .matchedTransitionSource(id: slack.id, in: slackZoom) { source in
+                                    // The row's snapshot carries the cell's own ground, so the surface
+                                    // that grows is the row itself rather than text floating on the list.
+                                    source
+                                        .background(Color(.secondarySystemGroupedBackground))
+                                        .clipShape(RoundedRectangle(cornerRadius: SlackRow.sourceCornerRadius, style: .continuous))
+                                }
+                        }
+                    }
+                }
+
+                Section("Tide") {
+                    ForEach(day.highsLows) { tide in
+                        LabeledContent {
+                            Text("\(Double(tide.m).map { Clock.decimal($0) } ?? tide.m) m")
+                                .monospacedDigit()
+                        } label: {
+                            Text("\(Clock.time(tide.t))  \(tide.isHigh ? "High water" : "Low water")")
+                                .monospacedDigit()
+                        }
+                    }
+                }
+
+                Section {
+                    Text("NOAA predictions for \(day.dateWritten). Currents off Alcatraz Island (SFB1204), tide at San Francisco (9414290). The water in the cove itself is not measured.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .navigationTitle("Aquatic Park")
+            .navigationDestination(for: Slack.self) { slack in
+                // Still a navigation destination: the bar, its back button and the edge swipe stay,
+                // and the system owns the zoom's curve and duration. The app adds no motion of its own.
+                TideDetailView(day: day, slack: slack, alerts: $alerts)
+                    .navigationTransition(.zoom(sourceID: slack.id, in: slackZoom))
+            }
+        }
+    }
+}
+
+struct SlackRow: View {
+    let slack: Slack
+    let hasAlert: Bool
+
+    /// Corner of the row's snapshot at the start of the zoom, before the system rounds it to the screen's.
+    static let sourceCornerRadius: CGFloat = 12
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 12) {
+            Text(slack.time)
+                .font(.title3.weight(.semibold))
+                .monospacedDigit()
+            VStack(alignment: .leading, spacing: 2) {
+                Text(slack.turn)
+                if let nextPeak = slack.nextPeak {
+                    Text(nextPeak)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            Spacer()
+            if hasAlert {
+                Image(systemName: "bell.fill")
+                    .foregroundStyle(.tint)
+                    .accessibilityLabel("Alert set")
+            }
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+#Preview {
+    TodayView()
+}

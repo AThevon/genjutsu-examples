@@ -2,7 +2,7 @@
 
 The recorded runs behind the examples in the [genjutsu](https://github.com/AThevon/genjutsu) README and on [genjutsu.athevon.dev/examples](https://genjutsu.athevon.dev/examples).
 
-Every example here is one real run of the plugin (two for `etale-ios`, told in order in one receipt), kept as it came out: the code the run wrote, its receipt (what ran, on which genjutsu commit and model, what it cost, what the build did, which defects are known), the conversation when there was one, and the media filmed from the build. Nothing a run wrote was edited by hand, with one exception, named in its receipt: every receipt counts its human edits, all of them are 0 but chef-ovatio's, one fix made to its live site after the run (its door titles crossed their photos in an ink that could not be read there).
+Every example here is one real run of the plugin (six for `etale-ios`, every run made of that prompt, told in order in one receipt), kept as it came out: the code the run wrote, its receipt (what ran, on which genjutsu commit and model, what it cost, what the build did, which defects are known), the conversation when there was one, and the media filmed from the build. Nothing a run wrote was edited by hand, with one exception, named in its receipt: every receipt counts its human edits, all of them are 0 but chef-ovatio's, one fix made to its live site after the run (its door titles crossed their photos in an ink that could not be read there).
 
 The genjutsu repository keeps none of this. Its README gallery is generated from [`manifest.json`](./manifest.json) here, and every image and link in it points at a tag of this repository, so what it shows cannot move under it.
 
@@ -15,7 +15,7 @@ The genjutsu repository keeps none of this. Its README gallery is generated from
 | [`pottery-firing/`](./pottery-firing) | `cast` | headless, first pass | yes | `/pottery-firing/` |
 | [`etale/`](./etale) | `paint` | conversation, the second of two on the same brief | yes | `/etale/` |
 | [`invoice-mark-paid/`](./invoice-mark-paid) | `cast` | headless, first pass | yes | `/invoice-mark-paid/` |
-| [`etale-ios/`](./etale-ios) | `cast` | headless, SwiftUI: two runs of one prompt, the first on 4.1.3, the second on the module fixes that shipped in 4.2.0 | yes, the second run; the first and its defects are in the same receipt | none: a native app |
+| [`etale-ios/`](./etale-ios) | `cast` | headless, SwiftUI: six runs of one prompt across four genjutsu commits; four used the system transition, two hand-built an overlay | yes, run 2, one of the six; all six and their defects are in the same receipt | none: a native app |
 | [`gres-redesign/`](./gres-redesign) | `paint` | conversation, the second of two on the same brief | no: thin execution, see its receipt | `/gres-redesign/` |
 | [`etale-landing/`](./etale-landing) | `paint` | headless, two runs | no: plain, replaced by the `etale` conversation | |
 | [`nocturne-planetarium/`](./nocturne-planetarium) | `paint` | headless, two runs | no: plain, replaced by the `nocturne` conversation | |
@@ -72,11 +72,11 @@ readme-media/            the images of the genjutsu README's hero and gallery (o
     conversation-N/      conversations: transcript.md and run.json written by converse.mjs
   takes/                 record.mjs take files and the encode scripts behind media/; for
                          etale-ios, also the UI test driver that performs the taps
-  media/                 the stills and clips (etale-ios: run 1's, and run 2's in run-2/)
+  media/                 the stills and clips (etale-ios: run 1's, and run N's in run-N/)
   compare/               captures of the two runs side by side (etale-landing only)
 ```
 
-In the raw output, paths into this repository were made relative to its root (and follow the files when they moved, such as a brief moved next to its example); each U+2014 dash in the CLI's own output (`run.log`, `report.html`) became " - ", as in the transcripts; nothing else was changed. converse.mjs also writes `calls/` and `session/`, which hold account details and are never committed (see `.gitignore`).
+In the raw output, paths into this repository were made relative to its root (and follow the files when they moved, such as a brief moved next to its example); each U+2014 dash in the CLI's own output (`run.log`, `report.html`) became " - ", as in the transcripts, and so did the one in the `<title>` of a preview page that run 3 of `etale-ios` wrote; nothing else was changed. converse.mjs also writes `calls/` and `session/`, which hold account details and are never committed (see `.gitignore`).
 
 ## Rebuild and re-record
 
