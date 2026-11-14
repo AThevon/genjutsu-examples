@@ -147,6 +147,13 @@ python3 bin/examples-section.py --ref readme-2026-10-05 --readme /path/to/genjut
 python3 -m unittest discover -s bin -p 'test_*.py'
 ```
 
+The genjutsu README carries the short form, written with `--compact`: the three examples marked `"readme": true` in the manifest, each with its clip, the one sentence of `readme_caption` (220 characters at most), one small line of provenance ending with `readme_note`, and its receipt, transcript and live demo; then one line that counts every recorded run and links the rest, here and on `examples_page`. An entry with a `readme_mention` (the first SwiftUI run) has its receipt linked from that line. Without `--compact` the block is the long form: every featured example in full, and the list of the runs not featured.
+
+```sh
+python3 bin/examples-section.py --ref readme-2026-11-14 --compact --readme /path/to/genjutsu/README.md --write
+python3 bin/examples-section.py --ref readme-2026-11-14 --compact --readme /path/to/genjutsu/README.md --check
+```
+
 A clip or cover narrower than 720 px (a phone screen) carries its `width` in the manifest and is shown at that width. It refuses a missing file, a media file over 720 KB, a conversation without its brief and first message, a branch as the ref, and an em dash anywhere. To change what the gallery shows: commit here, tag (`readme-YYYY-MM-DD`), push the tag, then regenerate the block with that tag.
 
 ## License

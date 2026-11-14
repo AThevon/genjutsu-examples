@@ -21,10 +21,23 @@ with `"featured": false` is a recorded run that is not shown, listed after the
 gallery on one line with the reason and its receipt, so that a run left out is
 still accounted for.
 
+With --compact the block is the short form the genjutsu README carries: only the
+featured entries marked `"readme": true`, in manifest order, each with its
+title, its clip (or cover), the one sentence of `readme_caption`, one small
+line (skill, how it ran, model, selection, cost, human edits, date, then
+`readme_note` when there is one) and three links at most: receipt, transcript,
+live demo. One closing line follows: how many runs the manifest records, how
+many of them are not shown in the gallery (they came out plain or thin; the
+reason of each is in the manifest and in the long form), a link to the receipt
+of every entry that carries a `readme_mention`, the repository at the tag and
+`examples_page`. The request, the modules, the build, the turns, the source
+and the list of runs not featured are left to those links.
+
 Usage:
     python3 bin/examples-section.py --ref readme-2026-10-05                  # print the block
     python3 bin/examples-section.py --ref <tag> --readme README.md --write   # replace the region
     python3 bin/examples-section.py --ref <tag> --readme README.md --check   # exit 1 if it differs
+    python3 bin/examples-section.py --ref <tag> --compact [--readme README.md --write | --check]
     [--manifest manifest.json]
 
 Every path in the manifest is relative to the manifest's directory, the root of
@@ -34,13 +47,20 @@ receipt, transcript, client brief, opening, source or case path that does not
 exist, a conversation without its client brief and opening, a media file over
 720 KB, a duplicate id, a multi-line prompt, a plugin_source that does not name
 the plugin_commit, a manifest with nothing featured, a ref that is a branch
-name (main, master, HEAD), and U+2014 (em dash) anywhere in the manifest.
+name (main, master, HEAD), and U+2014 (em dash) anywhere in the manifest. It
+also refuses `readme` on an entry that is not featured or without its
+`readme_caption`, a `readme_caption` of more than 220 characters or a
+`readme_note` of more than 200, either on several lines, a `readme_mention` on
+an entry the compact form already shows, and --compact on a manifest with no
+entry marked `readme` or without `examples_page`.
 
 The manifest:
     {
       "repo": "AThevon/genjutsu-examples",
       "demo_site": "https://<demos>.vercel.app",   # or null: relative demo paths are
                                                   # then left out of the block
+      "examples_page": "https://<site>/examples", # the gallery page the compact form links;
+                                                  # required by --compact only
       "examples": [ ... ]
     }
 
@@ -89,7 +109,15 @@ An entry recorded through genjutsu itself (mode headless or conversation):
                                               # agent playing the client was given
       "opening": "<id>/opening.txt",          # required for a conversation: the first
                                               # message, sent word for word
-      "notes": "what else a reader should know, said plainly"
+      "notes": "what else a reader should know, said plainly",
+      "readme": true,                         # optional: shown in the compact form
+      "readme_caption": "one sentence, 220 characters at most: what was asked and what
+                         the run did",        # required with readme
+      "readme_note": "a human edit, a defect, what the clip adds: 200 characters at most",
+                                              # optional, with readme only
+      "readme_mention": "the first SwiftUI run"   # optional, without readme only: the
+                                              # compact closing line links this entry's
+                                              # receipt under these words
     }
 
 An entry for the run bunshin was extracted from, made before v4.1.0 shipped
@@ -142,6 +170,8 @@ DASH = "\u2014"
 MAX_MEDIA_BYTES = 720 * 1000
 IMG_WIDTH = 720
 BRANCH_REFS = {"main", "master", "HEAD"}
+MAX_README_CAPTION = 220
+MAX_README_NOTE = 200
 
 SKILLS = {"cast", "paint", "bunshin"}
 KINDS = {"paint-new", "paint-existing", "cast", "bunshin"}
@@ -158,6 +188,13 @@ UNFEATURED_FIELDS = ("id", "title", "skill", "kind", "run", "receipt", "reason")
 UNFEATURED_RUN_FIELDS = ("mode", "plugin_version", "plugin_commit", "date")
 RUN_STRINGS = ("harness", "plugin_version", "plugin_commit", "model", "date", "ran_as",
                "subagent_tokens", "duration", "main_session", "loop")
+COMPACT_MODE_LABEL = {
+    "headless": "one-shot headless run",
+    "conversation": "conversation with an agent playing the client",
+    "bunshin-origin": "the run `bunshin` was extracted from",
+}
+NUMBER_WORDS = ("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+                "eleven", "twelve")
 MODE_LABEL = {
     "headless": "one-shot headless run",
     "conversation": "conversation with an agent playing the client",
@@ -289,6 +326,37 @@ def validate_client(root: Path, e: dict, where: str) -> None:
         check_path(root, need_str(e, key, where), f"{where}, {key}")
 
 
+def need_line(e: dict, key: str, where: str, limit: int | None = None) -> str:
+    text = need_str(e, key, where)
+    if "\n" in text or "\r" in text:
+        raise Fail(f"{where}: {key} must be one line")
+    if limit is not None and len(text) > limit:
+        raise Fail(f"{where}: {key} is {len(text)} characters, over the {limit} limit")
+    return text
+
+
+def validate_readme(e: dict, where: str, featured: bool) -> None:
+    """The compact form: `readme` marks an entry it shows, with its one-sentence
+    caption and an optional note; `readme_mention` names one it only links."""
+    shown = e.get("readme", False)
+    if not isinstance(shown, bool):
+        raise Fail(f"{where}: readme must be true or false, got {shown!r}")
+    if shown:
+        if not featured:
+            raise Fail(f"{where}: readme is only for a featured example")
+        need_line(e, "readme_caption", where, MAX_README_CAPTION)
+        if "readme_note" in e:
+            need_line(e, "readme_note", where, MAX_README_NOTE)
+        if "readme_mention" in e:
+            raise Fail(f"{where}: readme_mention is for an example the compact form does not show")
+    else:
+        for key in ("readme_caption", "readme_note"):
+            if key in e:
+                raise Fail(f"{where}: '{key}' needs \"readme\": true")
+        if "readme_mention" in e:
+            need_line(e, "readme_mention", where)
+
+
 def validate_links(root: Path, e: dict, where: str) -> None:
     """source and case are folders of this repository; demo is a path on demo_site or an https URL."""
     if "source" in e:
@@ -341,6 +409,7 @@ def validate(entries, root: Path) -> None:
         validate_transcript(root, e, where, required=featured and run["mode"] == "conversation")
         validate_client(root, e, where)
         validate_links(root, e, where)
+        validate_readme(e, where, featured)
         if not featured:
             if "\n" in e["reason"]:
                 raise Fail(f"{where}: reason must be one line")
@@ -393,6 +462,9 @@ class Links:
     def tree(self, rel: str) -> str:
         return f"https://github.com/{self.repo}/tree/{self._at(rel)}"
 
+    def root(self) -> str:
+        return f"https://github.com/{self.repo}/tree/{quote(self.ref, safe='')}"
+
     def demo(self, e: dict) -> str | None:
         demo = e.get("demo")
         if not demo:
@@ -421,6 +493,9 @@ def load(manifest: Path) -> dict:
     if demo_site is not None and (not isinstance(demo_site, str)
                                   or not re.fullmatch(r"https://[^\s/]+", demo_site)):
         raise Fail(f"demo_site must be null or an https origin without a trailing slash, got {demo_site!r}")
+    page = data.get("examples_page")
+    if page is not None and (not isinstance(page, str) or not re.fullmatch(r"https://[^\s/]+(/[^\s]*)?", page)):
+        raise Fail(f"examples_page must be an https URL, got {page!r}")
     validate(data.get("examples"), manifest.resolve().parent)
     return data
 
@@ -541,13 +616,8 @@ def side_links(e: dict, links: Links) -> list[str]:
 
 
 def block_for(e: dict, links: Links) -> list[str]:
-    media = e["media"]
-    shown = media.get("clip") or media["cover"]
     receipt = links.blob(e["receipt"])
-    img = (
-        f'<a href="{html.escape(receipt)}"><img src="{html.escape(links.raw(shown["src"]))}" '
-        f'alt="{html.escape(shown["alt"])}" width="{shown.get("width", IMG_WIDTH)}" /></a>'
-    )
+    img = image(e, links)
     out = [f"[Receipt]({receipt})"]
     if e.get("transcript"):
         out.append(f"[Transcript]({links.blob(e['transcript'])})")
@@ -582,6 +652,98 @@ def unfeatured_line(e: dict, links: Links) -> str:
     out += side_links(e, links)
     facts = f"`{e['skill']}`, {MODE_LABEL[run['mode']]}, {plugin_label(run)}, {run['date']}"
     return f"- **{e['title']}**: {facts}. {e['reason']} " + " · ".join(out)
+
+
+def image(e: dict, links: Links) -> str:
+    media = e["media"]
+    shown = media.get("clip") or media["cover"]
+    return (
+        f'<a href="{html.escape(links.blob(e["receipt"]))}"><img src="{html.escape(links.raw(shown["src"]))}" '
+        f'alt="{html.escape(shown["alt"])}" width="{shown.get("width", IMG_WIDTH)}" /></a>'
+    )
+
+
+def number(n: int) -> str:
+    return NUMBER_WORDS[n] if n < len(NUMBER_WORDS) else str(n)
+
+
+def compact_provenance(e: dict) -> str:
+    run = e["run"]
+    parts = [f"`{e['skill']}`", COMPACT_MODE_LABEL[run["mode"]], f"`{run['model']}`"]
+    if run["mode"] == "bunshin-origin":
+        parts.append(f"{run['subagent_tokens']} subagent tokens")
+    else:
+        n = run["selected_from"]
+        cost = f"${run['cost_usd']:.2f}"
+        if run.get("client_cost_usd"):
+            cost += f" (plus ${run['client_cost_usd']:.2f} for the client agent)"
+        parts += ["first pass" if n == 1 else f"selected from {n} runs", cost]
+    parts += [plural(run["human_edits"], "human edit"), run["date"]]
+    return " · ".join(parts)
+
+
+def compact_block(e: dict, links: Links) -> list[str]:
+    out = [f"[Receipt]({links.blob(e['receipt'])})"]
+    if e.get("transcript"):
+        out.append(f"[Transcript]({links.blob(e['transcript'])})")
+    demo = links.demo(e)
+    if demo:
+        out.append(f"[Live demo]({demo})")
+    small = compact_provenance(e)
+    if e.get("readme_note"):
+        small += f". {e['readme_note']}"
+    return [
+        f"### {e['title']}",
+        "",
+        image(e, links),
+        "",
+        e["readme_caption"],
+        "",
+        f"<sub>{small}</sub><br />",
+        " · ".join(out),
+    ]
+
+
+def compact_closing(entries: list[dict], shown: list[dict], links: Links, page: str) -> str:
+    total, n = len(entries), len(shown)
+    rest = total - n
+    plain = sum(1 for e in entries if not e.get("featured", True))
+    among = []
+    if plain:
+        among.append(f"the {number(plain)} that came out plain or thin")
+    among += [f"[{e['readme_mention']}]({links.blob(e['receipt'])})" for e in entries if e.get("readme_mention")]
+    repo = f"[genjutsu-examples]({links.root()}) at the tag `{links.ref}`"
+    site = f"[{page.removeprefix('https://')}]({page})"
+    if not rest:
+        if total == 1:
+            return f"This is the one recorded run. Its receipt is in {repo}; the gallery is at {site}."
+        return (f"These are the {number(total)} recorded runs. Their receipts are in {repo}; "
+                f"the gallery is at {site}.")
+    lead = f"{'This is' if n == 1 else 'These are'} {number(n)} of the {number(total)} recorded runs. "
+    others = "The other one" if rest == 1 else f"The other {number(rest)}"
+    if among:
+        others += ", among them " + " and ".join([", ".join(among[:-1]), among[-1]] if len(among) > 1 else among) + ","
+    verb = "keeps its receipt" if rest == 1 else "keep their receipts"
+    return f"{lead}{others} {verb} in {repo}; the gallery is at {site}."
+
+
+def build_compact(data: dict, ref: str) -> str:
+    links = Links(data["repo"], check_ref(ref), data.get("demo_site"))
+    entries = data["examples"]
+    shown = [e for e in entries if e.get("readme", False)]
+    if not shown:
+        raise Fail("--compact needs at least one example marked \"readme\": true")
+    page = data.get("examples_page")
+    if not page:
+        raise Fail("--compact needs 'examples_page' in the manifest, the gallery page its closing line links")
+    lines = [START]
+    for e in shown:
+        lines += [*compact_block(e, links), ""]
+    lines += [compact_closing(entries, shown, links, page), END]
+    out = "\n".join(lines) + "\n"
+    if DASH in out:
+        raise Fail("the generated block holds U+2014 (em dash)")
+    return out
 
 
 def build(data: dict, ref: str) -> str:
@@ -629,11 +791,13 @@ def main() -> int:
     mode = ap.add_mutually_exclusive_group()
     mode.add_argument("--write", action="store_true", help="replace the examples region of --readme")
     mode.add_argument("--check", action="store_true", help="exit 1 if the examples region of --readme differs")
+    ap.add_argument("--compact", action="store_true",
+                    help="the short form: the entries marked readme, one sentence each, and one closing line")
     args = ap.parse_args()
     try:
         if (args.write or args.check) and not args.readme:
             raise Fail("--write and --check need --readme")
-        block = build(load(Path(args.manifest)), args.ref)
+        block = (build_compact if args.compact else build)(load(Path(args.manifest)), args.ref)
         if args.write:
             path = Path(args.readme)
             head, _, tail = region(path)
@@ -642,7 +806,8 @@ def main() -> int:
             _, body, _ = region(Path(args.readme))
             if body != block.rstrip("\n"):
                 print(f"examples-section: the examples region of {args.readme} is out of date; run "
-                      f"python3 bin/examples-section.py --ref {args.ref} --readme {args.readme} --write",
+                      f"python3 bin/examples-section.py --ref {args.ref}{' --compact' if args.compact else ''} "
+                      f"--readme {args.readme} --write",
                       file=sys.stderr)
                 return 1
             print(f"OK   [examples]: {args.readme} matches {args.manifest} at {args.ref}")
