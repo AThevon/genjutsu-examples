@@ -11,7 +11,15 @@ and the first message it sent, and is refused without the last two; the run
 bunshin was extracted from is said as such, with its token cost and its human
 answers; a recorded run that is not featured is listed after the gallery with
 its reason and receipt; --write replaces only its region of the given README
-and --check fails when the region is out of date.
+and --check fails when the region is out of date. With --compact the block is
+the short form: only the entries marked readme, three at most, by readme_order
+and then in manifest order, each with its skill and title, its media, one
+sentence, one small line and at most three links, then one closing line that
+counts every recorded example, links the receipt of an entry carrying a
+readme_mention, the repository at the tag and examples_page, and prints no
+list of the runs not featured. The closing line stays true with one entry
+left, and when every entry left is one that is not featured; a compact field
+that would break out of its markup is refused.
 
     python3 -m unittest discover -s bin -p 'test_*.py'
 """
@@ -505,6 +513,300 @@ class ExamplesSectionTest(unittest.TestCase):
         self.assertEqual(target.read_text(), "no markers here\n")
         r = self.run_gen("--readme", str(self.tmp / "nope.md"), "--check")
         self.assertNotEqual(r.returncode, 0)
+
+    PAGE = "https://site.example.dev/examples"
+
+    def compact_entry(self, **extra):
+        entry = copy.deepcopy(ENTRY)
+        entry.update(readme=True, readme_caption="Asked to pin four stages, the run pinned them.")
+        entry.update(extra)
+        return entry
+
+    def other_entry(self, ex_id, **extra):
+        entry = copy.deepcopy(ENTRY)
+        entry["id"], entry["title"] = ex_id, f"Title of {ex_id}"
+        entry.update(extra)
+        return entry
+
+    def test_compact_shows_only_the_entries_marked_readme_in_manifest_order(self):
+        origin = copy.deepcopy(ORIGIN)
+        origin.update(readme=True, readme_caption="A real client's site, from two answers.")
+        self.write_manifest([self.other_entry("first-one"), origin, self.compact_entry(), self.unfeatured()],
+                            examples_page=self.PAGE)
+        r = self.run_gen("--compact")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        out = r.stdout
+        lines = out.strip().splitlines()
+        self.assertEqual(lines[0], "<!-- genjutsu:examples:start -->")
+        self.assertEqual(lines[-1], "<!-- genjutsu:examples:end -->")
+        self.assertEqual([l for l in lines if l.startswith("### ")],
+                         ["### `bunshin` · Chef Ovatio: a seven-page site",
+                          "### `cast` · Pottery studio firing stages"])
+        self.assertNotIn("Title of first-one", out)
+        self.assertNotIn("Recorded, not featured", out)
+        self.assertNotIn("First headless run", out)
+        self.assertNotIn("Recorded runs on fictional clients", out)
+
+    def test_a_compact_entry_is_its_media_one_sentence_one_small_line_and_its_links(self):
+        self.write_manifest([self.compact_entry()], examples_page=self.PAGE)
+        r = self.run_gen("--compact")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(r.stdout.splitlines()[1:9], [
+            "### `cast` · Pottery studio firing stages",
+            "",
+            f'<a href="{BLOB}/pottery-firing/receipt.md"><img src="{RAW}/readme-media/pottery-firing/clip.webp" '
+            'alt="scrolling the pinned section" width="720" /></a>',
+            "",
+            "Asked to pin four stages, the run pinned them.",
+            "",
+            "<sub>one-shot headless run · `claude-opus-5-5` · first pass · $1.53 · 0 human edits · "
+            "2026-10-04</sub><br />",
+            f"[Receipt]({BLOB}/pottery-firing/receipt.md) · [Live demo](https://demos.example.app/pottery-firing/)",
+        ])
+        for left_out in ("/genjutsu:cast pin the four firing stages", "The page is the starting fixture",
+                         "First pass, built unchanged.", "No transcript", "[Source]", "[Case]", "23 turns"):
+            self.assertNotIn(left_out, r.stdout)
+
+    def test_a_compact_entry_says_its_note_selection_client_cost_and_transcript(self):
+        entry = self.conversation(self.compact_entry(readme_note="Defect: the list runs over the dome."))
+        entry["run"].update(selected_from=3, client_cost_usd=0.8589, human_edits=1)
+        del entry["media"]["clip"]
+        entry["media"]["cover"]["width"] = 402
+        self.write_manifest([entry], examples_page=self.PAGE)
+        r = self.run_gen("--compact")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("<sub>conversation with an agent playing the client · `claude-opus-5-5` · "
+                      "selected from 3 runs · $1.53 (plus $0.86 for the client agent) · 1 human edit · 2026-10-04. "
+                      "Defect: the list runs over the dome.</sub><br />", r.stdout)
+        self.assertIn(f"[Receipt]({BLOB}/pottery-firing/receipt.md) · "
+                      f"[Transcript]({BLOB}/pottery-firing/transcript.md) · [Live demo](", r.stdout)
+        self.assertNotIn("Client brief", r.stdout)
+        self.assertIn(f'src="{RAW}/readme-media/pottery-firing/still.png" alt="the pinned section" width="402"',
+                      r.stdout)
+        entry["run"]["client_cost_usd"] = 0.004
+        self.write_manifest([entry], examples_page=self.PAGE)
+        out = self.run_gen("--compact").stdout
+        self.assertIn("selected from 3 runs · $1.53 · 1 human edit", out)
+        self.assertNotIn("$0.00", out)
+
+    def test_compact_follows_readme_order_and_says_the_readme_title(self):
+        origin = copy.deepcopy(ORIGIN)
+        origin.update(readme=True, readme_caption="A real client's site, from two answers.")
+        first = self.compact_entry(readme_order=1, readme_title="Pottery: four stages (GSAP)")
+        self.write_manifest([origin, self.other_entry("second-one", readme=True, readme_caption="One sentence.",
+                                                      readme_order=2), first], examples_page=self.PAGE)
+        r = self.run_gen("--compact")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual([l for l in r.stdout.splitlines() if l.startswith("### ")],
+                         ["### `cast` · Pottery: four stages (GSAP)", "### `cast` · Title of second-one",
+                          "### `bunshin` · Chef Ovatio: a seven-page site"])
+        long_form = self.run_gen().stdout
+        self.assertLess(long_form.index("### Chef Ovatio"), long_form.index("### Pottery studio firing stages"))
+        self.assertNotIn("Pottery: four stages (GSAP)", long_form)
+        self.write_manifest([self.compact_entry(readme_order=1),
+                             self.other_entry("second-one", readme=True, readme_caption="One.", readme_order=1)])
+        r = self.run_gen()
+        self.assertNotEqual(r.returncode, 0, r.stdout)
+        self.assertIn("readme_order", r.stderr)
+
+    def test_compact_shows_three_examples_at_most(self):
+        entries = [self.compact_entry()] + [
+            self.other_entry(f"more-{i}", readme=True, readme_caption="One sentence.") for i in range(3)]
+        self.write_manifest(entries, examples_page=self.PAGE)
+        r = self.run_gen("--compact")
+        self.assertNotEqual(r.returncode, 0, r.stdout)
+        self.assertIn("three examples at most", r.stderr)
+        self.assertEqual(self.run_gen().returncode, 0)
+        self.write_manifest(entries[:3], examples_page=self.PAGE)
+        self.assertEqual(self.run_gen("--compact").returncode, 0)
+
+    def test_the_compact_bunshin_origin_run_gives_tokens_and_its_human_edits(self):
+        origin = copy.deepcopy(ORIGIN)
+        origin.update(readme=True, readme_caption="A real client's site, from two answers.")
+        origin["run"]["human_edits"] = 1
+        self.write_manifest([origin], examples_page=self.PAGE)
+        r = self.run_gen("--compact")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("<sub>the run `bunshin` was extracted from, made with genjutsu 4.0.0's `paint`, with "
+                      "Impeccable, before `bunshin` shipped · `claude-opus-5-5` · about 10.5M subagent tokens "
+                      "(main session not measured) · 1 human edit · 2026-09-29</sub><br />", r.stdout)
+        self.assertIn(f"[Receipt]({BLOB}/chef-ovatio/receipt.md) · [Live demo](https://chef-ovatio.vercel.app)\n",
+                      r.stdout)
+        self.assertNotIn("$", r.stdout)
+        self.assertNotIn("private repository", r.stdout)
+
+    def closing(self, entries):
+        self.write_manifest(entries, examples_page=self.PAGE)
+        r = self.run_gen("--compact")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(r.stdout.splitlines()[-3], "")
+        return r.stdout.splitlines()[-2]
+
+    def test_the_compact_closing_line_counts_every_example_and_links_the_rest(self):
+        repo = f"[genjutsu-examples](https://github.com/AThevon/genjutsu-examples/tree/{REF})"
+        site = f"the site has its own gallery at [site.example.dev/examples]({self.PAGE})."
+        native = self.other_entry("native-app", readme_mention="the first native run")
+        del native["demo"]
+        mention = f"[the first native run]({BLOB}/pottery-firing/receipt.md)"
+        self.assertEqual(
+            self.closing([self.compact_entry(), native, self.other_entry("third-one"), self.unfeatured()]),
+            "One of four recorded examples. The other three, including the one that came out plain or thin "
+            f"and {mention}, are in {repo}; {site}")
+        self.assertEqual(self.closing([self.compact_entry(), self.other_entry("a-one"), self.other_entry("b-one")]),
+                         f"One of three recorded examples. The other two are in {repo}; {site}")
+        self.assertEqual(self.closing([self.compact_entry()]),
+                         f"This is the one recorded example. Its receipt is in {repo}; {site}")
+        self.assertEqual(
+            self.closing([self.compact_entry(), self.other_entry("b-one", readme=True, readme_caption="One.")]),
+            f"These are the two recorded examples. Their receipts are in {repo}; {site}")
+        line = self.closing([self.compact_entry(), native, self.unfeatured()])
+        self.assertEqual(line.count("receipt.md"), 1)
+        self.assertNotIn(f"tag `{REF}`", line)
+
+    def test_the_compact_closing_line_stays_true_with_one_entry_left(self):
+        repo = f"[genjutsu-examples](https://github.com/AThevon/genjutsu-examples/tree/{REF})"
+        native = self.other_entry("native-app", readme_mention="the first native run")
+        mention = f"[the first native run]({BLOB}/pottery-firing/receipt.md)"
+        self.assertTrue(self.closing([self.compact_entry(), self.other_entry("second-one")]).startswith(
+            f"One of two recorded examples. The other one is in {repo}; "))
+        self.assertTrue(self.closing([self.compact_entry(), self.unfeatured()]).startswith(
+            f"One of two recorded examples. The other one, which came out plain or thin, is in {repo}; "))
+        self.assertTrue(self.closing([self.compact_entry(), native]).startswith(
+            f"One of two recorded examples. The other one, {mention}, is in {repo}; "))
+        for line in (self.closing([self.compact_entry(), self.unfeatured()]),
+                     self.closing([self.compact_entry(), native])):
+            self.assertNotIn("among them", line)
+            self.assertNotIn("including", line)
+
+    def test_the_compact_closing_line_stays_true_when_every_other_entry_is_not_featured(self):
+        repo = f"[genjutsu-examples](https://github.com/AThevon/genjutsu-examples/tree/{REF})"
+        second = self.unfeatured()
+        second["id"] = "older-run"
+        line = self.closing([self.compact_entry(), self.unfeatured(), second])
+        self.assertTrue(line.startswith(
+            f"One of three recorded examples. The other two, which came out plain or thin, are in {repo}; "), line)
+        self.assertNotIn("including", line)
+
+    def test_compact_refuses_an_unfeatured_reason_that_is_not_plain_or_thin(self):
+        hidden = self.unfeatured()
+        hidden["reason"] = "Broken: the build failed."
+        self.write_manifest([self.compact_entry(), hidden], examples_page=self.PAGE)
+        r = self.run_gen("--compact")
+        self.assertNotEqual(r.returncode, 0, r.stdout)
+        self.assertIn("Plain or Thin", r.stderr)
+        self.assertEqual(self.run_gen().returncode, 0)
+        hidden["reason"] = "Thin execution: a system font."
+        self.write_manifest([self.compact_entry(), hidden], examples_page=self.PAGE)
+        self.assertEqual(self.run_gen("--compact").returncode, 0)
+
+    def test_a_compact_field_that_would_break_its_markup_is_refused(self):
+        self.refused(self.compact_entry(readme_note="closed </sub> <b>bold"), "readme_note must not hold")
+        self.refused(self.compact_entry(readme_caption="a <b>caption"), "readme_caption must not hold")
+        self.refused(self.compact_entry(readme_title="a <i>title"), "readme_title must not hold")
+        self.refused(self.compact_entry(readme_title="x" * 81), "over the 80 limit")
+        self.refused(self.compact_entry(readme_order=0), "readme_order")
+        self.refused(self.compact_entry(readme_order="1"), "readme_order")
+        self.write_manifest([copy.deepcopy(ENTRY), self.other_entry("native-app", readme_mention="the [first] run")])
+        r = self.run_gen()
+        self.assertNotEqual(r.returncode, 0, r.stdout)
+        self.assertIn("readme_mention must not hold", r.stderr)
+        self.write_manifest([copy.deepcopy(ENTRY), self.other_entry("native-app", readme_mention="x" * 61)])
+        self.assertIn("over the 60 limit", self.run_gen().stderr)
+        for key, value in (("readme_title", "A title without the mark."), ("readme_order", 1)):
+            entry = copy.deepcopy(ENTRY)
+            entry[key] = value
+            self.refused(entry, "needs \"readme\": true")
+        self.refused(self.compact_entry(), "examples_page", examples_page="https://x.dev/a_(b)")
+
+    def test_compact_needs_an_entry_marked_readme_and_the_examples_page(self):
+        self.write_manifest([copy.deepcopy(ENTRY)], examples_page=self.PAGE)
+        r = self.run_gen("--compact")
+        self.assertNotEqual(r.returncode, 0, r.stdout)
+        self.assertIn("readme", r.stderr)
+        self.write_manifest([self.compact_entry()])
+        r = self.run_gen("--compact")
+        self.assertNotEqual(r.returncode, 0, r.stdout)
+        self.assertIn("examples_page", r.stderr)
+        self.assertEqual(self.run_gen().returncode, 0)
+        self.refused(self.compact_entry(), "examples_page", examples_page="http://site.example.dev/examples")
+
+    def test_bad_readme_fields_are_refused_in_either_form(self):
+        entry = self.compact_entry()
+        del entry["readme_caption"]
+        self.refused(entry, "readme_caption")
+        self.refused(self.compact_entry(readme_caption="x" * 221), "over the 220 limit")
+        self.refused(self.compact_entry(readme_caption="one.\ntwo."), "one line")
+        self.refused(self.compact_entry(readme_note="x" * 201), "over the 200 limit")
+        self.refused(self.compact_entry(readme="yes"), "readme must be true or false")
+        self.refused(self.compact_entry(readme_mention="the first one"), "readme_mention")
+        self.refused(self.compact_entry(readme_caption=f"one {DASH} two"), "em dash")
+        entry = copy.deepcopy(ENTRY)
+        entry["readme_caption"] = "A caption without the mark."
+        self.refused(entry, "needs \"readme\": true")
+        entry = copy.deepcopy(ENTRY)
+        entry["readme_note"] = "A note without the mark."
+        self.refused(entry, "needs \"readme\": true")
+        hidden = self.unfeatured()
+        hidden.update(readme=True, readme_caption="Shown although it is not featured.")
+        self.write_manifest([copy.deepcopy(ENTRY), hidden])
+        r = self.run_gen()
+        self.assertNotEqual(r.returncode, 0, r.stdout)
+        self.assertIn("only for a featured example", r.stderr)
+        self.write_manifest([self.compact_entry(readme_caption="x" * 220)], examples_page=self.PAGE)
+        self.assertEqual(self.run_gen("--compact").returncode, 0)
+
+    def test_compact_keeps_the_tag_only_rule(self):
+        self.write_manifest([self.compact_entry()], examples_page=self.PAGE)
+        for ref in ("main", "master", "HEAD", "a b", ""):
+            with self.subTest(ref=ref):
+                r = self.run_gen("--compact", ref=ref)
+                self.assertNotEqual(r.returncode, 0, r.stdout)
+                self.assertIn("ref", r.stderr)
+        self.assertNotEqual(self.run_gen("--compact", ref=None).returncode, 0)
+        out = self.run_gen("--compact", ref="readme-2026-11-14").stdout
+        self.assertIn("/blob/readme-2026-11-14/pottery-firing/receipt.md", out)
+        self.assertIn("/tree/readme-2026-11-14); the site has its own gallery at ", out)
+        self.assertNotIn("/main/", out)
+
+    def test_compact_write_and_check_follow_the_compact_form(self):
+        self.write_manifest([self.compact_entry(), self.other_entry("second-one")], examples_page=self.PAGE)
+        target = self.tmp / "README.md"
+        target.write_text("before\n<!-- genjutsu:examples:start -->\nold\n<!-- genjutsu:examples:end -->\nafter\n")
+        r = self.run_gen("--compact", "--readme", str(target), "--check")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn(f"--ref {REF} --compact --readme {target} --write", r.stderr)
+        r = self.run_gen("--compact", "--readme", str(target), "--write")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        text = target.read_text()
+        self.assertEqual(text, "before\n" + self.run_gen("--compact").stdout + "after\n")
+        self.assertNotIn("Title of second-one", text)
+        self.assertEqual(self.run_gen("--compact", "--readme", str(target), "--check").returncode, 0)
+        self.assertNotEqual(self.run_gen("--readme", str(target), "--check").returncode, 0)
+        self.assertNotEqual(
+            self.run_gen("--compact", "--readme", str(target), "--check", ref="readme-2027-01-01").returncode, 0)
+        self.assertEqual(self.run_gen("--readme", str(target), "--write").returncode, 0)
+        self.assertNotEqual(self.run_gen("--compact", "--readme", str(target), "--check").returncode, 0)
+
+    def test_the_real_manifest_gives_the_three_compact_examples(self):
+        r = subprocess.run([sys.executable, str(SCRIPT), "--manifest", str(REAL_MANIFEST), "--ref", REF,
+                            "--compact"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        data = json.loads(REAL_MANIFEST.read_text())
+        self.assertEqual([e["id"] for e in data["examples"] if e.get("readme")],
+                         ["nocturne", "chef-ovatio", "invoice-mark-paid"])
+        self.assertEqual([l.split(" · ")[0] for l in r.stdout.splitlines() if l.startswith("### ")],
+                         ["### `cast`", "### `paint`", "### `bunshin`"])
+        self.assertEqual(sorted(e["skill"] for e in data["examples"] if e.get("readme")),
+                         ["bunshin", "cast", "paint"])
+        self.assertEqual(r.stdout.count("\n### "), 3)
+        self.assertEqual(r.stdout.count("<img "), 3)
+        self.assertIn(f"[the one SwiftUI case, six runs of one prompt]({BLOB}/etale-ios/receipt.md)", r.stdout)
+        self.assertIn("Three of nine recorded examples. The other six, including the three that came out plain "
+                      "or thin and [the one SwiftUI case", r.stdout)
+        self.assertIn("before `bunshin` shipped", r.stdout)
+        self.assertIn("(https://genjutsu.athevon.dev/examples)", r.stdout)
+        self.assertNotIn(DASH, r.stdout)
+        self.assertLessEqual(len(r.stdout.splitlines()), 32)
 
     def test_the_real_manifest_is_valid(self):
         r = subprocess.run([sys.executable, str(SCRIPT), "--manifest", str(REAL_MANIFEST), "--ref", REF],

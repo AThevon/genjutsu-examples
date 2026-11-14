@@ -1,6 +1,7 @@
 {
   "repo": "AThevon/genjutsu-examples",
   "demo_site": "https://genjutsu-examples.vercel.app",
+  "examples_page": "https://genjutsu.athevon.dev/examples",
   "examples": [
     {
       "id": "nocturne",
@@ -49,7 +50,12 @@
       "opening": "nocturne/opening.txt",
       "notes": "The client accepted both theses at the first showing and asked once for the four problems of the first report to be fixed. The run never saw its page and handed every visual check over. Three defects it introduced are in the receipt: from 1100 px wide the star list runs over the dome (near the end of the clip), a picked star's magnitude line covers its name, and on a phone the hero panel hides the bottom of the dome.",
       "source": "nocturne/source",
-      "demo": "/nocturne/"
+      "demo": "/nocturne/",
+      "readme": true,
+      "readme_order": 2,
+      "readme_title": "Nocturne: a planetarium's landing page (plain CSS)",
+      "readme_caption": "Asked for a planetarium's landing page from an empty template and a star catalogue, the run drew 403 stars and Saturn as they stand over Lisbon at 22:00 on 9 October 2026, lit brightest first as it scrolls to night.",
+      "readme_note": "Defect: from 1100 px wide the star list runs over the dome (end of the clip); two more in the receipt. The run could not open its page in a browser. A headless run of this brief came out plain first."
     },
     {
       "id": "chef-ovatio",
@@ -87,7 +93,12 @@
       },
       "receipt": "chef-ovatio/receipt.md",
       "demo": "https://chef-ovatio.vercel.app",
-      "source_note": "Source: the client's private repository"
+      "source_note": "Source: the client's private repository",
+      "readme": true,
+      "readme_order": 3,
+      "readme_title": "Chef Ovatio: a private chef's seven-page site (Astro)",
+      "readme_caption": "A real private chef's site, seven pages in French and English, made from his public Instagram profile and two answers; scrolling the home, the plate sets like a sun behind a cobalt horizon.",
+      "readme_note": "The edit, made since: door titles that could not be read across their photos now stand on them. The last fix round was not reviewed. Filmed from the live site, whose contact details are still blank."
     },
     {
       "id": "pottery-firing",
@@ -220,7 +231,11 @@
       "notes": "Headless, so the run marked its own thesis UNVALIDATED. It introduced one defect its own audit missed: on a shorter window, handing focus to the next unpaid invoice scrolls the page while the totals count (it does not show at 1440x900; the receipt describes when it does).",
       "source": "invoice-mark-paid/runs/20261004T162510Z/workspace-1",
       "case": "cases/invoice-mark-paid",
-      "demo": "/invoice-mark-paid/"
+      "demo": "/invoice-mark-paid/",
+      "readme": true,
+      "readme_order": 1,
+      "readme_caption": "On a fixture invoice page, asked to make a dead \"Mark as paid\" action feel like the money landed, the run made the amount leave Outstanding and land in Paid as both totals count, in one headless pass.",
+      "readme_note": "Its thesis was approved by nobody. Defect its own audit missed: on a shorter window than the clip's, the page scrolls while the totals count. The pointer is drawn in by the recorder, not by the build."
     },
     {
       "id": "etale-ios",
@@ -263,7 +278,8 @@
       "receipt": "etale-ios/receipt.md",
       "notes": "Headless, so each run marked its own thesis UNVALIDATED, and none could build in its session; each built here unchanged on the first try. All six runs are in the receipt. Run 1, on genjutsu 4.1.3 ($3.42), hand-built an overlay: it rewrote both screens, gave up the navigation bar and the swipe back, and its drag-to-close flickers. Three gaps in genjutsu's modules were fixed after it; run 2, shown here, is the same prompt on those fixes. Run 3, on the 4.2.0 release branch with the same fixes ($2.46), hand-built a surface again, with the time landing on the wrong row. A step was then added (read the thesis against the loaded modules before any code); runs 4 to 6, with it, all used the system zoom ($1.30 to $1.36), but each had named the zoom before reading any module, so the step was never seen correcting a hand-built thesis. Used the system transition: 1 of 2 on the fixed modules without the step, 3 of 3 with it; too few runs to tell the step from chance. Run 2 is shown because no later run is clearly better and it is the one filmed under Reduce Motion, dark appearance and large type. Its own defect: a white box shows around the row for about 0.4 s after each return. Simulator only: no real device, no VoiceOver check.",
       "source": "etale-ios/runs/20261113T201315Z/workspace-1",
-      "case": "cases/etale-ios"
+      "case": "cases/etale-ios",
+      "readme_mention": "the one SwiftUI case, six runs of one prompt"
     },
     {
       "id": "gres-redesign",
