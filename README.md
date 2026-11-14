@@ -147,7 +147,7 @@ python3 bin/examples-section.py --ref readme-2026-10-05 --readme /path/to/genjut
 python3 -m unittest discover -s bin -p 'test_*.py'
 ```
 
-The genjutsu README carries the short form, written with `--compact`: the three examples marked `"readme": true` in the manifest, each with its clip, the one sentence of `readme_caption` (220 characters at most), one small line of provenance ending with `readme_note`, and its receipt, transcript and live demo; then one line that counts every recorded run and links the rest, here and on `examples_page`. An entry with a `readme_mention` (the first SwiftUI run) has its receipt linked from that line. Without `--compact` the block is the long form: every featured example in full, and the list of the runs not featured.
+The genjutsu README carries the short form, written with `--compact`: the examples marked `"readme": true` in the manifest (three today, and three at most), placed by `readme_order`, each with its skill and its title (`readme_title` when there is one), its clip, the one sentence of `readme_caption` (220 characters at most), one small line of provenance ending with `readme_note`, and its receipt, transcript and live demo; then one line that counts every recorded example and links the rest, here and on `examples_page`. That line says the examples not featured came out plain or thin, so `--compact` refuses one whose `reason` does not start with Plain or Thin. An entry with a `readme_mention` (the one SwiftUI case) has its receipt linked from that line. Without `--compact` the block is the long form: every featured example in full, and the list of the runs not featured.
 
 ```sh
 python3 bin/examples-section.py --ref readme-2026-11-14 --compact --readme /path/to/genjutsu/README.md --write
