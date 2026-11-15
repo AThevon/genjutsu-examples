@@ -34,7 +34,9 @@ for demo in "${DEMOS[@]}"; do
   id="${demo%% *}"
   src="$REPO/${demo#* }"
   echo "== $id <- ${demo#* }"
-  rsync -a --exclude node_modules --exclude dist --exclude .cc-writes "$src"/ "$WORK/$id"/
+  # tar instead of rsync: the Workers Builds image has no rsync.
+  mkdir -p "$WORK/$id"
+  tar -C "$src" --exclude node_modules --exclude dist --exclude .cc-writes -cf - . | tar -C "$WORK/$id" -xf -
   (cd "$WORK/$id" && npm ci --no-audit --no-fund && npm run build -- --base "/$id/")
   rm -rf "${OUT:?}/$id"
   cp -R "$WORK/$id/dist" "$OUT/$id"
