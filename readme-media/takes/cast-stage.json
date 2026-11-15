@@ -1,78 +1,15 @@
 {
   "live": "https://genjutsu.athevon.dev",
-  "w": 1280,
-  "h": 720,
-  "dpr": 1.5,
-  "fps": 24,
-  "settle": 1500,
-  "cursor": true,
+  "w": 1280, "h": 720, "dpr": 1.5, "fps": 24, "settle": 1500, "cursor": true,
   "steps": [
-    {
-      "eval": "[...document.documentElement.children].at(-1).style.visibility='hidden'"
-    },
-    {
-      "scroll": {
-        "to": "[data-cast-stage]",
-        "offset": 100,
-        "duration": 42
-      }
-    },
-    {
-      "wait": 3200
-    },
-    {
-      "still": "a-open"
-    },
-    {
-      "hover": "#cs-panel-gallery [data-back]",
-      "duration": 450
-    },
-    {
-      "click": "#cs-panel-gallery [data-back]"
-    },
-    {
-      "wait": 800
-    },
-    {
-      "hover": "#cs-panel-gallery .cg-card",
-      "nth": 2,
-      "duration": 450
-    },
-    {
-      "click": "#cs-panel-gallery .cg-card",
-      "nth": 2
-    },
-    {
-      "wait": 250
-    },
-    {
-      "still": "b-mid"
-    },
-    {
-      "wait": 1100
-    },
-    {
-      "hover": "#cs-panel-gallery [data-back]",
-      "duration": 450
-    },
-    {
-      "click": "#cs-panel-gallery [data-back]"
-    },
-    {
-      "wait": 900
-    },
-    {
-      "hover": "#cs-tab-nav",
-      "duration": 500
-    },
-    {
-      "click": "#cs-tab-nav"
-    },
-    {
-      "wait": 3600
-    },
-    {
-      "still": "d-nav"
-    }
+    {"eval": "[...document.documentElement.children].at(-1).style.visibility='hidden'"},
+    {"scroll": {"to": "[data-cast-stage]", "offset": 100, "duration": 42}},
+    {"wait": 3400},
+    {"hover": "#cs-tab-page", "duration": 600},
+    {"click": "#cs-tab-page"},
+    {"wait": 3300},
+    {"hover": "#cs-tab-nav", "duration": 600},
+    {"click": "#cs-tab-nav"},
+    {"wait": 3800}
   ]
 }

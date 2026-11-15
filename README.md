@@ -117,12 +117,12 @@ python3 readme-media/takes/encode-hero.py /tmp/hero-site/frames readme-media/her
 
 The frame numbers are the take's own, so a changed take needs its cuts found again. `readme-media/hero-site-poster.png` is its first frame at 1200 px.
 
-The README's `cast` clip is not a recorded run either: it films the five demos the site draws for `cast` (the gallery, then the navbar), which the genjutsu README says. Its frames are cropped to the stage, then encoded in one section at 24 fps:
+The README's `cast` clip is not a recorded run either: it films the demos the site draws for `cast` (the gallery, the whole page, then the navbar), which the genjutsu README says. It only lets each tab play on its own: an album clicked by the recorder, or the switch to `what you have`, left the cover travel in a wrong state in virtual time. Its frames are cropped to the stage, then encoded in one section per tab at 24 fps:
 
 ```sh
 node bin/record.mjs --take readme-media/takes/cast-stage.json --out /tmp/cast-stage --max-kb 100000 --keep-frames
 mkdir /tmp/cast-stage/crop && magick mogrify -path /tmp/cast-stage/crop -crop 1760x1020+80+0 +repage /tmp/cast-stage/frames/*.png
-python3 readme-media/takes/encode-hero.py /tmp/cast-stage/crop readme-media/cast-stage/clip.webp 70 1080 0:294:24
+python3 readme-media/takes/encode-hero.py /tmp/cast-stage/crop readme-media/cast-stage/clip.webp 70 1080 0:99:24 99:194:24 194:287:24
 ```
 
 The demos:
