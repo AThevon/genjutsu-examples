@@ -787,21 +787,20 @@ class ExamplesSectionTest(unittest.TestCase):
         self.assertEqual(self.run_gen("--readme", str(target), "--write").returncode, 0)
         self.assertNotEqual(self.run_gen("--compact", "--readme", str(target), "--check").returncode, 0)
 
-    def test_the_real_manifest_gives_the_three_compact_examples(self):
+    def test_the_real_manifest_gives_the_two_compact_examples(self):
+        # the README shows the site's cast demos above this block, so the block
+        # carries paint and bunshin only
         r = subprocess.run([sys.executable, str(SCRIPT), "--manifest", str(REAL_MANIFEST), "--ref", REF,
                             "--compact"], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr)
         data = json.loads(REAL_MANIFEST.read_text())
-        self.assertEqual([e["id"] for e in data["examples"] if e.get("readme")],
-                         ["nocturne", "chef-ovatio", "invoice-mark-paid"])
+        self.assertEqual([e["id"] for e in data["examples"] if e.get("readme")], ["nocturne", "chef-ovatio"])
         self.assertEqual([l.split(" · ")[0] for l in r.stdout.splitlines() if l.startswith("### ")],
-                         ["### `cast`", "### `paint`", "### `bunshin`"])
-        self.assertEqual(sorted(e["skill"] for e in data["examples"] if e.get("readme")),
-                         ["bunshin", "cast", "paint"])
-        self.assertEqual(r.stdout.count("\n### "), 3)
-        self.assertEqual(r.stdout.count("<img "), 3)
+                         ["### `paint`", "### `bunshin`"])
+        self.assertEqual(r.stdout.count("\n### "), 2)
+        self.assertEqual(r.stdout.count("<img "), 2)
         self.assertIn(f"[the one SwiftUI case, six runs of one prompt]({BLOB}/etale-ios/receipt.md)", r.stdout)
-        self.assertIn("Three of nine recorded examples. The other six, including the three that came out plain "
+        self.assertIn("Two of nine recorded examples. The other seven, including the three that came out plain "
                       "or thin and [the one SwiftUI case", r.stdout)
         self.assertIn("before `bunshin` shipped", r.stdout)
         self.assertIn("(https://genjutsu.athevon.dev/examples)", r.stdout)

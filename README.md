@@ -55,7 +55,9 @@ demos/                   the demos index page and its vercel.json
 baseline-2026-11/        headless paint against no plugin and frontend-design on one minimal brief, see its COMPARE.md
 readme-media/            the images of the genjutsu README's hero and gallery (one cover and
                          one clip per featured example)
-  takes/                 the take and the encode script behind hero-site.webp
+  cast-stage/            the README's cast clip, filmed from the site's cast demos (not a run)
+  takes/                 the takes behind hero-site.webp and cast-stage/clip.webp, and their
+                         encode script
 <example>/
   receipt.md             the run, its cost, the build, known defects, how the media was made
   receipt.json           the same, as data
@@ -115,6 +117,14 @@ python3 readme-media/takes/encode-hero.py /tmp/hero-site/frames readme-media/her
 
 The frame numbers are the take's own, so a changed take needs its cuts found again. `readme-media/hero-site-poster.png` is its first frame at 1200 px.
 
+The README's `cast` clip is not a recorded run either: it films the five demos the site draws for `cast` (the gallery, then the navbar), which the genjutsu README says. Its frames are cropped to the stage, then encoded in one section at 24 fps:
+
+```sh
+node bin/record.mjs --take readme-media/takes/cast-stage.json --out /tmp/cast-stage --max-kb 100000 --keep-frames
+mkdir /tmp/cast-stage/crop && magick mogrify -path /tmp/cast-stage/crop -crop 1760x1020+80+0 +repage /tmp/cast-stage/frames/*.png
+python3 readme-media/takes/encode-hero.py /tmp/cast-stage/crop readme-media/cast-stage/clip.webp 70 1080 0:294:24
+```
+
 The demos:
 
 ```sh
@@ -147,7 +157,7 @@ python3 bin/examples-section.py --ref readme-2026-10-05 --readme /path/to/genjut
 python3 -m unittest discover -s bin -p 'test_*.py'
 ```
 
-The genjutsu README carries the short form, written with `--compact`: the examples marked `"readme": true` in the manifest (three today, and three at most), placed by `readme_order`, each with its skill and its title (`readme_title` when there is one), its clip, the one sentence of `readme_caption` (220 characters at most), one small line of provenance ending with `readme_note`, and its receipt, transcript and live demo; then one line that counts every recorded example and links the rest, here and on `examples_page`. That line says the examples not featured came out plain or thin, so `--compact` refuses one whose `reason` does not start with Plain or Thin. An entry with a `readme_mention` (the one SwiftUI case) has its receipt linked from that line. Without `--compact` the block is the long form: every featured example in full, and the list of the runs not featured.
+The genjutsu README carries the short form, written with `--compact`: the examples marked `"readme": true` in the manifest (two today, and three at most), placed by `readme_order`, each with its skill and its title (`readme_title` when there is one), its clip, the one sentence of `readme_caption` (220 characters at most), one small line of provenance ending with `readme_note`, and its receipt, transcript and live demo; then one line that counts every recorded example and links the rest, here and on `examples_page`. That line says the examples not featured came out plain or thin, so `--compact` refuses one whose `reason` does not start with Plain or Thin. An entry with a `readme_mention` (the one SwiftUI case) has its receipt linked from that line. Without `--compact` the block is the long form: every featured example in full, and the list of the runs not featured.
 
 ```sh
 python3 bin/examples-section.py --ref readme-2026-11-14 --compact --readme /path/to/genjutsu/README.md --write
