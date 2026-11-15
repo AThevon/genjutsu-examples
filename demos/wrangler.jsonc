@@ -1,0 +1,12 @@
+{
+  // Deployed from the built folder: bin/build-demos.sh <out dir>, then `npx wrangler deploy` inside it.
+  "name": "genjutsu-demos",
+  "account_id": "80e29a139e2e1fc1d715542328fe00e8",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": ".",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "demos.genjutsu.athevon.dev", "custom_domain": true }]
+}

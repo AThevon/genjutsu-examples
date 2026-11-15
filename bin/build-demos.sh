@@ -3,9 +3,9 @@
 #
 # Every demo is the code a run left, built as it stands: the source is copied to a scratch
 # folder, `npm ci` installs its lockfile, and `npm run build -- --base /<id>/` builds it under
-# its own path. Nothing in the source is edited. demos/index.html and demos/vercel.json are
-# copied to the root. The result deploys as a static site (no build step on the host):
-#   cd <out dir> && vercel deploy --prod --yes
+# its own path. Nothing in the source is edited. demos/index.html, demos/wrangler.jsonc, demos/_headers and
+# demos/.assetsignore are copied to the root. The result deploys as a static site (no build step on the host):
+#   cd <out dir> && npx wrangler deploy   (Cloudflare Worker, static assets only)
 # Needs Node 22 or later and network (npm ci).
 set -euo pipefail
 
@@ -40,5 +40,5 @@ for demo in "${DEMOS[@]}"; do
   cp -R "$WORK/$id/dist" "$OUT/$id"
 done
 
-cp "$REPO/demos/index.html" "$REPO/demos/vercel.json" "$OUT"/
+cp "$REPO/demos/index.html" "$REPO/demos/wrangler.jsonc" "$REPO/demos/_headers" "$REPO/demos/.assetsignore" "$OUT"/
 echo "Demos built in $OUT"

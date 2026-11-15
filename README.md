@@ -11,7 +11,7 @@ The genjutsu repository keeps none of this. Its README gallery is generated from
 | Folder | Skill | How it ran | In the gallery | Demo |
 |---|---|---|---|---|
 | [`nocturne/`](./nocturne) | `paint` | conversation | yes | `/nocturne/` |
-| [`chef-ovatio/`](./chef-ovatio) | `bunshin` | the run `bunshin` was extracted from, before v4.1.0 | yes | [chef-ovatio.vercel.app](https://chef-ovatio.vercel.app) |
+| [`chef-ovatio/`](./chef-ovatio) | `bunshin` | the run `bunshin` was extracted from, before v4.1.0 | yes | [chef-ovatio.demos.genjutsu.athevon.dev](https://chef-ovatio.demos.genjutsu.athevon.dev) |
 | [`pottery-firing/`](./pottery-firing) | `cast` | headless, first pass | yes | `/pottery-firing/` |
 | [`etale/`](./etale) | `paint` | conversation, the second of two on the same brief | yes | `/etale/` |
 | [`invoice-mark-paid/`](./invoice-mark-paid) | `cast` | headless, first pass | yes | `/invoice-mark-paid/` |

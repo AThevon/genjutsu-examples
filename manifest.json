@@ -1,6 +1,6 @@
 {
   "repo": "AThevon/genjutsu-examples",
-  "demo_site": "https://genjutsu-examples.vercel.app",
+  "demo_site": "https://demos.genjutsu.athevon.dev",
   "examples_page": "https://genjutsu.athevon.dev/examples",
   "examples": [
     {
@@ -92,7 +92,7 @@
         "stills": []
       },
       "receipt": "chef-ovatio/receipt.md",
-      "demo": "https://chef-ovatio.vercel.app",
+      "demo": "https://chef-ovatio.demos.genjutsu.athevon.dev",
       "source_note": "Source: the client's private repository",
       "readme": true,
       "readme_order": 3,
